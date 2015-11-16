@@ -7,7 +7,7 @@
     android:padding="5dip" >
 
     <!--  ListView最左边的缩略图 -->
-    <LinearLayout android:id="@+id/thumbnail"
+    <LinearLayout android:id="@+id/item_staggredview_thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="3dip"
@@ -28,8 +28,8 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_alignTop="@+id/item_staggredview_thumbnail"
+        android:layout_toRightOf="@+id/item_staggredview_thumbnail"
         android:text="Rihanna Love the way lie"
         android:textColor="#040404"
         android:typeface="sans"
@@ -45,7 +45,7 @@
         android:textColor="#343434"
         android:textSize="10dip"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toRightOf="@+id/item_staggredview_thumbnail"
         android:text="Just gona stand there and ..." />
 
     <!-- video play duration -->
