@@ -1,15 +1,25 @@
 package com.qfq.muqing.myvideoplayer;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
+
+import com.qfq.muqing.myvideoplayer.adapters.StaggeredAdapter;
 
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
     private static String TAG = "qfq" + "VideoPlayer/MainActivity";
+    private Context mContext;
     private CharSequence mTitle;
+    private RecyclerView mList;
+    private StaggeredAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +27,20 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
         mTitle = getTitle();
+        mContext = getApplicationContext();
+
+        mList = (RecyclerView)findViewById(R.id.selection_list);
+        mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mList.addItemDecoration(new InsetDecoration(mContext));
+
+        mList.getItemAnimator().setAddDuration(1000);
+        mList.getItemAnimator().setChangeDuration(1000);
+        mList.getItemAnimator().setMoveDuration(1000);
+        mList.getItemAnimator().setRemoveDuration(1000);
+
+        mAdapter = new StaggeredAdapter(mContext);
+        mAdapter.setmOnItemClickListener(this);
+        mList.setAdapter(mAdapter);
     }
 
 
@@ -40,6 +64,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, "To be delete", Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -32,6 +32,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     public StaggeredAdapter(Context context) {
         mContext = context;
+        mItems = new ArrayList<VideoItem>();
         generateItems();
     }
 
@@ -56,6 +57,13 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     @Override
     public void onBindViewHolder(VerticalItemHolder itemHolder, int position) {
+
+        final View itemView = itemHolder.videoThumbnail;
+        if (position % 4 == 0) {
+            itemView.setMinimumHeight(300);
+        } else {
+            itemView.setMinimumHeight(100);
+        }
         VideoItem item = mItems.get(position);
         itemHolder.setVideoTitle(item.videoName);
         itemHolder.setVideoDuration(item.videoDuration);
@@ -153,6 +161,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             String videoDuration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
             String videoTitle = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
             VideoItem item = new VideoItem(videoId, videoPath, videoTitle, videoDuration);
+            mItems.add(item);
             cursor.moveToNext();
         }
         cursor.close();
