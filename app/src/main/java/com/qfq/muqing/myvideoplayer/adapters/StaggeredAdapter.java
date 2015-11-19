@@ -30,9 +30,13 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     private Context mContext;
 
-    public StaggeredAdapter(Context context) {
+    private int mThumbnailParentWidth;
+
+    public StaggeredAdapter(Context context, int thumbnailParentWidth) {
         mContext = context;
         mItems = new ArrayList<VideoItem>();
+        mThumbnailParentWidth = thumbnailParentWidth;
+        Log.v("qfq", "thumbnail width=" + mThumbnailParentWidth / 2);
         generateItems();
     }
 

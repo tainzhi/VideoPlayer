@@ -1,10 +1,13 @@
 package com.qfq.muqing.myvideoplayer;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +23,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private CharSequence mTitle;
     private RecyclerView mList;
     private StaggeredAdapter mAdapter;
+    private int mItemMargin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +35,32 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         mList = (RecyclerView)findViewById(R.id.selection_list);
         mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mList.addItemDecoration(new InsetDecoration(mContext));
+        mItemMargin = getResources().getDimensionPixelOffset(R.dimen.item_margin);
+        mList.addItemDecoration(new InsetDecoration(mContext, mItemMargin));
 
         mList.getItemAnimator().setAddDuration(1000);
         mList.getItemAnimator().setChangeDuration(1000);
         mList.getItemAnimator().setMoveDuration(1000);
         mList.getItemAnimator().setRemoveDuration(1000);
 
-        mAdapter = new StaggeredAdapter(mContext);
+        //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
+        mAdapter = new StaggeredAdapter(mContext, getWindowWidth() - 6 * mItemMargin);
         mAdapter.setmOnItemClickListener(this);
         mList.setAdapter(mAdapter);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    private int getWindowWidth() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        return width;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
