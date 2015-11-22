@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         mList.getItemAnimator().setRemoveDuration(1000);
 
         //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
-        mAdapter = new StaggeredAdapter(mContext, getWindowWidth() - 6 * mItemMargin);
+        mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin)/2);
         mAdapter.setmOnItemClickListener(this);
         mList.setAdapter(mAdapter);
     }

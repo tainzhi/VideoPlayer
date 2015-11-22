@@ -6,7 +6,10 @@ package com.qfq.muqing.myvideoplayer.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.support.v4.view.LayoutInflaterFactory;
 import android.support.v7.widget.RecyclerView;
@@ -72,6 +75,13 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         itemHolder.setVideoTitle(item.videoName);
         itemHolder.setVideoDuration(item.videoDuration);
         itemHolder.setVideoProgreee(item.videoProgress);
+
+        Bitmap thumbBitmap = ThumbnailUtils.createVideoThumbnail(item.videoPath, MediaStore.Video.Thumbnails.MICRO_KIND);
+        if (thumbBitmap != null) {
+            Log.v("qfq", "mThumbnailParentWidth=" + mThumbnailParentWidth);
+            Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
+        }
+        itemHolder.setVideoThumbnail(thumbBitmap);
     }
 
     public static class VerticalItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -104,6 +114,14 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             this.videoThumbnail.setImageDrawable(videoThumbnail);
         }
 
+        public ImageView getVideoThumbnail() {
+            return this.videoThumbnail;
+        }
+
+        public void setVideoThumbnail(Bitmap thumbnailBitmap) {
+            this.videoThumbnail.setImageBitmap(thumbnailBitmap);
+        }
+
         public void setVideoTitle(String videoTitle) {
             this.videoTitle.setText(videoTitle);
         }
@@ -119,17 +137,19 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     }
 
     public static class VideoItem {
-        public String videoId;
+        public int videoId;
         public String videoPath;
         public String videoName;
+        public int videoSize;
         public String videoDuration;
         public String videoProgress;
 
-        public VideoItem(String videoId, String videoPath, String videoName, String videoDuration) {
+        public VideoItem(int videoId, String videoPath, String videoName, int videoSize, String videoDuration) {
             this.videoPath = videoPath;
             this.videoId = videoId;
             this.videoName =videoName;
             this.videoDuration = videoDuration;
+            this.videoSize = videoSize;
             this.videoProgress = null;
         }
     }
@@ -147,10 +167,11 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     private void generateItems() {
         String[] videoColumns = {
-            MediaStore.Video.Media._ID,
-            MediaStore.Video.Media.DATA,
-            MediaStore.Video.Media.TITLE,
-            MediaStore.Video.Media.DURATION,
+                MediaStore.Video.Media._ID,
+                MediaStore.Video.Media.DATA,
+                MediaStore.Video.Media.TITLE,
+                MediaStore.Video.Media.SIZE,
+                MediaStore.Video.Media.DURATION,
         };
 
 
@@ -160,11 +181,12 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         cursor.moveToFirst();
         for (int i=0; i<totalCount; i++)
         {
-            String videoId = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
+            int videoId = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
             String videoPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
             String videoDuration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
             String videoTitle = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
-            VideoItem item = new VideoItem(videoId, videoPath, videoTitle, videoDuration);
+            int videoSize = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
+            VideoItem item = new VideoItem(videoId, videoPath, videoTitle, videoSize, videoDuration);
             mItems.add(item);
             cursor.moveToNext();
         }
