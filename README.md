@@ -32,13 +32,21 @@ Thumbnails widht and height is 288*512
 
 options is for decoding MINI_KIND, so it will not be usefull if options.outWidth is not fit for MINI_KIND
 
-####
+####ThumbnailUtils.createVideoThumbnail####
+
+[References](http://www.jianshu.com/p/4aa82a21b4b5)
+
+####MediaMetadataRetriver####
+
+[MediaMetadataRetriver.getFrameAt](http://developer.android.com/intl/zh-cn/reference/android/media/MediaMetadataRetriever.html#getFrameAtTime)
+
+[MediaMetadataRetriver与ThumbnailtUtils.createVideoThumbnail的关系](http://m.blog.csdn.net/blog/Mr_dsw/48524977), 可以查看源码
 
 
 ##Notes
 ##Todo
 - [+] StaggedGridView
-- [ ] thumbnail
+- [ ] thumbnail.scale
 - [ ] 删除动画
 - [ ] ViewStub覆盖住主界面, 没有视频的时候
 - [ ] ActionBar重写

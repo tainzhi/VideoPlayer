@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
@@ -81,7 +82,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             Log.v("qfq", "mThumbnailParentWidth=" + mThumbnailParentWidth);
             Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
         }
-        itemHolder.setVideoThumbnail(thumbBitmap);
+        itemHolder.setVideoThumbnail(scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth));
     }
 
     public static class VerticalItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -191,5 +192,22 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             cursor.moveToNext();
         }
         cursor.close();
+    }
+
+    private Bitmap scaleBitmap(Bitmap originalBitmap, int toWidth, int toHeight) {
+        float scaleWidth = ((float)toWidth) / originalBitmap.getWidth();
+        float scaleHeight = ((float)toHeight) / originalBitmap.getHeight();
+
+        float scale = 0;
+        if (scaleWidth < scaleHeight) {
+            scale = scaleWidth;
+        } else {
+            scale = scaleHeight;
+        }
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        return Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(),
+                originalBitmap.getHeight(), matrix, true);
     }
 }
