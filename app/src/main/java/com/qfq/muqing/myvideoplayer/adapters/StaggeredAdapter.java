@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qfq.muqing.myvideoplayer.R;
@@ -36,10 +37,15 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     private int mThumbnailParentWidth;
 
+    private View mVideoTitleView;
+    private View mVideoSizeView;
+    private View mVideoDurationView;
+    private View mVideoProgressView;
+
     public StaggeredAdapter(Context context, int thumbnailParentWidth) {
         mContext = context;
-        mItems = new ArrayList<VideoItem>();
         mThumbnailParentWidth = thumbnailParentWidth;
+        mItems = new ArrayList<VideoItem>();
         Log.v("qfq", "thumbnail width=" + mThumbnailParentWidth / 2);
         generateItems();
     }
@@ -54,8 +60,17 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     @Override
     public VerticalItemHolder onCreateViewHolder(ViewGroup container, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());
-        View root = layoutInflater.inflate(R.layout.item_staggredview, container, false );
-        return new VerticalItemHolder(root, this);
+        View root = layoutInflater.inflate(R.layout.item_staggredview, container, false);
+        View videoDetailTitleView = (LinearLayout)root.findViewById(R.id.item_video_title);
+        View videoDetailSizeView = (LinearLayout)root.findViewById(R.id.item_video_size);
+        View videoDetailDurationView = (LinearLayout)root.findViewById(R.id.item_video_duration);
+        View videoDetailProgressView = (LinearLayout)root.findViewById(R.id.item_video_progess);
+        return new VerticalItemHolder(root,
+                videoDetailTitleView,
+                videoDetailSizeView,
+                videoDetailDurationView,
+                videoDetailProgressView,
+                this);
     }
 
     @Override
@@ -94,11 +109,15 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
         private StaggeredAdapter mAdapter;
 
-        public VerticalItemHolder(View v, StaggeredAdapter adapter) {
+        public VerticalItemHolder(View v,
+                                  View videoDetailTitleView,
+                                  View videoDetailSizeView,
+                                  View videoDetailDurationView,
+                                  View videoDetailProgressView,
+                                  StaggeredAdapter adapter) {
             super(v);
             v.setOnClickListener(this);
             mAdapter = adapter;
-
             videoThumbnail = (ImageView)v.findViewById(R.id.item_staggredview_thumbnail);
             videoTitle = (TextView)v.findViewById(R.id.item_staggredview_video_title);
             videoDuration = (TextView)v.findViewById(R.id.item_staggredview_video_duration);
