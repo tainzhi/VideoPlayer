@@ -37,10 +37,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     private int mThumbnailParentWidth;
 
-    private View mVideoTitleView;
-    private View mVideoSizeView;
-    private View mVideoDurationView;
-    private View mVideoProgressView;
 
     public StaggeredAdapter(Context context, int thumbnailParentWidth) {
         mContext = context;
@@ -61,16 +57,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     public VerticalItemHolder onCreateViewHolder(ViewGroup container, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());
         View root = layoutInflater.inflate(R.layout.item_staggredview, container, false);
-        View videoDetailTitleView = (LinearLayout)root.findViewById(R.id.item_video_title);
-        View videoDetailSizeView = (LinearLayout)root.findViewById(R.id.item_video_size);
-        View videoDetailDurationView = (LinearLayout)root.findViewById(R.id.item_video_duration);
-        View videoDetailProgressView = (LinearLayout)root.findViewById(R.id.item_video_progess);
-        return new VerticalItemHolder(root,
-                videoDetailTitleView,
-                videoDetailSizeView,
-                videoDetailDurationView,
-                videoDetailProgressView,
-                this);
+        return new VerticalItemHolder(root, this);
     }
 
     @Override
@@ -81,16 +68,19 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     @Override
     public void onBindViewHolder(VerticalItemHolder itemHolder, int position) {
 
-        final View itemView = itemHolder.videoThumbnail;
+        final View thumbnailView = itemHolder.videoThumbnail;
         if (position % 4 == 0) {
-            itemView.setMinimumHeight(300);
+            thumbnailView.setMinimumHeight(300);
         } else {
-            itemView.setMinimumHeight(100);
+            thumbnailView.setMinimumHeight(100);
         }
+
         VideoItem item = mItems.get(position);
+        Log.d("testQFQ", "position=" + position + " videoName=" + item.videoName);
         itemHolder.setVideoTitle(item.videoName);
+        itemHolder.setVideoSize(item.videoSize + "");
         itemHolder.setVideoDuration(item.videoDuration);
-        itemHolder.setVideoProgreee(item.videoProgress);
+        itemHolder.setVideoProgress(item.videoProgress);
 
         Bitmap thumbBitmap = ThumbnailUtils.createVideoThumbnail(item.videoPath, MediaStore.Video.Thumbnails.MICRO_KIND);
         if (thumbBitmap != null) {
@@ -102,26 +92,25 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     public static class VerticalItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private LinearLayout videoTitleLayout;
+        private LinearLayout videoSizeLayout;
+        private LinearLayout videoDurationLayout;
+        private LinearLayout videoProgressLayout;
         private ImageView videoThumbnail;
-        private TextView videoTitle;
-        private TextView videoDuration;
-        private TextView videoProgreee;
 
         private StaggeredAdapter mAdapter;
 
         public VerticalItemHolder(View v,
-                                  View videoDetailTitleView,
-                                  View videoDetailSizeView,
-                                  View videoDetailDurationView,
-                                  View videoDetailProgressView,
                                   StaggeredAdapter adapter) {
             super(v);
             v.setOnClickListener(this);
             mAdapter = adapter;
             videoThumbnail = (ImageView)v.findViewById(R.id.item_staggredview_thumbnail);
-            videoTitle = (TextView)v.findViewById(R.id.item_staggredview_video_title);
-            videoDuration = (TextView)v.findViewById(R.id.item_staggredview_video_duration);
-            videoProgreee = (TextView)v.findViewById(R.id.item_staggredview_video_progress);
+            videoTitleLayout = (LinearLayout)v.findViewById(R.id.item_video_title);
+            videoSizeLayout = (LinearLayout)v.findViewById(R.id.item_video_size);
+            videoDurationLayout = (LinearLayout)v.findViewById(R.id.item_video_duration);
+            videoProgressLayout = (LinearLayout)v.findViewById(R.id.item_video_progess);
+
         }
 
         @Override
@@ -143,17 +132,32 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         }
 
         public void setVideoTitle(String videoTitle) {
-            this.videoTitle.setText(videoTitle);
+            TextView videoItemName = (TextView)this.videoTitleLayout.findViewById(R.id.video_item_name);
+            TextView videoItemDeatail = (TextView)this.videoTitleLayout.findViewById(R.id.video_item_detail);
+            videoItemName.setText(R.string.video_title_name);
+            videoItemDeatail.setText(videoTitle);
+        }
+
+        public void setVideoSize(String videoSize) {
+            TextView videoItemName = (TextView)this.videoSizeLayout.findViewById(R.id.video_item_name);
+            TextView videoItemDeatail = (TextView)this.videoSizeLayout.findViewById(R.id.video_item_detail);
+            videoItemName.setText(R.string.video_size_name);
+            videoItemDeatail.setText(videoSize);
         }
 
         public void setVideoDuration(String videoDuration) {
-            this.videoDuration.setText(videoDuration);
+            TextView videoItemName = (TextView)this.videoDurationLayout.findViewById(R.id.video_item_name);
+            TextView videoItemDeatail = (TextView)this.videoDurationLayout.findViewById(R.id.video_item_detail);
+            videoItemName.setText(R.string.video_duration_name);
+            videoItemDeatail.setText(videoDuration);
         }
 
-        public void setVideoProgreee(String videoProgreee) {
-            this.videoProgreee.setText(videoProgreee);
+        public void setVideoProgress(String videoProgress) {
+            TextView videoItemName = (TextView)this.videoProgressLayout.findViewById(R.id.video_item_name);
+            TextView videoItemDeatail = (TextView)this.videoProgressLayout.findViewById(R.id.video_item_detail);
+            videoItemName.setText(R.string.video_progress_name);
+            videoItemDeatail.setText(videoProgress);
         }
-
     }
 
     public static class VideoItem {

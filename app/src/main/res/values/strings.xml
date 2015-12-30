@@ -5,5 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="video_title_name">Title</string>
+    <string name="video_size_name">Size</string>
+    <string name="video_duration_name">Duration</string>
+    <string name="video_progress_name">Progress</string>
 
 </resources>

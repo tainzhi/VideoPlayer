@@ -14,21 +14,4 @@
     <include android:id="@+id/item_video_duration" layout="@layout/item_staggredview_detail"/>
     <include android:id="@+id/item_video_progess" layout="@layout/item_staggredview_detail"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/item_staggredview_video_title" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/item_staggredview_video_duration" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/item_staggredview_video_progress" />
 </LinearLayout>
