@@ -178,7 +178,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         }
     }
 
-    public void setmOnItemClickListener(AdapterView.OnItemClickListener listener) {
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
 

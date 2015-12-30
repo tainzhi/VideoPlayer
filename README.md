@@ -47,7 +47,7 @@ options is for decoding MINI_KIND, so it will not be usefull if options.outWidth
 ##Todo
 - [+] StaggedGridView
 - [+] thumbnail.scale
-- [ ] Item display
+- [+] Item display
 - [ ] 删除动画
 - [ ] How to scrool the list smoothly?
 - [ ] ViewStub覆盖住主界面, 没有视频的时候

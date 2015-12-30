@@ -11,12 +11,13 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.qfq.muqing.myvideoplayer.adapters.StaggeredAdapter;
 
-public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends ActionBarActivity implements AbsListView.OnItemClickListener, AbsListView.OnItemLongClickListener {
 
     private static String TAG = "qfq" + "VideoPlayer/MainActivity";
     private Context mContext;
@@ -45,7 +46,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
         mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin)/2);
-        mAdapter.setmOnItemClickListener(this);
+        mList.setOnItemClickListener(this);
+        mList.setOnLongClickListener(this);
         mList.setAdapter(mAdapter);
     }
 
@@ -87,6 +89,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this, "To be delete", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClickListener(AdapterView<?> parent, View view, int position, long id) {
+        void onItemLongClickListener()
     }
 
 }
