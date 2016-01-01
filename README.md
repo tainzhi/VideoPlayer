@@ -2,14 +2,15 @@
 - MainActivity: 重写了adapter，并读取数据库，写入视频信息到列表
 - PlayVideo: 简单的实现了播放界面
 
-##参考学习
+##Notes
+###参考学习
 - [recyclereview-playround](https://github.com/devunwired/recyclerview-playground) StaggeredGridView用法实例的github项目
 - [提供RecycleView封装的api](http://lucasr.org/2014/07/31/the-new-twowayview/)
 - [android官方文档 StaggeredGridLayoutManager](http://developer.android.com/reference/android/support/v7/widget/StaggeredGridLayoutManager.html#)
 
-##How to getThumbnail of a Video
+###How to getThumbnail of a Video
 
-#### MediaStore.Video.Thumbnails.getThhumbnail( , , MediaStore.Video.Thumbnails.MICRO_KIND,)
+##### MediaStore.Video.Thumbnails.getThhumbnail( , , MediaStore.Video.Thumbnails.MICRO_KIND,)
 ```
 Bitmap thumbBitmap = MediaStore.Video.Thumbnails.getThumbnail(mContext.getContentResolver(),
             item.videoId,
@@ -18,7 +19,7 @@ Bitmap thumbBitmap = MediaStore.Video.Thumbnails.getThumbnail(mContext.getConten
 ```
 Thumbnails widht and height is 96*96
 
-#### MediaStore.Video.Thumbnails.getThhumbnail( , , MediaStore.Video.Thumbnails.MINI_KIND,)
+##### MediaStore.Video.Thumbnails.getThhumbnail( , , MediaStore.Video.Thumbnails.MINI_KIND,)
 ```
 BitmapFactory.Options options = new BitmapFactory.Options();
         options.outHeight = mThumbnailParentWidth;
@@ -32,18 +33,23 @@ Thumbnails widht and height is 288*512
 
 options is for decoding MINI_KIND, so it will not be usefull if options.outWidth is not fit for MINI_KIND
 
-####ThumbnailUtils.createVideoThumbnail####
+#####ThumbnailUtils.createVideoThumbnail####
 
 [References](http://www.jianshu.com/p/4aa82a21b4b5)
 
-####MediaMetadataRetriver####
+#####MediaMetadataRetriver####
 
 [MediaMetadataRetriver.getFrameAt](http://developer.android.com/intl/zh-cn/reference/android/media/MediaMetadataRetriever.html#getFrameAtTime)
 
 [MediaMetadataRetriver与ThumbnailtUtils.createVideoThumbnail的关系](http://m.blog.csdn.net/blog/Mr_dsw/48524977), 可以查看源码
 
+###RecyclerView don't has onItemClickListener
+RecyclerView don't has onItemClickLister&& onItemLongClickListern, so you have to implement them.
+[参考](http://stackoverflow.com/questions/24471109/recyclerview-onclick/26826692#26826692)
 
-##Notes
+###SurfaceView&&VideoView
+VideoView extends SurfaceView
+
 ##Todo
 - [+] StaggedGridView
 - [+] thumbnail.scale

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.qfq.muqing.myvideoplayer.adapters.StaggeredAdapter;
 
-public class MainActivity extends ActionBarActivity implements AbsListView.OnItemClickListener, AbsListView.OnItemLongClickListener {
+public class MainActivity extends ActionBarActivity  {
 
     private static String TAG = "qfq" + "VideoPlayer/MainActivity";
     private Context mContext;
@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity implements AbsListView.OnIte
     private StaggeredAdapter mAdapter;
     private int mItemMargin;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -46,8 +46,8 @@ public class MainActivity extends ActionBarActivity implements AbsListView.OnIte
 
         //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
         mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin)/2);
-        mList.setOnItemClickListener(this);
-        mList.setOnLongClickListener(this);
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
+        mAdapter.setOnItemLongClickListener(mOnItemLongClickListener);
         mList.setAdapter(mAdapter);
     }
 
@@ -86,14 +86,19 @@ public class MainActivity extends ActionBarActivity implements AbsListView.OnIte
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "To be delete", Toast.LENGTH_SHORT).show();
-    }
+    private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
+        }
 
-    @Override
-    public void onItemLongClickListener(AdapterView<?> parent, View view, int position, long id) {
-        void onItemLongClickListener()
-    }
+    };
 
+    private AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(mContext, "onItemLongClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    };
 }

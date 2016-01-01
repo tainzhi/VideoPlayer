@@ -32,6 +32,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     private ArrayList<VideoItem> mItems;
 
     private AdapterView.OnItemClickListener mOnItemClickListener;
+    private AdapterView.OnItemLongClickListener mOnItemLongClickListener;
 
     private Context mContext;
 
@@ -90,7 +91,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         itemHolder.setVideoThumbnail(scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth));
     }
 
-    public static class VerticalItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class VerticalItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private LinearLayout videoTitleLayout;
         private LinearLayout videoSizeLayout;
@@ -104,6 +105,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
                                   StaggeredAdapter adapter) {
             super(v);
             v.setOnClickListener(this);
+            v.setOnLongClickListener(this);
             mAdapter = adapter;
             videoThumbnail = (ImageView)v.findViewById(R.id.item_staggredview_thumbnail);
             videoTitleLayout = (LinearLayout)v.findViewById(R.id.item_video_title);
@@ -116,6 +118,12 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         @Override
         public void onClick(View v) {
             mAdapter.onItemHolderClick(this);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            mAdapter.onItemHolderLongClick(this);
+            return false;
         }
 
 
@@ -178,15 +186,27 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         }
     }
 
+
+    private void onItemHolderClick(VerticalItemHolder itemHolder) {
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(null, itemHolder.itemView,
+                    itemHolder.getAdapterPosition(), mItems.get(itemHolder.getAdapterPosition()).videoId);
+        }
+    }
+
     public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
 
-    private void onItemHolderClick(VerticalItemHolder itemHoler) {
-        if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(null, itemHoler.itemView,
-                    itemHoler.getAdapterPosition(), itemHoler.getItemId());
+    private void onItemHolderLongClick(VerticalItemHolder itemHolder) {
+        if (mOnItemLongClickListener != null) {
+            mOnItemLongClickListener.onItemLongClick(null, itemHolder.itemView,
+                    itemHolder.getAdapterPosition(), mItems.get(itemHolder.getAdapterPosition()).videoId);
         }
+    }
+
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
+        mOnItemLongClickListener = listener;
     }
 
     private void generateItems() {
