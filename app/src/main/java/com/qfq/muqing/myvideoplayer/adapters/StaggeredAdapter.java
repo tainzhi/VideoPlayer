@@ -96,12 +96,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         itemHolder.setVideoDuration(item.videoDuration);
         itemHolder.setVideoProgress(item.videoProgress);
 
-//        Bitmap thumbBitmap = ThumbnailUtils.createVideoThumbnail(item.videoPath, MediaStore.Video.Thumbnails.MICRO_KIND);
-//        if (thumbBitmap != null) {
-//            Log.v("qfq", "mThumbnailParentWidth=" + mThumbnailParentWidth);
-//            Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
-//        }
-//        itemHolder.setVideoThumbnail(scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth));
         loadThumbnailBitmap(item.videoId,
                 item.videoDuration,
                 item.videoProgress,
@@ -259,15 +253,15 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         float scaleWidth = ((float)toWidth) / originalBitmap.getWidth();
         float scaleHeight = ((float)toHeight) / originalBitmap.getHeight();
 
-        float scale = 0;
-        if (scaleWidth < scaleHeight) {
-            scale = scaleWidth;
-        } else {
-            scale = scaleHeight;
-        }
+//        float scale = 0;
+//        if (scaleWidth < scaleHeight) {
+//            scale = scaleWidth;
+//        } else {
+//            scale = scaleHeight;
+//        }
 
         Matrix matrix = new Matrix();
-        matrix.postScale(scale, scale);
+        matrix.postScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(),
                 originalBitmap.getHeight(), matrix, true);
     }
@@ -325,6 +319,10 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         @Override
         protected Bitmap doInBackground(Integer... params) {
             Bitmap bitmap = null;
+            File thumbnailParent = new File(mContext.getExternalCacheDir(), "/list_thumbnail");
+            if (!thumbnailParent.exists()) {
+                thumbnailParent.mkdir();
+            }
             String videoThumbnailPathName = mContext.getExternalCacheDir() + "/list_thumbnail/" + videoId + "_" + videoProgress;
             File file = new File(videoThumbnailPathName);
             if (file.exists()) {
