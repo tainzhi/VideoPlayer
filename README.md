@@ -59,12 +59,16 @@ http://developer.android.com/reference/android/widget/VideoView.html#getAudioSes
 http://developer.android.com/reference/android/widget/VideoView.html#getAudioSessionId()
 http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 
+###获取更清晰额缩略图并缓存在cache中
+- 使用MediaMetadataRetriever.getFrameAtTime()获取缩略图, 如果获取失败是MediaStore.Video.Thumbnails.getThumbnail()获取
+- 获取的缩略图缓存在externalCacheDir()中, 通过id和progres命名
+
 ##Todo
 - [+] StaggedGridView
 - [+] thumbnail.scale
 - [+] Item display
 - [+] AsyncTask加载缩略图, scroom the list smoothly
-- [ ] 优化1: 把获取的缩略图存储起来
+- [+] 优化1: 把获取的缩略图存储起来
 - [ ] 删除动画
 - [ ] ViewStub覆盖住主界面, 没有视频的时候
 - [ ] ActionBar重写

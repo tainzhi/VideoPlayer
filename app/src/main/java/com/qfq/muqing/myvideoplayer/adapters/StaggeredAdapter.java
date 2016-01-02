@@ -4,6 +4,7 @@ package com.qfq.muqing.myvideoplayer.adapters;
  * Created by Administrator on 2015/11/15.
  */
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -12,7 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.ThumbnailUtils;
+import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
@@ -27,11 +28,15 @@ import android.widget.TextView;
 
 import com.qfq.muqing.myvideoplayer.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.VerticalItemHolder> {
 
+    private final static String TAG = "VideoPlayer/StaggeredAdapter";
     private ArrayList<VideoItem> mItems;
 
     private AdapterView.OnItemClickListener mOnItemClickListener;
@@ -97,7 +102,11 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 //            Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
 //        }
 //        itemHolder.setVideoThumbnail(scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth));
-        loadThumbnailBitmap(item.videoId, item.videoPath, itemHolder.getVideoThumbnail());
+        loadThumbnailBitmap(item.videoId,
+                item.videoDuration,
+                item.videoProgress,
+                item.videoPath,
+                itemHolder.getVideoThumbnail());
     }
 
     public static class VerticalItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -162,18 +171,18 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             videoItemDeatail.setText(videoSize);
         }
 
-        public void setVideoDuration(String videoDuration) {
+        public void setVideoDuration(long videoDuration) {
             TextView videoItemName = (TextView)this.videoDurationLayout.findViewById(R.id.video_item_name);
             TextView videoItemDeatail = (TextView)this.videoDurationLayout.findViewById(R.id.video_item_detail);
             videoItemName.setText(R.string.video_duration_name);
-            videoItemDeatail.setText(videoDuration);
+            videoItemDeatail.setText(Long.toString(videoDuration));
         }
 
-        public void setVideoProgress(String videoProgress) {
+        public void setVideoProgress(long videoProgress) {
             TextView videoItemName = (TextView)this.videoProgressLayout.findViewById(R.id.video_item_name);
             TextView videoItemDeatail = (TextView)this.videoProgressLayout.findViewById(R.id.video_item_detail);
             videoItemName.setText(R.string.video_progress_name);
-            videoItemDeatail.setText(videoProgress);
+            videoItemDeatail.setText(Long.toString(videoProgress));
         }
     }
 
@@ -182,16 +191,16 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         public String videoPath;
         public String videoName;
         public int videoSize;
-        public String videoDuration;
-        public String videoProgress;
+        public long videoDuration;
+        public long videoProgress;
 
-        public VideoItem(int videoId, String videoPath, String videoName, int videoSize, String videoDuration) {
+        public VideoItem(int videoId, String videoPath, String videoName, int videoSize, long videoDuration) {
             this.videoPath = videoPath;
             this.videoId = videoId;
             this.videoName =videoName;
             this.videoDuration = videoDuration;
             this.videoSize = videoSize;
-            this.videoProgress = null;
+            this.videoProgress = 0;
         }
     }
 
@@ -236,7 +245,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         {
             int videoId = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
             String videoPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
-            String videoDuration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+            long videoDuration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
             String videoTitle = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
             int videoSize = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
             VideoItem item = new VideoItem(videoId, videoPath, videoTitle, videoSize, videoDuration);
@@ -263,9 +272,9 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
                 originalBitmap.getHeight(), matrix, true);
     }
 
-    private void loadThumbnailBitmap(int videoId, String videoPath, ImageView thumbnailView) {
+    private void loadThumbnailBitmap(int videoId, long videoDuration, long videoProgress, String videoPath, ImageView thumbnailView) {
         if (cancelPotionalWork(videoId, thumbnailView)) {
-            final ThumbnailBitmapWorkTask task  = new ThumbnailBitmapWorkTask(videoId, videoPath, thumbnailView);
+            final ThumbnailBitmapWorkTask task  = new ThumbnailBitmapWorkTask(videoId, videoDuration, videoProgress, videoPath, thumbnailView);
             final AsyncDrawable asyncDrawable  = new AsyncDrawable(mContext.getResources(),
                     mDefaultThumbnailBitmap, task);
             thumbnailView.setImageDrawable(asyncDrawable);
@@ -301,23 +310,30 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     class ThumbnailBitmapWorkTask extends AsyncTask<Integer, Void, Bitmap> {
         private final WeakReference<ImageView> imageViewWeakReference;
         private int videoId;
+        private long videoDuration;
+        private long videoProgress;
         private String videoPath;
 
-        public ThumbnailBitmapWorkTask(int videoId, String videoPath, ImageView imageView) {
+        public ThumbnailBitmapWorkTask(int videoId, long videoDuration, long videoProgress, String videoPath, ImageView imageView) {
             imageViewWeakReference = new WeakReference<ImageView>(imageView);
             this.videoId = videoId;
+            this.videoDuration = videoDuration;
+            this.videoProgress = videoDuration / 2;
             this.videoPath = videoPath;
         }
 
         @Override
         protected Bitmap doInBackground(Integer... params) {
-            int id = params[0].intValue();
-            Bitmap thumbBitmap = ThumbnailUtils.createVideoThumbnail(videoPath, MediaStore.Video.Thumbnails.MICRO_KIND);
-            if (thumbBitmap != null) {
-                Log.v("qfq", "mThumbnailParentWidth=" + mThumbnailParentWidth);
-                Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
+            Bitmap bitmap = null;
+            String videoThumbnailPathName = mContext.getExternalCacheDir() + "/list_thumbnail/" + videoId + "_" + videoProgress;
+            File file = new File(videoThumbnailPathName);
+            if (file.exists()) {
+                bitmap = BitmapFactory.decodeFile(videoThumbnailPathName);
+            } else {
+                bitmap = createVideoThumbnail(videoId, videoProgress);
+                saveVideoThumbnail(bitmap, videoThumbnailPathName);
             }
-            return scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth);
+            return bitmap;
         }
 
         @Override
@@ -327,6 +343,45 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
                 if (imageView != null) {
                     imageView.setImageBitmap(bitmap);
                 }
+            }
+        }
+
+        private Bitmap createVideoThumbnail(int videoId, long videoProgress) {
+            MediaMetadataRetriever mediaMetadataRetriever = null;
+            Bitmap srcBitmap = null;
+            try {
+                mediaMetadataRetriever = new MediaMetadataRetriever();
+                mediaMetadataRetriever.setDataSource(mContext,
+                        ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoId));
+                srcBitmap = mediaMetadataRetriever.getFrameAtTime(videoProgress*1000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+            } catch (Exception e) {
+                Log.e(TAG, "counldn't get frame of " + videoPath);
+            } finally {
+                if (mediaMetadataRetriever != null) {
+                    mediaMetadataRetriever.release();
+                }
+            }
+            if (srcBitmap == null) {
+                srcBitmap = MediaStore.Video.Thumbnails.getThumbnail(mContext.getContentResolver(), videoId,
+                        MediaStore.Video.Thumbnails.MINI_KIND, null);
+                if (srcBitmap == null) {
+                    srcBitmap = MediaStore.Video.Thumbnails.getThumbnail(mContext.getContentResolver(), videoId,
+                            MediaStore.Video.Thumbnails.MICRO_KIND, null);
+                }
+            }
+            return scaleBitmap(srcBitmap, mThumbnailParentWidth, mThumbnailParentWidth);
+        }
+
+        private void saveVideoThumbnail(Bitmap bitmap, String thumbnailPath) {
+            Log.v(TAG, "saveVideoThumbnail(), thumbnailPath=" + thumbnailPath);
+            try {
+                File thumbnailFile = new File(thumbnailPath);
+                FileOutputStream fileOutputStream = new FileOutputStream(thumbnailFile);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                fileOutputStream.flush();
+                fileOutputStream.close();
+            } catch (IOException e) {
+                Log.e(TAG, "IOException");
             }
         }
 
