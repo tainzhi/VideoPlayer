@@ -47,6 +47,11 @@ options is for decoding MINI_KIND, so it will not be usefull if options.outWidth
 RecyclerView don't has onItemClickLister&& onItemLongClickListern, so you have to implement them.
 [参考](http://stackoverflow.com/questions/24471109/recyclerview-onclick/26826692#26826692)
 
+###AsyncTask加载列表缩略图
+http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/process-bitmap.html
+http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/process-bitmap.html
+http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/display-bitmap.html
+
 ###SurfaceView&&VideoView
 VideoView extends SurfaceView
 http://developer.android.com/reference/android/view/SurfaceView.html
@@ -58,8 +63,9 @@ http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfa
 - [+] StaggedGridView
 - [+] thumbnail.scale
 - [+] Item display
+- [+] AsyncTask加载缩略图, scroom the list smoothly
+- [ ] 优化1: 把获取的缩略图存储起来
 - [ ] 删除动画
-- [ ] How to scrool the list smoothly?
 - [ ] ViewStub覆盖住主界面, 没有视频的时候
 - [ ] ActionBar重写
 - [ ] ActionBar图标
@@ -73,7 +79,6 @@ http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfa
 - [ ] SearchView的实现
 - [ ] CheckBox的实现
 - [ ] 类似搜狐视频一样的截屏进度条
-- [ ] 各种界面, 性能优化
 
 ##图片介绍
 ![MainActivity](./listview.png)
