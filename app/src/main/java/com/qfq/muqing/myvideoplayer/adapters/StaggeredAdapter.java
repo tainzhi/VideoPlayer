@@ -5,14 +5,16 @@ package com.qfq.muqing.myvideoplayer.adapters;
  */
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.support.v4.view.LayoutInflaterFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 
 import com.qfq.muqing.myvideoplayer.R;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.VerticalItemHolder> {
@@ -37,12 +40,17 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     private Context mContext;
 
     private int mThumbnailParentWidth;
+    private Bitmap mDefaultThumbnailBitmap;
 
 
     public StaggeredAdapter(Context context, int thumbnailParentWidth) {
         mContext = context;
         mThumbnailParentWidth = thumbnailParentWidth;
         mItems = new ArrayList<VideoItem>();
+        mDefaultThumbnailBitmap = scaleBitmap(
+                BitmapFactory.decodeResource(mContext.getResources(), R.drawable.thumbnail_default),
+                mThumbnailParentWidth,
+                mThumbnailParentWidth);
         Log.v("qfq", "thumbnail width=" + mThumbnailParentWidth / 2);
         generateItems();
     }
@@ -83,12 +91,13 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         itemHolder.setVideoDuration(item.videoDuration);
         itemHolder.setVideoProgress(item.videoProgress);
 
-        Bitmap thumbBitmap = ThumbnailUtils.createVideoThumbnail(item.videoPath, MediaStore.Video.Thumbnails.MICRO_KIND);
-        if (thumbBitmap != null) {
-            Log.v("qfq", "mThumbnailParentWidth=" + mThumbnailParentWidth);
-            Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
-        }
-        itemHolder.setVideoThumbnail(scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth));
+//        Bitmap thumbBitmap = ThumbnailUtils.createVideoThumbnail(item.videoPath, MediaStore.Video.Thumbnails.MICRO_KIND);
+//        if (thumbBitmap != null) {
+//            Log.v("qfq", "mThumbnailParentWidth=" + mThumbnailParentWidth);
+//            Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
+//        }
+//        itemHolder.setVideoThumbnail(scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth));
+        loadThumbnailBitmap(item.videoId, item.videoPath, itemHolder.getVideoThumbnail());
     }
 
     public static class VerticalItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -252,5 +261,88 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         matrix.postScale(scale, scale);
         return Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(),
                 originalBitmap.getHeight(), matrix, true);
+    }
+
+    private void loadThumbnailBitmap(int videoId, String videoPath, ImageView thumbnailView) {
+        if (cancelPotionalWork(videoId, thumbnailView)) {
+            final ThumbnailBitmapWorkTask task  = new ThumbnailBitmapWorkTask(videoId, videoPath, thumbnailView);
+            final AsyncDrawable asyncDrawable  = new AsyncDrawable(mContext.getResources(),
+                    mDefaultThumbnailBitmap, task);
+            thumbnailView.setImageDrawable(asyncDrawable);
+            task.execute(videoId);
+        }
+    }
+
+    private static boolean cancelPotionalWork(int videoId, ImageView imageView) {
+        final ThumbnailBitmapWorkTask thumbnailBitmapWorkTask = getThumbnailBitmapWorkTask(imageView);
+
+        if (thumbnailBitmapWorkTask != null) {
+            final int thumnailVideoId = thumbnailBitmapWorkTask.videoId;
+            if (videoId != thumnailVideoId) {
+                thumbnailBitmapWorkTask.cancel(true);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static ThumbnailBitmapWorkTask getThumbnailBitmapWorkTask(ImageView imageView) {
+        if (imageView != null) {
+            final Drawable drawable = imageView.getDrawable();
+            if (drawable instanceof AsyncDrawable) {
+                final AsyncDrawable asyncDrawable = (AsyncDrawable)drawable;
+                return asyncDrawable.getThumbnailBitmapWorkTask();
+            }
+        }
+        return null;
+    }
+
+    class ThumbnailBitmapWorkTask extends AsyncTask<Integer, Void, Bitmap> {
+        private final WeakReference<ImageView> imageViewWeakReference;
+        private int videoId;
+        private String videoPath;
+
+        public ThumbnailBitmapWorkTask(int videoId, String videoPath, ImageView imageView) {
+            imageViewWeakReference = new WeakReference<ImageView>(imageView);
+            this.videoId = videoId;
+            this.videoPath = videoPath;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Integer... params) {
+            int id = params[0].intValue();
+            Bitmap thumbBitmap = ThumbnailUtils.createVideoThumbnail(videoPath, MediaStore.Video.Thumbnails.MICRO_KIND);
+            if (thumbBitmap != null) {
+                Log.v("qfq", "mThumbnailParentWidth=" + mThumbnailParentWidth);
+                Log.v("qfq", "thumbnail is not null, width=" + thumbBitmap.getWidth() + ", heigth=" + thumbBitmap.getHeight());
+            }
+            return scaleBitmap(thumbBitmap, mThumbnailParentWidth, mThumbnailParentWidth);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (imageViewWeakReference != null && bitmap != null) {
+                final  ImageView imageView = imageViewWeakReference.get();
+                if (imageView != null) {
+                    imageView.setImageBitmap(bitmap);
+                }
+            }
+        }
+
+    }
+
+    static class AsyncDrawable extends BitmapDrawable {
+        private final WeakReference<ThumbnailBitmapWorkTask> thumbnailBitmapWorkTaskWeakReference;
+
+        public AsyncDrawable(Resources res, Bitmap bitmap,
+                             ThumbnailBitmapWorkTask thumbnailBitmapWorkTask) {
+            super(res, bitmap);
+            thumbnailBitmapWorkTaskWeakReference = new WeakReference<ThumbnailBitmapWorkTask>(thumbnailBitmapWorkTask);
+        }
+
+        public ThumbnailBitmapWorkTask getThumbnailBitmapWorkTask() {
+            return thumbnailBitmapWorkTaskWeakReference.get();
+        }
     }
 }
