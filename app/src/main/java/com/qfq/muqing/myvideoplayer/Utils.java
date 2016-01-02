@@ -18,4 +18,7 @@ public class Utils {
         Log.v("qfq", "px=" + px + "dp = " + dp + "density=" + metrics.densityDpi);
         return px;
     }
+
+    public static String THUMBNAIL_CACHE_PATH = "list_thumbnail";
+    public static String FILENAME_SEPERATOR = "_";
 }

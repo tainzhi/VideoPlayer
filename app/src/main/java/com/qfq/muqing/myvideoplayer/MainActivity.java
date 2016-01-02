@@ -31,8 +31,11 @@ public class MainActivity extends ActionBarActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mTitle = getTitle();
         mContext = getApplicationContext();
+
+        Log.d(TAG, "external cache dir=" + mContext.getExternalCacheDir().getAbsolutePath());
 
         mList = (RecyclerView)findViewById(R.id.selection_list);
         mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));

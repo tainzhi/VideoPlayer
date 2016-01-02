@@ -49,6 +49,10 @@ RecyclerView don't has onItemClickLister&& onItemLongClickListern, so you have t
 
 ###SurfaceView&&VideoView
 VideoView extends SurfaceView
+http://developer.android.com/reference/android/view/SurfaceView.html
+http://developer.android.com/reference/android/widget/VideoView.html#getAudioSessionId()
+http://developer.android.com/reference/android/widget/VideoView.html#getAudioSessionId()
+http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 
 ##Todo
 - [+] StaggedGridView
