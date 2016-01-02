@@ -70,6 +70,8 @@ http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfa
 - [ ] 最后播放的视频特殊化
 - [ ] 缩略图使用最后退出时一帧的图片, AsyncTask实现
 - [ ] 悬浮播放窗
+- [ ] SearchView的实现
+- [ ] CheckBox的实现
 - [ ] 类似搜狐视频一样的截屏进度条
 - [ ] 各种界面, 性能优化
 
