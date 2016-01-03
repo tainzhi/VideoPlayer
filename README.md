@@ -1,4 +1,5 @@
-#MyVideoPlayer ##Introduction has only two activity, one is to show the list, then ohter is show the playing video.
+#MyVideoPlayer
+##Introduction has only two activity, one is to show the list, then ohter is show the playing video.
 - MainActivity: 重写了adapter，并读取数据库，写入视频信息到列表
 - PlayVideo: 简单的实现了播放界面
 
@@ -60,11 +61,16 @@ http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/display-bitm
 两个播放窗口, 但是没有播放声音
 [参考](https://github.com/google/grafika/blob/master/src/com/android/grafika/DoubleDecodeActivity.java)
 
+###MediaPlayer
+http://developer.android.com/intl/zh-cn/reference/android/media/MediaPlayer.html
+http://developer.android.com/intl/zh-cn/guide/topics/media/mediaplayer.html
+
 ###SurfaceView&&VideoView
 VideoView extends SurfaceView
+
 http://developer.android.com/reference/android/view/SurfaceView.html
 http://developer.android.com/reference/android/widget/VideoView.html#getAudioSessionId()
-http://developer.android.com/reference/android/widget/VideoView.html#getAudioSessionId()
+http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 
 ###GalleryView
@@ -84,7 +90,7 @@ https://github.com/sourcey/imagegallerydemo
 - [ ] ActionBar重写
 - [ ] ActionBar图标
 - [ ] App图标
-- [ ] 播放界面
+- [+] 播放界面, with SurfaceView
 - [ ] 播放界面的操作: 快进, 快退, 播放
 - [ ] 响应Touch事件
 - [ ] 最后播放的视频特殊化

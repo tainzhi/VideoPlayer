@@ -19,8 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayVideoActivity" />
-        <activity android:name=".DoubleVideoPlayerActivity"/>
+        <activity android:name=".SingleVideoPlayerActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".DoubleVideoPlayerActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
