@@ -28,8 +28,8 @@ import com.qfq.muqing.myvideoplayer.DoubleDecode.SpeedControlCallback;
  * <p>
  * TODO: consider shutting down when the screen is turned off, to preserve battery.
  */
-public class DoubleMoviePlayerActivity extends Activity {
-    private static final String TAG = "VideoPlayer/DoubleMoviePlayer";
+public class DoubleVideoPlayerActivity extends Activity {
+    private static final String TAG = "VideoPlayer/DoubleVideoPlayerActivity";
 
     private static final int VIDEO_COUNT = 2;
 

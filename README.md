@@ -56,6 +56,10 @@ http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/display-bitm
 - 使用MediaMetadataRetriever.getFrameAtTime()获取缩略图, 如果获取失败是MediaStore.Video.Thumbnails.getThumbnail()获取
 - 获取的缩略图缓存在externalCacheDir()中, 通过id和progres命名
 
+###DoubleMovieActivity
+两个播放窗口, 但是没有播放声音
+[参考](https://github.com/google/grafika/blob/master/src/com/android/grafika/DoubleDecodeActivity.java)
+
 ###SurfaceView&&VideoView
 VideoView extends SurfaceView
 http://developer.android.com/reference/android/view/SurfaceView.html
@@ -74,6 +78,7 @@ https://github.com/sourcey/imagegallerydemo
 - [+] Item display
 - [+] AsyncTask加载缩略图, scroom the list smoothly
 - [+] 优化1: 把获取的缩略图存储起来
+- [+] DoubleViewActivity
 - [ ] 删除动画
 - [ ] ViewStub覆盖住主界面, 没有视频的时候
 - [ ] ActionBar重写
@@ -87,6 +92,7 @@ https://github.com/sourcey/imagegallerydemo
 - [ ] 悬浮播放窗
 - [ ] SearchView的实现
 - [ ] CheckBox的实现
+- [ ] DoubleViewActivity优化: 添加声音, 控制
 - [ ] 类似搜狐视频一样的截屏进度条
 
 ##图片介绍

@@ -7,12 +7,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -93,7 +91,7 @@ public class MainActivity extends ActionBarActivity  {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
             String filePath = mAdapter.getVideoItemAtPosition(position).videoPath;
-            Intent startIntent = new Intent(MainActivity.this, DoubleMoviePlayerActivity.class);
+            Intent startIntent = new Intent(MainActivity.this, DoubleVideoPlayerActivity.class);
             startIntent.putExtra("file", filePath);
             startActivity(startIntent);
         }
