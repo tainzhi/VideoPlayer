@@ -139,7 +139,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         @Override
         public boolean onLongClick(View v) {
             mAdapter.onItemHolderLongClick(this);
-            return false;
+            return true;
         }
 
 

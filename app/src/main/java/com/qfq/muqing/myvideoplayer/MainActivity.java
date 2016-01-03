@@ -1,10 +1,13 @@
 package com.qfq.muqing.myvideoplayer;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
-import android.support.v7.app.ActionBarActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Display;
@@ -90,10 +93,10 @@ public class MainActivity extends ActionBarActivity  {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
-            String filePath = mAdapter.getVideoItemAtPosition(position).videoPath;
-            Intent startIntent = new Intent(MainActivity.this, DoubleVideoPlayerActivity.class);
-            startIntent.putExtra("file", filePath);
-            startActivity(startIntent);
+            Uri videoUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
+            Intent intent = new Intent(MainActivity.this, SingleVideoPlayerActivity.class);
+            intent.setData(videoUri);
+            startActivity(intent);
         }
 
     };
@@ -102,6 +105,10 @@ public class MainActivity extends ActionBarActivity  {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             Toast.makeText(mContext, "onItemLongClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
+            String filePath = mAdapter.getVideoItemAtPosition(position).videoPath;
+            Intent startIntent = new Intent(MainActivity.this, DoubleVideoPlayerActivity.class);
+            startIntent.putExtra("file", filePath);
+            startActivity(startIntent);
             return true;
         }
     };
