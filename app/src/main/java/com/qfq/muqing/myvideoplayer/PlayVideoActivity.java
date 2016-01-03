@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 
-public class PlayVideo extends Activity {
+public class PlayVideoActivity extends Activity {
     Button back;
     final Context context=this;
     VideoView v;
@@ -20,16 +21,6 @@ public class PlayVideo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_layout);
-        /*
-        back=(Button)findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        */
-
         v=(VideoView)findViewById(R.id.video);
         Intent i=getIntent();
         final String videoPath =i.getStringExtra("videoPath");
@@ -49,11 +40,6 @@ public class PlayVideo extends Activity {
 
         v.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
-                /*
-                mp.reset();
-                v.setVideoPath(videoPath);
-                v.start();
-                */
                 finish();
             }
         });

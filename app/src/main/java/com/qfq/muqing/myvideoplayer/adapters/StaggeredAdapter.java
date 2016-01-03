@@ -67,6 +67,10 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         notifyItemRemoved(position);
     }
 
+    public VideoItem getVideoItemAtPosition(int position) {
+        return mItems.get(position);
+    }
+
     @Override
     public VerticalItemHolder onCreateViewHolder(ViewGroup container, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());

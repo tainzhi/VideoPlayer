@@ -52,6 +52,10 @@ http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/process-bitm
 http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/process-bitmap.html
 http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/display-bitmap.html
 
+###获取更清晰额缩略图并缓存在cache中
+- 使用MediaMetadataRetriever.getFrameAtTime()获取缩略图, 如果获取失败是MediaStore.Video.Thumbnails.getThumbnail()获取
+- 获取的缩略图缓存在externalCacheDir()中, 通过id和progres命名
+
 ###SurfaceView&&VideoView
 VideoView extends SurfaceView
 http://developer.android.com/reference/android/view/SurfaceView.html
@@ -59,9 +63,10 @@ http://developer.android.com/reference/android/widget/VideoView.html#getAudioSes
 http://developer.android.com/reference/android/widget/VideoView.html#getAudioSessionId()
 http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 
-###获取更清晰额缩略图并缓存在cache中
-- 使用MediaMetadataRetriever.getFrameAtTime()获取缩略图, 如果获取失败是MediaStore.Video.Thumbnails.getThumbnail()获取
-- 获取的缩略图缓存在externalCacheDir()中, 通过id和progres命名
+###GalleryView
+https://github.com/inovex/ViewPager3D
+http://blog.csdn.net/pzhtpf/article/details/7251579
+https://github.com/sourcey/imagegallerydemo
 
 ##Todo
 - [+] StaggedGridView

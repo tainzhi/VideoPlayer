@@ -1,6 +1,7 @@
 package com.qfq.muqing.myvideoplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import com.qfq.muqing.myvideoplayer.adapters.StaggeredAdapter;
 
 public class MainActivity extends ActionBarActivity  {
 
-    private static String TAG = "qfq" + "VideoPlayer/MainActivity";
+    private static String TAG = "VideoPlayer/MainActivity";
     private Context mContext;
     private CharSequence mTitle;
     private RecyclerView mList;
@@ -34,8 +35,6 @@ public class MainActivity extends ActionBarActivity  {
 
         mTitle = getTitle();
         mContext = getApplicationContext();
-
-        Log.d(TAG, "external cache dir=" + mContext.getExternalCacheDir().getAbsolutePath());
 
         mList = (RecyclerView)findViewById(R.id.selection_list);
         mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
@@ -93,6 +92,10 @@ public class MainActivity extends ActionBarActivity  {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
+            String filePath = mAdapter.getVideoItemAtPosition(position).videoPath;
+            Intent startIntent = new Intent(MainActivity.this, DoubleMoviePlayerActivity.class);
+            startIntent.putExtra("file", filePath);
+            startActivity(startIntent);
         }
 
     };
