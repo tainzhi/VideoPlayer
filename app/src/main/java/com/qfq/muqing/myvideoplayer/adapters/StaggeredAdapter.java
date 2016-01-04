@@ -56,7 +56,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
                 BitmapFactory.decodeResource(mContext.getResources(), R.drawable.thumbnail_default),
                 mThumbnailParentWidth,
                 mThumbnailParentWidth);
-        Log.v("qfq", "thumbnail width=" + mThumbnailParentWidth / 2);
         generateItems();
     }
 
@@ -94,7 +93,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         }
 
         VideoItem item = mItems.get(position);
-        Log.d("testQFQ", "position=" + position + " videoName=" + item.videoName);
         itemHolder.setVideoTitle(item.videoName);
         itemHolder.setVideoSize(item.videoSize + "");
         itemHolder.setVideoDuration(item.videoDuration);
