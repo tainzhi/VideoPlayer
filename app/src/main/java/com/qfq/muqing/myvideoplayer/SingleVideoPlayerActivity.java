@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -22,6 +27,13 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private SurfaceView mPlayView;
     private SurfaceHolder mSurfaceHolder;
 
+    private LinearLayout mControlTitleLayout;
+    private TextView mControlTitle;
+    private LinearLayout mControllerBarLayout;
+    private ImageView mControllerControl;
+    private SeekBar mControllerProgress;
+    private ImageView mControllerFloatWindow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +45,16 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
 
         setContentView(R.layout.activity_single_video_player);
         mPlayView = (SurfaceView)findViewById(R.id.activity_single_video_player_player_view);
+        mControlTitleLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
+        mControlTitle = (TextView)findViewById(R.id.activity_single_video_player_player_video_title);
+        mControllerBarLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
+        mControllerControl = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_control);
+        mControllerProgress = (SeekBar)findViewById(R.id.activity_single_video_player_player_controller_progress);
+        mControllerFloatWindow = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_floatwindow);
+
+        mControllerControl.setOnClickListener(mContollerControlClickListener);
+        mControllerFloatWindow.setOnClickListener(mControllerFloatWindowClickListener);
+
         mSurfaceHolder = mPlayView.getHolder();
         mSurfaceHolder.addCallback(this);
         mMediaPlayer = new MediaPlayer();
@@ -52,6 +74,20 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         super.onDestroy();
         mMediaPlayer.release();
     }
+
+    private View.OnClickListener mContollerControlClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.v(TAG, "control");
+        }
+    };
+
+    private View.OnClickListener mControllerFloatWindowClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.v(TAG, "float window");
+        }
+    };
 
     private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
         @Override
