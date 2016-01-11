@@ -8,24 +8,25 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
-        android:id="@+id/activity_single_video_player_player_title"
+        android:id="@+id/activity_single_video_player_player_title_bar"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_gravity="top"
+        android:layout_gravity="top|center"
         android:background="@android:drawable/toast_frame">
         <TextView
-            android:id="@+id/activity_single_video_player_player_controller_video_title"
+            android:id="@+id/activity_single_video_player_player_video_title"
             android:text="This a vidoe title"
             android:layout_width="wrap_content"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             style="@style/Base.TextAppearance.AppCompat.Title"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textColor="#ffffff" />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/activity_single_video_player_player_controller_video_controller"
+        android:id="@+id/activity_single_video_player_player_controller_bar"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -43,13 +44,15 @@
             android:layout_gravity="center" />
 
         <SeekBar
+            android:id="@+id/activity_single_video_player_player_controller_progress"
             android:paddingLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="20dp"
             android:layout_weight="0.92"
             android:indeterminate="false"
-            android:layout_gravity="center"/>
+            android:progressBackgroundTint="#ff1957"
+            android:layout_gravity="center" />
         <ImageView
             android:id="@+id/activity_single_video_player_player_controller_floatwindow"
             android:layout_width="wrap_content"
