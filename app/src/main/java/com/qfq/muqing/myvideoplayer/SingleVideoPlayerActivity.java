@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,17 +24,23 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private final static String TAG = "VideoPlayer/SingleVideoPlayerActivity";
 
     private Uri mVideoUri;
+    private String mVideoTitle;
+    private long mVideoDuration;
 
     private MediaPlayer mMediaPlayer;
     private SurfaceView mPlayView;
     private SurfaceHolder mSurfaceHolder;
 
-    private LinearLayout mControlTitleLayout;
-    private TextView mControlTitle;
+    private LinearLayout mControllerTitleLayout;
+    private TextView mControllerTitle;
     private LinearLayout mControllerBarLayout;
     private ImageView mControllerControl;
     private SeekBar mControllerProgress;
     private ImageView mControllerFloatWindow;
+
+    private boolean mVideoPlayOrPause = false; // play state is true, stop state is false;
+
+    private final static int CONTROLLER_CONTROL = 0;
 
 
     @Override
@@ -42,18 +50,24 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
 
         Intent intent = getIntent();
         mVideoUri = intent.getData();
+        Bundle bundle = intent.getExtras();
+        mVideoTitle = bundle.getString("title");
+        mVideoDuration = bundle.getLong("duration");
+
 
         setContentView(R.layout.activity_single_video_player);
         mPlayView = (SurfaceView)findViewById(R.id.activity_single_video_player_player_view);
-        mControlTitleLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
-        mControlTitle = (TextView)findViewById(R.id.activity_single_video_player_player_video_title);
+        mControllerTitleLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
+        mControllerTitle = (TextView)findViewById(R.id.activity_single_video_player_player_video_title);
         mControllerBarLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
         mControllerControl = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_control);
         mControllerProgress = (SeekBar)findViewById(R.id.activity_single_video_player_player_controller_progress);
         mControllerFloatWindow = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_floatwindow);
 
+        mControllerTitle.setText(mVideoTitle);
         mControllerControl.setOnClickListener(mContollerControlClickListener);
         mControllerFloatWindow.setOnClickListener(mControllerFloatWindowClickListener);
+        mControllerProgress.setOnSeekBarChangeListener(mOnSeekBarChangeListener);
 
         mSurfaceHolder = mPlayView.getHolder();
         mSurfaceHolder.addCallback(this);
@@ -75,10 +89,36 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         mMediaPlayer.release();
     }
 
+    final private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what) {
+                case CONTROLLER_CONTROL:
+                    // pause
+                    if (mVideoPlayOrPause) {
+                        mVideoPlayOrPause = false;
+                        mMediaPlayer.pause();
+                        mControllerControl.setImageResource(R.drawable.activity_single_video_player_control_stop);
+                    } else {
+                        // play
+                        mVideoPlayOrPause = true;
+                        mMediaPlayer.start();
+                        mControllerControl.setImageResource(R.drawable.activity_single_video_player_control_play);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     private View.OnClickListener mContollerControlClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.v(TAG, "control");
+            Log.v(TAG, "onClick() ControllerClick");
+            Message msg = mHandler.obtainMessage();
+            msg.what = CONTROLLER_CONTROL;
+            mHandler.sendMessage(msg);
         }
     };
 
@@ -94,6 +134,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         public void onPrepared(MediaPlayer mp) {
             Log.v(TAG, "MediaPlayer.onPrepared()");
             mMediaPlayer.start();
+            mVideoPlayOrPause = true;
             Log.v(TAG, "MediaPlayer.start()");
         }
     };
@@ -103,6 +144,25 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         public void onCompletion(MediaPlayer mp) {
             Log.v(TAG, "MediaPlayer.onCompletion()");
             finish();
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener mOnSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            int videoProgress = (int)(i * 1.0 / 100 * mVideoDuration);
+            Log.v(TAG, "seekbar progress:" + i + "; video duration:" + mVideoDuration + "; video progress = " + videoProgress);
+            mMediaPlayer.seekTo(videoProgress);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
         }
     };
 

@@ -94,8 +94,12 @@ public class MainActivity extends ActionBarActivity  {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
             Uri videoUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
+            String videoTitle = mAdapter.getVideoItemAtPosition(position).videoName;
+            long videoDuration = mAdapter.getVideoItemAtPosition(position).videoDuration;
             Intent intent = new Intent(MainActivity.this, SingleVideoPlayerActivity.class);
             intent.setData(videoUri);
+            intent.putExtra("title", videoTitle);
+            intent.putExtra("duration", videoDuration);
             startActivity(intent);
         }
 

@@ -91,10 +91,10 @@ https://github.com/sourcey/imagegallerydemo
 - [ ] ActionBar图标
 - [ ] App图标
 - [+] 播放界面, with SurfaceView
-- [ ] 播放界面的操作: 快进, 快退, 播放
+- [+] 播放界面的操作: 快进, 快退, 播放
 - [ ] 响应Touch事件
 - [ ] 最后播放的视频特殊化
-- [ ] 缩略图使用最后退出时一帧的图片, AsyncTask实现
+- [+] 缩略图使用最后退出时一帧的图片, AsyncTask实现
 - [ ] 悬浮播放窗
 - [ ] SearchView的实现
 - [ ] CheckBox的实现
