@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity  {
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
             Uri videoUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
             String videoTitle = mAdapter.getVideoItemAtPosition(position).videoName;
             long videoDuration = mAdapter.getVideoItemAtPosition(position).videoDuration;
@@ -108,7 +108,7 @@ public class MainActivity extends ActionBarActivity  {
     private AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(mContext, "onItemLongClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "onItemLongClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
             String filePath = mAdapter.getVideoItemAtPosition(position).videoPath;
             Intent startIntent = new Intent(MainActivity.this, DoubleVideoPlayerActivity.class);
             startIntent.putExtra("file", filePath);

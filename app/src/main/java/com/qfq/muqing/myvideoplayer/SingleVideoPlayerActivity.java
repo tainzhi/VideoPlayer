@@ -41,6 +41,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private boolean mVideoPlayOrPause = false; // play state is true, stop state is false;
 
     private final static int CONTROLLER_CONTROL = 0;
+    private final static int CONTROLLER_SEEK_TO = 1;
 
 
     @Override
@@ -106,6 +107,9 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
                         mControllerControl.setImageResource(R.drawable.activity_single_video_player_control_play);
                     }
                     break;
+                case CONTROLLER_SEEK_TO:
+                    int videoProgress = msg.arg1;
+                    mMediaPlayer.seekTo(videoProgress);
                 default:
                     break;
             }
@@ -126,6 +130,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         @Override
         public void onClick(View v) {
             Log.v(TAG, "float window");
+            //TODO: implement float window
         }
     };
 
@@ -152,7 +157,10 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             int videoProgress = (int)(i * 1.0 / 100 * mVideoDuration);
             Log.v(TAG, "seekbar progress:" + i + "; video duration:" + mVideoDuration + "; video progress = " + videoProgress);
-            mMediaPlayer.seekTo(videoProgress);
+            Message msg = new Message();
+            msg.what = CONTROLLER_SEEK_TO;
+            msg.arg1 = videoProgress;
+            mHandler.sendMessage(msg);
         }
 
         @Override
