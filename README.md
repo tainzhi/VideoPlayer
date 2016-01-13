@@ -78,6 +78,12 @@ https://github.com/inovex/ViewPager3D
 http://blog.csdn.net/pzhtpf/article/details/7251579
 https://github.com/sourcey/imagegallerydemo
 
+
+http://stackoverflow.com/questions/17168215/seekbar-and-media-player-in-android
+http://developer.android.com/reference/java/lang/Runnable.html
+http://stackoverflow.com/questions/541487/implements-runnable-vs-extends-thread
+http://stackoverflow.com/questions/3658779/threads-in-java
+
 ##Todo
 - [+] StaggedGridView
 - [+] thumbnail.scale
