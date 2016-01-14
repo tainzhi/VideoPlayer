@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -43,6 +44,10 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
 
     private final static int CONTROLLER_CONTROL = 0;
     private final static int CONTROLLER_SEEK_TO = 1;
+    private final static int HIDE_CONTROLLER_BAR = 2;
+    private final static int SHOW_CONTROLLER_BAR = 3;
+
+    private final static int HIDE_CONTROLLER_BAR_DELAY = 3000;
 
     private UpdateSeekBarThread mUpdateSeekBarThread;
 
@@ -62,11 +67,16 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         mPlayView = (SurfaceView)findViewById(R.id.activity_single_video_player_player_view);
         mControllerTitleLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
         mControllerTitle = (TextView)findViewById(R.id.activity_single_video_player_player_video_title);
-        mControllerBarLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
+        mControllerBarLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_controller_bar);
         mControllerControl = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_control);
         mControllerProgress = (SeekBar)findViewById(R.id.activity_single_video_player_player_controller_progress);
         mControllerFloatWindow = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_floatwindow);
 
+        //Hide TitleBar and ControllerBar 5s later
+        mHandler.sendEmptyMessageDelayed(HIDE_CONTROLLER_BAR, HIDE_CONTROLLER_BAR_DELAY);
+
+
+        mPlayView.setOnTouchListener(mOnTouchListener);
         mControllerTitle.setText(mVideoTitle);
         mControllerControl.setOnClickListener(mContollerControlClickListener);
         mControllerFloatWindow.setOnClickListener(mControllerFloatWindowClickListener);
@@ -115,6 +125,12 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
                 case CONTROLLER_SEEK_TO:
                     int videoProgress = msg.arg1;
                     mMediaPlayer.seekTo(videoProgress);
+                case HIDE_CONTROLLER_BAR:
+                    mControllerTitleLayout.setVisibility(View.INVISIBLE);
+                    mControllerBarLayout.setVisibility(View.INVISIBLE);
+                case SHOW_CONTROLLER_BAR:
+                    mControllerTitleLayout.setVisibility(View.VISIBLE);
+                    mControllerBarLayout.setVisibility(View.VISIBLE);
                 default:
                     break;
             }
@@ -136,6 +152,22 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         public void onClick(View v) {
             Log.v(TAG, "float window");
             //TODO: implement float window
+        }
+    };
+
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Log.v(TAG, "onTouch");
+            int state = event.getAction();
+            switch (state) {
+                case MotionEvent.ACTION_UP:
+                    mHandler.sendEmptyMessage(SHOW_CONTROLLER_BAR);
+                    break;
+                default:
+                    break;
+            }
+            return true;
         }
     };
 

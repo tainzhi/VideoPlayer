@@ -73,16 +73,17 @@ http://developer.android.com/reference/android/widget/VideoView.html#getAudioSes
 http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 
-###GalleryView
-https://github.com/inovex/ViewPager3D
-http://blog.csdn.net/pzhtpf/article/details/7251579
-https://github.com/sourcey/imagegallerydemo
-
 ###Thread&&Runnable实现SeekBar自动更新进度
 http://stackoverflow.com/questions/17168215/seekbar-and-media-player-in-android
 http://developer.android.com/reference/java/lang/Runnable.html
 http://stackoverflow.com/questions/541487/implements-runnable-vs-extends-thread
 http://stackoverflow.com/questions/3658779/threads-in-java
+
+###GalleryView
+https://github.com/inovex/ViewPager3D
+http://blog.csdn.net/pzhtpf/article/details/7251579
+https://github.com/sourcey/imagegallerydemo
+
 
 ##Todo
 - [+] StaggedGridView
@@ -91,14 +92,13 @@ http://stackoverflow.com/questions/3658779/threads-in-java
 - [+] AsyncTask加载缩略图, scroom the list smoothly
 - [+] 优化1: 把获取的缩略图存储起来
 - [+] DoubleViewActivity
-- [ ] 删除动画
 - [ ] ViewStub覆盖住主界面, 没有视频的时候
 - [ ] ActionBar重写
 - [ ] ActionBar图标
-- [ ] App图标
+- [+] App图标
 - [+] 播放界面, with SurfaceView
 - [+] 播放界面的操作: 快进, 快退, 播放
-- [ ] 响应Touch事件
+- [+] 响应Touch事件
 - [ ] 最后播放的视频特殊化
 - [+] 缩略图使用最后退出时一帧的图片, AsyncTask实现
 - [ ] 悬浮播放窗
@@ -106,6 +106,8 @@ http://stackoverflow.com/questions/3658779/threads-in-java
 - [ ] CheckBox的实现
 - [ ] DoubleViewActivity优化: 添加声音, 控制
 - [ ] 类似搜狐视频一样的截屏进度条
+- [ ] Animation:显示和隐藏播放界面控制栏动画
+- [ ] Animation:列表界面删除动画
 
 ##图片介绍
 ![MainActivity](./listview.png)
