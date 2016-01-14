@@ -39,10 +39,12 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private ImageView mControllerFloatWindow;
 
     private boolean mVideoPlayOrPause = false; // play state is true, stop state is false;
+    private boolean mIsTouchOnSeekBar = false;
 
     private final static int CONTROLLER_CONTROL = 0;
     private final static int CONTROLLER_SEEK_TO = 1;
 
+    private UpdateSeekBarThread mUpdateSeekBarThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,10 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     protected void onDestroy() {
         Log.v(TAG, "onDestroy()");
         super.onDestroy();
-        mMediaPlayer.release();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+        }
+        mMediaPlayer = null;
     }
 
     final private Handler mHandler = new Handler() {
@@ -140,6 +145,8 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             Log.v(TAG, "MediaPlayer.onPrepared()");
             mMediaPlayer.start();
             mVideoPlayOrPause = true;
+            mUpdateSeekBarThread = new UpdateSeekBarThread("UpdateSeekBarThread");
+            mUpdateSeekBarThread.start();
             Log.v(TAG, "MediaPlayer.start()");
         }
     };
@@ -148,6 +155,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         @Override
         public void onCompletion(MediaPlayer mp) {
             Log.v(TAG, "MediaPlayer.onCompletion()");
+            mUpdateSeekBarThread.stop_thread();
             finish();
         }
     };
@@ -155,22 +163,23 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private SeekBar.OnSeekBarChangeListener mOnSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            int videoProgress = (int)(i * 1.0 / 100 * mVideoDuration);
-            Log.v(TAG, "seekbar progress:" + i + "; video duration:" + mVideoDuration + "; video progress = " + videoProgress);
-            Message msg = new Message();
-            msg.what = CONTROLLER_SEEK_TO;
-            msg.arg1 = videoProgress;
-            mHandler.sendMessage(msg);
+            if (b) {
+                int videoProgress = (int) (i * 1.0 / 100 * mVideoDuration);
+                Message msg = new Message();
+                msg.what = CONTROLLER_SEEK_TO;
+                msg.arg1 = videoProgress;
+                mHandler.sendMessage(msg);
+            }
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-
+            mIsTouchOnSeekBar = true;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
+            mIsTouchOnSeekBar = false;
         }
     };
 
@@ -191,6 +200,35 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     public void surfaceDestroyed(SurfaceHolder holder) {
         // TODO Auto-generated method stub
 
+    }
+
+    private class UpdateSeekBarThread extends Thread {
+
+        volatile boolean isRuuning = true;
+        protected UpdateSeekBarThread(String threadName) {
+            this.setName(threadName);
+            isRuuning = true;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            while (mMediaPlayer != null && isRuuning) {
+                if (!mIsTouchOnSeekBar && mMediaPlayer.isPlaying()) {
+                    int videoProgress = mMediaPlayer.getCurrentPosition();
+                    mControllerProgress.setProgress((int) (videoProgress * 1.0 / mVideoDuration * 100));
+                }
+                try {
+                    this.sleep(100);
+                } catch (InterruptedException e) {
+                    //FIXME: exception
+                }
+            }
+        }
+
+        public void stop_thread() {
+            isRuuning = false;
+        }
     }
 }
 
