@@ -11,6 +11,11 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="0dp"></android.support.v7.widget.RecyclerView>
+    <ViewStub
+        android:id="@+id/viewstub_novideo_hint_layout_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/viewstub_novideo_hint_layout"/>
 
 </LinearLayout>
 

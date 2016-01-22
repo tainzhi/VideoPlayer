@@ -14,17 +14,19 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.qfq.muqing.myvideoplayer.adapters.StaggeredAdapter;
+import com.qfq.muqing.myvideoplayer.callbacks.OnStaggeredAdapterInformation;
 
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends ActionBarActivity {
 
     private static String TAG = "VideoPlayer/MainActivity";
     private Context mContext;
     private CharSequence mTitle;
     private RecyclerView mList;
+    private ViewStub mHintViewStub;
     private StaggeredAdapter mAdapter;
     private int mItemMargin;
 
@@ -48,7 +50,7 @@ public class MainActivity extends ActionBarActivity  {
         mList.getItemAnimator().setRemoveDuration(1000);
 
         //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
-        mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin)/2);
+        mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin)/2, mOnStaggeredAdapterInformation);
         mAdapter.setOnItemClickListener(mOnItemClickListener);
         mAdapter.setOnItemLongClickListener(mOnItemLongClickListener);
         mList.setAdapter(mAdapter);
@@ -114,6 +116,17 @@ public class MainActivity extends ActionBarActivity  {
             startIntent.putExtra("file", filePath);
             startActivity(startIntent);
             return true;
+        }
+    };
+
+    private OnStaggeredAdapterInformation mOnStaggeredAdapterInformation = new OnStaggeredAdapterInformation() {
+        @Override
+        public void onStaggeredAdapterInformation() {
+            mList.setVisibility(View.GONE);
+            if (mHintViewStub == null) {
+                mHintViewStub = (ViewStub)findViewById(R.id.viewstub_novideo_hint_layout_id);
+                mHintViewStub.inflate();
+            }
         }
     };
 }

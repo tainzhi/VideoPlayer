@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qfq.muqing.myvideoplayer.R;
+import com.qfq.muqing.myvideoplayer.callbacks.OnStaggeredAdapterInformation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,6 +42,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
     private AdapterView.OnItemClickListener mOnItemClickListener;
     private AdapterView.OnItemLongClickListener mOnItemLongClickListener;
+    private OnStaggeredAdapterInformation mOnStaggeredAdapterInformation;
 
     private Context mContext;
 
@@ -48,9 +50,10 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     private Bitmap mDefaultThumbnailBitmap;
 
 
-    public StaggeredAdapter(Context context, int thumbnailParentWidth) {
+    public StaggeredAdapter(Context context, int thumbnailParentWidth, OnStaggeredAdapterInformation onStaggeredAdapterInformation) {
         mContext = context;
         mThumbnailParentWidth = thumbnailParentWidth;
+        mOnStaggeredAdapterInformation = onStaggeredAdapterInformation;
         mItems = new ArrayList<VideoItem>();
         mDefaultThumbnailBitmap = scaleBitmap(
                 BitmapFactory.decodeResource(mContext.getResources(), R.drawable.thumbnail_default),
@@ -235,6 +238,10 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
 
         Cursor cursor = mContext.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoColumns, null, null,null);
         int totalCount = cursor.getCount();
+        // no video, then show the no video hint
+        if (totalCount <= 0) {
+            mOnStaggeredAdapterInformation.onStaggeredAdapterInformation();
+        }
         Log.i("totalCount.........", "count");
         cursor.moveToFirst();
         for (int i=0; i<totalCount; i++)
