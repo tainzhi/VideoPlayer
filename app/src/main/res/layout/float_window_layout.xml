@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/float_window_title_bar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#141212">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="left"
+            android:src="@drawable/float_window_title_back"
+            android:id="@+id/float_window_title_back"
+            android:layout_gravity="left"
+            android:layout_marginLeft="2dip" />
+        <TextView
+            android:id="@+id/float_window_video_title"
+            android:text="float window video title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#fbf7f7" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="right"
+            android:src="@drawable/float_window_title_close"
+            android:id="@+id/float_window_title_close"
+            android:layout_gravity="right"
+            android:layout_marginRight="2dip" />
+    </LinearLayout>
+
+    <SurfaceView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/float_window_title_bar"
+        android:id="@+id/float_window_play_view" />
+</RelativeLayout>

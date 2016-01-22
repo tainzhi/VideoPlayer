@@ -5,8 +5,6 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import java.util.concurrent.ThreadPoolExecutor;
-
 /**
  * Created by muqing on 11/18/15.
  */
@@ -21,4 +19,8 @@ public class Utils {
 
     public static String THUMBNAIL_CACHE_PATH = "list_thumbnail";
     public static String FILENAME_SEPERATOR = "_";
+
+    public static String VIDEO_PLAYER_SETTING_PREFERENCE = "settings";
+    public static String VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X = "float_window_position_x";
+    public static String VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y = "float_window_position_y";
 }
