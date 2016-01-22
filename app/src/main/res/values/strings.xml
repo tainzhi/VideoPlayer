@@ -9,5 +9,6 @@
     <string name="video_size_name">Size</string>
     <string name="video_duration_name">Duration</string>
     <string name="video_progress_name">Progress</string>
+    <string name="no_video_hint">No Video!!!</string>
 
 </resources>

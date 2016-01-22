@@ -18,12 +18,11 @@
             android:id="@+id/activity_single_video_player_player_video_title"
             android:text="This a vidoe title"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             style="@style/Base.TextAppearance.AppCompat.Title"
             android:textSize="30sp"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:layout_gravity="center" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/activity_single_video_player_player_controller_bar"

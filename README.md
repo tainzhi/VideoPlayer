@@ -84,6 +84,7 @@ https://github.com/inovex/ViewPager3D
 http://blog.csdn.net/pzhtpf/article/details/7251579
 https://github.com/sourcey/imagegallerydemo
 
+###使用Callback机制和ViewStub实现无视频时的提示界面
 
 ##Todo
 - [+] StaggedGridView
@@ -92,7 +93,7 @@ https://github.com/sourcey/imagegallerydemo
 - [+] AsyncTask加载缩略图, scroom the list smoothly
 - [+] 优化1: 把获取的缩略图存储起来
 - [+] DoubleViewActivity
-- [ ] ViewStub覆盖住主界面, 没有视频的时候
+- [+] ViewStub覆盖住主界面, 没有视频的时候
 - [ ] ActionBar重写
 - [ ] ActionBar图标
 - [+] App图标
