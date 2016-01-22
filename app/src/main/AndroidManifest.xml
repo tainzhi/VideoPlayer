@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SingleVideoPlayerActivity"
+            android:keepScreenOn="true"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:screenOrientation="landscape">
         </activity>
