@@ -47,7 +47,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private final static int HIDE_CONTROLLER_BAR = 2;
     private final static int SHOW_CONTROLLER_BAR = 3;
 
-    private final static int HIDE_CONTROLLER_BAR_DELAY = 3000;
+    private final static int HIDE_CONTROLLER_BAR_DELAY = 5000;
 
     private UpdateSeekBarThread mUpdateSeekBarThread;
 
@@ -125,12 +125,17 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
                 case CONTROLLER_SEEK_TO:
                     int videoProgress = msg.arg1;
                     mMediaPlayer.seekTo(videoProgress);
+                    break;
                 case HIDE_CONTROLLER_BAR:
+                    Log.v(TAG, "to hide controller bar");
                     mControllerTitleLayout.setVisibility(View.INVISIBLE);
                     mControllerBarLayout.setVisibility(View.INVISIBLE);
+                    break;
                 case SHOW_CONTROLLER_BAR:
+                    Log.v(TAG, "to show controller bar");
                     mControllerTitleLayout.setVisibility(View.VISIBLE);
                     mControllerBarLayout.setVisibility(View.VISIBLE);
+                    break;
                 default:
                     break;
             }
@@ -162,7 +167,11 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             int state = event.getAction();
             switch (state) {
                 case MotionEvent.ACTION_UP:
+                    mHandler.removeMessages(SHOW_CONTROLLER_BAR);
                     mHandler.sendEmptyMessage(SHOW_CONTROLLER_BAR);
+
+                    mHandler.removeMessages(HIDE_CONTROLLER_BAR);
+                    mHandler.sendEmptyMessageDelayed(HIDE_CONTROLLER_BAR, HIDE_CONTROLLER_BAR_DELAY);
                     break;
                 default:
                     break;
