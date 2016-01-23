@@ -155,8 +155,16 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private View.OnClickListener mControllerFloatWindowClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.v(TAG, "float window");
-            //TODO: implement float window
+            Log.v(TAG, "hide current window, to open float window");
+            // SingleVideoPlayActivity finish, then back to home screen
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            homeIntent.addCategory(Intent.CATEGORY_HOME);
+            SingleVideoPlayerActivity.this.startActivity(homeIntent);
+            finish();
+
+            FloatWindow.getInstance(getApplicationContext(),
+                    mVideoUri, mVideoTitle, mMediaPlayer.getCurrentPosition(), mVideoDuration).showFloatWindow();
         }
     };
 
@@ -255,14 +263,18 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         public void run() {
             super.run();
             while (mMediaPlayer != null && isRuuning) {
-                if (!mIsTouchOnSeekBar && mMediaPlayer.isPlaying()) {
-                    int videoProgress = mMediaPlayer.getCurrentPosition();
-                    mControllerProgress.setProgress((int) (videoProgress * 1.0 / mVideoDuration * 100));
-                }
                 try {
-                    this.sleep(100);
-                } catch (InterruptedException e) {
-                    //FIXME: exception
+                    if (!mIsTouchOnSeekBar && mMediaPlayer.isPlaying()) {
+                        int videoProgress = mMediaPlayer.getCurrentPosition();
+                        mControllerProgress.setProgress((int) (videoProgress * 1.0 / mVideoDuration * 100));
+                    }
+                    try {
+                        this.sleep(100);
+                    } catch (InterruptedException e) {
+                        //FIXME: exception
+                    }
+                } catch (IllegalStateException e) {
+                    Log.e(TAG, "MediaPlay state wrong ", e);
                 }
             }
         }
