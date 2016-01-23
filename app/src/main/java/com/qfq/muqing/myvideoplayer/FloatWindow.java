@@ -1,19 +1,27 @@
 package com.qfq.muqing.myvideoplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 /**
  * Created by Administrator on 2016/1/22.
  */
-public class FloatWindow {
+public class FloatWindow implements SurfaceHolder.Callback {
 
     private final static String TAG = "VideoPlayer/FloatWindow";
 
@@ -22,6 +30,7 @@ public class FloatWindow {
     private ImageView mFloatWindowBack;
     private TextView mFloatWindowViewTitle;
     private ImageView mFloatWindowClose;
+    private SurfaceView mFloatWindowPlayView;
 
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams;
@@ -29,23 +38,79 @@ public class FloatWindow {
     private int mFloatWindowPositionX;
     private int mFloatWindowPositionY;
 
+    private Uri mVideoUri;
+    private String mVideoTitle;
+    private int mVideoProgress;
+    private long mVideoDuration;
 
-    public FloatWindow(Context context) {
+    private MediaPlayer mMediaPlayer;
+    private SurfaceView mPlayView;
+    private SurfaceHolder mSurfaceHolder;
+
+    private static FloatWindow mInstance;
+
+    public FloatWindow(Context context, Uri uri, String title, int progress, long duration) {
         mContext = context;
+        mVideoUri = uri;
+        mVideoTitle = title;
+        mVideoProgress = progress;
+        mVideoDuration = duration;
         mWindowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        Log.v(TAG, "video uri=" + uri + ", title=" + title + ", progress=" + progress);
+    }
+
+    public static FloatWindow getInstance(Context context, Uri uri, String title, int progress, long duration) {
+        if (mInstance == null) {
+            mInstance = new FloatWindow(context, uri, title, progress, duration);
+        }
+        return mInstance;
+    }
+
+    public void showFloatWindow() {
+        Log.v(TAG, "showFloatWindow()");
         initView();
-        
+        initMediaPlayer();
+
+    }
+
+    public void closeFloatWindow() {
+        Log.v(TAG, "closeFloatWindow()");
+        mMediaPlayer.release();
+        mWindowManager.removeView(mFloatWindowView);
+        mInstance = null;
     }
 
     private void initView() {
+        Log.v(TAG, "initView");
         mFloatWindowView = View.inflate(mContext, R.layout.float_window_layout, null);
         mFloatWindowBack = (ImageView) mFloatWindowView.findViewById(R.id.float_window_title_back);
         mFloatWindowViewTitle = (TextView)mFloatWindowView.findViewById(R.id.float_window_video_title);
         mFloatWindowClose = (ImageView) mFloatWindowView.findViewById(R.id.float_window_title_close);
+        mFloatWindowPlayView = (SurfaceView)mFloatWindowView.findViewById(R.id.float_window_play_view);
+        mFloatWindowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, "back to full screen play window");
+                // TODO: 2016/1/23 back to full play window
+                Intent backIntent = new Intent(mContext, SingleVideoPlayerActivity.class);
+                backIntent.setData(mVideoUri);
+                backIntent.putExtra("title", mVideoTitle);
+                backIntent.putExtra("duration", mVideoDuration);
+                mContext.startActivity(backIntent);
+            }
+        });
+        mFloatWindowClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, "close float window");
+                closeFloatWindow();
+            }
+        });
 
         mLayoutParams = new WindowManager.LayoutParams();
         mLayoutParams.format = PixelFormat.TRANSPARENT;
-        mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+//        mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         mLayoutParams.gravity = Gravity.LEFT | Gravity.TOP;
@@ -57,6 +122,22 @@ public class FloatWindow {
         mLayoutParams.x = mFloatWindowPositionX;
         mLayoutParams.y = mFloatWindowPositionY;
         mWindowManager.addView(mFloatWindowView, mLayoutParams);
+    }
+
+    private void initMediaPlayer() {
+        Log.v(TAG, "initMediaPlayer");
+        mSurfaceHolder = mFloatWindowPlayView.getHolder();
+        mSurfaceHolder.addCallback(this);
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
+        mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+        try {
+            mMediaPlayer.setDataSource(mContext, mVideoUri);
+            mMediaPlayer.prepareAsync();
+//            mMediaPlayer.seekTo(mVideoProgress);
+        } catch (IOException e) {
+            Log.e(TAG, mVideoUri.toString() + " IOException!!!");
+        }
     }
 
     private void getFloatWindowPosition() {
@@ -76,5 +157,39 @@ public class FloatWindow {
         }
     }
 
+    private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            Log.v(TAG, "MediaPlayer.onPrepared()");
+            mMediaPlayer.start();
+            Log.v(TAG, "MediaPlayer.start()");
+        }
+    };
 
+    private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            Log.v(TAG, "MediaPlayer.onCompletion()");
+            closeFloatWindow();
+        }
+    };
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,
+                               int height) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        // TODO Auto-generated method stub
+        mMediaPlayer.setDisplay(mSurfaceHolder);
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // TODO Auto-generated method stub
+
+    }
 }
