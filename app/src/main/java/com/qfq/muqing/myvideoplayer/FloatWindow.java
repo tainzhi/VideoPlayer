@@ -85,6 +85,7 @@ public class FloatWindow implements SurfaceHolder.Callback {
         mFloatWindowView = View.inflate(mContext, R.layout.float_window_layout, null);
         mFloatWindowBack = (ImageView) mFloatWindowView.findViewById(R.id.float_window_title_back);
         mFloatWindowViewTitle = (TextView)mFloatWindowView.findViewById(R.id.float_window_video_title);
+        mFloatWindowViewTitle.setText(mVideoTitle);
         mFloatWindowClose = (ImageView) mFloatWindowView.findViewById(R.id.float_window_title_close);
         mFloatWindowPlayView = (SurfaceView)mFloatWindowView.findViewById(R.id.float_window_play_view);
         mFloatWindowBack.setOnClickListener(new View.OnClickListener() {
@@ -94,9 +95,13 @@ public class FloatWindow implements SurfaceHolder.Callback {
                 // TODO: 2016/1/23 back to full play window
                 Intent backIntent = new Intent(mContext, SingleVideoPlayerActivity.class);
                 backIntent.setData(mVideoUri);
+                backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 backIntent.putExtra("title", mVideoTitle);
                 backIntent.putExtra("duration", mVideoDuration);
+                backIntent.putExtra("progress", mMediaPlayer.getCurrentPosition());
                 mContext.startActivity(backIntent);
+
+                closeFloatWindow();
             }
         });
         mFloatWindowClose.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +139,6 @@ public class FloatWindow implements SurfaceHolder.Callback {
         try {
             mMediaPlayer.setDataSource(mContext, mVideoUri);
             mMediaPlayer.prepareAsync();
-//            mMediaPlayer.seekTo(mVideoProgress);
         } catch (IOException e) {
             Log.e(TAG, mVideoUri.toString() + " IOException!!!");
         }
@@ -145,6 +149,7 @@ public class FloatWindow implements SurfaceHolder.Callback {
         mFloatWindowPositionX = sp.getInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X, -1);
         mFloatWindowPositionY = sp.getInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y, -1);
 
+
         // First enter float window, set the window in center
         if (mFloatWindowPositionX == -1 || mFloatWindowPositionY == -1) {
             DisplayMetrics dispalyMetrics = new DisplayMetrics();
@@ -152,6 +157,16 @@ public class FloatWindow implements SurfaceHolder.Callback {
             int windowWidth = dispalyMetrics.widthPixels;
             int windowHeight = dispalyMetrics.heightPixels;
 
+            Log.v(TAG, "window width=" + windowWidth + ", height="+windowHeight);
+            Log.v(TAG, "float width=" + mLayoutParams.width + ", height=" + mLayoutParams.height);
+
+            // the current window orientation is landscape, but we should layout float window in protrait orientation
+            // so the windowWidth is height in protrait orientation
+            int temp = windowWidth;
+            windowWidth = windowHeight;
+            windowHeight = temp;
+
+            // layout float window center initially
             mFloatWindowPositionX = (windowWidth - mLayoutParams.width) /2;
             mFloatWindowPositionY = (windowHeight - mLayoutParams.height) / 2;
         }
@@ -161,6 +176,7 @@ public class FloatWindow implements SurfaceHolder.Callback {
         @Override
         public void onPrepared(MediaPlayer mp) {
             Log.v(TAG, "MediaPlayer.onPrepared()");
+            mMediaPlayer.seekTo(mVideoProgress);
             mMediaPlayer.start();
             Log.v(TAG, "MediaPlayer.start()");
         }
