@@ -27,6 +27,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private Uri mVideoUri;
     private String mVideoTitle;
     private long mVideoDuration;
+    private int mVideoProgress;
 
     private MediaPlayer mMediaPlayer;
     private SurfaceView mPlayView;
@@ -61,6 +62,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         Bundle bundle = intent.getExtras();
         mVideoTitle = bundle.getString("title");
         mVideoDuration = bundle.getLong("duration");
+        mVideoProgress = bundle.getInt("progress", 0);
 
 
         setContentView(R.layout.activity_single_video_player);
@@ -192,6 +194,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         @Override
         public void onPrepared(MediaPlayer mp) {
             Log.v(TAG, "MediaPlayer.onPrepared()");
+            mMediaPlayer.seekTo(mVideoProgress);
             mMediaPlayer.start();
             mVideoPlayOrPause = true;
             mUpdateSeekBarThread = new UpdateSeekBarThread("UpdateSeekBarThread");

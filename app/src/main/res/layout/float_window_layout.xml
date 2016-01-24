@@ -3,13 +3,13 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/float_window_title_bar"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="#141212">
+        android:background="#6f6d31">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -17,23 +17,30 @@
             android:src="@drawable/float_window_title_back"
             android:id="@+id/float_window_title_back"
             android:layout_gravity="left"
-            android:layout_marginLeft="2dip" />
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentStart="true"/>
         <TextView
             android:id="@+id/float_window_video_title"
             android:text="float window video title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="#fbf7f7" />
+            android:layout_centerInParent="true"
+            android:singleLine="true"
+            android:ellipsize="middle"
+            android:textColor="#fbf7f7"
+            android:gravity="center" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/float_window_title_close"
             android:id="@+id/float_window_title_close"
-            android:layout_gravity="right"
-            android:layout_marginRight="2dip" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+    </RelativeLayout>
 
     <SurfaceView
         android:layout_width="wrap_content"
