@@ -79,12 +79,22 @@ http://developer.android.com/reference/java/lang/Runnable.html
 http://stackoverflow.com/questions/541487/implements-runnable-vs-extends-thread
 http://stackoverflow.com/questions/3658779/threads-in-java
 
-###GalleryView
-https://github.com/inovex/ViewPager3D
-http://blog.csdn.net/pzhtpf/article/details/7251579
-https://github.com/sourcey/imagegallerydemo
 
 ###使用Callback机制和ViewStub实现无视频时的提示界面
+
+
+###FloatWindow
+主要使用了`WindowManager`. 显示悬浮窗有两种方式
+- 方式1: 需要权限`<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>`
+- 方式2: 不需要权限, 但是需要设置`WindownManager.LayoutParams.type`为`WindowManager.LayoutParams.TYPE_TOAST`
+
+**Todo**: 移动悬浮窗的时候, 悬浮窗会一直抖动, 这个问题需要解决
+
+[参考](http://www.liaohuqiu.net/cn/posts/android-windows-manager/)
+
+###GalleryView
+http://blog.csdn.net/pzhtpf/article/details/7251579
+https://github.com/sourcey/imagegallerydemo
 
 ##Todo
 - [+] StaggedGridView
@@ -102,7 +112,7 @@ https://github.com/sourcey/imagegallerydemo
 - [+] 响应Touch事件
 - [ ] 最后播放的视频特殊化
 - [+] 缩略图使用最后退出时一帧的图片, AsyncTask实现
-- [ ] 悬浮播放窗
+- [+] 悬浮播放窗
 - [ ] SearchView的实现
 - [ ] CheckBox的实现
 - [ ] DoubleViewActivity优化: 添加声音, 控制

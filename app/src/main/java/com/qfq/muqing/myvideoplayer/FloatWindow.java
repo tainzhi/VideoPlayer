@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -35,8 +36,12 @@ public class FloatWindow implements SurfaceHolder.Callback {
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams;
 
+    private int mWindowWidth;
+    private int mWindowHeight;
     private int mFloatWindowPositionX;
     private int mFloatWindowPositionY;
+    private int mFloatWindowWidth;
+    private int mFloatWindowHeight;
 
     private Uri mVideoUri;
     private String mVideoTitle;
@@ -73,8 +78,14 @@ public class FloatWindow implements SurfaceHolder.Callback {
 
     }
 
+    public void updateFloatWindow() {
+        Log.v(TAG, "updateFloatWindow()");
+        mWindowManager.updateViewLayout(mFloatWindowView, mLayoutParams);
+    }
+
     public void closeFloatWindow() {
         Log.v(TAG, "closeFloatWindow()");
+        setFloatWindowPosition();
         mMediaPlayer.release();
         mWindowManager.removeView(mFloatWindowView);
         mInstance = null;
@@ -88,6 +99,7 @@ public class FloatWindow implements SurfaceHolder.Callback {
         mFloatWindowViewTitle.setText(mVideoTitle);
         mFloatWindowClose = (ImageView) mFloatWindowView.findViewById(R.id.float_window_title_close);
         mFloatWindowPlayView = (SurfaceView)mFloatWindowView.findViewById(R.id.float_window_play_view);
+        mFloatWindowPlayView.setOnTouchListener(mOnTouchListener);
         mFloatWindowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,15 +126,18 @@ public class FloatWindow implements SurfaceHolder.Callback {
 
         mLayoutParams = new WindowManager.LayoutParams();
         mLayoutParams.format = PixelFormat.TRANSPARENT;
-//        mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-        mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+        mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+//        mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         mLayoutParams.gravity = Gravity.LEFT | Gravity.TOP;
         // width : heidht = 16:9, this is for video
         // but the whole floatwindow height will take title height into account
-        mLayoutParams.width = (int)mContext.getResources().getDimension(R.dimen.float_window_width);
-        mLayoutParams.height = (int)mContext.getResources().getDimension(R.dimen.float_window_height);
+        mFloatWindowWidth = (int)mContext.getResources().getDimension(R.dimen.float_window_width);
+        mLayoutParams.width = mFloatWindowWidth;
+        mFloatWindowHeight = (int)mContext.getResources().getDimension(R.dimen.float_window_height);
+        mLayoutParams.height = mFloatWindowHeight;
+        getWindowWidthAndHeight();
         getFloatWindowPosition();
         mLayoutParams.x = mFloatWindowPositionX;
         mLayoutParams.y = mFloatWindowPositionY;
@@ -144,32 +159,39 @@ public class FloatWindow implements SurfaceHolder.Callback {
         }
     }
 
+    private void setFloatWindowPosition() {
+        SharedPreferences sp = mContext.getSharedPreferences(Utils.VIDEO_PLAYER_SETTING_PREFERENCE, Context.MODE_PRIVATE);
+        sp.edit().putInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X, mFloatWindowPositionX).commit();
+        sp.edit().putInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y, mFloatWindowPositionY).commit();
+    }
+
     private void getFloatWindowPosition() {
         SharedPreferences sp = mContext.getSharedPreferences(Utils.VIDEO_PLAYER_SETTING_PREFERENCE, Context.MODE_PRIVATE);
         mFloatWindowPositionX = sp.getInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X, -1);
         mFloatWindowPositionY = sp.getInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y, -1);
 
-
         // First enter float window, set the window in center
         if (mFloatWindowPositionX == -1 || mFloatWindowPositionY == -1) {
-            DisplayMetrics dispalyMetrics = new DisplayMetrics();
-            mWindowManager.getDefaultDisplay().getMetrics(dispalyMetrics);
-            int windowWidth = dispalyMetrics.widthPixels;
-            int windowHeight = dispalyMetrics.heightPixels;
-
-            Log.v(TAG, "window width=" + windowWidth + ", height="+windowHeight);
-            Log.v(TAG, "float width=" + mLayoutParams.width + ", height=" + mLayoutParams.height);
-
-            // the current window orientation is landscape, but we should layout float window in protrait orientation
-            // so the windowWidth is height in protrait orientation
-            int temp = windowWidth;
-            windowWidth = windowHeight;
-            windowHeight = temp;
-
             // layout float window center initially
-            mFloatWindowPositionX = (windowWidth - mLayoutParams.width) /2;
-            mFloatWindowPositionY = (windowHeight - mLayoutParams.height) / 2;
+            mFloatWindowPositionX = (mWindowWidth - mLayoutParams.width) /2;
+            mFloatWindowPositionY = (mWindowHeight - mLayoutParams.height) / 2;
         }
+    }
+
+    private void getWindowWidthAndHeight() {
+        DisplayMetrics dispalyMetrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getMetrics(dispalyMetrics);
+        int windowWidth = dispalyMetrics.widthPixels;
+        int windowHeight = dispalyMetrics.heightPixels;
+
+        // the current window orientation is landscape, but we should layout float window in protrait orientation
+        // so the windowWidth is height in protrait orientation
+        int temp = windowWidth;
+        windowWidth = windowHeight;
+        windowHeight = temp;
+
+        mWindowWidth = windowWidth;
+        mWindowHeight = windowHeight;
     }
 
     private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
@@ -196,6 +218,48 @@ public class FloatWindow implements SurfaceHolder.Callback {
         // TODO Auto-generated method stub
 
     }
+
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            float lastX = event.getRawX();
+            float lastY = event.getRawY();
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    Log.v(TAG, "onTouch ACTION_DOWN");
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    Log.v(TAG, "onTouch ACTION_MOVE");
+                    // TODO: 2016/1/24 fix ACTION_MOVE shake issue
+                    float distanceX = lastX - mFloatWindowPositionX;
+                    float distanceY = lastY - mFloatWindowPositionY;
+
+                    if (Math.abs(distanceX) > 50 && Math.abs(distanceY) > 50) {
+                        mFloatWindowPositionX = (int)event.getRawX();
+                        mFloatWindowPositionY = (int)event.getRawY();
+                        if (mFloatWindowPositionX > mWindowWidth - mFloatWindowWidth) {
+                            mFloatWindowPositionX = mWindowWidth - mFloatWindowWidth;
+                        }
+                        if (mFloatWindowPositionY > mWindowHeight - mFloatWindowHeight) {
+                            mFloatWindowPositionY = mWindowHeight - mFloatWindowHeight;
+                        }
+                        mLayoutParams.x = mFloatWindowPositionX;
+                        mLayoutParams.y = mFloatWindowPositionY;
+                        updateFloatWindow();
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Log.v(TAG, "onTouch ACTION_UP");
+                    mFloatWindowPositionX = (int)event.getRawX();
+                    mFloatWindowPositionY = (int)event.getRawY();
+                    setFloatWindowPosition();
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+    };
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
