@@ -353,6 +353,12 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             }
         }
 
+        /**
+         * 
+         * @param videoId
+         * @param videoProgress
+         * @return
+         */
         private Bitmap createVideoThumbnail(int videoId, long videoProgress) {
             MediaMetadataRetriever mediaMetadataRetriever = null;
             Bitmap srcBitmap = null;
@@ -393,6 +399,8 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         }
 
     }
+
+
 
     static class AsyncDrawable extends BitmapDrawable {
         private final WeakReference<ThumbnailBitmapWorkTask> thumbnailBitmapWorkTaskWeakReference;

@@ -1,9 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion '23.0.1'
-
     defaultConfig {
         applicationId "com.qfq.muqing.myvideoplayer"
         minSdkVersion 19
@@ -17,6 +16,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable true
         }
+    }
+    productFlavors {
     }
 }
 

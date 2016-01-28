@@ -1,13 +1,11 @@
 package com.qfq.muqing.myvideoplayer.adapters;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +25,6 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     private Context mContext;
 
     private Uri mVideoUri;
-    private int mVideoId;
     private int mVideoDuration;
     private int mVideoProgress;
 
@@ -38,10 +35,9 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
 
     VideoProgressThumb[]  ProgressThumbList = new VideoProgressThumb[THUMB_COUNT];
 
-    public HorizontalGridViewAdapter(Context context, Uri uri, int id, int duration, int progress) {
+    public HorizontalGridViewAdapter(Context context, Uri uri, int duration, int progress) {
         mContext = context;
         mVideoUri = uri;
-        mVideoId = id;
         mVideoDuration = duration;
         mVideoProgress = progress;
     }
@@ -50,7 +46,7 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     public HorizontalViewHolder onCreateViewHolder(ViewGroup container, int valueType) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         View view = inflater.inflate(R.layout.item_horizontal_videoprogress_window, container, false);
-        return HorizontalViewHolder(view);
+        return new HorizontalViewHolder(view);
     }
 
     @Override
@@ -93,8 +89,9 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
         }
     }
 
-    class VideoProgressThumbWork extends AsyncTask<Uri uri, Void, Void> {
-        private void doInBackground(Uri ...) {
+    class VideoProgressThumbWork extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
             // 20 thumbs, 1 is current, some prior current, the other after current
             // 20 thumbs, so the whole video is divided into (20 + 1) divions
             int thumbDivision = (int)(1.0 * mVideoDuration / (THUMB_COUNT + 1));
@@ -108,8 +105,7 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
             Bitmap srcBitmap = null;
             MediaMetadataRetriever retriever = new MediaMetadataRetriever();
             try {
-                retriever.setDataSource(mContext,
-                        ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mVideoId));
+                retriever.setDataSource(mContext, mVideoUri);
                 for (int i = 0; i < THUMB_COUNT + 1; i++) {
                     ProgressThumbList[i].progress = i * thumbDivision;
                     int videoProgress = i * thumbDivision;
@@ -124,7 +120,7 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
                     retriever.release();
                 }
             }
-
+            return null;
         }
 
         private void PostExecute() {

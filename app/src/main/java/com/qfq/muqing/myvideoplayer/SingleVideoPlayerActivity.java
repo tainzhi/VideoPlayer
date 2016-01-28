@@ -1,6 +1,7 @@
 package com.qfq.muqing.myvideoplayer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -24,6 +25,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
 
     private final static String TAG = "VideoPlayer/SingleVideoPlayerActivity";
 
+    private Context mContext;
     private Uri mVideoUri;
     private String mVideoTitle;
     private long mVideoDuration;
@@ -57,6 +59,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         Log.v(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
 
+        mContext = this;
         Intent intent = getIntent();
         mVideoUri = intent.getData();
         Bundle bundle = intent.getExtras();
@@ -227,6 +230,9 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
             mIsTouchOnSeekBar = true;
+
+            HorizontalVieoProgressWindow progressWindow = new HorizontalVieoProgressWindow(mContext, mHandler, mVideoUri, (int)(mVideoDuration), (int)(mVideoProgress));
+            progressWindow.showAt(mPlayView);
         }
 
         @Override
