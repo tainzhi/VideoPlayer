@@ -45,14 +45,14 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     @Override
     public HorizontalViewHolder onCreateViewHolder(ViewGroup container, int valueType) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
-        View view = inflater.inflate(R.layout.item_horizontal_videoprogress_window, container, false);
-        return new HorizontalViewHolder(view);
+        View root = inflater.inflate(R.layout.item_horizontal_videoprogress_window, container, false);
+        return new HorizontalViewHolder(root);
     }
 
     @Override
     public void onBindViewHolder(HorizontalViewHolder viewHolder, int position) {
         RecyclerView.ViewHolder holder = viewHolder;
-        viewHolder.setThumbViewSrc(ProgressThumbList[position].progressThumb);
+        viewHolder.mThumbView.setImageResource(R.drawable.horizontal_video_progress_thumb);
     }
 
     @Override
@@ -78,15 +78,16 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     }
 
     public static class HorizontalViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mThumbView;
+        public ImageView mThumbView;
         public HorizontalViewHolder (View v) {
             super(v);
-            mThumbView = (ImageView)v;
+            mThumbView = (ImageView)v.findViewById(R.id.item_horizontal_videoprogress_id);
         }
 
         public void setThumbViewSrc(Bitmap bitmap) {
             mThumbView.setImageBitmap(bitmap);
         }
+
     }
 
     class VideoProgressThumbWork extends AsyncTask<Void, Void, Void> {
