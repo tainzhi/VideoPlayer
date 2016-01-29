@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v17.leanback.widget.HorizontalGridView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -22,6 +23,7 @@ public class HorizontalVieoProgressWindow {
     private int mVideoDuration;
     private int mVideoProgress;
 
+    private View mHorizontalVideoProgressViewContainer;
     private HorizontalGridView mHorizontalVideoProgressView;
     private HorizontalGridViewAdapter mAdapter;
 
@@ -37,7 +39,9 @@ public class HorizontalVieoProgressWindow {
     }
 
     private void initView() {
-        mHorizontalVideoProgressView = (HorizontalGridView) View.inflate(mContext, R.layout.horizontal_video_progress_window_layout, null);
+        Log.v(TAG, "initView");
+        mHorizontalVideoProgressViewContainer = View.inflate(mContext, R.layout.horizontal_video_progress_window_layout, null);
+        mHorizontalVideoProgressView = (HorizontalGridView) mHorizontalVideoProgressViewContainer.findViewById(R.id.horizontalgridview_videoprogress_id);
         mAdapter = new HorizontalGridViewAdapter(mContext, mVideoUri, mVideoDuration, mVideoProgress);
         mHorizontalVideoProgressView.setAdapter(mAdapter);
         mHorizontalVideoProgressView.setWindowAlignment(HorizontalGridView.WINDOW_ALIGN_BOTH_EDGE);
@@ -45,7 +49,8 @@ public class HorizontalVieoProgressWindow {
     }
 
     public void showAt(View parentView) {
-        PopupWindow mainWindow = new PopupWindow(mHorizontalVideoProgressView);
-        mainWindow.showAtLocation(parentView, Gravity.TOP, 0, 0);
+        Log.v(TAG, "showAt");
+        PopupWindow mainWindow = new PopupWindow(mHorizontalVideoProgressViewContainer);
+        mainWindow.showAtLocation(parentView, Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
     }
 }
