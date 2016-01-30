@@ -15,6 +15,8 @@ import android.widget.ImageView;
 
 import com.qfq.muqing.myvideoplayer.R;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by Administrator on 2016/1/24.
  */
@@ -23,6 +25,8 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     private final static String TAG = "VideoPlayer/HorizontalGridViewAdapter";
 
     private Context mContext;
+
+    private HorizontalGridViewAdapter mAdapter = this;
 
     private Uri mVideoUri;
     private int mVideoDuration;
@@ -33,13 +37,17 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
 
     private final static int THUMB_COUNT = 20;
 
-    VideoProgressThumb[]  ProgressThumbList = new VideoProgressThumb[THUMB_COUNT];
+    private boolean hasCreateThumb = false;
+
+    private VideoProgressThumb[] mVideoProgressThumbList = new VideoProgressThumb[THUMB_COUNT];
 
     public HorizontalGridViewAdapter(Context context, Uri uri, int duration, int progress) {
         mContext = context;
         mVideoUri = uri;
         mVideoDuration = duration;
         mVideoProgress = progress;
+
+        new VideoProgressThumbWork().execute();
     }
 
     @Override
@@ -52,7 +60,10 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     @Override
     public void onBindViewHolder(HorizontalViewHolder viewHolder, int position) {
         RecyclerView.ViewHolder holder = viewHolder;
-        viewHolder.mThumbView.setImageResource(R.drawable.horizontal_video_progress_thumb);
+        ImageView imageView = viewHolder.mThumbView;
+        imageView.setImageResource(R.drawable.horizontal_video_progress_thumb);
+        mVideoProgressThumbList[position] = new VideoProgressThumb(position, viewHolder.mThumbView);
+
     }
 
     @Override
@@ -77,11 +88,11 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
                 originalBitmap.getHeight(), matrix, true);
     }
 
-    public static class HorizontalViewHolder extends RecyclerView.ViewHolder {
+    public class HorizontalViewHolder extends RecyclerView.ViewHolder {
         public ImageView mThumbView;
         public HorizontalViewHolder (View v) {
             super(v);
-            mThumbView = (ImageView)v.findViewById(R.id.item_horizontal_videoprogress_id);
+            mThumbView = (ImageView) v.findViewById(R.id.item_horizontal_videoprogress_id);
         }
 
         public void setThumbViewSrc(Bitmap bitmap) {
@@ -93,9 +104,10 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     class VideoProgressThumbWork extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
+            Log.d(TAG, "VideoProgressThumbWork.doInBackground()");
             // 20 thumbs, 1 is current, some prior current, the other after current
             // 20 thumbs, so the whole video is divided into (20 + 1) divions
-            int thumbDivision = (int)(1.0 * mVideoDuration / (THUMB_COUNT + 1));
+            int thumbDivision = (int)( mVideoDuration  / 2);
             // TODO: 2016/1/24 hightlight current thumb
 //            int indexDivisionSum = 0;
 //            int priorCount = (int)(1.0 * mVideoProgress / mVideoDuration * THUMB_COUNT);
@@ -104,14 +116,23 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
 //                indexDivisionSum = indexDivisionSum + thumbDivision;
 //            }
             Bitmap srcBitmap = null;
-            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            MediaMetadataRetriever retriever = null;
             try {
+                Log.d(TAG, "qfqvideo uri=" + mVideoUri.toString());
+                retriever = new MediaMetadataRetriever();
                 retriever.setDataSource(mContext, mVideoUri);
-                for (int i = 0; i < THUMB_COUNT + 1; i++) {
-                    ProgressThumbList[i].progress = i * thumbDivision;
-                    int videoProgress = i * thumbDivision;
-                    srcBitmap = retriever.getFrameAtTime(videoProgress*1000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-                    ProgressThumbList[i].progressThumb = scaleBitmap(srcBitmap, mProgressThumbWidth, mProgresThumbHeight);
+                for (int i = 1; i < THUMB_COUNT + 1; i++) {
+                    int videoProgress = 1 * thumbDivision;
+                    if (videoProgress > mVideoDuration) {
+                        videoProgress = mVideoDuration - 100;
+                    }
+                    Log.d(TAG, "VideoProgressThumbWork.doInBackground(), progress=" + videoProgress);
+                    srcBitmap = retriever.getFrameAtTime(videoProgress * 1000, MediaMetadataRetriever.OPTION_CLOSEST);
+                    if (srcBitmap == null) {
+                        Log.e(TAG, "position=" + i + ", failed!");
+                    }
+                    retriever.release();
+                    mVideoProgressThumbList[i - 1].setProgressThumb(scaleBitmap(srcBitmap, mProgressThumbWidth, mProgresThumbHeight));
                 }
 
             } catch (Exception e) {
@@ -125,18 +146,48 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
         }
 
         private void PostExecute() {
-
+            hasCreateThumb = true;
+            for (int i = 0; i < THUMB_COUNT; i++) {
+                mVideoProgressThumbList[i].update();
+            }
         }
     }
 
     class VideoProgressThumb{
-        int progress;
-        boolean isFocus;
-        Bitmap progressThumb;
-        public VideoProgressThumb() {
-            progress = 0;
-            isFocus = false;
-            progressThumb = null;
+        private int mPosition;
+        private int mProgress;
+        private boolean mIsFocus;
+        private Bitmap mProgressThumb;
+        private WeakReference<ImageView> mImageViewWeakReference;
+
+        public VideoProgressThumb(int position, ImageView imageView) {
+            mPosition = position;
+            mImageViewWeakReference = new WeakReference<ImageView>(imageView);
+        }
+
+        public WeakReference<ImageView> getImageViewWeakReference() {
+            return mImageViewWeakReference;
+        }
+
+        public void setImageViewReference(WeakReference<ImageView> reference) {
+            mImageViewWeakReference = reference;
+        }
+
+        public void setProgressThumb(Bitmap bitmap) {
+            mProgressThumb = bitmap;
+        }
+
+        public Bitmap getProgressThumb() {
+            return mProgressThumb;
+        }
+
+        public void setProgress(int progress) {
+            mProgress = progress;
+        }
+
+        public void update() {
+            ImageView imageView = mImageViewWeakReference.get();
+            imageView.setImageBitmap(mProgressThumb);
         }
     }
 }

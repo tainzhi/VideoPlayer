@@ -92,9 +92,15 @@ http://stackoverflow.com/questions/3658779/threads-in-java
 
 [参考](http://www.liaohuqiu.net/cn/posts/android-windows-manager/)
 
-###GalleryView
-http://blog.csdn.net/pzhtpf/article/details/7251579
-https://github.com/sourcey/imagegallerydemo
+###GalleryView弃用, 改用HorizontalGridView
+- PopWindow必须设置width和height, 否则无法显示
+[参考](https://android.googlesource.com/platform/development/+/master/samples/SupportLeanbackDemos/src/com/example/android/leanback/HorizontalGridTestActivity.java)
+
+###getFrameAt
+http://stackoverflow.com/questions/12772547/mediametadataretriever-getframeattime-returns-only-first-frame
+http://stackoverflow.com/questions/14460151/mediametadataretriever-getframeattimelong-option-crashing
+http://stackoverflow.com/questions/20624996/android-get-all-the-frames-of-a-video-any-video-file
+https://github.com/wseemann/FFmpegMediaMetadataRetriever
 
 ##Todo
 - [+] StaggedGridView
