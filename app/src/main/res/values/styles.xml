@@ -1,8 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="DefaultTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="MainActivityTheme" parent="Theme.AppCompat.Light">
+        <item name="icon">@drawable/ic_appbar</item>
     </style>
 
 </resources>

@@ -7,7 +7,8 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Display;
@@ -20,7 +21,7 @@ import android.widget.AdapterView;
 import com.qfq.muqing.myvideoplayer.adapters.StaggeredAdapter;
 import com.qfq.muqing.myvideoplayer.callbacks.OnStaggeredAdapterInformation;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "VideoPlayer/MainActivity";
     private Context mContext;
@@ -35,9 +36,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mTitle = getTitle();
         mContext = getApplicationContext();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME );
 
         mList = (RecyclerView)findViewById(R.id.selection_list);
         mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
