@@ -1,8 +1,12 @@
 package com.qfq.muqing.myvideoplayer.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -32,22 +36,30 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     private int mVideoDuration;
     private int mVideoProgress;
 
-    private int mProgressThumbWidth;
-    private int mProgresThumbHeight;
+    private int mProgressThumbWidth = 300;
+    private int mProgresThumbHeight = 200;
+    private Bitmap mDefaultThumbnailBitmap;
 
-    private final static int THUMB_COUNT = 20;
-
-    private boolean hasCreateThumb = false;
-
-    private VideoProgressThumb[] mVideoProgressThumbList = new VideoProgressThumb[THUMB_COUNT];
+    private final static int THUMB_COUNT = 30;
+    private int[] mThumbPosition = new int[THUMB_COUNT + 1];
 
     public HorizontalGridViewAdapter(Context context, Uri uri, int duration, int progress) {
         mContext = context;
         mVideoUri = uri;
         mVideoDuration = duration;
         mVideoProgress = progress;
+        mDefaultThumbnailBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.thumbnail_default);
 
-        new VideoProgressThumbWork().execute();
+        int division = duration / (THUMB_COUNT + 1);
+        float position = (float)progress / duration;
+        int countBefore = (int)(progress / division);
+        for (int i=0; i <countBefore; i++) {
+            mThumbPosition[i] = (i+1) * division;
+        }
+        mThumbPosition[countBefore] = progress;
+        for (int i = countBefore + 1; i<THUMB_COUNT+1; i++) {
+            mThumbPosition[i] = (i+1) * division;
+        }
     }
 
     @Override
@@ -62,14 +74,127 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
         RecyclerView.ViewHolder holder = viewHolder;
         ImageView imageView = viewHolder.mThumbView;
         imageView.setImageResource(R.drawable.horizontal_video_progress_thumb);
-        mVideoProgressThumbList[position] = new VideoProgressThumb(position, viewHolder.mThumbView);
-
+        loadThumbnailBitmap(mVideoUri, position, mThumbPosition[position], imageView);
     }
 
     @Override
     public int getItemCount() {
-        return THUMB_COUNT;
+        return THUMB_COUNT + 1;
     }
+
+    public class HorizontalViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mThumbView;
+        public HorizontalViewHolder (View v) {
+            super(v);
+            mThumbView = (ImageView) v.findViewById(R.id.item_horizontal_videoprogress_id);
+        }
+    }
+
+    class ThumbnailBitmapWorkTask extends AsyncTask<Integer, Void, Bitmap> {
+
+        private final WeakReference<ImageView> imageViewWeakReference;
+        private Uri mVideoUri;
+        private int mId;
+
+        public int getId() {
+            return mId;
+        }
+
+        public ThumbnailBitmapWorkTask(Uri uri, int id, ImageView imageView) {
+            Log.v(TAG, "ThumbnailBitmapTask, id=" + id);
+            imageViewWeakReference = new WeakReference<ImageView>(imageView);
+            mVideoUri = uri;
+            mId = id;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Integer... params) {
+            int progress = params[0];
+            Bitmap bitmap = createBitmap(mVideoUri, progress);
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            Log.v(TAG, "AsyncTask, id=" + mId + ", bitmap=" + ((bitmap != null) + ", reference=" + (imageViewWeakReference !=null)));
+            if (imageViewWeakReference != null && bitmap != null) {
+                final ImageView imageView = imageViewWeakReference.get();
+                if (imageView != null) {
+                    imageView.setImageBitmap(bitmap);
+                }
+            }
+        }
+    }
+
+    private void loadThumbnailBitmap(Uri uri, int index,  int progress, ImageView thumbnailView) {
+        Log.v(TAG, "position=" + index + ", progress=" + progress);
+        if (cancelPotionalWork(index, thumbnailView)) {
+            Log.v(TAG, "loadThumbnailBitmpa enter");
+            final ThumbnailBitmapWorkTask task  = new ThumbnailBitmapWorkTask(uri, index, thumbnailView);
+            final AsyncDrawable asyncDrawable  = new AsyncDrawable(mContext.getResources(),
+                    mDefaultThumbnailBitmap, task);
+            thumbnailView.setImageDrawable(asyncDrawable);
+            task.execute(progress);
+        }
+    }
+
+    private static boolean cancelPotionalWork(int id, ImageView imageView) {
+        Log.v(TAG, "cancelPositionalWork, id=" +id);
+        final ThumbnailBitmapWorkTask thumbnailBitmapWorkTask = getThumbnailBitmapWorkTask(imageView);
+        Log.v(TAG, "thumbnailBitmapWorkTask=" + (thumbnailBitmapWorkTask == null));
+        if (thumbnailBitmapWorkTask != null) {
+            if (id != thumbnailBitmapWorkTask.mId) {
+                thumbnailBitmapWorkTask.cancel(true);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static ThumbnailBitmapWorkTask getThumbnailBitmapWorkTask(ImageView imageView) {
+        if (imageView != null) {
+            final Drawable drawable = imageView.getDrawable();
+            if (drawable instanceof AsyncDrawable) {
+                final AsyncDrawable asyncDrawable = (AsyncDrawable)drawable;
+                return asyncDrawable.getThumbnailBitmapWorkTask();
+            }
+        }
+        return null;
+    }
+
+
+    static class AsyncDrawable extends BitmapDrawable {
+        private final WeakReference<ThumbnailBitmapWorkTask> thumbnailBitmapWorkTaskWeakReference;
+
+        public AsyncDrawable(Resources res, Bitmap bitmap,
+                             ThumbnailBitmapWorkTask thumbnailBitmapWorkTask) {
+            super(res, bitmap);
+            thumbnailBitmapWorkTaskWeakReference = new WeakReference<ThumbnailBitmapWorkTask>(thumbnailBitmapWorkTask);
+        }
+
+        public ThumbnailBitmapWorkTask getThumbnailBitmapWorkTask() {
+            return thumbnailBitmapWorkTaskWeakReference.get();
+        }
+    }
+
+    private Bitmap createBitmap(Uri videoUri, long videoProgress) {
+        MediaMetadataRetriever mediaMetadataRetriever = null;
+        Bitmap srcBitmap = null;
+        try {
+            mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(mContext, videoUri);
+            srcBitmap = mediaMetadataRetriever.getFrameAtTime(videoProgress*1000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+        } catch (Exception e) {
+            Log.e(TAG, "counldn't get frame at " + videoProgress);
+        } finally {
+            if (mediaMetadataRetriever != null) {
+                mediaMetadataRetriever.release();
+            }
+        }
+        return scaleBitmap(srcBitmap, mProgresThumbHeight,mProgresThumbHeight);
+    }
+
 
     private Bitmap scaleBitmap(Bitmap originalBitmap, int toWidth, int toHeight) {
         float scaleWidth = ((float)toWidth) / originalBitmap.getWidth();
@@ -88,106 +213,4 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
                 originalBitmap.getHeight(), matrix, true);
     }
 
-    public class HorizontalViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mThumbView;
-        public HorizontalViewHolder (View v) {
-            super(v);
-            mThumbView = (ImageView) v.findViewById(R.id.item_horizontal_videoprogress_id);
-        }
-
-        public void setThumbViewSrc(Bitmap bitmap) {
-            mThumbView.setImageBitmap(bitmap);
-        }
-
-    }
-
-    class VideoProgressThumbWork extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            Log.d(TAG, "VideoProgressThumbWork.doInBackground()");
-            // 20 thumbs, 1 is current, some prior current, the other after current
-            // 20 thumbs, so the whole video is divided into (20 + 1) divions
-            int thumbDivision = (int)( mVideoDuration  / 2);
-            // TODO: 2016/1/24 hightlight current thumb
-//            int indexDivisionSum = 0;
-//            int priorCount = (int)(1.0 * mVideoProgress / mVideoDuration * THUMB_COUNT);
-//            for (int i = 0; i < priorCount; i++) {
-//                ProgressThumbList[i].progress = indexDivisionSum + thumbDivision;
-//                indexDivisionSum = indexDivisionSum + thumbDivision;
-//            }
-            Bitmap srcBitmap = null;
-            MediaMetadataRetriever retriever = null;
-            try {
-                Log.d(TAG, "qfqvideo uri=" + mVideoUri.toString());
-                retriever = new MediaMetadataRetriever();
-                retriever.setDataSource(mContext, mVideoUri);
-                for (int i = 1; i < THUMB_COUNT + 1; i++) {
-                    int videoProgress = 1 * thumbDivision;
-                    if (videoProgress > mVideoDuration) {
-                        videoProgress = mVideoDuration - 100;
-                    }
-                    Log.d(TAG, "VideoProgressThumbWork.doInBackground(), progress=" + videoProgress);
-                    srcBitmap = retriever.getFrameAtTime(videoProgress * 1000, MediaMetadataRetriever.OPTION_CLOSEST);
-                    if (srcBitmap == null) {
-                        Log.e(TAG, "position=" + i + ", failed!");
-                    }
-                    retriever.release();
-                    mVideoProgressThumbList[i - 1].setProgressThumb(scaleBitmap(srcBitmap, mProgressThumbWidth, mProgresThumbHeight));
-                }
-
-            } catch (Exception e) {
-                Log.e(TAG, "getFrameAtTime failed!");
-            } finally {
-                if (retriever != null) {
-                    retriever.release();
-                }
-            }
-            return null;
-        }
-
-        private void PostExecute() {
-            hasCreateThumb = true;
-            for (int i = 0; i < THUMB_COUNT; i++) {
-                mVideoProgressThumbList[i].update();
-            }
-        }
-    }
-
-    class VideoProgressThumb{
-        private int mPosition;
-        private int mProgress;
-        private boolean mIsFocus;
-        private Bitmap mProgressThumb;
-        private WeakReference<ImageView> mImageViewWeakReference;
-
-        public VideoProgressThumb(int position, ImageView imageView) {
-            mPosition = position;
-            mImageViewWeakReference = new WeakReference<ImageView>(imageView);
-        }
-
-        public WeakReference<ImageView> getImageViewWeakReference() {
-            return mImageViewWeakReference;
-        }
-
-        public void setImageViewReference(WeakReference<ImageView> reference) {
-            mImageViewWeakReference = reference;
-        }
-
-        public void setProgressThumb(Bitmap bitmap) {
-            mProgressThumb = bitmap;
-        }
-
-        public Bitmap getProgressThumb() {
-            return mProgressThumb;
-        }
-
-        public void setProgress(int progress) {
-            mProgress = progress;
-        }
-
-        public void update() {
-            ImageView imageView = mImageViewWeakReference.get();
-            imageView.setImageBitmap(mProgressThumb);
-        }
-    }
 }
