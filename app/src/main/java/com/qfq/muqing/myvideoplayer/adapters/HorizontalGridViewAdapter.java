@@ -50,9 +50,11 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
         mVideoUri = uri;
         mVideoDuration = duration;
         mVideoProgress = progress;
-        mDefaultThumbnailBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.horizontal_video_progress_thumb);
         mProgressThumbWidth = progressThumbWidth;
         mProgresThumbHeight = progressThumbHeight;
+        mDefaultThumbnailBitmap = scaleBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.horizontal_video_progress_thumb),
+                mProgressThumbWidth,
+                mProgresThumbHeight);
 
         int division = duration / (THUMB_COUNT + 1);
         float position = (float)progress / duration;
