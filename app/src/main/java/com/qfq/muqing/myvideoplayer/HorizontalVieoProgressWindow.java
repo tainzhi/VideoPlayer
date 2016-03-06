@@ -54,6 +54,7 @@ public class HorizontalVieoProgressWindow {
         PopupWindow popupWindow = new PopupWindow(mHorizontalVideoProgressViewContainer);
         popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.showAtLocation(parentView, Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+        popupWindow.showAtLocation(parentView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
+        popupWindow.update(0, 300, -1, -1, true);
     }
 }

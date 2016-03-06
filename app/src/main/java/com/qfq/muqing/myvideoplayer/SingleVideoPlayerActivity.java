@@ -36,6 +36,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private SurfaceView mPlayView;
     private SurfaceHolder mSurfaceHolder;
 
+    private View mParentView;
     private LinearLayout mControllerTitleLayout;
     private TextView mControllerTitle;
     private LinearLayout mControllerBarLayout;
@@ -71,6 +72,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
 
 
         setContentView(R.layout.activity_single_video_player);
+        mParentView = (View)findViewById(R.id.activity_single_video_parrent);
         mPlayView = (SurfaceView)findViewById(R.id.activity_single_video_player_player_view);
         mControllerTitleLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
         mControllerTitle = (TextView)findViewById(R.id.activity_single_video_player_player_video_title);
@@ -234,7 +236,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             mIsTouchOnSeekBar = true;
 
             HorizontalVieoProgressWindow progressWindow = new HorizontalVieoProgressWindow(mContext, mHandler, mVideoUri, (int)(mVideoDuration), (int)(mVideoProgress));
-            progressWindow.showAt(mPlayView);
+            progressWindow.showAt(mParentView);
         }
 
         @Override
