@@ -24,5 +24,6 @@
         android:id="@+id/video_item_detail"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:paddingStart="5dp"
-        android:ellipsize="end" />
+        android:ellipsize="end"
+        android:singleLine="true" />
 </LinearLayout>
