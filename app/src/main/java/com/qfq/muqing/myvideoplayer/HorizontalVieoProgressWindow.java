@@ -23,18 +23,24 @@ public class HorizontalVieoProgressWindow {
     private Uri mVideoUri;
     private int mVideoDuration;
     private int mVideoProgress;
+    private int mProgressThumbWidth;
+    private int mProgressThumbHeight;
 
     private View mHorizontalVideoProgressViewContainer;
     private HorizontalGridView mHorizontalVideoProgressView;
     private HorizontalGridViewAdapter mAdapter;
 
     public HorizontalVieoProgressWindow(Context context, Handler handler,
-                                         Uri uri, int duration, int progress) {
+                                         Uri uri, int duration, int progress,
+                                        int progressThumbWidth,
+                                        int progressThumbHeight) {
         mContext = context;
         mHandler = handler;
         mVideoUri = uri;
         mVideoDuration = duration;
         mVideoProgress = progress;
+        mProgressThumbWidth = progressThumbWidth;
+        mProgressThumbHeight = progressThumbHeight;
 
         initView();
     }
@@ -43,18 +49,20 @@ public class HorizontalVieoProgressWindow {
         Log.v(TAG, "initView");
         mHorizontalVideoProgressViewContainer = View.inflate(mContext, R.layout.horizontal_video_progress_window_layout, null);
         mHorizontalVideoProgressView = (HorizontalGridView) mHorizontalVideoProgressViewContainer.findViewById(R.id.horizontalgridview_videoprogress_id);
-        mAdapter = new HorizontalGridViewAdapter(mContext, mVideoUri, mVideoDuration, mVideoProgress);
+        mAdapter = new HorizontalGridViewAdapter(mContext, mVideoUri, mVideoDuration, mVideoProgress, mProgressThumbWidth, mProgressThumbHeight);
         mHorizontalVideoProgressView.setAdapter(mAdapter);
         mHorizontalVideoProgressView.setWindowAlignment(HorizontalGridView.WINDOW_ALIGN_BOTH_EDGE);
         mHorizontalVideoProgressView.setWindowAlignmentOffsetPercent(35);
     }
 
-    public void showAt(View parentView) {
+    public void showAt(View parentView, int x, int y) {
         Log.v(TAG, "showAt");
         PopupWindow popupWindow = new PopupWindow(mHorizontalVideoProgressViewContainer);
         popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.showAtLocation(parentView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
-        popupWindow.update(0, 300, -1, -1, true);
+//        popupWindow.showAtLocation(parentView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
+        popupWindow.showAsDropDown(parentView);
+        popupWindow.update(x, y, -1, -1, true);
+
     }
 }

@@ -43,12 +43,16 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     private final static int THUMB_COUNT = 30;
     private int[] mThumbPosition = new int[THUMB_COUNT + 1];
 
-    public HorizontalGridViewAdapter(Context context, Uri uri, int duration, int progress) {
+    public HorizontalGridViewAdapter(Context context, Uri uri, int duration, int progress,
+                                     int progressThumbWidth,
+                                     int progressThumbHeight) {
         mContext = context;
         mVideoUri = uri;
         mVideoDuration = duration;
         mVideoProgress = progress;
         mDefaultThumbnailBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.horizontal_video_progress_thumb);
+        mProgressThumbWidth = progressThumbWidth;
+        mProgresThumbHeight = progressThumbHeight;
 
         int division = duration / (THUMB_COUNT + 1);
         float position = (float)progress / duration;
@@ -192,7 +196,7 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
                 mediaMetadataRetriever.release();
             }
         }
-        return scaleBitmap(srcBitmap, mProgresThumbHeight,mProgresThumbHeight);
+        return scaleBitmap(srcBitmap, mProgressThumbWidth ,mProgresThumbHeight);
     }
 
 

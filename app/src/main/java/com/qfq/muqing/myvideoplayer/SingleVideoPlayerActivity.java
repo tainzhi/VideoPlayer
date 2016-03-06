@@ -235,8 +235,14 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         public void onStartTrackingTouch(SeekBar seekBar) {
             mIsTouchOnSeekBar = true;
 
-            HorizontalVieoProgressWindow progressWindow = new HorizontalVieoProgressWindow(mContext, mHandler, mVideoUri, (int)(mVideoDuration), (int)(mVideoProgress));
-            progressWindow.showAt(mParentView);
+            int progressThumbWidth = (int)getResources().getDimension(R.dimen.progress_thumb_width);
+            int progressThumbHeight = (int)getResources().getDimension(R.dimen.progress_thumb_height);
+            HorizontalVieoProgressWindow progressWindow = new HorizontalVieoProgressWindow(mContext, mHandler, mVideoUri, (int)(mVideoDuration), (int)(mVideoProgress),
+                    progressThumbWidth, progressThumbHeight);
+            int popupHorizontalProgressWindowX = 0;
+            Log.d("qfqtest", progressThumbWidth + ", " + progressThumbHeight);
+            int popupHorizontalProgressWindowY = mParentView.getHeight() -  - mControllerBarLayout.getHeight() - progressThumbHeight - 3;
+            progressWindow.showAt(mParentView, popupHorizontalProgressWindowX, popupHorizontalProgressWindowY);
         }
 
         @Override

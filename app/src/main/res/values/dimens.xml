@@ -3,4 +3,6 @@
     <dimen name="item_margin">5dp</dimen>
     <dimen name="float_window_width">300dp</dimen>
     <dimen name="float_window_height">210dp</dimen>
+    <dimen name="progress_thumb_width">160dp</dimen>
+    <dimen name="progress_thumb_height">90dp</dimen>
 </resources>
