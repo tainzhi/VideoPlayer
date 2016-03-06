@@ -22,7 +22,11 @@
             style="@style/Base.TextAppearance.AppCompat.Title"
             android:textSize="30sp"
             android:textColor="#ffffff"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:ellipsize="middle" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/activity_single_video_player_player_controller_bar"
