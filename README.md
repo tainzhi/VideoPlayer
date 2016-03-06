@@ -110,8 +110,8 @@ https://github.com/wseemann/FFmpegMediaMetadataRetriever
 - [+] 优化1: 把获取的缩略图存储起来
 - [+] DoubleViewActivity
 - [+] ViewStub覆盖住主界面, 没有视频的时候
-- [ ] ActionBar重写
-- [ ] ActionBar图标
+- [+] ActionBar重写
+- [+] ActionBar图标
 - [+] App图标
 - [+] 播放界面, with SurfaceView
 - [+] 播放界面的操作: 快进, 快退, 播放
