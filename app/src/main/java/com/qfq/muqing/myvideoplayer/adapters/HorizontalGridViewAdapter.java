@@ -198,7 +198,11 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
                 mediaMetadataRetriever.release();
             }
         }
-        return scaleBitmap(srcBitmap, mProgressThumbWidth ,mProgresThumbHeight);
+        if (null == srcBitmap) {
+            return null;
+        } else {
+            return scaleBitmap(srcBitmap, mProgressThumbWidth ,mProgresThumbHeight);
+        }
     }
 
 
