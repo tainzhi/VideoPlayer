@@ -1,12 +1,8 @@
 package com.qfq.muqing.myvideoplayer.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.qfq.muqing.myvideoplayer.R;
 
 import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
 
 /**
  * Created by Administrator on 2016/1/24.
@@ -31,14 +29,15 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     private Context mContext;
 
     private HorizontalGridViewAdapter mAdapter = this;
+    private WeakHashMap<ImageView, ThumbnailBitmapWorkTask> mThumbTaskRefereceHashMap = new WeakHashMap<ImageView, ThumbnailBitmapWorkTask>();
+    private WeakHashMap<ImageView, HorizontalViewHolder> mHorizontalViewHolderReferenceHashMap = new WeakHashMap<ImageView, HorizontalViewHolder>();
 
     private Uri mVideoUri;
     private int mVideoDuration;
     private int mVideoProgress;
 
-    private int mProgressThumbWidth = 300;
-    private int mProgresThumbHeight = 200;
-    private Bitmap mDefaultThumbnailBitmap;
+    private int mProgressThumbWidth;
+    private int mProgresThumbHeight;
 
     private final static int THUMB_COUNT = 30;
     private int[] mThumbPosition = new int[THUMB_COUNT + 1];
@@ -52,9 +51,6 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
         mVideoProgress = progress;
         mProgressThumbWidth = progressThumbWidth;
         mProgresThumbHeight = progressThumbHeight;
-        mDefaultThumbnailBitmap = scaleBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.horizontal_video_progress_thumb),
-                mProgressThumbWidth,
-                mProgresThumbHeight);
 
         int division = duration / (THUMB_COUNT + 1);
         float position = (float)progress / duration;
@@ -79,8 +75,7 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     public void onBindViewHolder(HorizontalViewHolder viewHolder, int position) {
         RecyclerView.ViewHolder holder = viewHolder;
         ImageView imageView = viewHolder.mThumbView;
-        imageView.setImageResource(R.drawable.horizontal_video_progress_thumb);
-        loadThumbnailBitmap(mVideoUri, position, mThumbPosition[position], imageView);
+        loadThumbnailBitmap(viewHolder, mVideoUri, position, mThumbPosition[position], imageView);
     }
 
     @Override
@@ -90,9 +85,14 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
 
     public class HorizontalViewHolder extends RecyclerView.ViewHolder {
         public ImageView mThumbView;
+        public ProgressBar mThumbLoadingBar;
         public HorizontalViewHolder (View v) {
             super(v);
             mThumbView = (ImageView) v.findViewById(R.id.item_horizontal_videoprogress_id);
+            mThumbLoadingBar = (ProgressBar)v.findViewById(R.id.item_horizontal_videoprogress_default_loading_bar);
+            mThumbView.setVisibility(View.GONE);
+            v.setMinimumWidth(mProgressThumbWidth);
+            v.setMinimumHeight(mProgresThumbHeight);
         }
     }
 
@@ -127,60 +127,22 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
                 final ImageView imageView = imageViewWeakReference.get();
                 if (imageView != null) {
                     imageView.setImageBitmap(bitmap);
+                    imageView.setVisibility(View.VISIBLE);
+
+                    mHorizontalViewHolderReferenceHashMap.get(imageView).mThumbLoadingBar.setVisibility(View.GONE);
                 }
             }
         }
     }
 
-    private void loadThumbnailBitmap(Uri uri, int index,  int progress, ImageView thumbnailView) {
+    private void loadThumbnailBitmap(HorizontalViewHolder viewHolder,Uri uri, int index,  int progress, ImageView thumbnailView) {
         Log.v(TAG, "position=" + index + ", progress=" + progress);
-        if (cancelPotionalWork(index, thumbnailView)) {
+        if (!mThumbTaskRefereceHashMap.containsKey(thumbnailView)) {
             Log.v(TAG, "loadThumbnailBitmpa enter");
             final ThumbnailBitmapWorkTask task  = new ThumbnailBitmapWorkTask(uri, index, thumbnailView);
-            final AsyncDrawable asyncDrawable  = new AsyncDrawable(mContext.getResources(),
-                    mDefaultThumbnailBitmap, task);
-            thumbnailView.setImageDrawable(asyncDrawable);
+            mThumbTaskRefereceHashMap.put(thumbnailView, task);
+            mHorizontalViewHolderReferenceHashMap.put(thumbnailView, viewHolder);
             task.execute(progress);
-        }
-    }
-
-    private static boolean cancelPotionalWork(int id, ImageView imageView) {
-        Log.v(TAG, "cancelPositionalWork, id=" +id);
-        final ThumbnailBitmapWorkTask thumbnailBitmapWorkTask = getThumbnailBitmapWorkTask(imageView);
-        Log.v(TAG, "thumbnailBitmapWorkTask=" + (thumbnailBitmapWorkTask == null));
-        if (thumbnailBitmapWorkTask != null) {
-            if (id != thumbnailBitmapWorkTask.mId) {
-                thumbnailBitmapWorkTask.cancel(true);
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static ThumbnailBitmapWorkTask getThumbnailBitmapWorkTask(ImageView imageView) {
-        if (imageView != null) {
-            final Drawable drawable = imageView.getDrawable();
-            if (drawable instanceof AsyncDrawable) {
-                final AsyncDrawable asyncDrawable = (AsyncDrawable)drawable;
-                return asyncDrawable.getThumbnailBitmapWorkTask();
-            }
-        }
-        return null;
-    }
-
-
-    static class AsyncDrawable extends BitmapDrawable {
-        private final WeakReference<ThumbnailBitmapWorkTask> thumbnailBitmapWorkTaskWeakReference;
-
-        public AsyncDrawable(Resources res, Bitmap bitmap,
-                             ThumbnailBitmapWorkTask thumbnailBitmapWorkTask) {
-            super(res, bitmap);
-            thumbnailBitmapWorkTaskWeakReference = new WeakReference<ThumbnailBitmapWorkTask>(thumbnailBitmapWorkTask);
-        }
-
-        public ThumbnailBitmapWorkTask getThumbnailBitmapWorkTask() {
-            return thumbnailBitmapWorkTaskWeakReference.get();
         }
     }
 

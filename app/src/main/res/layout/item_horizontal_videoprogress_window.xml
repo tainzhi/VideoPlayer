@@ -6,5 +6,14 @@
     <ImageView
         android:id="@+id/item_horizontal_videoprogress_id"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_horizontal_videoprogress_default_loading_bar"
+        android:layout_gravity="center" />
+
 </LinearLayout>
