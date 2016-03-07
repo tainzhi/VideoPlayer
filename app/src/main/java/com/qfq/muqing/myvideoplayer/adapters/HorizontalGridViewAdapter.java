@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -31,6 +32,8 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     private HorizontalGridViewAdapter mAdapter = this;
     private WeakHashMap<ImageView, ThumbnailBitmapWorkTask> mThumbTaskRefereceHashMap = new WeakHashMap<ImageView, ThumbnailBitmapWorkTask>();
     private WeakHashMap<ImageView, HorizontalViewHolder> mHorizontalViewHolderReferenceHashMap = new WeakHashMap<ImageView, HorizontalViewHolder>();
+
+    private AdapterView.OnItemClickListener mOnItemClickListener;
 
     private Uri mVideoUri;
     private int mVideoDuration;
@@ -72,9 +75,15 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     }
 
     @Override
-    public void onBindViewHolder(HorizontalViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final HorizontalViewHolder viewHolder, final int position) {
         RecyclerView.ViewHolder holder = viewHolder;
         ImageView imageView = viewHolder.mThumbView;
+        viewHolder.mThumbView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemHolderClick(position, mThumbPosition[position]);
+            }
+        });
         loadThumbnailBitmap(viewHolder, mVideoUri, position, mThumbPosition[position], imageView);
     }
 
@@ -94,6 +103,18 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
             v.setMinimumWidth(mProgressThumbWidth);
             v.setMinimumHeight(mProgresThumbHeight);
         }
+
+    }
+
+    private void onItemHolderClick(int position, int videoProgress) {
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(null, null,
+                    position, videoProgress);
+        }
+    }
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
     class ThumbnailBitmapWorkTask extends AsyncTask<Integer, Void, Bitmap> {
@@ -122,7 +143,7 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            Log.v(TAG, "AsyncTask, id=" + mId + ", bitmap=" + ((bitmap != null) + ", reference=" + (imageViewWeakReference !=null)));
+            Log.v(TAG, "AsyncTask, id=" + mId + ", bitmap=" + ((bitmap != null) + ", reference=" + (imageViewWeakReference != null)));
             if (imageViewWeakReference != null && bitmap != null) {
                 final ImageView imageView = imageViewWeakReference.get();
                 if (imageView != null) {

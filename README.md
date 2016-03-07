@@ -92,9 +92,12 @@ http://stackoverflow.com/questions/3658779/threads-in-java
 
 [参考](http://www.liaohuqiu.net/cn/posts/android-windows-manager/)
 
+###ActionBar显示title&&icon
+
 ###GalleryView弃用, 改用HorizontalGridView
 - PopWindow必须设置width和height, 否则无法显示
 [参考](https://android.googlesource.com/platform/development/+/master/samples/SupportLeanbackDemos/src/com/example/android/leanback/HorizontalGridTestActivity.java)
+- WeakHashMap
 
 ###getFrameAt
 http://stackoverflow.com/questions/12772547/mediametadataretriever-getframeattime-returns-only-first-frame
@@ -122,7 +125,7 @@ https://github.com/wseemann/FFmpegMediaMetadataRetriever
 - [ ] SearchView的实现
 - [ ] CheckBox的实现
 - [ ] DoubleViewActivity优化: 添加声音, 控制
-- [ ] 类似搜狐视频一样的截屏进度条
+- [+] 类似搜狐视频一样的截屏进度条
 - [ ] Animation:显示和隐藏播放界面控制栏动画
 - [ ] Animation:列表界面删除动画
 

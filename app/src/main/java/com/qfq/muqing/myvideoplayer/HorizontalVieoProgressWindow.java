@@ -3,10 +3,12 @@ package com.qfq.muqing.myvideoplayer;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.PopupWindow;
 
 import com.qfq.muqing.myvideoplayer.adapters.HorizontalGridViewAdapter;
@@ -17,6 +19,9 @@ import com.qfq.muqing.myvideoplayer.adapters.HorizontalGridViewAdapter;
 public class HorizontalVieoProgressWindow {
 
     private final static String TAG = "VideoPlayer/HorizontalVideoProgressWindow";
+
+    private final static int CONTROLLER_SEEK_TO = 1;
+
     private Context mContext;
     private Handler mHandler;
     private Uri mVideoUri;
@@ -28,6 +33,8 @@ public class HorizontalVieoProgressWindow {
     private View mHorizontalVideoProgressViewContainer;
     private HorizontalGridView mHorizontalVideoProgressView;
     private HorizontalGridViewAdapter mAdapter;
+
+    private PopupWindow mPopupWindow;
 
     public HorizontalVieoProgressWindow(Context context, Handler handler,
                                          Uri uri, int duration, int progress,
@@ -49,6 +56,7 @@ public class HorizontalVieoProgressWindow {
         mHorizontalVideoProgressViewContainer = View.inflate(mContext, R.layout.horizontal_video_progress_window_layout, null);
         mHorizontalVideoProgressView = (HorizontalGridView) mHorizontalVideoProgressViewContainer.findViewById(R.id.horizontalgridview_videoprogress_id);
         mAdapter = new HorizontalGridViewAdapter(mContext, mVideoUri, mVideoDuration, mVideoProgress, mProgressThumbWidth, mProgressThumbHeight);
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
         mHorizontalVideoProgressView.setAdapter(mAdapter);
         mHorizontalVideoProgressView.setWindowAlignment(HorizontalGridView.WINDOW_ALIGN_BOTH_EDGE);
         mHorizontalVideoProgressView.setWindowAlignmentOffsetPercent(35);
@@ -56,12 +64,24 @@ public class HorizontalVieoProgressWindow {
 
     public void showAt(View parentView, int x, int y) {
         Log.v(TAG, "showAt");
-        PopupWindow popupWindow = new PopupWindow(mHorizontalVideoProgressViewContainer, mProgressThumbWidth, mProgressThumbHeight);
-        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        mPopupWindow = new PopupWindow(mHorizontalVideoProgressViewContainer, mProgressThumbWidth, mProgressThumbHeight);
+        mPopupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        mPopupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 //        popupWindow.showAtLocation(parentView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
-        popupWindow.showAsDropDown(parentView);
-        popupWindow.update(x, y, -1, -1, true);
+        mPopupWindow.showAsDropDown(parentView);
+        mPopupWindow.update(x, y, -1, -1, true);
 
     }
+
+    private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long videoProgress) {
+            Message msg = new Message();
+            msg.what = CONTROLLER_SEEK_TO;
+            msg.arg1 = (int)videoProgress;
+            mHandler.sendMessage(msg);
+            mPopupWindow.dismiss();
+        }
+    };
+
 }
