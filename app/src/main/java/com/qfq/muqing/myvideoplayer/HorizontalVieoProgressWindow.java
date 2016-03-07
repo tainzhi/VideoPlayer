@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
@@ -57,7 +56,7 @@ public class HorizontalVieoProgressWindow {
 
     public void showAt(View parentView, int x, int y) {
         Log.v(TAG, "showAt");
-        PopupWindow popupWindow = new PopupWindow(mHorizontalVideoProgressViewContainer);
+        PopupWindow popupWindow = new PopupWindow(mHorizontalVideoProgressViewContainer, mProgressThumbWidth, mProgressThumbHeight);
         popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 //        popupWindow.showAtLocation(parentView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
