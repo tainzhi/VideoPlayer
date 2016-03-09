@@ -97,5 +97,7 @@
     <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="leanback-v17-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
+    <orderEntry type="module" module-name="disklrucache-2.0.2" exported="" />
+    <orderEntry type="library" exported="" name="android-android-23" level="project" />
   </component>
 </module>
