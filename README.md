@@ -105,6 +105,11 @@ http://stackoverflow.com/questions/14460151/mediametadataretriever-getframeattim
 http://stackoverflow.com/questions/20624996/android-get-all-the-frames-of-a-video-any-video-file
 https://github.com/wseemann/FFmpegMediaMetadataRetriever
 
+###DiskCache保存缩略图
+https://github.com/JakeWharton/DiskLruCache
+http://developer.android.com/training/displaying-bitmaps/cache-bitmap.html
+http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-does-not-provide-for-opencache-method
+
 ##Todo
 - [+] StaggedGridView
 - [+] thumbnail.scale
@@ -126,6 +131,7 @@ https://github.com/wseemann/FFmpegMediaMetadataRetriever
 - [ ] CheckBox的实现
 - [ ] DoubleViewActivity优化: 添加声音, 控制
 - [+] 类似搜狐视频一样的截屏进度条
+- [+] DiskCache进度条产生的缩略图文件
 - [ ] Animation:显示和隐藏播放界面控制栏动画
 - [ ] Animation:列表界面删除动画
 

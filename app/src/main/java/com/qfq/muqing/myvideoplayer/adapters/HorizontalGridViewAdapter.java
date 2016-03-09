@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.qfq.muqing.myvideoplayer.R;
+import com.qfq.muqing.myvideoplayer.utils.DiskLruImageCache;
+import com.qfq.muqing.myvideoplayer.utils.Util;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
@@ -26,6 +28,8 @@ import java.util.WeakHashMap;
 public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGridViewAdapter.HorizontalViewHolder> {
 
     private final static String TAG = "VideoPlayer/HorizontalGridViewAdapter";
+
+    private DiskLruImageCache mDiskLruCache;
 
     private Context mContext;
 
@@ -65,6 +69,8 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
         for (int i = countBefore + 1; i<THUMB_COUNT+1; i++) {
             mThumbPosition[i] = (i+1) * division;
         }
+
+        mDiskLruCache  = new DiskLruImageCache(mContext, Util.DISK_CACHE_DIR, Util.DISK_CACHE_SIZE);
     }
 
     @Override
@@ -137,7 +143,15 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
         @Override
         protected Bitmap doInBackground(Integer... params) {
             int progress = params[0];
-            Bitmap bitmap = createBitmap(mVideoUri, progress);
+            Bitmap bitmap;
+            if (mDiskLruCache != null && mDiskLruCache.getBitmap(progress) == null) {
+                bitmap = createBitmap(mVideoUri, progress);
+                if (bitmap != null) {
+                    mDiskLruCache.put(progress, bitmap);
+                }
+            } else {
+                bitmap = mDiskLruCache.getBitmap(progress);
+            }
             return bitmap;
         }
 
