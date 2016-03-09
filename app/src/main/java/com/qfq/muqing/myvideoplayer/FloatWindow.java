@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qfq.muqing.myvideoplayer.utils.Util;
+
 import java.io.IOException;
 
 /**
@@ -160,15 +162,15 @@ public class FloatWindow implements SurfaceHolder.Callback {
     }
 
     private void setFloatWindowPosition() {
-        SharedPreferences sp = mContext.getSharedPreferences(Utils.VIDEO_PLAYER_SETTING_PREFERENCE, Context.MODE_PRIVATE);
-        sp.edit().putInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X, mFloatWindowPositionX).commit();
-        sp.edit().putInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y, mFloatWindowPositionY).commit();
+        SharedPreferences sp = mContext.getSharedPreferences(Util.VIDEO_PLAYER_SETTING_PREFERENCE, Context.MODE_PRIVATE);
+        sp.edit().putInt(Util.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X, mFloatWindowPositionX).commit();
+        sp.edit().putInt(Util.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y, mFloatWindowPositionY).commit();
     }
 
     private void getFloatWindowPosition() {
-        SharedPreferences sp = mContext.getSharedPreferences(Utils.VIDEO_PLAYER_SETTING_PREFERENCE, Context.MODE_PRIVATE);
-        mFloatWindowPositionX = sp.getInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X, -1);
-        mFloatWindowPositionY = sp.getInt(Utils.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y, -1);
+        SharedPreferences sp = mContext.getSharedPreferences(Util.VIDEO_PLAYER_SETTING_PREFERENCE, Context.MODE_PRIVATE);
+        mFloatWindowPositionX = sp.getInt(Util.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_X, -1);
+        mFloatWindowPositionY = sp.getInt(Util.VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y, -1);
 
         // First enter float window, set the window in center
         if (mFloatWindowPositionX == -1 || mFloatWindowPositionY == -1) {
