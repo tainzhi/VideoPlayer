@@ -65,6 +65,7 @@ public class HorizontalVieoProgressWindow {
     public void showAt(View parentView, int x, int y) {
         Log.v(TAG, "showAt");
         mPopupWindow = new PopupWindow(mHorizontalVideoProgressViewContainer, mProgressThumbWidth, mProgressThumbHeight);
+        mPopupWindow.setAnimationStyle(R.style.animation_single_video_player_progress_popwindow);
         mPopupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         mPopupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 //        popupWindow.showAtLocation(parentView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
