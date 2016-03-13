@@ -9,4 +9,9 @@
         <item name="icon">@drawable/ic_appbar</item>
     </style>
 
+    <style name="animation_single_video_player_progress_popwindow" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/animation_single_video_player_progress_popwindow_enter</item>
+        <item name="android:windowExitAnimation">@anim/animation_single_video_player_progress_popwindow_exit</item>
+    </style>
+
 </resources>
