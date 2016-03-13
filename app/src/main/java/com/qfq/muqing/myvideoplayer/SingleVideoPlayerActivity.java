@@ -1,5 +1,8 @@
 package com.qfq.muqing.myvideoplayer;
 
+import android.animation.AnimatorInflater;
+import android.animation.LayoutTransition;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +16,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -55,6 +60,8 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private final static int HIDE_CONTROLLER_BAR_DELAY = 5000;
 
     private UpdateSeekBarThread mUpdateSeekBarThread;
+
+    private LayoutTransition mLayoutTransition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +109,8 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         } catch (IOException e) {
             Log.e(TAG, mVideoUri.toString() + " IOException!!!");
         }
+
+        initTransition();
     }
 
     @Override
@@ -301,6 +310,14 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         public void stop_thread() {
             isRuuning = false;
         }
+    }
+
+    private void initTransition() {
+        mLayoutTransition = new LayoutTransition();
+        FrameLayout parentContainer = (FrameLayout)findViewById(R.id.activity_single_video_parrent);
+        parentContainer.setLayoutTransition(mLayoutTransition);
+        mLayoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_appear));
+        mLayoutTransition.setAnimator(LayoutTransition.DISAPPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_disappearing));
     }
 }
 
