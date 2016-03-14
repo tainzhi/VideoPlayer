@@ -1,4 +1,16 @@
-#MyVideoPlayer
+# VideoPlayer#
+## Info##
+This is a repository about my videoplayer
+
+![demo](./demo.gif)
+
+### The functions which have been implemented
+- 滑动列表
+- 双播放窗口
+- 单播放窗口及控制界面
+- **悬浮播放窗口**
+- **预览窗口: 进度表显示thumbnail窗口及跳转**
+
 ##Introduction has only two activity, one is to show the list, then ohter is show the playing video.
 - MainActivity: 重写了adapter，并读取数据库，写入视频信息到列表
 - PlayVideo: 简单的实现了播放界面
@@ -110,6 +122,8 @@ https://github.com/JakeWharton/DiskLruCache
 http://developer.android.com/training/displaying-bitmaps/cache-bitmap.html
 http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-does-not-provide-for-opencache-method
 
+### Animation
+
 ##Todo
 - [+] StaggedGridView
 - [+] thumbnail.scale
@@ -135,9 +149,3 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 - [+] Animation:显示和隐藏播放界面控制栏动画
 - [+] Animation:列表界面删除动画
 
-## Animation
-
-##图片介绍
-![MainActivity](./listview.png)
-
-![PlayVideo](./play.png)
