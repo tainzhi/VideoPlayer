@@ -132,8 +132,10 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 - [ ] DoubleViewActivity优化: 添加声音, 控制
 - [+] 类似搜狐视频一样的截屏进度条
 - [+] DiskCache进度条产生的缩略图文件
-- [ ] Animation:显示和隐藏播放界面控制栏动画
-- [ ] Animation:列表界面删除动画
+- [+] Animation:显示和隐藏播放界面控制栏动画
+- [+] Animation:列表界面删除动画
+
+## Animation
 
 ##图片介绍
 ![MainActivity](./listview.png)
