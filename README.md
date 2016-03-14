@@ -11,10 +11,6 @@ This is a repository about my videoplayer
 - **悬浮播放窗口**
 - **预览窗口: 进度表显示thumbnail窗口及跳转**
 
-##Introduction has only two activity, one is to show the list, then ohter is show the playing video.
-- MainActivity: 重写了adapter，并读取数据库，写入视频信息到列表
-- PlayVideo: 简单的实现了播放界面
-
 ##Notes
 ###参考学习
 - [recyclereview-playround](https://github.com/devunwired/recyclerview-playground) StaggeredGridView用法实例的github项目
