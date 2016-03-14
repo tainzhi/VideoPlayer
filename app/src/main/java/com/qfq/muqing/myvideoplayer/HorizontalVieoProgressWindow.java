@@ -77,11 +77,11 @@ public class HorizontalVieoProgressWindow {
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long videoProgress) {
+            mPopupWindow.dismiss();
             Message msg = new Message();
             msg.what = CONTROLLER_SEEK_TO;
             msg.arg1 = (int)videoProgress;
             mHandler.sendMessage(msg);
-            mPopupWindow.dismiss();
         }
     };
 
