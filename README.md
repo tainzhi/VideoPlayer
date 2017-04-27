@@ -1,5 +1,5 @@
-# VideoPlayer#
-## Info##
+# VideoPlayer
+## Info
 This is a repository about my videoplayer
 
 ![demo](./demo.gif)
@@ -11,13 +11,13 @@ This is a repository about my videoplayer
 - **悬浮播放窗口**
 - **预览窗口: 进度表显示thumbnail窗口及跳转**
 
-##Notes
-###参考学习
+## Notes
+### 参考学习
 - [recyclereview-playround](https://github.com/devunwired/recyclerview-playground) StaggeredGridView用法实例的github项目
 - [提供RecycleView封装的api](http://lucasr.org/2014/07/31/the-new-twowayview/)
 - [android官方文档 StaggeredGridLayoutManager](http://developer.android.com/reference/android/support/v7/widget/StaggeredGridLayoutManager.html#)
 
-###How to getThumbnail of a Video
+### How to getThumbnail of a Video
 
 ##### MediaStore.Video.Thumbnails.getThhumbnail( , , MediaStore.Video.Thumbnails.MICRO_KIND,)
 ```
@@ -42,38 +42,38 @@ Thumbnails widht and height is 288*512
 
 options is for decoding MINI_KIND, so it will not be usefull if options.outWidth is not fit for MINI_KIND
 
-#####ThumbnailUtils.createVideoThumbnail####
+##### ThumbnailUtils.createVideoThumbnail
 
 [References](http://www.jianshu.com/p/4aa82a21b4b5)
 
-#####MediaMetadataRetriver####
+##### MediaMetadataRetriver
 
 [MediaMetadataRetriver.getFrameAt](http://developer.android.com/intl/zh-cn/reference/android/media/MediaMetadataRetriever.html#getFrameAtTime)
 
 [MediaMetadataRetriver与ThumbnailtUtils.createVideoThumbnail的关系](http://m.blog.csdn.net/blog/Mr_dsw/48524977), 可以查看源码
 
-###RecyclerView don't has onItemClickListener
+### RecyclerView don't has onItemClickListener
 RecyclerView don't has onItemClickLister&& onItemLongClickListern, so you have to implement them.
 [参考](http://stackoverflow.com/questions/24471109/recyclerview-onclick/26826692#26826692)
 
-###AsyncTask加载列表缩略图
+### AsyncTask加载列表缩略图
 http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/process-bitmap.html
 http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/process-bitmap.html
 http://developer.android.com/intl/zh-cn/training/displaying-bitmaps/display-bitmap.html
 
-###获取更清晰额缩略图并缓存在cache中
+### 获取更清晰额缩略图并缓存在cache中
 - 使用MediaMetadataRetriever.getFrameAtTime()获取缩略图, 如果获取失败是MediaStore.Video.Thumbnails.getThumbnail()获取
 - 获取的缩略图缓存在externalCacheDir()中, 通过id和progres命名
 
-###DoubleMovieActivity
+### DoubleMovieActivity
 两个播放窗口, 但是没有播放声音
 [参考](https://github.com/google/grafika/blob/master/src/com/android/grafika/DoubleDecodeActivity.java)
 
-###MediaPlayer
+### MediaPlayer
 http://developer.android.com/intl/zh-cn/reference/android/media/MediaPlayer.html
 http://developer.android.com/intl/zh-cn/guide/topics/media/mediaplayer.html
 
-###SurfaceView&&VideoView
+### SurfaceView&&VideoView
 VideoView extends SurfaceView
 
 http://developer.android.com/reference/android/view/SurfaceView.html
@@ -81,17 +81,17 @@ http://developer.android.com/reference/android/widget/VideoView.html#getAudioSes
 http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 http://stackoverflow.com/questions/16700587/how-to-attach-mediaplayer-with-surfaceview-in-android
 
-###Thread&&Runnable实现SeekBar自动更新进度
+### Thread&&Runnable实现SeekBar自动更新进度
 http://stackoverflow.com/questions/17168215/seekbar-and-media-player-in-android
 http://developer.android.com/reference/java/lang/Runnable.html
 http://stackoverflow.com/questions/541487/implements-runnable-vs-extends-thread
 http://stackoverflow.com/questions/3658779/threads-in-java
 
 
-###使用Callback机制和ViewStub实现无视频时的提示界面
+### 使用Callback机制和ViewStub实现无视频时的提示界面
 
 
-###FloatWindow
+### FloatWindow
 主要使用了`WindowManager`. 显示悬浮窗有两种方式
 - 方式1: 需要权限`<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>`
 - 方式2: 不需要权限, 但是需要设置`WindownManager.LayoutParams.type`为`WindowManager.LayoutParams.TYPE_TOAST`
@@ -100,27 +100,27 @@ http://stackoverflow.com/questions/3658779/threads-in-java
 
 [参考](http://www.liaohuqiu.net/cn/posts/android-windows-manager/)
 
-###ActionBar显示title&&icon
+### ActionBar显示title&&icon
 
-###GalleryView弃用, 改用HorizontalGridView
+### GalleryView弃用, 改用HorizontalGridView
 - PopWindow必须设置width和height, 否则无法显示
 [参考](https://android.googlesource.com/platform/development/+/master/samples/SupportLeanbackDemos/src/com/example/android/leanback/HorizontalGridTestActivity.java)
 - WeakHashMap
 
-###getFrameAt
+### getFrameAt
 http://stackoverflow.com/questions/12772547/mediametadataretriever-getframeattime-returns-only-first-frame
 http://stackoverflow.com/questions/14460151/mediametadataretriever-getframeattimelong-option-crashing
 http://stackoverflow.com/questions/20624996/android-get-all-the-frames-of-a-video-any-video-file
 https://github.com/wseemann/FFmpegMediaMetadataRetriever
 
-###DiskCache保存缩略图
+### DiskCache保存缩略图
 https://github.com/JakeWharton/DiskLruCache
 http://developer.android.com/training/displaying-bitmaps/cache-bitmap.html
 http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-does-not-provide-for-opencache-method
 
 ### Animation
 
-##Todo
+## Todo
 - [+] StaggedGridView
 - [+] thumbnail.scale
 - [+] Item display
