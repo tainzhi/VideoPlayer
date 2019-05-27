@@ -1,2 +1,0 @@
-configurations.create("default")
-artifacts.add("default", file('disklrucache-2.0.2.jar'))
