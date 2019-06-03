@@ -1,4 +1,6 @@
 # VideoPlayer
+
+## todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
 ## Info
 This is a repository about my videoplayer
 

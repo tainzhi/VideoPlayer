@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v17.leanback.widget.HorizontalGridView
+    <androidx.leanback.widget.HorizontalGridView
         android:id="@+id/horizontalgridview_videoprogress_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v17.leanback.widget.HorizontalGridView>
+        android:layout_height="wrap_content"></androidx.leanback.widget.HorizontalGridView>
 
 </RelativeLayout>

@@ -2,8 +2,8 @@ package com.qfq.muqing.myvideoplayer;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 /**
