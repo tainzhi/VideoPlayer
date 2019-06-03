@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v17.leanback.widget.HorizontalGridView;
+import androidx.leanback.widget.HorizontalGridView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
