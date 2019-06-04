@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer;
+package com.qfq.tainzhi.videoplayer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.view.TextureView;
 import java.io.File;
 import java.io.IOException;
 
-import com.qfq.muqing.myvideoplayer.DoubleDecode.MoviePlayer;
-import com.qfq.muqing.myvideoplayer.DoubleDecode.SpeedControlCallback;
+import com.qfq.tainzhi.videoplayer.DoubleDecode.MoviePlayer;
+import com.qfq.tainzhi.videoplayer.DoubleDecode.SpeedControlCallback;
 
 /**
  * Created by muqing on 1/3/16.

@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer.utils;
+package com.qfq.tainzhi.videoplayer.utils;
 
 import android.content.Context;
 import android.content.res.Resources;

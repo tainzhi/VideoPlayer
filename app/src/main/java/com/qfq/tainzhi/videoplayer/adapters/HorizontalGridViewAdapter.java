@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer.adapters;
+package com.qfq.tainzhi.videoplayer.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,9 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.qfq.muqing.myvideoplayer.R;
-import com.qfq.muqing.myvideoplayer.utils.DiskLruImageCache;
-import com.qfq.muqing.myvideoplayer.utils.Util;
+import com.qfq.tainzhi.videoplayer.R;
+import com.qfq.tainzhi.videoplayer.utils.DiskLruImageCache;
+import com.qfq.tainzhi.videoplayer.utils.Util;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;

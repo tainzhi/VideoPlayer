@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer.adapters;
+package com.qfq.tainzhi.videoplayer.adapters;
 
 /**
  * Created by Administrator on 2015/11/15.
@@ -26,8 +26,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.qfq.muqing.myvideoplayer.R;
-import com.qfq.muqing.myvideoplayer.callbacks.OnStaggeredAdapterInformation;
+import com.qfq.tainzhi.videoplayer.R;
+import com.qfq.tainzhi.videoplayer.callbacks.OnStaggeredAdapterInformation;
 
 import java.io.File;
 import java.io.FileOutputStream;

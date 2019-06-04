@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer;
+package com.qfq.tainzhi.videoplayer;
 
 import android.content.Context;
 import android.graphics.Rect;

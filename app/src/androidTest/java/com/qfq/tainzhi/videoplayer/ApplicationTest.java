@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer;
+package com.qfq.tainzhi.videoplayer;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
