@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer.DoubleDecode;
+package com.qfq.tainzhi.videoplayer.DoubleDecode;
 
 import android.media.MediaCodec;
 import android.media.MediaExtractor;

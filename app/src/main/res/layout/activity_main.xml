@@ -1,21 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.qfq.muqing.myvideoplayer.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/selection_list"
+    <FrameLayout
+        android:id="@+id/real_tab_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="0dp"></androidx.recyclerview.widget.RecyclerView>
-    <ViewStub
-        android:id="@+id/viewstub_novideo_hint_layout_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout="@layout/viewstub_novideo_hint_layout"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#333333"/>
+
+    <androidx.fragment.app.FragmentTabHost
+        android:id="@+id/tab_host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/tab_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0">
+        </FrameLayout>
+    </androidx.fragment.app.FragmentTabHost>
 </LinearLayout>
-

@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer;
+package com.qfq.tainzhi.videoplayer;
 
 import android.Manifest;
 import android.content.ContentUris;
@@ -23,12 +23,12 @@ import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.qfq.muqing.myvideoplayer.adapters.StaggeredAdapter;
-import com.qfq.muqing.myvideoplayer.callbacks.OnStaggeredAdapterInformation;
+import com.qfq.tainzhi.videoplayer.adapters.StaggeredAdapter;
+import com.qfq.tainzhi.videoplayer.callbacks.OnStaggeredAdapterInformation;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
-    private static String TAG = "VideoPlayer/MainActivity";
+    private static String TAG = "VideoPlayer/HomeActivity";
     public static final int EXTERNAL_STORAGE_REQ_CODE = 10;
     
     private Context mContext;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
     
         requestPermission();
 
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             Uri videoUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
             String videoTitle = mAdapter.getVideoItemAtPosition(position).videoName;
             long videoDuration = mAdapter.getVideoItemAtPosition(position).videoDuration;
-            Intent intent = new Intent(MainActivity.this, SingleVideoPlayerActivity.class);
+            Intent intent = new Intent(HomeActivity.this, SingleVideoPlayerActivity.class);
             intent.setData(videoUri);
             intent.putExtra("title", videoTitle);
             intent.putExtra("duration", videoDuration);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             //Toast.makeText(mContext, "onItemLongClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
             String filePath = mAdapter.getVideoItemAtPosition(position).videoPath;
-            Intent startIntent = new Intent(MainActivity.this, DoubleVideoPlayerActivity.class);
+            Intent startIntent = new Intent(HomeActivity.this, DoubleVideoPlayerActivity.class);
             startIntent.putExtra("file", filePath);
             startActivity(startIntent);
             return true;

@@ -1,4 +1,4 @@
-package com.qfq.muqing.myvideoplayer;
+package com.qfq.tainzhi.videoplayer;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
 
-import com.qfq.muqing.myvideoplayer.adapters.HorizontalGridViewAdapter;
+import com.qfq.tainzhi.videoplayer.adapters.HorizontalGridViewAdapter;
 
 /**
  * Created by Administrator on 2016/1/24.
