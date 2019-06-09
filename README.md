@@ -1,6 +1,5 @@
 # VideoPlayer
 
-## todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
 ## Info
 This is a repository about my videoplayer
 
@@ -123,27 +122,14 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 ### Animation
 
 ## Todo
-- [+] StaggedGridView
-- [+] thumbnail.scale
-- [+] Item display
-- [+] AsyncTask加载缩略图, scroom the list smoothly
-- [+] 优化1: 把获取的缩略图存储起来
-- [+] DoubleViewActivity
-- [+] ViewStub覆盖住主界面, 没有视频的时候
-- [+] ActionBar重写
-- [+] ActionBar图标
-- [+] App图标
-- [+] 播放界面, with SurfaceView
-- [+] 播放界面的操作: 快进, 快退, 播放
-- [+] 响应Touch事件
-- [ ] 最后播放的视频特殊化
-- [+] 缩略图使用最后退出时一帧的图片, AsyncTask实现
-- [+] 悬浮播放窗
-- [ ] SearchView的实现
-- [ ] CheckBox的实现
-- [ ] DoubleViewActivity优化: 添加声音, 控制
-- [+] 类似搜狐视频一样的截屏进度条
-- [+] DiskCache进度条产生的缩略图文件
-- [+] Animation:显示和隐藏播放界面控制栏动画
-- [+] Animation:列表界面删除动画
+- [ ] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
+- [ ]进度条+小窗显示
+- [ ]悬浮窗播放
+- [ ]记录视频播放记录
+- [ ]混淆编译
+- [ ]添加自动测试模块
+- [ ]ExoPlayer, vitamio:[部署参考](https://github.com/tainzhi/QDouyu/tree/v0.1), ijkplayer提供切换接口
+- [ ]搭建一个局域网服务器, 提供全国视频爬取的链接
+- [ ]搭建一个局域网服务器, 提供美剧tab的搜索和展示
+- [ ]kotlin实现
 
