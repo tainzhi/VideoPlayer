@@ -9,9 +9,31 @@
         <item name="icon">@drawable/ic_appbar</item>
     </style>
 
-    <style name="animation_single_video_player_progress_popwindow" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/animation_single_video_player_progress_popwindow_enter</item>
-        <item name="android:windowExitAnimation">@anim/animation_single_video_player_progress_popwindow_exit</item>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
+    <style name="animation_single_video_player_progress_popwindow" parent="android:Animation">
+        <item name="android:windowEnterAnimation">
+            @anim/animation_single_video_player_progress_popwindow_enter
+        </item>
+        <item name="android:windowExitAnimation">
+            @anim/animation_single_video_player_progress_popwindow_exit
+        </item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

@@ -1,78 +1,107 @@
 package com.qfq.tainzhi.videoplayer.mvp.view.activity;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import androidx.core.view.GravityCompat;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+
+import android.view.MenuItem;
+
+import com.google.android.material.navigation.NavigationView;
+import com.qfq.tainzhi.videoplayer.R;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTabHost;
+import androidx.appcompat.widget.Toolbar;
 
-import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.R2;
-import com.qfq.tainzhi.videoplayer.mvp.view.fragment.DouyuFragment;
-import com.qfq.tainzhi.videoplayer.mvp.view.fragment.LikeFragment;
-import com.qfq.tainzhi.videoplayer.mvp.view.fragment.LocalVideoFragment;
-import com.qfq.tainzhi.videoplayer.mvp.view.fragment.TVFragment;
-import com.qfq.tainzhi.videoplayer.mvp.view.fragment.USTVFragment;
+import android.view.Menu;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-/**
- * Created by muqing on 2019/6/4.
- * Email: qfq61@qq.com
- */
-public class MainActivity extends AppCompatActivity {
-    public static final String TAG = "VideoPlayer/MainActivity";
-    @BindView(R2.id.tab_content)
-    FrameLayout mTabContent;
-    @BindView(R2.id.tab_host)
-    FragmentTabHost mTabHost;
-    @BindView(R2.id.real_tab_content)
-    FrameLayout mRealTabContent;
-    private final String mTabSpec[] = {"local", "douyu", "like", "tv", "ustv"};
-    private final String mIndicator[] = {"本地视频", "斗鱼", "收藏", "电视", "美剧"};
-    private final Class mFragmentClass[] = {
-            LocalVideoFragment.class,
-            DouyuFragment.class,
-            LikeFragment.class,
-            TVFragment.class,
-            USTVFragment.class};
-    
-    // TODO: 2019/6/4 添加图片
-    // private final int mTabImage[] = {
-    //         R.drawable.tab_local_item,
-    //                                         R.d
-    // }
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        
-        if (mTabHost == null) {
-            return;
-        }
-        mTabHost.setup(this, getSupportFragmentManager(), R.id.real_tab_content);
-        for (int i = 0; i < mTabSpec.length; i++) {
-            mTabHost.addTab(mTabHost.newTabSpec(mTabSpec[i]).setIndicator(getTabView(i)),
-                    mFragmentClass[i], null);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
     
-    private View getTabView(int index) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.tab_item, null);
-        // ImageView image = (ImageView)view.findViewById(R.id.tab_iamge);
-        TextView text = (TextView)view.findViewById(R.id.tab_title);
-        // image.setImageResource(mTabImage[index]);
-        text.setText(mIndicator[index]);
-        return view;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        
+        if (id == R.id.nav_home) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+        
+        } else if (id == R.id.nav_slideshow) {
+        
+        } else if (id == R.id.nav_tools) {
+        
+        } else if (id == R.id.nav_share) {
+        
+        } else if (id == R.id.nav_send) {
+        
+        }
+        
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
