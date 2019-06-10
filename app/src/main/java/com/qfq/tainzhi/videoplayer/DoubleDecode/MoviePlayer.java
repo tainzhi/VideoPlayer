@@ -414,7 +414,7 @@ public class MoviePlayer {
      * Thread helper for video playback.
      * <p>
      * The PlayerFeedback callbacks will execute on the thread that creates the object,
-     * assuming that thread has a looper.  Otherwise, they will execute on the main looper.
+     * assuming that thread has a looper.  Otherwise, they will execute on the menu_activity_main looper.
      */
     public static class PlayTask implements Runnable {
         private static final int MSG_PLAY_STOPPED = 0;

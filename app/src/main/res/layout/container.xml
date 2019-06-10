@@ -3,10 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
-    android:background="color/viewBackground"
-    app:layout_behavior="android"
-    tools:layout="@layout/activity_home">
+    android:background="@color/viewBackground"
+    tools:layout="@layout/fragment_local_video">
 
 </FrameLayout>

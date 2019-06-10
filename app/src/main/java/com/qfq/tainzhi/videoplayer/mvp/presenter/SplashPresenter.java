@@ -1,7 +1,7 @@
 package com.qfq.tainzhi.videoplayer.mvp.presenter;
 
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.ISplashPresenter;
-import com.qfq.tainzhi.videoplayer.mvp.view.activity.impl.ISplashActivityView;
+import com.qfq.tainzhi.videoplayer.ui.activity.impl.ISplashActivityView;
 
 import java.util.concurrent.TimeUnit;
 

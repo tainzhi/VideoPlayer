@@ -1,16 +1,14 @@
-package com.qfq.tainzhi.videoplayer.mvp.view.activity;
+package com.qfq.tainzhi.videoplayer.ui.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.qfq.tainzhi.videoplayer.HomeActivity;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.SplashPresenter;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.ISplashPresenter;
-import com.qfq.tainzhi.videoplayer.mvp.view.activity.impl.ISplashActivityView;
+import com.qfq.tainzhi.videoplayer.ui.activity.impl.ISplashActivityView;
 
 /**
  * Created by muqing on 2019/6/9.

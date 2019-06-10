@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer.mvp.view.activity.impl;
+package com.qfq.tainzhi.videoplayer.ui.activity.impl;
 
 /**
  * Created by muqing on 2019/6/9.
