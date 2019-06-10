@@ -25,13 +25,13 @@ public class SplashActivity extends AppCompatActivity implements ISplashActivity
     }
     
     @Override
-    public void enterApp() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+    protected void onDestroy() {
+        super.onDestroy();
     }
     
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void enterApp() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

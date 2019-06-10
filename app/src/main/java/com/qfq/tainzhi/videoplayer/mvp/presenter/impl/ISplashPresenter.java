@@ -6,5 +6,6 @@ package com.qfq.tainzhi.videoplayer.mvp.presenter.impl;
  */
 public interface ISplashPresenter {
     void setDelay();
+    
     void unRegister();
 }

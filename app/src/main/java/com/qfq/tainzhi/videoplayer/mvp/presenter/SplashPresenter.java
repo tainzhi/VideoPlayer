@@ -23,13 +23,13 @@ public class SplashPresenter implements ISplashPresenter {
     
     @Override
     public void setDelay() {
-        mSubscription = Observable.timer(300, TimeUnit. MILLISECONDS)
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long mLong) {
-                        mView.enterApp();
-                    }
-                });
+        mSubscription = Observable.timer(300, TimeUnit.MILLISECONDS)
+                                .subscribe(new Action1<Long>() {
+                                    @Override
+                                    public void call(Long mLong) {
+                                        mView.enterApp();
+                                    }
+                                });
     }
     
     @Override

@@ -1,34 +1,25 @@
 package com.qfq.tainzhi.videoplayer.ui.fragment;
 
-import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.DoubleVideoPlayerActivity;
-import com.qfq.tainzhi.videoplayer.HomeActivity;
 import com.qfq.tainzhi.videoplayer.InsetDecoration;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.SingleVideoPlayerActivity;
@@ -50,57 +41,6 @@ public class LocalVideoFragment extends BaseFragment {
     private ViewStub mHintViewStub;
     private StaggeredAdapter mAdapter;
     private int mItemMargin;
-    
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_local_video, container,
-                false);
-        initView(mView);
-        Logger.d("");
-        return mView;
-    }
-    
-    private void initView(View view) {
-        mContext = getContext();
-    
-        mList = (RecyclerView)mView.findViewById(R.id.selection_list);
-        mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mItemMargin = getResources().getDimensionPixelOffset(R.dimen.item_margin);
-        mList.addItemDecoration(new InsetDecoration(mContext, mItemMargin));
-    
-        mList.getItemAnimator().setAddDuration(1000);
-        mList.getItemAnimator().setChangeDuration(1000);
-        mList.getItemAnimator().setMoveDuration(1000);
-        mList.getItemAnimator().setRemoveDuration(1000);
-    
-        //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
-        mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin)/2, mOnStaggeredAdapterInformation);
-        mAdapter.setOnItemClickListener(mOnItemClickListener);
-        mAdapter.setOnItemLongClickListener(mOnItemLongClickListener);
-        mList.setAdapter(mAdapter);
-    }
-    
-    public static LocalVideoFragment getInstance() {
-        if (mInstance == null) {
-            mInstance = new LocalVideoFragment();
-        }
-        return mInstance;
-    }
-    
-    
-    private int getWindowWidth() {
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        return width;
-    }
-    
-    @Override
-    public void onDoubleClick(){
-        Logger.d("");
-    }
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -116,7 +56,6 @@ public class LocalVideoFragment extends BaseFragment {
         }
         
     };
-    
     private AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -129,18 +68,67 @@ public class LocalVideoFragment extends BaseFragment {
             return true;
         }
     };
-    
     private OnStaggeredAdapterInformation mOnStaggeredAdapterInformation = new OnStaggeredAdapterInformation() {
         @Override
         public void onStaggeredAdapterInformation() {
             mList.setVisibility(View.GONE);
             if (mHintViewStub == null) {
                 mHintViewStub =
-                        (ViewStub)mView.findViewById(R.id.viewstub_novideo_hint_layout_id);
+                        (ViewStub) mView.findViewById(R.id.viewstub_novideo_hint_layout_id);
                 mHintViewStub.inflate();
             }
         }
     };
     
-   
+    public static LocalVideoFragment getInstance() {
+        if (mInstance == null) {
+            mInstance = new LocalVideoFragment();
+        }
+        return mInstance;
+    }
+    
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_local_video, container,
+                false);
+        initView(mView);
+        Logger.d("");
+        return mView;
+    }
+    
+    private void initView(View view) {
+        mContext = getContext();
+        
+        mList = (RecyclerView) mView.findViewById(R.id.selection_list);
+        mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mItemMargin = getResources().getDimensionPixelOffset(R.dimen.item_margin);
+        mList.addItemDecoration(new InsetDecoration(mContext, mItemMargin));
+        
+        mList.getItemAnimator().setAddDuration(1000);
+        mList.getItemAnimator().setChangeDuration(1000);
+        mList.getItemAnimator().setMoveDuration(1000);
+        mList.getItemAnimator().setRemoveDuration(1000);
+        
+        //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
+        mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin) / 2, mOnStaggeredAdapterInformation);
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
+        mAdapter.setOnItemLongClickListener(mOnItemLongClickListener);
+        mList.setAdapter(mAdapter);
+    }
+    
+    private int getWindowWidth() {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        return width;
+    }
+    
+    @Override
+    public void onDoubleClick() {
+        Logger.d("");
+    }
+    
+    
 }

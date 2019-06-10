@@ -26,19 +26,21 @@ import java.io.IOException;
 
 
 public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder.Callback {
-
+    
     private final static String TAG = "VideoPlayer/SingleVideoPlayerActivity";
-
+    private final static int CONTROLLER_CONTROL = 0;
+    private final static int CONTROLLER_SEEK_TO = 1;
+    private final static int HIDE_CONTROLLER_BAR = 2;
+    private final static int SHOW_CONTROLLER_BAR = 3;
+    private final static int HIDE_CONTROLLER_BAR_DELAY = 5000;
     private Context mContext;
     private Uri mVideoUri;
     private String mVideoTitle;
     private long mVideoDuration;
     private int mVideoProgress;
-
     private MediaPlayer mMediaPlayer;
     private SurfaceView mPlayView;
     private SurfaceHolder mSurfaceHolder;
-
     private View mParentView;
     private LinearLayout mControllerTitleLayout;
     private TextView mControllerTitle;
@@ -46,85 +48,11 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private ImageView mControllerControl;
     private SeekBar mControllerProgress;
     private ImageView mControllerFloatWindow;
-
     private boolean mVideoPlayOrPause = false; // play state is true, stop state is false;
-    private boolean mIsTouchOnSeekBar = false;
-
-    private final static int CONTROLLER_CONTROL = 0;
-    private final static int CONTROLLER_SEEK_TO = 1;
-    private final static int HIDE_CONTROLLER_BAR = 2;
-    private final static int SHOW_CONTROLLER_BAR = 3;
-
-    private final static int HIDE_CONTROLLER_BAR_DELAY = 5000;
-
-    private UpdateSeekBarThread mUpdateSeekBarThread;
-
-    private LayoutTransition mLayoutTransition;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.v(TAG, "onCreate()");
-        super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        mContext = this;
-        Intent intent = getIntent();
-        mVideoUri = intent.getData();
-        Bundle bundle = intent.getExtras();
-        mVideoTitle = bundle.getString("title");
-        mVideoDuration = bundle.getLong("duration");
-        mVideoProgress = bundle.getInt("progress", 0);
-
-
-        setContentView(R.layout.activity_single_video_player);
-        mParentView = (View)findViewById(R.id.activity_single_video_parrent);
-        mPlayView = (SurfaceView)findViewById(R.id.activity_single_video_player_player_view);
-        mControllerTitleLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_title_bar);
-        mControllerTitle = (TextView)findViewById(R.id.activity_single_video_player_player_video_title);
-        mControllerBarLayout = (LinearLayout)findViewById(R.id.activity_single_video_player_player_controller_bar);
-        mControllerControl = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_control);
-        mControllerProgress = (SeekBar)findViewById(R.id.activity_single_video_player_player_controller_progress);
-        mControllerFloatWindow = (ImageView)findViewById(R.id.activity_single_video_player_player_controller_floatwindow);
-
-        //Hide TitleBar and ControllerBar 5s later
-        mHandler.sendEmptyMessageDelayed(HIDE_CONTROLLER_BAR, HIDE_CONTROLLER_BAR_DELAY);
-
-
-        mPlayView.setOnTouchListener(mOnTouchListener);
-        mControllerTitle.setText(mVideoTitle);
-        mControllerControl.setOnClickListener(mContollerControlClickListener);
-        mControllerFloatWindow.setOnClickListener(mControllerFloatWindowClickListener);
-        mControllerProgress.setOnSeekBarChangeListener(mOnSeekBarChangeListener);
-
-        mSurfaceHolder = mPlayView.getHolder();
-        mSurfaceHolder.addCallback(this);
-        mMediaPlayer = new MediaPlayer();
-        mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
-        mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
-        try {
-            mMediaPlayer.setDataSource(this, mVideoUri);
-            mMediaPlayer.prepareAsync();
-        } catch (IOException e) {
-            Log.e(TAG, mVideoUri.toString() + " IOException!!!");
-        }
-
-        initTransition();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.v(TAG, "onDestroy()");
-        super.onDestroy();
-        if (mMediaPlayer != null) {
-            mMediaPlayer.release();
-        }
-        mMediaPlayer = null;
-    }
-
     final private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch(msg.what) {
+            switch (msg.what) {
                 case CONTROLLER_CONTROL:
                     // pause
                     if (mVideoPlayOrPause) {
@@ -157,7 +85,9 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             }
         }
     };
-
+    private boolean mIsTouchOnSeekBar = false;
+    private UpdateSeekBarThread mUpdateSeekBarThread;
+    private LayoutTransition mLayoutTransition;
     private View.OnClickListener mContollerControlClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -167,7 +97,6 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             mHandler.sendMessage(msg);
         }
     };
-
     private View.OnClickListener mControllerFloatWindowClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -178,12 +107,11 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             homeIntent.addCategory(Intent.CATEGORY_HOME);
             SingleVideoPlayerActivity.this.startActivity(homeIntent);
             finish();
-
+            
             FloatWindow.getInstance(getApplicationContext(),
                     mVideoUri, mVideoTitle, mMediaPlayer.getCurrentPosition(), mVideoDuration).showFloatWindow();
         }
     };
-
     private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -193,7 +121,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
                 case MotionEvent.ACTION_UP:
                     mHandler.removeMessages(SHOW_CONTROLLER_BAR);
                     mHandler.sendEmptyMessage(SHOW_CONTROLLER_BAR);
-
+                    
                     mHandler.removeMessages(HIDE_CONTROLLER_BAR);
                     mHandler.sendEmptyMessageDelayed(HIDE_CONTROLLER_BAR, HIDE_CONTROLLER_BAR_DELAY);
                     break;
@@ -203,7 +131,6 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             return true;
         }
     };
-
     private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(MediaPlayer mp) {
@@ -216,7 +143,6 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             Log.v(TAG, "MediaPlayer.start()");
         }
     };
-
     private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mp) {
@@ -225,7 +151,6 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             finish();
         }
     };
-
     private SeekBar.OnSeekBarChangeListener mOnSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -237,54 +162,123 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
                 mHandler.sendMessage(msg);
             }
         }
-
+        
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
             mIsTouchOnSeekBar = true;
-
-            int progressThumbWidth = (int)getResources().getDimension(R.dimen.progress_thumb_width);
-            int progressThumbHeight = (int)getResources().getDimension(R.dimen.progress_thumb_height);
+            
+            int progressThumbWidth = (int) getResources().getDimension(R.dimen.progress_thumb_width);
+            int progressThumbHeight = (int) getResources().getDimension(R.dimen.progress_thumb_height);
             Log.d(TAG, "progressThumb width=" + progressThumbWidth + ", height=" + progressThumbHeight);
-            HorizontalVieoProgressWindow progressWindow = new HorizontalVieoProgressWindow(mContext, mHandler, mVideoUri, (int)(mVideoDuration), (int)(mVideoProgress),
+            HorizontalVieoProgressWindow progressWindow = new HorizontalVieoProgressWindow(mContext, mHandler, mVideoUri, (int) (mVideoDuration), (int) (mVideoProgress),
                     progressThumbWidth, progressThumbHeight);
             int popupHorizontalProgressWindowX = 0;
             int popupHorizontalProgressWindowY = mParentView.getHeight() - mControllerBarLayout.getHeight() - progressThumbHeight - 3;
             progressWindow.showAt(mParentView, popupHorizontalProgressWindowX, popupHorizontalProgressWindowY);
         }
-
+        
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             mIsTouchOnSeekBar = false;
         }
     };
-
+    
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-                               int height) {
-        // TODO Auto-generated method stub
-
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.v(TAG, "onCreate()");
+        super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        
+        mContext = this;
+        Intent intent = getIntent();
+        mVideoUri = intent.getData();
+        Bundle bundle = intent.getExtras();
+        mVideoTitle = bundle.getString("title");
+        mVideoDuration = bundle.getLong("duration");
+        mVideoProgress = bundle.getInt("progress", 0);
+        
+        
+        setContentView(R.layout.activity_single_video_player);
+        mParentView = (View) findViewById(R.id.activity_single_video_parrent);
+        mPlayView = (SurfaceView) findViewById(R.id.activity_single_video_player_player_view);
+        mControllerTitleLayout = (LinearLayout) findViewById(R.id.activity_single_video_player_player_title_bar);
+        mControllerTitle = (TextView) findViewById(R.id.activity_single_video_player_player_video_title);
+        mControllerBarLayout = (LinearLayout) findViewById(R.id.activity_single_video_player_player_controller_bar);
+        mControllerControl = (ImageView) findViewById(R.id.activity_single_video_player_player_controller_control);
+        mControllerProgress = (SeekBar) findViewById(R.id.activity_single_video_player_player_controller_progress);
+        mControllerFloatWindow = (ImageView) findViewById(R.id.activity_single_video_player_player_controller_floatwindow);
+        
+        //Hide TitleBar and ControllerBar 5s later
+        mHandler.sendEmptyMessageDelayed(HIDE_CONTROLLER_BAR, HIDE_CONTROLLER_BAR_DELAY);
+        
+        
+        mPlayView.setOnTouchListener(mOnTouchListener);
+        mControllerTitle.setText(mVideoTitle);
+        mControllerControl.setOnClickListener(mContollerControlClickListener);
+        mControllerFloatWindow.setOnClickListener(mControllerFloatWindowClickListener);
+        mControllerProgress.setOnSeekBarChangeListener(mOnSeekBarChangeListener);
+        
+        mSurfaceHolder = mPlayView.getHolder();
+        mSurfaceHolder.addCallback(this);
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
+        mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+        try {
+            mMediaPlayer.setDataSource(this, mVideoUri);
+            mMediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            Log.e(TAG, mVideoUri.toString() + " IOException!!!");
+        }
+        
+        initTransition();
     }
-
+    
+    @Override
+    protected void onDestroy() {
+        Log.v(TAG, "onDestroy()");
+        super.onDestroy();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+        }
+        mMediaPlayer = null;
+    }
+    
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         // TODO Auto-generated method stub
         mMediaPlayer.setDisplay(mSurfaceHolder);
     }
-
+    
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,
+                               int height) {
+        // TODO Auto-generated method stub
+        
+    }
+    
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         // TODO Auto-generated method stub
-
+        
     }
-
+    
+    private void initTransition() {
+        mLayoutTransition = new LayoutTransition();
+        FrameLayout parentContainer = (FrameLayout) findViewById(R.id.activity_single_video_parrent);
+        parentContainer.setLayoutTransition(mLayoutTransition);
+        mLayoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_appear));
+        mLayoutTransition.setAnimator(LayoutTransition.DISAPPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_disappearing));
+    }
+    
     private class UpdateSeekBarThread extends Thread {
-
+        
         volatile boolean isRuuning = true;
+        
         protected UpdateSeekBarThread(String threadName) {
             this.setName(threadName);
             isRuuning = true;
         }
-
+        
         @Override
         public void run() {
             super.run();
@@ -304,18 +298,10 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
                 }
             }
         }
-
+        
         public void stop_thread() {
             isRuuning = false;
         }
-    }
-
-    private void initTransition() {
-        mLayoutTransition = new LayoutTransition();
-        FrameLayout parentContainer = (FrameLayout)findViewById(R.id.activity_single_video_parrent);
-        parentContainer.setLayoutTransition(mLayoutTransition);
-        mLayoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_appear));
-        mLayoutTransition.setAnimator(LayoutTransition.DISAPPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_disappearing));
     }
 }
 

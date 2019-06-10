@@ -1,18 +1,18 @@
 package com.qfq.tainzhi.videoplayer;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.SurfaceTexture;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.qfq.tainzhi.videoplayer.DoubleDecode.MoviePlayer;
 import com.qfq.tainzhi.videoplayer.DoubleDecode.SpeedControlCallback;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by muqing on 1/3/16.
@@ -30,18 +30,18 @@ import com.qfq.tainzhi.videoplayer.DoubleDecode.SpeedControlCallback;
  */
 public class DoubleVideoPlayerActivity extends Activity {
     private static final String TAG = "VideoPlayer/DoubleVideoPlayerActivity";
-
+    
     private static final int VIDEO_COUNT = 2;
-
+    
     // Must be static storage so they'll survive Activity restart.
     private static boolean sVideoRunning = false;
     private static VideoBlob[] sBlob = new VideoBlob[VIDEO_COUNT];
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_double_moive_player);
-
+        
         Intent intent = getIntent();
         String file = intent.getStringExtra("file");
         if (!sVideoRunning) {
@@ -55,11 +55,11 @@ public class DoubleVideoPlayerActivity extends Activity {
             sBlob[1].recreateView((TextureView) findViewById(R.id.activity_double_movie_player_slid_2));
         }
     }
-
+    
     @Override
     protected void onPause() {
         super.onPause();
-
+        
         boolean finishing = isFinishing();
         Log.d(TAG, "isFinishing: " + finishing);
         for (int i = 0; i < VIDEO_COUNT; i++) {
@@ -71,8 +71,8 @@ public class DoubleVideoPlayerActivity extends Activity {
         sVideoRunning = !finishing;
         Log.d(TAG, "onPause complete");
     }
-
-
+    
+    
     /**
      * Video playback blob.
      * <p>
@@ -90,26 +90,26 @@ public class DoubleVideoPlayerActivity extends Activity {
     private static class VideoBlob implements TextureView.SurfaceTextureListener {
         private TextureView mTextureView;
         private String mFilePath;
-
+        
         private SurfaceTexture mSavedSurfaceTexture;
         private PlayMovieThread mPlayThread;
         private SpeedControlCallback mCallback;
-
+        
         /**
          * Constructs the VideoBlob.
          *
-         * @param view The TextureView object we want to draw into.
+         * @param view     The TextureView object we want to draw into.
          * @param filePath Which movie file path.
-         * @param ordinal The blob's ordinal (only used for log messages).
+         * @param ordinal  The blob's ordinal (only used for log messages).
          */
         public VideoBlob(TextureView view, String filePath, int ordinal) {
-
+            
             mCallback = new SpeedControlCallback();
             mFilePath = filePath;
-
+            
             recreateView(view);
         }
-
+        
         /**
          * Performs partial construction.  The VideoBlob is already created, but the Activity
          * was recreated, so we need to update our view.
@@ -121,7 +121,7 @@ public class DoubleVideoPlayerActivity extends Activity {
                 view.setSurfaceTexture(mSavedSurfaceTexture);
             }
         }
-
+        
         /**
          * Stop playback and shut everything down.
          */
@@ -129,23 +129,23 @@ public class DoubleVideoPlayerActivity extends Activity {
             mPlayThread.requestStop();
             // TODO: wait for the playback thread to stop so we don't kill the Surface
             //       before the video stops
-
+            
             // We don't need this any more, so null it out.  This also serves as a signal
             // to let onSurfaceTextureDestroyed() know that it can tell TextureView to
             // free the SurfaceTexture.
             mSavedSurfaceTexture = null;
         }
-
+        
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture st, int width, int height) {
-
+            
             // If this is our first time though, we're going to use the SurfaceTexture that
             // the TextureView provided.  If not, we're going to replace the current one with
             // the original.
-
+            
             if (mSavedSurfaceTexture == null) {
                 mSavedSurfaceTexture = st;
-
+                
                 mPlayThread = new PlayMovieThread(new File(mFilePath), new Surface(st), mCallback);
             } else {
                 // Can't do it here in Android <= 4.4.  The TextureView doesn't add a
@@ -155,11 +155,11 @@ public class DoubleVideoPlayerActivity extends Activity {
                 //mTextureView.setSurfaceTexture(mSavedSurfaceTexture);
             }
         }
-
+        
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture st, int width, int height) {
         }
-
+        
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture st) {
             // The SurfaceTexture is already detached from the EGL context at this point, so
@@ -169,13 +169,13 @@ public class DoubleVideoPlayerActivity extends Activity {
             // return "true" in that case (indicating that TextureView can release the ST).
             return (mSavedSurfaceTexture == null);
         }
-
+        
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture st) {
             //Log.d(TAG, "onSurfaceTextureUpdated st=" + st);
         }
     }
-
+    
     /**
      * Thread object that plays a movie from a file to a surface.
      * <p>
@@ -186,7 +186,7 @@ public class DoubleVideoPlayerActivity extends Activity {
         private final Surface mSurface;
         private final SpeedControlCallback mCallback;
         private MoviePlayer mMoviePlayer;
-
+        
         /**
          * Creates thread and starts execution.
          * <p>
@@ -197,10 +197,10 @@ public class DoubleVideoPlayerActivity extends Activity {
             mFile = file;
             mSurface = surface;
             mCallback = callback;
-
+            
             start();
         }
-
+        
         /**
          * Asks MoviePlayer to halt playback.  Returns without waiting for playback to halt.
          * <p>
@@ -209,7 +209,7 @@ public class DoubleVideoPlayerActivity extends Activity {
         public void requestStop() {
             mMoviePlayer.requestStop();
         }
-
+        
         @Override
         public void run() {
             try {
