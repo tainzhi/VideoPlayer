@@ -2,6 +2,8 @@
 <resources>
     <color name="zhuganzi">#511d23</color>
     <color name="Blue_Grey">#607d8b</color>
-    <color name="textColorPrimary">#616161</color>
+    <color name="textColorPrimary">#FFC107</color>
     <color name="viewBackground">@android:color/white</color>
+    <color name="item_not_checkted">@android:color/white</color>
+    <color name="item_checkted">#FFC107</color>
 </resources>
