@@ -28,8 +28,8 @@
             app:itemTextColor="@drawable/nav_item_color_state"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_navigation_main" />
-        <!--fixme-->
-        <!--app:layout_behavior=""-->
+            <!--fixme-->
+            <!--app:layout_behavior="com.qfq.tainzhi.videoplayer.widget.BottomNavigationBehavior"-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.navigation.NavigationView

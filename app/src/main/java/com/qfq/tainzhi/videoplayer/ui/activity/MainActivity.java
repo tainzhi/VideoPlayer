@@ -1,19 +1,25 @@
 package com.qfq.tainzhi.videoplayer.ui.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.R2;
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment;
@@ -22,6 +28,8 @@ import com.qfq.tainzhi.videoplayer.ui.fragment.LocalVideoFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.USTVFragment;
 import com.qfq.tainzhi.videoplayer.utils.SettingUtil;
+
+import java.security.cert.LDAPCertStoreParameters;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R2.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     
-    private static final String TAG = "MainActivity";
+    public static final int EXTERNAL_STORAGE_REQ_CODE = 10;
     private static final String POSITION = "position";
     private static final String SELECTED_ITEM = "bottomNavigationSelectItem";
     public static final int FRAGMENT_LOCAL_VIDEO = 0;
@@ -67,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestPermission();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
@@ -221,9 +230,8 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     ft.show(mLikeFragment);
                 }
-                break;
-                
         }
+        ft.commit();
     }
     
     private void hideFragment(FragmentTransaction ft) {
@@ -298,4 +306,43 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    
+    public void requestPermission(){
+        //判断当前Activity是否已经获得了该权限
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+            
+            //如果App的权限申请曾经被用户拒绝过，就需要在这里跟用户做出解释
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(this,"please give me the permission",Toast.LENGTH_SHORT).show();
+            } else {
+                //进行权限请求
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        EXTERNAL_STORAGE_REQ_CODE);
+            }
+        }
+    }
+    
+    // REFACTOR: 2019/6/10 待重构 美化界面
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case EXTERNAL_STORAGE_REQ_CODE: {
+                // 如果请求被拒绝，那么通常grantResults数组为空
+                if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //申请成功，进行相应操作
+                    // createFile("hello.txt");
+                } else {
+                    //申请失败，可以继续向用户解释。
+                }
+                return;
+            }
+        }
+    }
+    
 }
