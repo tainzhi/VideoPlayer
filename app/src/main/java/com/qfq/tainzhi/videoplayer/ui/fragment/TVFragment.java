@@ -19,18 +19,18 @@ public class TVFragment extends BaseFragment {
     private static TVFragment mInstance = null;
     private View mView;
     
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_local_video, container, false);
-        return mView;
-    }
-    
     public static TVFragment getInstance() {
         if (mInstance == null) {
             mInstance = new TVFragment();
         }
         return mInstance;
+    }
+    
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_local_video, container, false);
+        return mView;
     }
     
     @Override

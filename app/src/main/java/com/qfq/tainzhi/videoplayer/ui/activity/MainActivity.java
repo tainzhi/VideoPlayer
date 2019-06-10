@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.R2;
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment;
@@ -29,14 +28,20 @@ import com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.USTVFragment;
 import com.qfq.tainzhi.videoplayer.utils.SettingUtil;
 
-import java.security.cert.LDAPCertStoreParameters;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     
+    public static final int EXTERNAL_STORAGE_REQ_CODE = 10;
+    public static final int FRAGMENT_LOCAL_VIDEO = 0;
+    public static final int FRAGMENT_DOUYU = 1;
+    public static final int FRAGMENT_TV = 2;
+    public static final int FRAGMENT_USTV = 3;
+    public static final int FRAGMENT_LIKE = 4;
+    private static final String POSITION = "position";
+    private static final String SELECTED_ITEM = "bottomNavigationSelectItem";
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
     @BindView(R2.id.container)
@@ -47,21 +52,12 @@ public class MainActivity extends AppCompatActivity
     NavigationView mNavigationView;
     @BindView(R2.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    
-    public static final int EXTERNAL_STORAGE_REQ_CODE = 10;
-    private static final String POSITION = "position";
-    private static final String SELECTED_ITEM = "bottomNavigationSelectItem";
-    public static final int FRAGMENT_LOCAL_VIDEO = 0;
-    public static final int FRAGMENT_DOUYU = 1;
-    public static final int FRAGMENT_TV = 2;
-    public static final int FRAGMENT_USTV = 3;
-    public static final int FRAGMENT_LIKE = 4;
     private int[] mTitles = {
             R.string.title_local_video,
-                                    R.string.title_douyu,
-                                    R.string.title_tv,
-                                    R.string.title_ustv,
-    R.string.title_like};
+            R.string.title_douyu,
+            R.string.title_tv,
+            R.string.title_ustv,
+            R.string.title_like};
     
     private LocalVideoFragment mLocalVideoFragment;
     private DouyuFragment mDouyuFragment;
@@ -82,9 +78,9 @@ public class MainActivity extends AppCompatActivity
         
         if (savedInstanceState != null) {
             mLocalVideoFragment =
-                    (LocalVideoFragment)getSupportFragmentManager().findFragmentByTag(LocalVideoFragment.class.getName());
+                    (LocalVideoFragment) getSupportFragmentManager().findFragmentByTag(LocalVideoFragment.class.getName());
             mDouyuFragment =
-                    (DouyuFragment)getSupportFragmentManager().findFragmentByTag(DouyuFragment.class.getName());
+                    (DouyuFragment) getSupportFragmentManager().findFragmentByTag(DouyuFragment.class.getName());
             mTVFragment =
                     (TVFragment) getSupportFragmentManager().findFragmentByTag(TVFragment.class.getName());
             mUSTVFragment =
@@ -154,7 +150,7 @@ public class MainActivity extends AppCompatActivity
     public void doubleClick(int index) {
         long secondClickTime = System.currentTimeMillis();
         if ((secondClickTime - mFirstClickTime < 500)) {
-            switch(index) {
+            switch (index) {
                 case FRAGMENT_LOCAL_VIDEO:
                     mLocalVideoFragment.onDoubleClick();
                     break;
@@ -261,6 +257,25 @@ public class MainActivity extends AppCompatActivity
         }
     }
     
+    // REFACTOR: 2019/6/10 待重构 美化界面
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case EXTERNAL_STORAGE_REQ_CODE: {
+                // 如果请求被拒绝，那么通常grantResults数组为空
+                if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //申请成功，进行相应操作
+                    // createFile("hello.txt");
+                } else {
+                    //申请失败，可以继续向用户解释。
+                }
+                return;
+            }
+        }
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -307,7 +322,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
     
-    public void requestPermission(){
+    public void requestPermission() {
         //判断当前Activity是否已经获得了该权限
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -316,31 +331,12 @@ public class MainActivity extends AppCompatActivity
             //如果App的权限申请曾经被用户拒绝过，就需要在这里跟用户做出解释
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(this,"please give me the permission",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "please give me the permission", Toast.LENGTH_SHORT).show();
             } else {
                 //进行权限请求
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         EXTERNAL_STORAGE_REQ_CODE);
-            }
-        }
-    }
-    
-    // REFACTOR: 2019/6/10 待重构 美化界面
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case EXTERNAL_STORAGE_REQ_CODE: {
-                // 如果请求被拒绝，那么通常grantResults数组为空
-                if (grantResults.length > 0
-                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //申请成功，进行相应操作
-                    // createFile("hello.txt");
-                } else {
-                    //申请失败，可以继续向用户解释。
-                }
-                return;
             }
         }
     }

@@ -18,9 +18,9 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         AppContext = getApplicationContext();
-    
+        
         initTheme();
-    
+        
         // TODO: 2019/6/10 add leakcnary
         // if (BuildConfig.DEBUG) {
         //     SdkManager.initStetho(this);

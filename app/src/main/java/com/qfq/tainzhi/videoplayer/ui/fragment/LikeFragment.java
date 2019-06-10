@@ -1,7 +1,6 @@
 package com.qfq.tainzhi.videoplayer.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,18 +19,18 @@ public class LikeFragment extends BaseFragment {
     public static LikeFragment mInstance = null;
     private View mView;
     
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_local_video, container, false);
-        return mView;
-    }
-    
     public static LikeFragment getInstance() {
         if (mInstance == null) {
             mInstance = new LikeFragment();
         }
         return mInstance;
+    }
+    
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_local_video, container, false);
+        return mView;
     }
     
     @Override

@@ -96,7 +96,7 @@ public class SpeedControlCallback implements MoviePlayer.FrameCallback {
                 // to alert the developer that their movie might have issues (maybe they
                 // accidentally output timestamps in nsec rather than usec).
                 Log.i(TAG, "Inter-frame pause was " + (frameDelta / ONE_MILLION) +
-                        "sec, capping at 5 sec");
+                                   "sec, capping at 5 sec");
                 frameDelta = 5 * ONE_MILLION;
             }
 
@@ -121,13 +121,14 @@ public class SpeedControlCallback implements MoviePlayer.FrameCallback {
                         long startNsec = System.nanoTime();
                         Thread.sleep(sleepTimeUsec / 1000, (int) (sleepTimeUsec % 1000) * 1000);
                         long actualSleepNsec = System.nanoTime() - startNsec;
-                        Log.d(TAG, "sleep=" + sleepTimeUsec + " actual=" + (actualSleepNsec/1000) +
-                                " diff=" + (Math.abs(actualSleepNsec / 1000 - sleepTimeUsec)) +
-                                " (usec)");
+                        Log.d(TAG, "sleep=" + sleepTimeUsec + " actual=" + (actualSleepNsec / 1000) +
+                                           " diff=" + (Math.abs(actualSleepNsec / 1000 - sleepTimeUsec)) +
+                                           " (usec)");
                     } else {
                         Thread.sleep(sleepTimeUsec / 1000, (int) (sleepTimeUsec % 1000) * 1000);
                     }
-                } catch (InterruptedException ie) {}
+                } catch (InterruptedException ie) {
+                }
                 nowUsec = System.nanoTime() / 1000;
             }
 
@@ -139,7 +140,9 @@ public class SpeedControlCallback implements MoviePlayer.FrameCallback {
     }
 
     // runs on decode thread
-    @Override public void postRender() {}
+    @Override
+    public void postRender() {
+    }
 
     @Override
     public void loopReset() {
