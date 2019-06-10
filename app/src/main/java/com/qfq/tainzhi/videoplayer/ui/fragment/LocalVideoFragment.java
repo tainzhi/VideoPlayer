@@ -101,7 +101,8 @@ public class LocalVideoFragment extends BaseFragment {
         mContext = getContext();
         
         mList = (RecyclerView) mView.findViewById(R.id.selection_list);
-        mList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mList.setLayoutManager(new StaggeredGridLayoutManager(1,
+                StaggeredGridLayoutManager.VERTICAL));
         mItemMargin = getResources().getDimensionPixelOffset(R.dimen.item_margin);
         mList.addItemDecoration(new InsetDecoration(mContext, mItemMargin));
         
@@ -116,7 +117,7 @@ public class LocalVideoFragment extends BaseFragment {
         mAdapter.setOnItemLongClickListener(mOnItemLongClickListener);
         mList.setAdapter(mAdapter);
     }
-    
+
     private int getWindowWidth() {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -124,11 +125,10 @@ public class LocalVideoFragment extends BaseFragment {
         int width = size.x;
         return width;
     }
-    
+
     @Override
     public void onDoubleClick() {
         Logger.d("");
     }
-    
     
 }
