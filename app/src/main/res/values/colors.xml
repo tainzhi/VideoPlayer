@@ -6,4 +6,5 @@
     <color name="viewBackground">@android:color/white</color>
     <color name="item_not_checkted">@android:color/white</color>
     <color name="item_checkted">#FFC107</color>
+    <color name="line_divider">@android:color/white</color>
 </resources>
