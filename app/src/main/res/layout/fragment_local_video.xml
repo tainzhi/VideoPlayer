@@ -6,42 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/selection_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="0dp"></androidx.recyclerview.widget.RecyclerView>
-    <ViewStub
-        android:id="@+id/viewstub_novideo_hint_layout_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout="@layout/viewstub_novideo_hint_layout"/>
-    <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-        <!--android:id="@+id/refresh_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+        android:layout_height="match_parent">
 
-        <!--<androidx.coordinatorlayout.widget.CoordinatorLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" >-->
-            <!--<ViewStub-->
-                <!--android:id="@+id/viewstub_novideo_hint_layout_id"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout="@layout/viewstub_novideo_hint_layout"/>-->
-            <!--<androidx.recyclerview.widget.RecyclerView-->
-                <!--android:id="@+id/section_lists"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:fadeScrollbars="true"-->
-                <!--android:scrollbarFadeDuration="1"-->
-                <!--android:scrollbars="vertical"/>-->
-        <!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <ViewStub
+                android:id="@+id/viewstub_novideo_hint_layout_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/viewstub_novideo_hint_layout"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/section_lists"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="true"
+                android:scrollbarFadeDuration="1"
+                android:scrollbars="vertical"/>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!--</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
 
