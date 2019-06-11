@@ -1,85 +1,41 @@
 package com.qfq.tainzhi.videoplayer.ui.fragment;
 
-import android.content.ContentUris;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Point;
-import android.net.Uri;
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhanobut.logger.Logger;
-import com.qfq.tainzhi.videoplayer.DoubleVideoPlayerActivity;
-import com.qfq.tainzhi.videoplayer.InsetDecoration;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.SingleVideoPlayerActivity;
-import com.qfq.tainzhi.videoplayer.adapters.StaggeredAdapter;
-import com.qfq.tainzhi.videoplayer.callbacks.OnStaggeredAdapterInformation;
+import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
+import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by muqing on 2019/6/4.
  * Email: qfq61@qq.com
  */
-public class LocalVideoFragment extends BaseFragment {
-    private static final String TAG = "LocalVideoFragment";
+public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+    private ViewStub mNoVideoHint;
+    private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mRefreshLayout;
+    
     private static LocalVideoFragment mInstance = null;
-    
     private View mView;
-    private Context mContext;
-    private CharSequence mTitle;
-    private RecyclerView mList;
-    private ViewStub mHintViewStub;
-    private StaggeredAdapter mAdapter;
-    private int mItemMargin;
-    private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //Toast.makeText(mContext, "onItemClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
-            Uri videoUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
-            String videoTitle = mAdapter.getVideoItemAtPosition(position).videoName;
-            long videoDuration = mAdapter.getVideoItemAtPosition(position).videoDuration;
-            Intent intent = new Intent(getContext(), SingleVideoPlayerActivity.class);
-            intent.setData(videoUri);
-            intent.putExtra("title", videoTitle);
-            intent.putExtra("duration", videoDuration);
-            startActivity(intent);
-        }
-        
-    };
-    private AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            //Toast.makeText(mContext, "onItemLongClick: " + position + ", id: " + id, Toast.LENGTH_SHORT).show();
-            String filePath = mAdapter.getVideoItemAtPosition(position).videoPath;
-            Intent startIntent = new Intent(getContext(),
-                    DoubleVideoPlayerActivity.class);
-            startIntent.putExtra("file", filePath);
-            startActivity(startIntent);
-            return true;
-        }
-    };
-    private OnStaggeredAdapterInformation mOnStaggeredAdapterInformation = new OnStaggeredAdapterInformation() {
-        @Override
-        public void onStaggeredAdapterInformation() {
-            mList.setVisibility(View.GONE);
-            if (mHintViewStub == null) {
-                mHintViewStub =
-                        (ViewStub) mView.findViewById(R.id.viewstub_novideo_hint_layout_id);
-                mHintViewStub.inflate();
-            }
-        }
-    };
-    
+    private List<LocalVideoBean> mList = new ArrayList<>();
+    private LocalVideoAdapter mAdapter;
     public static LocalVideoFragment getInstance() {
         if (mInstance == null) {
             mInstance = new LocalVideoFragment();
@@ -92,40 +48,88 @@ public class LocalVideoFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_local_video, container,
                 false);
-        initView(mView);
-        Logger.d("");
+        mRefreshLayout =
+                (SwipeRefreshLayout)mView.findViewById(R.id.refresh_layout);
+        mRecyclerView = (RecyclerView)mView.findViewById(R.id.section_lists);
+        mNoVideoHint = mView.findViewById(R.id.viewstub_novideo_hint_layout_id);
+        
+        mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.zhuganzi));
+        mRefreshLayout.setOnRefreshListener(this);
+        
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                LinearLayoutManager.VERTICAL));
+        
+        mAdapter = new LocalVideoAdapter(getContext(), mList);
+        mAdapter.setOnItemClickListener(new LocalVideoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Logger.d("");
+                Toast.makeText(getContext(),
+                        "Click" + mList.get(position).getTitle(),
+                        Toast.LENGTH_LONG);
+            }
+        });
+        mAdapter.setOnItemLongClickListener(new LocalVideoAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Logger.d("");
+                Toast.makeText(getContext(),
+                        "Long Click" + mList.get(position).getPath(),
+                        Toast.LENGTH_LONG);
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(getContext());
+                builder.setMessage("删除\"" + mList.get(position).getTitle());
+                builder.setPositiveButton("确定",
+                        (dialog, which) -> {
+                            mList.remove(position);
+                            Logger.d("list size %s", mList.size());
+                            mAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        });
+                builder.setNegativeButton("取消",
+                        (dialog, which)-> dialog.dismiss());
+                builder.show();
+        
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
+        
+        addListener();
+        prepareData();
         return mView;
     }
     
-    private void initView(View view) {
-        mContext = getContext();
-        
-        mList = (RecyclerView) mView.findViewById(R.id.selection_list);
-        mList.setLayoutManager(new StaggeredGridLayoutManager(1,
-                StaggeredGridLayoutManager.VERTICAL));
-        mItemMargin = getResources().getDimensionPixelOffset(R.dimen.item_margin);
-        mList.addItemDecoration(new InsetDecoration(mContext, mItemMargin));
-        
-        mList.getItemAnimator().setAddDuration(1000);
-        mList.getItemAnimator().setChangeDuration(1000);
-        mList.getItemAnimator().setMoveDuration(1000);
-        mList.getItemAnimator().setRemoveDuration(1000);
-        
-        //set item width, Window.getWidth - marginLeft - marginRight - 2 * 2 * Insets
-        mAdapter = new StaggeredAdapter(mContext, (getWindowWidth() - 6 * mItemMargin) / 2, mOnStaggeredAdapterInformation);
-        mAdapter.setOnItemClickListener(mOnItemClickListener);
-        mAdapter.setOnItemLongClickListener(mOnItemLongClickListener);
-        mList.setAdapter(mAdapter);
+    private void addListener() {
     }
-
-    private int getWindowWidth() {
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        return width;
+    
+    private void prepareData() {
+        LocalVideoBean video = new LocalVideoBean("1", "title1", "1", "2", "3", "4");
+        mList.add(video);
+        
+        video = new LocalVideoBean("2", "title2title2", "2", "2", "2", "2");
+        mList.add(video);
+        
+        video = new LocalVideoBean("3", "title3333", "34dkfjdkfjdjf", "3", "3",
+                "3");
+        mList.add(video);
+        
+        video = new LocalVideoBean("4", "title4", "4", "4", "4", "4");
+        mList.add(video);
     }
-
+    
+    @Override
+    public void onRefresh() {
+        mRefreshLayout.setRefreshing(true);
+        // setAdapter();
+        if (mList.size() == 0) {
+            mNoVideoHint.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
+        mRefreshLayout.setRefreshing(false);
+    }
+    
     @Override
     public void onDoubleClick() {
         Logger.d("");
