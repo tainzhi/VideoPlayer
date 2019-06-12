@@ -17,8 +17,8 @@ import android.widget.ProgressBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.utils.DiskLruImageCache;
-import com.qfq.tainzhi.videoplayer.utils.Util;
+import com.qfq.tainzhi.videoplayer.util.DiskLruImageCache;
+import com.qfq.tainzhi.videoplayer.util.Util;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;

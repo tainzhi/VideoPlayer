@@ -34,7 +34,7 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
     
     private static LocalVideoFragment mInstance = null;
     private View mView;
-    private List<LocalVideoBean> mList = new ArrayList<>();
+    private List<LocalVideoBean> mLists = new ArrayList<>();
     private LocalVideoAdapter mAdapter;
     public static LocalVideoFragment getInstance() {
         if (mInstance == null) {
@@ -61,13 +61,13 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 LinearLayoutManager.VERTICAL));
         
-        mAdapter = new LocalVideoAdapter(getContext(), mList);
+        mAdapter = new LocalVideoAdapter(getContext(), mLists);
         mAdapter.setOnItemClickListener(new LocalVideoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Logger.d("");
                 Toast.makeText(getContext(),
-                        "Click" + mList.get(position).getTitle(),
+                        "Click" + mLists.get(position).getTitle(),
                         Toast.LENGTH_LONG);
             }
         });
@@ -76,15 +76,15 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
             public void onItemLongClick(View view, int position) {
                 Logger.d("");
                 Toast.makeText(getContext(),
-                        "Long Click" + mList.get(position).getPath(),
+                        "Long Click" + mLists.get(position).getPath(),
                         Toast.LENGTH_LONG);
                 AlertDialog.Builder builder =
                         new AlertDialog.Builder(getContext());
-                builder.setMessage("删除\"" + mList.get(position).getTitle());
+                builder.setMessage("删除\"" + mLists.get(position).getTitle());
                 builder.setPositiveButton("确定",
                         (dialog, which) -> {
-                            mList.remove(position);
-                            Logger.d("list size %s", mList.size());
+                            mLists.remove(position);
+                            Logger.d(mLists.get(position).toString());
                             mAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         });
@@ -97,33 +97,17 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         mRecyclerView.setAdapter(mAdapter);
         
         addListener();
-        prepareData();
         return mView;
     }
     
     private void addListener() {
     }
     
-    private void prepareData() {
-        LocalVideoBean video = new LocalVideoBean("1", "title1", "1", "2", "3", "4");
-        mList.add(video);
-        
-        video = new LocalVideoBean("2", "title2title2", "2", "2", "2", "2");
-        mList.add(video);
-        
-        video = new LocalVideoBean("3", "title3333", "34dkfjdkfjdjf", "3", "3",
-                "3");
-        mList.add(video);
-        
-        video = new LocalVideoBean("4", "title4", "4", "4", "4", "4");
-        mList.add(video);
-    }
-    
     @Override
     public void onRefresh() {
         mRefreshLayout.setRefreshing(true);
         // setAdapter();
-        if (mList.size() == 0) {
+        if (mLists.size() == 0) {
             mNoVideoHint.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }

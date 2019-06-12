@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer.utils;
+package com.qfq.tainzhi.videoplayer.util;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;

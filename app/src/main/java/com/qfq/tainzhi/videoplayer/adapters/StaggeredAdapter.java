@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qfq.tainzhi.videoplayer.R;
@@ -76,7 +75,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     @Override
     public VerticalItemHolder onCreateViewHolder(ViewGroup container, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());
-        View root = layoutInflater.inflate(R.layout.item_staggredview, container, false);
+        View root = layoutInflater.inflate(R.layout.item_local_video, container, false);
         return new VerticalItemHolder(root, this);
     }
 
@@ -128,7 +127,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             videoTitle = (TextView)v.findViewById(R.id.item_video_title);
             videoSize = (TextView) v.findViewById(R.id.item_video_size);
             videoDuration = (TextView) v.findViewById(R.id.item_video_duration);
-            videoProgress = (TextView)v.findViewById(R.id.item_video_progess);
+            videoProgress = (TextView)v.findViewById(R.id.item_video_date_added);
 
         }
 
@@ -215,6 +214,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
     }
 
     private void generateItems() {
+        // DATA is path
         String[] videoColumns = {
                 MediaStore.Video.Media._ID,
                 MediaStore.Video.Media.DATA,
@@ -236,7 +236,8 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
         {
             int videoId = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
             String videoPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
-            long videoDuration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+            long videoDuration =
+                    cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
             String videoTitle = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
             int videoSize = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
             VideoItem item = new VideoItem(videoId, videoPath, videoTitle, videoSize, videoDuration);

@@ -1,9 +1,15 @@
-# VideoPlayer
+VideoPlayer
 
 ## Info
 This is a repository about my videoplayer
 
 ![demo](./demo.gif)
+
+## 参考
+- [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android) 
+- [abigfishtv ios 大鱼电视直播 基于ijkplayer的播放器 700多个电视台 包括央视，各地方台，卫视，熊猫直播，社会化分享，登陆，仿微博等 (支持iphonex)](https://github.com/clyhs/ABigFishTV) 
+- [各种视频播放所需要的功能集](https://github.com/yangchong211/YCVideoPlayer) 
+- [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
 
 ### The functions which have been implemented
 - 滑动列表
@@ -123,6 +129,14 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 
 ## Todo
 - [ ] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
+- [ ] 电视频道
+> - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
+> - [ ]可以显示当前正在播放的内容(这个需要爬虫爬取结果, 用个热点小图标显示)
+> - [ ]爬取频道的标志图片, 用圆形图片显示; 三级缓存实现
+> - [ ]该界面搜索: 是搜索的卫视频道 
+- [ ] 本地视频
+> - [ ] 该界面搜索: 搜索本地视频
+> - [ ] 参考小米视频: 实现最近播放记录功能(或者用videopage实现)
 - [ ]进度条+小窗显示
 - [ ]悬浮窗播放
 - [ ]记录视频播放记录
@@ -131,5 +145,8 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 - [ ]ExoPlayer, vitamio:[部署参考](https://github.com/tainzhi/QDouyu/tree/v0.1), ijkplayer提供切换接口
 - [ ]搭建一个局域网服务器, 提供全国视频爬取的链接
 - [ ]搭建一个局域网服务器, 提供美剧tab的搜索和展示
+- [ ]升级RxJava1.x到RxJava2.x
 - [ ]kotlin实现
+
+
 

@@ -14,16 +14,16 @@
 
         <ImageView
             android:id="@+id/item_staggredview_thumbnail"
-            android:layout_margin="10dp"
-            android:layout_width="240dp"
-            android:layout_height="160dp" />
+            android:layout_margin="5dp"
+            android:layout_width="200dp"
+            android:layout_height="150dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_toLeftOf="@id/item_staggredview_thumbnail"
             android:layout_toStartOf="@+id/item_staggredview_thumbnail"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_height="wrap_content">
 
             <TextView
@@ -31,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
+                android:layout_marginTop="15dp"
                 android:textStyle="bold"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -58,7 +59,7 @@
                     tools:text="1:59:99" />
 
                 <TextView
-                    android:id="@+id/item_video_progess"
+                    android:id="@+id/item_video_date_added"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="00:25:25" />
