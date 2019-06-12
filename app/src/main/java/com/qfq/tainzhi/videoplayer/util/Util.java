@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer.utils;
+package com.qfq.tainzhi.videoplayer.util;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -25,6 +25,6 @@ public class Util {
         Log.v("qfq", "px=" + px + "dp = " + dp + "density=" + metrics.densityDpi);
         return px;
     }
-
+    
 
 }

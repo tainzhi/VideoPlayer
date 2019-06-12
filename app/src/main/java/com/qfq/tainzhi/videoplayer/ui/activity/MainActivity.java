@@ -26,7 +26,7 @@ import com.qfq.tainzhi.videoplayer.ui.fragment.LikeFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.LocalVideoFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.USTVFragment;
-import com.qfq.tainzhi.videoplayer.utils.SettingUtil;
+import com.qfq.tainzhi.videoplayer.util.SettingUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

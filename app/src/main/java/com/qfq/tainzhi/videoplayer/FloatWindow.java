@@ -17,7 +17,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.qfq.tainzhi.videoplayer.utils.Util;
+import com.qfq.tainzhi.videoplayer.util.Util;
 
 import java.io.IOException;
 
