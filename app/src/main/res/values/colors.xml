@@ -7,4 +7,8 @@
     <color name="item_not_checkted">@android:color/white</color>
     <color name="item_checkted">#FFC107</color>
     <color name="line_divider">@android:color/white</color>
+
+    <color name="douyu_colorPrimary">#ff7830</color>
+    <color name="douyu_colorPrimaryDark">#D54B00</color>
+    <color name="douyu_colorAccent">#ff630e</color>
 </resources>
