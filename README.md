@@ -11,18 +11,7 @@ This is a repository about my videoplayer
 - [各种视频播放所需要的功能集](https://github.com/yangchong211/YCVideoPlayer) 
 - [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
 
-### The functions which have been implemented
-- 滑动列表
-- 双播放窗口
-- 单播放窗口及控制界面
-- **悬浮播放窗口**
-- **预览窗口: 进度表显示thumbnail窗口及跳转**
-
 ## Notes
-### 参考学习
-- [recyclereview-playround](https://github.com/devunwired/recyclerview-playground) StaggeredGridView用法实例的github项目
-- [提供RecycleView封装的api](http://lucasr.org/2014/07/31/the-new-twowayview/)
-- [android官方文档 StaggeredGridLayoutManager](http://developer.android.com/reference/android/support/v7/widget/StaggeredGridLayoutManager.html#)
 
 ### How to getThumbnail of a Video
 
@@ -134,6 +123,7 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 > - [ ]可以显示当前正在播放的内容(这个需要爬虫爬取结果, 用个热点小图标显示)
 > - [ ]爬取频道的标志图片, 用圆形图片显示; 三级缓存实现
 > - [ ]该界面搜索: 是搜索的卫视频道 
+> - [ ]列表滑动删除: [列表滑动删除](https://www.androidhive.info/2017/09/android-recyclerview-swipe-delete-undo-using-itemtouchhelper/?utm_source=recyclerview&utm_medium=site&utm_campaign=refer_article) 
 - [ ] 本地视频
 > - [ ] 该界面搜索: 搜索本地视频
 > - [ ] 参考小米视频: 实现最近播放记录功能(或者用videopage实现)

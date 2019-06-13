@@ -111,12 +111,14 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
     }
     
     public String getVideoCreatDate(String path) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(path);
-        String createDate =
-                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);
-        // 解析出的时间格式为, 20180503T044105.000Z, 需转换
-        return StringUtil.formatDate(createDate);
+        return null;
+        // Logger.d("%s", path);
+        // MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        // retriever.setDataSource(path);
+        // String createDate =
+        //         retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);
+        // // 解析出的时间格式为, 20180503T044105.000Z, 需转换
+        // return StringUtil.formatDate(createDate);
     }
     
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
