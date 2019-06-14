@@ -1,13 +1,11 @@
 package com.qfq.tainzhi.videoplayer.adapters;
 
 import android.content.Context;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.bean.DouyuRoomBean;
 import com.qfq.tainzhi.videoplayer.widget.RoundCornerImageView;
@@ -29,13 +27,13 @@ public class DouyuChannelRoomAdapter extends BaseQuickAdapter<DouyuRoomBean,
     
     @Override
     protected void convert(BaseViewHolder holder, DouyuRoomBean room) {
-        Logger.d(room.toString());
         holder.setText(R.id.tv_nickname, room.getNickname())
                 .setText(R.id.tv_room_name, room.getRoom_name())
                 .setText(R.id.tv_online, room.getOnline() + "位观众");
-        Glide.with(mContext).load(room.getRoomSrc()).fitCenter()
+        Glide.with(mContext).load(room.getRoom_src()).fitCenter()
                 .error(R.drawable.default_dota2)
                 .into((RoundCornerImageView)holder.getView(R.id.iv_room));
         
     }
+    
 }
