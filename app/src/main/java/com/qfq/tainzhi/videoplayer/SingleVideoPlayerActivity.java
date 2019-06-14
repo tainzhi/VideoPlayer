@@ -194,7 +194,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         mVideoUri = intent.getData();
         Bundle bundle = intent.getExtras();
         mVideoTitle = bundle.getString("title");
-        mVideoDuration = bundle.getLong("duration");
+        mVideoDuration = bundle.getLong("duration", 0);
         mVideoProgress = bundle.getInt("progress", 0);
         
         

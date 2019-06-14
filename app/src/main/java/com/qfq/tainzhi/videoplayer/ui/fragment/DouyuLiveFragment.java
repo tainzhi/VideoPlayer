@@ -1,5 +1,7 @@
 package com.qfq.tainzhi.videoplayer.ui.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
+import com.qfq.tainzhi.videoplayer.SingleVideoPlayerActivity;
 import com.qfq.tainzhi.videoplayer.adapters.DouyuChannelRoomAdapter;
 import com.qfq.tainzhi.videoplayer.bean.DouyuRoomBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.DouyuLivePresenter;
@@ -74,6 +77,14 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
         mDouyuLivePresenter = new DouyuLivePresenter(this);
         mDouyuLivePresenter.getRoomList(mChannelId, mChannelTitle, mOffset);
         mAdapter = new DouyuChannelRoomAdapter(getContext(), mChannelRooms);
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startPlay(mChannelRooms.get(position).getRoom_id(),
+                        mChannelRooms.get(position).getNickname());
+        
+            }
+        });
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override public void onLoadMoreRequested() {
                 Logger.d("moffset:%s", mOffset);
@@ -132,5 +143,15 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
     public void setLoadComplete() {
         mRefreshLayout.setRefreshing(false);
         mAdapter.loadMoreComplete();
+    }
+    
+    private void startPlay(int roomId, String title) {
+        String path = "http://tx2play1.douyucdn" +
+                              ".cn/live/237974rptJVwMilG_4000p.flv";
+        Intent intent = new Intent(getContext(),
+                SingleVideoPlayerActivity.class);
+        intent.setData(Uri.parse(path));
+        intent.putExtra("title", title);
+        startActivity(intent);
     }
 }

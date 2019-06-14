@@ -14,8 +14,8 @@
 
         <com.qfq.tainzhi.videoplayer.widget.RoundCornerImageView
             android:id="@+id/item_staggredview_thumbnail"
-            android:layout_width="200dp"
-            android:layout_height="150dp"
+            android:layout_width="160dp"
+            android:layout_height="120dp"
             android:layout_margin="5dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop" />
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:maxLines="2"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_video_title"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:textSize="10dp">
 
