@@ -1,7 +1,11 @@
 package com.qfq.tainzhi.videoplayer.ui.fragment;
 
 import android.app.AlertDialog;
+import android.content.ContentUris;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +21,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
+import com.qfq.tainzhi.videoplayer.SingleVideoPlayerActivity;
 import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by muqing on 2019/6/4.
@@ -65,10 +71,8 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         mAdapter.setOnItemClickListener(new LocalVideoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d("");
-                Toast.makeText(getContext(),
-                        "Click" + mLists.get(position).getTitle(),
-                        Toast.LENGTH_LONG);
+                startPlay(mLists.get(position).getId(),
+                        mLists.get(position).getTitle());
             }
         });
         mAdapter.setOnItemLongClickListener(new LocalVideoAdapter.OnItemLongClickListener() {
@@ -122,4 +126,13 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         Logger.d("");
     }
     
+    private void startPlay(int id, String title) {
+        Intent intent = new Intent(getContext(),
+                SingleVideoPlayerActivity.class);
+        Uri videoUri =
+                ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
+        intent.setData(videoUri);
+        intent.putExtra("title", title);
+        startActivity(intent);
+    }
 }
