@@ -10,6 +10,7 @@ This is a repository about my videoplayer
 - [abigfishtv ios 大鱼电视直播 基于ijkplayer的播放器 700多个电视台 包括央视，各地方台，卫视，熊猫直播，社会化分享，登陆，仿微博等 (支持iphonex)](https://github.com/clyhs/ABigFishTV) 
 - [各种视频播放所需要的功能集](https://github.com/yangchong211/YCVideoPlayer) 
 - [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
+- [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer) 
 
 ## Notes
 
@@ -116,8 +117,13 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 
 ### Animation
 
+## 基于
+MVP, retrofit2, rxjava2
+
 ## Todo
 - [ ] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
+- [ ] [Recyclerview covered by BottomNavigationView](https://stackoverflow.com/questions/41199801/recyclerview-covered-by-bottomnavigationview)
+- [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
 - [ ] 电视频道
 > - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
 > - [ ]可以显示当前正在播放的内容(这个需要爬虫爬取结果, 用个热点小图标显示)
