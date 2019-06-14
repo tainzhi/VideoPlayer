@@ -74,13 +74,13 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
         mDouyuLivePresenter = new DouyuLivePresenter(this);
         mDouyuLivePresenter.getRoomList(mChannelId, mChannelTitle, mOffset);
         mAdapter = new DouyuChannelRoomAdapter(getContext(), mChannelRooms);
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view,
-                                         int position) {
-                Logger.d(mChannelRooms.get(position).toString());
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override public void onLoadMoreRequested() {
+                Logger.d("moffset:%s", mOffset);
+                onLoadMore();
             }
-        });
+        }, mRecyclerView);
+      
         initView();
         ViewGroup parent = (ViewGroup) mView.getParent();
         if (parent != null) {
@@ -94,6 +94,7 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
                 new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
+            // FIXME: 2019/6/14 功能无法实现: 第一行1列, 其余行2列
             public int getSpanSize(int position) {
                 return (position == 0) ? 1 : gridLayoutManager.getSpanCount();
             }
@@ -102,25 +103,34 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mRefreshLayout.setRefreshing(true);
     }
     
     @Override
     public void onRefresh() {
         mRefreshLayout.setRefreshing(true);
+        mOffset = 0;
         mDouyuLivePresenter.getRoomList(mChannelId, mChannelTitle, mOffset);
-        mRefreshLayout.setRefreshing(false);
     }
     
     public void showData(List<DouyuRoomBean> rooms) {
-        mChannelRooms.addAll(rooms);
+        if (mOffset == 0) {
+            mChannelRooms.clear();
+            mChannelRooms.addAll(rooms);
+        } else {
+            mChannelRooms.addAll(rooms);
+        }
         mAdapter.notifyDataSetChanged();
     }
     
     public void onLoadMore() {
-        // TODO: 2019/6/14  加载更多
+        mOffset += 20;
+        mRefreshLayout.setRefreshing(true);
+        mDouyuLivePresenter.getRoomList(mChannelId, mChannelTitle, mOffset);
     }
     
     public void setLoadComplete() {
         mRefreshLayout.setRefreshing(false);
+        mAdapter.loadMoreComplete();
     }
 }

@@ -94,6 +94,12 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         
             }
         });
+        mAdapter.setOnBottomReachedListener(new LocalVideoAdapter.OnBottomReachedListener() {
+            @Override
+            public void onBottomReached(int position) {
+                Logger.d("position:%s", position);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         
         return mView;

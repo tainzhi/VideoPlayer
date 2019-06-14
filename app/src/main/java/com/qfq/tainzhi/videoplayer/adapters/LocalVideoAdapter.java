@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 import com.qfq.tainzhi.videoplayer.util.StringUtil;
+import com.qfq.tainzhi.videoplayer.widget.RoundCornerImageView;
 
 import java.io.File;
 import java.util.List;
@@ -32,6 +34,7 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
     private List<LocalVideoBean> mLists;
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
+    private OnBottomReachedListener mOnBottomReachedListener;
     
     public LocalVideoAdapter(Context c, List<LocalVideoBean> l) {
         mContext = c;
@@ -59,7 +62,6 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
         Logger.d("local has %d videos", totalCount);
         cursor.moveToFirst();
         for (int i = 0; i < totalCount; i++) {
-            Logger.d("%sth video" , i);
             int id =
                     cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
             String path =
@@ -71,7 +73,6 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
             
             String title =
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
-            Logger.d("%s, %s, %s" ,id, path, title);
             // 视频大小是以秒(s)为单位的整数数字, 故需转成00:00:00
             long duration =
                     cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
@@ -129,6 +130,10 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
         this.mOnItemLongClickListener = mOnItemLongClickListener;
     }
     
+    public void setOnBottomReachedListener(OnBottomReachedListener mOnBottomReachedListener) {
+        this.mOnBottomReachedListener = mOnBottomReachedListener;
+    }
+    
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
         return new MyViewHolder(LayoutInflater.from(mContext)
@@ -138,7 +143,9 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         LocalVideoBean video = mLists.get(position);
-        holder.thumb.setImageURI(Uri.fromFile(new File(video.getThumbnailPath())));
+        if (video.getThumbnailPath() != null) {
+            holder.thumb.setImageURI(Uri.fromFile(new File(video.getThumbnailPath())));
+        }
         holder.title.setText(video.getTitle());
         holder.size.setText(video.getSize());
         holder.duration.setText(video.getDuration());
@@ -165,6 +172,10 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
                 }
             });
         }
+        
+        if (position ==  mLists.size() - 1) {
+            mOnBottomReachedListener.onBottomReached(position);
+        }
     }
     
     @Override
@@ -178,6 +189,10 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
     
     public interface OnItemLongClickListener {
         void onItemLongClick(View view, int position);
+    }
+    
+    public interface OnBottomReachedListener {
+        void onBottomReached(int position);
     }
     
     class MyViewHolder extends RecyclerView.ViewHolder {
