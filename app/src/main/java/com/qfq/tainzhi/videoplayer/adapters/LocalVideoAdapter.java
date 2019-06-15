@@ -76,7 +76,6 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
             // 视频大小是以秒(s)为单位的整数数字, 故需转成00:00:00
             long duration =
                     cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
-            String duration_s = StringUtil.formatMediaTime(duration);
             String resolution =
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.RESOLUTION));
             String date_added =
@@ -88,7 +87,7 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
             String create_date = getVideoCreatDate(path);
             String thumbnailsPath = getThumbnailPath(id);
             LocalVideoBean item = new LocalVideoBean(id, path, size_s, title,
-                    duration_s, resolution, date_added,
+                    duration, resolution, date_added,
                     date_modified, date_taken, create_date, thumbnailsPath);
             mLists.add(item);
             cursor.moveToNext();
@@ -148,7 +147,7 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
         }
         holder.title.setText(video.getTitle());
         holder.size.setText(video.getSize());
-        holder.duration.setText(video.getDuration());
+        holder.duration.setText(StringUtil.formatMediaTime(video.getDuration()));
         holder.date_added.setText(video.getCreateDate());
         
         if (mOnItemClickListener != null) {

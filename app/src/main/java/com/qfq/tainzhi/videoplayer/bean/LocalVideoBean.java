@@ -10,7 +10,7 @@ public class LocalVideoBean {
     String path;
     String size; // long convert to 35M
     String title;
-    String duration; // long convert to 100:80:00
+    long duration; //多少秒
     String resolution;
     String date_created;
     String date_modified;
@@ -18,7 +18,9 @@ public class LocalVideoBean {
     String createDate;
     String thumbnailPath;
     
-    public LocalVideoBean(int mId, String mPath, String mSize, String mTitle, String mDuration, String mResolution, String mDate_created, String mDate_modified, String mDate_taken, String mCreateDate, String mThumbnailPath) {
+    public LocalVideoBean(int mId, String mPath, String mSize, String mTitle,
+                          long mDuration, String mResolution,
+                          String mDate_created, String mDate_modified, String mDate_taken, String mCreateDate, String mThumbnailPath) {
         id = mId;
         path = mPath;
         size = mSize;
@@ -64,11 +66,11 @@ public class LocalVideoBean {
         title = mTitle;
     }
     
-    public String getDuration() {
+    public long getDuration() {
         return duration;
     }
     
-    public void setDuration(String mDuration) {
+    public void setDuration(long mDuration) {
         duration = mDuration;
     }
     

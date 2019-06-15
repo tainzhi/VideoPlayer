@@ -120,8 +120,14 @@ http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-do
 ## 基于
 MVP, retrofit2, rxjava2
 
+## 实现简介
+- MainActivity: 
+- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频
+
+
 ## Todo
 - [ ] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
+- [ ] navitationdrawler添加切换player的菜单
 - [ ] [Recyclerview covered by BottomNavigationView](https://stackoverflow.com/questions/41199801/recyclerview-covered-by-bottomnavigationview)
 - [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
 - [ ] 电视频道

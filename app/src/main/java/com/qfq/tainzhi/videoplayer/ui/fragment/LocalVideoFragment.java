@@ -21,13 +21,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.SingleVideoPlayerActivity;
+import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by muqing on 2019/6/4.
@@ -72,7 +71,8 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
             @Override
             public void onItemClick(View view, int position) {
                 startPlay(mLists.get(position).getId(),
-                        mLists.get(position).getTitle());
+                        mLists.get(position).getTitle(),
+                        mLists.get(position).getDuration());
             }
         });
         mAdapter.setOnItemLongClickListener(new LocalVideoAdapter.OnItemLongClickListener() {
@@ -126,13 +126,14 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         Logger.d("");
     }
     
-    private void startPlay(int id, String title) {
+    private void startPlay(int id, String title, long duration) {
         Intent intent = new Intent(getContext(),
-                SingleVideoPlayerActivity.class);
+                DefaultPlayActivity.class);
         Uri videoUri =
                 ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
         intent.setData(videoUri);
         intent.putExtra("title", title);
+        intent.putExtra("duration", duration);
         startActivity(intent);
     }
 }
