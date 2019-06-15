@@ -16,8 +16,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.orhanobut.logger.Logger;
+import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.SingleVideoPlayerActivity;
 import com.qfq.tainzhi.videoplayer.adapters.DouyuChannelRoomAdapter;
 import com.qfq.tainzhi.videoplayer.bean.DouyuRoomBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.DouyuLivePresenter;
@@ -149,7 +149,7 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
         String path = "http://tx2play1.douyucdn" +
                               ".cn/live/237974rptJVwMilG_4000p.flv";
         Intent intent = new Intent(getContext(),
-                SingleVideoPlayerActivity.class);
+                DefaultPlayActivity.class);
         intent.setData(Uri.parse(path));
         intent.putExtra("title", title);
         startActivity(intent);

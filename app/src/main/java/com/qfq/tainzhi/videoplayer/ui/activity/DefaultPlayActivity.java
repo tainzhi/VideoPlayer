@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer;
+package com.qfq.tainzhi.videoplayer.ui.activity;
 
 import android.animation.AnimatorInflater;
 import android.animation.LayoutTransition;
@@ -19,15 +19,20 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.qfq.tainzhi.videoplayer.FloatWindow;
+import com.qfq.tainzhi.videoplayer.HorizontalVieoProgressWindow;
+import com.qfq.tainzhi.videoplayer.R;
 
 import java.io.IOException;
 
 
-public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder.Callback {
+public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callback {
     
-    private final static String TAG = "VideoPlayer/SingleVideoPlayerActivity";
+    private final static String TAG = "VideoPlayer/DefaultPlayActivity";
     private final static int CONTROLLER_CONTROL = 0;
     private final static int CONTROLLER_SEEK_TO = 1;
     private final static int HIDE_CONTROLLER_BAR = 2;
@@ -42,7 +47,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     private SurfaceView mPlayView;
     private SurfaceHolder mSurfaceHolder;
     private View mParentView;
-    private LinearLayout mControllerTitleLayout;
+    private RelativeLayout mControllerTitleLayout;
     private TextView mControllerTitle;
     private LinearLayout mControllerBarLayout;
     private ImageView mControllerControl;
@@ -58,12 +63,12 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
                     if (mVideoPlayOrPause) {
                         mVideoPlayOrPause = false;
                         mMediaPlayer.pause();
-                        mControllerControl.setImageResource(R.drawable.activity_single_video_player_control_stop);
+                        mControllerControl.setImageResource(R.drawable.ic_video_player_pause);
                     } else {
                         // play
                         mVideoPlayOrPause = true;
                         mMediaPlayer.start();
-                        mControllerControl.setImageResource(R.drawable.activity_single_video_player_control_play);
+                        mControllerControl.setImageResource(R.drawable.ic_video_player_play);
                     }
                     break;
                 case CONTROLLER_SEEK_TO:
@@ -105,7 +110,7 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             homeIntent.addCategory(Intent.CATEGORY_HOME);
-            SingleVideoPlayerActivity.this.startActivity(homeIntent);
+            DefaultPlayActivity.this.startActivity(homeIntent);
             finish();
             
             FloatWindow.getInstance(getApplicationContext(),
@@ -198,15 +203,18 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
         mVideoProgress = bundle.getInt("progress", 0);
         
         
-        setContentView(R.layout.activity_single_video_player);
-        mParentView = (View) findViewById(R.id.activity_single_video_parrent);
-        mPlayView = (SurfaceView) findViewById(R.id.activity_single_video_player_player_view);
-        mControllerTitleLayout = (LinearLayout) findViewById(R.id.activity_single_video_player_player_title_bar);
-        mControllerTitle = (TextView) findViewById(R.id.activity_single_video_player_player_video_title);
-        mControllerBarLayout = (LinearLayout) findViewById(R.id.activity_single_video_player_player_controller_bar);
-        mControllerControl = (ImageView) findViewById(R.id.activity_single_video_player_player_controller_control);
-        mControllerProgress = (SeekBar) findViewById(R.id.activity_single_video_player_player_controller_progress);
-        mControllerFloatWindow = (ImageView) findViewById(R.id.activity_single_video_player_player_controller_floatwindow);
+        setContentView(R.layout.activity_default_video_player);
+        mParentView = (View) findViewById(R.id.activity_default_video_parent);
+        mPlayView = (SurfaceView) findViewById(R.id.activity_default_video_player_player_view);
+        mControllerTitleLayout =
+                (RelativeLayout) findViewById(R.id.l_video_player_top_panel);
+        mControllerTitle = (TextView) findViewById(R.id.video_player_top_panel_video_title);
+        mControllerBarLayout =
+                (LinearLayout) findViewById(R.id.l_video_player_bottom_panel);
+        mControllerControl =
+                (ImageView) findViewById(R.id.video_player_bottom_panel_play);
+        mControllerProgress = (SeekBar) findViewById(R.id.activity_default_video_player_player_controller_progress);
+        mControllerFloatWindow = (ImageView) findViewById(R.id.video_player_bottom_panel_float_window);
         
         //Hide TitleBar and ControllerBar 5s later
         mHandler.sendEmptyMessageDelayed(HIDE_CONTROLLER_BAR, HIDE_CONTROLLER_BAR_DELAY);
@@ -264,10 +272,15 @@ public class SingleVideoPlayerActivity extends Activity implements SurfaceHolder
     
     private void initTransition() {
         mLayoutTransition = new LayoutTransition();
-        FrameLayout parentContainer = (FrameLayout) findViewById(R.id.activity_single_video_parrent);
+        FrameLayout parentContainer =
+                (FrameLayout) findViewById(R.id.activity_default_video_parent);
         parentContainer.setLayoutTransition(mLayoutTransition);
-        mLayoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_appear));
-        mLayoutTransition.setAnimator(LayoutTransition.DISAPPEARING, AnimatorInflater.loadAnimator(mContext, R.animator.animator_single_video_player_layout_disappearing));
+        mLayoutTransition.setAnimator(LayoutTransition.APPEARING,
+                AnimatorInflater.loadAnimator(mContext,
+                        R.animator.animator_single_video_player_layout_appear));
+        mLayoutTransition.setAnimator(LayoutTransition.DISAPPEARING,
+                AnimatorInflater.loadAnimator(mContext,
+                        R.animator.animator_single_video_player_layout_disappearing));
     }
     
     private class UpdateSeekBarThread extends Thread {

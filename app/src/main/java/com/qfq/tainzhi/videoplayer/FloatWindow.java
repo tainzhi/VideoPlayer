@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 import com.qfq.tainzhi.videoplayer.util.Util;
 
 import java.io.IOException;
@@ -158,7 +159,7 @@ public class FloatWindow implements SurfaceHolder.Callback {
             public void onClick(View v) {
                 Log.v(TAG, "back to full screen play window");
                 // TODO: 2016/1/23 back to full play window
-                Intent backIntent = new Intent(mContext, SingleVideoPlayerActivity.class);
+                Intent backIntent = new Intent(mContext, DefaultPlayActivity.class);
                 backIntent.setData(mVideoUri);
                 backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 backIntent.putExtra("title", mVideoTitle);
