@@ -21,9 +21,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
+import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +32,15 @@ import java.util.List;
  * Created by muqing on 2019/6/4.
  * Email: qfq61@qq.com
  */
-public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+    private static LocalVideoFragment mInstance = null;
     private ViewStub mNoVideoHint;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
-    
-    private static LocalVideoFragment mInstance = null;
     private View mView;
     private List<LocalVideoBean> mLists = new ArrayList<>();
     private LocalVideoAdapter mAdapter;
+    
     public static LocalVideoFragment getInstance() {
         if (mInstance == null) {
             mInstance = new LocalVideoFragment();
@@ -54,8 +54,8 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         mView = inflater.inflate(R.layout.fragment_local_video, container,
                 false);
         mRefreshLayout =
-                (SwipeRefreshLayout)mView.findViewById(R.id.refresh_layout);
-        mRecyclerView = (RecyclerView)mView.findViewById(R.id.section_lists);
+                (SwipeRefreshLayout) mView.findViewById(R.id.refresh_layout);
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.section_lists);
         mNoVideoHint = mView.findViewById(R.id.viewstub_novideo_hint_layout_id);
         
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.zhuganzi));
@@ -93,9 +93,9 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
                             dialog.dismiss();
                         });
                 builder.setNegativeButton("取消",
-                        (dialog, which)-> dialog.dismiss());
+                        (dialog, which) -> dialog.dismiss());
                 builder.show();
-        
+                
             }
         });
         mAdapter.setOnBottomReachedListener(new LocalVideoAdapter.OnBottomReachedListener() {
@@ -109,6 +109,11 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         return mView;
     }
     
+    @Override
+    public void onPause() {
+        super.onPause();
+        
+    }
     
     @Override
     public void onRefresh() {

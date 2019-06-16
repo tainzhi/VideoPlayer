@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.util.DiskLruImageCache;
-import com.qfq.tainzhi.videoplayer.util.Util;
+import com.qfq.tainzhi.videoplayer.util.SettingUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
@@ -66,7 +66,7 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
             mThumbPosition[i] = (i + 1) * division;
         }
         
-        mDiskLruCache = new DiskLruImageCache(mContext, Util.DISK_CACHE_DIR, Util.DISK_CACHE_SIZE);
+        mDiskLruCache = new DiskLruImageCache(mContext, SettingUtil.DISK_CACHE_DIR, SettingUtil.DISK_CACHE_SIZE);
     }
     
     @Override

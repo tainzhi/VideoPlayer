@@ -12,6 +12,40 @@ This is a repository about my videoplayer
 - [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
 - [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer) 
 
+## 基于
+MVP, retrofit2, rxjava2
+
+## 实现简介
+- MainActivity: 
+- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频
+
+
+## Todo
+- [ ] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
+- [ ] navitationdrawler添加切换player的菜单
+- [ ] [Recyclerview covered by BottomNavigationView](https://stackoverflow.com/questions/41199801/recyclerview-covered-by-bottomnavigationview)
+- [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
+- [ ] 电视频道
+> - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
+> - [ ]可以显示当前正在播放的内容(这个需要爬虫爬取结果, 用个热点小图标显示)
+> - [ ]爬取频道的标志图片, 用圆形图片显示; 三级缓存实现
+> - [ ]该界面搜索: 是搜索的卫视频道 
+> - [ ]列表滑动删除: [列表滑动删除](https://www.androidhive.info/2017/09/android-recyclerview-swipe-delete-undo-using-itemtouchhelper/?utm_source=recyclerview&utm_medium=site&utm_campaign=refer_article) 
+- [ ] 本地视频
+> - [ ] 该界面搜索: 搜索本地视频
+> - [ ] 参考小米视频: 实现最近播放记录功能(或者用videopage实现)
+- [ ]进度条+小窗显示
+- [ ]悬浮窗播放: 赋予权限 [参考](https://github.com/duqian291902259/Android-FloatWindow) 
+- [ ]记录视频播放记录
+- [ ]混淆编译
+- [ ]添加自动测试模块
+- [ ]ExoPlayer, vitamio:[部署参考](https://github.com/tainzhi/QDouyu/tree/v0.1), ijkplayer提供切换接口
+- [ ]搭建一个局域网服务器, 提供全国视频爬取的链接
+- [ ]搭建一个局域网服务器, 提供美剧tab的搜索和展示
+- [ ]升级RxJava1.x到RxJava2.x
+- [ ]kotlin实现
+
+
 ## Notes
 
 ### How to getThumbnail of a Video
@@ -116,39 +150,6 @@ http://developer.android.com/training/displaying-bitmaps/cache-bitmap.html
 http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-does-not-provide-for-opencache-method
 
 ### Animation
-
-## 基于
-MVP, retrofit2, rxjava2
-
-## 实现简介
-- MainActivity: 
-- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频
-
-
-## Todo
-- [ ] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
-- [ ] navitationdrawler添加切换player的菜单
-- [ ] [Recyclerview covered by BottomNavigationView](https://stackoverflow.com/questions/41199801/recyclerview-covered-by-bottomnavigationview)
-- [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
-- [ ] 电视频道
-> - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
-> - [ ]可以显示当前正在播放的内容(这个需要爬虫爬取结果, 用个热点小图标显示)
-> - [ ]爬取频道的标志图片, 用圆形图片显示; 三级缓存实现
-> - [ ]该界面搜索: 是搜索的卫视频道 
-> - [ ]列表滑动删除: [列表滑动删除](https://www.androidhive.info/2017/09/android-recyclerview-swipe-delete-undo-using-itemtouchhelper/?utm_source=recyclerview&utm_medium=site&utm_campaign=refer_article) 
-- [ ] 本地视频
-> - [ ] 该界面搜索: 搜索本地视频
-> - [ ] 参考小米视频: 实现最近播放记录功能(或者用videopage实现)
-- [ ]进度条+小窗显示
-- [ ]悬浮窗播放
-- [ ]记录视频播放记录
-- [ ]混淆编译
-- [ ]添加自动测试模块
-- [ ]ExoPlayer, vitamio:[部署参考](https://github.com/tainzhi/QDouyu/tree/v0.1), ijkplayer提供切换接口
-- [ ]搭建一个局域网服务器, 提供全国视频爬取的链接
-- [ ]搭建一个局域网服务器, 提供美剧tab的搜索和展示
-- [ ]升级RxJava1.x到RxJava2.x
-- [ ]kotlin实现
 
 
 
