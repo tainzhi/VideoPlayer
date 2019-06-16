@@ -121,6 +121,7 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
         // return StringUtil.formatDate(createDate);
     }
     
+    
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }

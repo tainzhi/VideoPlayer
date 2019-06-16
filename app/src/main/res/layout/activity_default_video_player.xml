@@ -23,6 +23,20 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="bottom" />
+        <LinearLayout
+            android:id="@+id/video_player_progress_preview_layout"
+            android:layout_marginBottom="30dp"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_above="@+id/l_video_player_bottom_panel"
+            android:layout_width="150dp"
+            android:layout_height="100dp">
+            <ImageView
+                android:id="@+id/video_player_progress_preview_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000000" />
+        </LinearLayout>
     </RelativeLayout>
 
 

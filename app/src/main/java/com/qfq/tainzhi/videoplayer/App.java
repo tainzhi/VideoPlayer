@@ -32,6 +32,7 @@ public class App extends MultiDexApplication {
     private void initTheme() {
         // TODO: 2019/6/10 add theme change
     }
+    
 }
 
 
