@@ -19,7 +19,7 @@ public class LikeFragment extends BaseFragment {
     public static LikeFragment mInstance = null;
     private View mView;
     
-    public static LikeFragment getInstance() {
+    public static LikeFragment newInstance() {
         if (mInstance == null) {
             mInstance = new LikeFragment();
         }

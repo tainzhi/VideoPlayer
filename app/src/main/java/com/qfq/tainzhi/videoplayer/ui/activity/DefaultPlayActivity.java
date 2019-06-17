@@ -119,7 +119,7 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
             DefaultPlayActivity.this.startActivity(homeIntent);
             finish();
             
-            FloatWindow.getInstance(getApplicationContext(),
+            FloatWindow.newInstance(getApplicationContext(),
                     mVideoUri, mVideoTitle, mMediaPlayer.getCurrentPosition(), mVideoDuration).showFloatWindow();
         }
     };

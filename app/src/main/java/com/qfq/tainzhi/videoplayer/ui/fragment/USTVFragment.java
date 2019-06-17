@@ -19,7 +19,7 @@ public class USTVFragment extends BaseFragment {
     public static USTVFragment mInstance = null;
     private View mView;
     
-    public static USTVFragment getInstance() {
+    public static USTVFragment newInstance() {
         if (mInstance == null) {
             mInstance = new USTVFragment();
         }

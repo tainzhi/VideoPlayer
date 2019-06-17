@@ -20,7 +20,7 @@ public class SettingUtil {
     private SharedPreferences mSetting =
             PreferenceManager.getDefaultSharedPreferences(App.AppContext);
     
-    public static SettingUtil getInstance() {
+    public static SettingUtil newInstance() {
         return SettingUtilInstance.instance;
     }
     

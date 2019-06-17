@@ -44,7 +44,7 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
     private List<LocalVideoBean> mLists = new ArrayList<>();
     private LocalVideoAdapter mAdapter;
     
-    public static LocalVideoFragment getInstance() {
+    public static LocalVideoFragment newInstance() {
         if (mInstance == null) {
             mInstance = new LocalVideoFragment();
         }

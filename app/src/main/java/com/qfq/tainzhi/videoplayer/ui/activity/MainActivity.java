@@ -23,6 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.R2;
+import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuChannelFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.LikeFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.LocalVideoFragment;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity
             showFragment(FRAGMENT_LOCAL_VIDEO);
         }
         
-        if (SettingUtil.getInstance().getIsFirstTime()) {
+        if (SettingUtil.newInstance().getIsFirstTime()) {
             showTapTarget();
         }
     }
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity
             case FRAGMENT_LOCAL_VIDEO:
                 toolbar.setTitle(R.string.title_local_video);
                 if (mLocalVideoFragment == null) {
-                    mLocalVideoFragment = LocalVideoFragment.getInstance();
+                    mLocalVideoFragment = LocalVideoFragment.newInstance();
                     ft.add(R.id.container, mLocalVideoFragment,
                             LocalVideoFragment.class.getName());
                 } else {
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity
             case FRAGMENT_DOUYU:
                 toolbar.setTitle(R.string.title_douyu);
                 if (mDouyuFragment == null) {
-                    mDouyuFragment = DouyuFragment.getInstance();
+                    mDouyuFragment = DouyuFragment.newInstance();
                     ft.add(R.id.container, mDouyuFragment,
                             DouyuFragment.class.getName());
                 } else {
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity
             case FRAGMENT_TV:
                 toolbar.setTitle(R.string.title_tv);
                 if (mTVFragment == null) {
-                    mTVFragment = TVFragment.getInstance();
+                    mTVFragment = TVFragment.newInstance();
                     ft.add(R.id.container, mTVFragment,
                             TVFragment.class.getName());
                 } else {
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity
             case FRAGMENT_USTV:
                 toolbar.setTitle(R.string.title_ustv);
                 if (mUSTVFragment == null) {
-                    mUSTVFragment = USTVFragment.getInstance();
+                    mUSTVFragment = USTVFragment.newInstance();
                     ft.add(R.id.container, mUSTVFragment,
                             USTVFragment.class.getName());
                 } else {
@@ -222,7 +223,7 @@ public class MainActivity extends AppCompatActivity
             case FRAGMENT_LIKE:
                 toolbar.setTitle(R.string.title_like);
                 if (mLikeFragment == null) {
-                    mLikeFragment = LikeFragment.getInstance();
+                    mLikeFragment = LikeFragment.newInstance();
                     ft.add(R.id.container, mLikeFragment,
                             LikeFragment.class.getName());
                 } else {
@@ -247,6 +248,9 @@ public class MainActivity extends AppCompatActivity
         }
         if (mLikeFragment != null) {
             ft.hide(mLikeFragment);
+        }
+        if (DouyuChannelFragment.getInstance() != null) {
+            ft.remove(DouyuChannelFragment.getInstance());
         }
     }
     

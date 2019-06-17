@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -17,7 +19,6 @@ import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.R2;
 import com.qfq.tainzhi.videoplayer.adapters.ChannelPagerAdapter;
-import com.qfq.tainzhi.videoplayer.ui.activity.DouyuChannelActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class DouyuFragment extends BaseFragment {
     private int[] mIdList;
     private List<Fragment> mFragmentList;
     
-    public static DouyuFragment getInstance() {
+    public static DouyuFragment newInstance() {
         if (mInstance == null) {
             mInstance = new DouyuFragment();
         }
@@ -65,7 +66,6 @@ public class DouyuFragment extends BaseFragment {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         // mLinearLayout.setBackgroundColor(getContext().getColor(R.color.zhuganzi));
-        mAddChannel.setOnClickListener(v -> startActivity(new Intent(getActivity(), DouyuChannelActivity.class)));
         
         return mView;
     }
@@ -98,5 +98,15 @@ public class DouyuFragment extends BaseFragment {
     
     @OnClick(R2.id.add_channel_iv)
     public void onClick() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.hide(mInstance);
+        ft.add(R.id.container, DouyuChannelFragment.newInstance());
+        ft.commit();
+    }
+    
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Logger.d("");
     }
 }

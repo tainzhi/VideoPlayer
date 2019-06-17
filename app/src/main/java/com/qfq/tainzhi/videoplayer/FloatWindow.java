@@ -118,7 +118,7 @@ public class FloatWindow implements SurfaceHolder.Callback {
         Log.v(TAG, "video uri=" + uri + ", title=" + title + ", progress=" + progress);
     }
     
-    public static FloatWindow getInstance(Context context, Uri uri, String title, int progress, long duration) {
+    public static FloatWindow newInstance(Context context, Uri uri, String title, int progress, long duration) {
         if (mInstance == null) {
             mInstance = new FloatWindow(context, uri, title, progress, duration);
         }

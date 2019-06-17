@@ -1,7 +1,7 @@
 package com.qfq.tainzhi.videoplayer.mvp.model;
 
-import com.google.gson.Gson;
-import com.qfq.tainzhi.videoplayer.bean.GsonChannelRooms;
+import com.qfq.tainzhi.videoplayer.bean.GsonDouyuChannelRooms;
+import com.qfq.tainzhi.videoplayer.bean.GsonDouyuChannels;
 
 import io.reactivex.Flowable;
 import retrofit2.Retrofit;
@@ -33,26 +33,34 @@ public class DouyuModel {
     public interface DouyuService {
         // http://open.douyucdn.cn/api/RoomApi/live?limit=20&offset=20
         @GET("live")
-        Flowable<GsonChannelRooms> getRecommend(@Query("limit") int limit,
-                                                @Query(
+        Flowable<GsonDouyuChannelRooms> getRecommend(@Query("limit") int limit,
+                                                     @Query(
                 "offset") int offset);
         
         // http://open.douyucdn.cn/api/RoomApi/live/3?limit=20&offset=20
         @GET("live/{channel_id}")
-        Flowable<GsonChannelRooms> getChannelRoom(@Path("channel_id") int channel_id,
-                                        @Query("limit") int limit,
-                                        @Query("offset") int offset);
-        
+        Flowable<GsonDouyuChannelRooms> getChannelRoom(@Path("channel_id") int channel_id,
+                                                       @Query("limit") int limit,
+                                                       @Query("offset") int offset);
+    
+    
+        // http://open.douyucdn.cn/api/RoomApi/game
+        @GET("game")
+        Flowable<GsonDouyuChannels> getChannelList();
         
     }
     
-    public Flowable<GsonChannelRooms> RoomListGet(int channelId, String title,
-                                          int offset) {
+    public Flowable<GsonDouyuChannelRooms> RoomListGet(int channelId, String title,
+                                                       int offset) {
         if (channelId == -1) {
             return mDouyuService.getRecommend(DEFAULT_LIMIT, offset);
         } else {
             return mDouyuService.getChannelRoom(channelId, DEFAULT_LIMIT,
                     offset);
         }
+    }
+    
+    public Flowable<GsonDouyuChannels> ChannelListGet() {
+        return mDouyuService.getChannelList();
     }
 }
