@@ -6,7 +6,7 @@ import java.util.List;
  * Created by muqing on 2019/6/14.
  * Email: qfq61@qq.com
  */
-public class GsonChannelRooms {
+public class GsonDouyuChannelRooms {
     
     /**
      * error : 0

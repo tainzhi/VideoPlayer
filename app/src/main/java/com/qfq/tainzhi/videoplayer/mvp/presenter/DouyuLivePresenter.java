@@ -1,10 +1,8 @@
 package com.qfq.tainzhi.videoplayer.mvp.presenter;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.qfq.tainzhi.videoplayer.bean.DouyuRoomBean;
-import com.qfq.tainzhi.videoplayer.bean.GsonChannelRooms;
+import com.qfq.tainzhi.videoplayer.bean.GsonDouyuChannelRooms;
 import com.qfq.tainzhi.videoplayer.mvp.model.DouyuModel;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.IDouyuLivePresenter;
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuLiveFragment;
@@ -32,17 +30,15 @@ public class DouyuLivePresenter implements IDouyuLivePresenter {
     
     @Override
     public void getRoomList(int type, String title, int offset) {
-        List<DouyuRoomBean> douyuRooms = new ArrayList<>();
         mDouyuModel.RoomListGet(type, title, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ResourceSubscriber<GsonChannelRooms>() {
+                .subscribe(new ResourceSubscriber<GsonDouyuChannelRooms>() {
                     @Override
-                    public void onNext(GsonChannelRooms mGsonChannelRooms) {
-                        List<DouyuRoomBean> roomInfos = new ArrayList<>();
+                    public void onNext(GsonDouyuChannelRooms mGsonChannelRooms) {
                         try {
-                            Gson gson = new Gson();
-                            for (GsonChannelRooms.DataBean dataBean :
+                            List<DouyuRoomBean> douyuRooms = new ArrayList<>();
+                            for (GsonDouyuChannelRooms.DataBean dataBean :
                                     mGsonChannelRooms.getData()) {
                                 DouyuRoomBean room = new DouyuRoomBean();
                                 room.setRoom_id(dataBean.getRoom_id());
@@ -54,7 +50,6 @@ public class DouyuLivePresenter implements IDouyuLivePresenter {
                                 douyuRooms.add(room);
                             }
                             mFragment.showData(douyuRooms);
-                            mFragment.setLoadComplete();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -67,7 +62,7 @@ public class DouyuLivePresenter implements IDouyuLivePresenter {
     
                     @Override
                     public void onComplete() {
-        
+                        mFragment.setLoadComplete();
                     }
                 });
     }
