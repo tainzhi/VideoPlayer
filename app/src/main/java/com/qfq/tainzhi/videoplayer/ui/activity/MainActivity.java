@@ -1,7 +1,9 @@
 package com.qfq.tainzhi.videoplayer.ui.activity;
 
 import android.Manifest;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -341,5 +343,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
     
-    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        super.onConfigurationChanged(newConfig);
+    }
 }
