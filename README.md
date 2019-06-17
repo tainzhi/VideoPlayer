@@ -12,13 +12,15 @@ VideoPlayer
 - [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer) 
 
 ## 功能简介
+- 切换播放器: 默认播放器(基于android自带的MediaPlayer), 基于ijkplayer的播放器
+- ~~进度条可以预览视频(该功能有bug): 实现方法比较另类, 用Glide加载, 某些格式的视频需要能解码的库; 窗口暂时不能移动~~
 
 ## 依赖框架和技术
 MVP, retrofit2, rxjava2
 
 ## 实现简介
 - MainActivity: 
-- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频; 进度条可以预览视频(该功能有bug)
+- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频; 
 - 
 
 

@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_video_player_play" />
-                            <entry key="sourceFile" value="C:\Users\muqing\Downloads\Play.svg" />
+                            <entry key="outputName" value="ic_video_default_thumbnail" />
+                            <entry key="sourceFile" value="C:\Users\muqing\Downloads\视频.svg" />
                           </map>
                         </option>
                       </PersistentState>
