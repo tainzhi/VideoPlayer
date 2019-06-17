@@ -174,11 +174,11 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
                 
                 int width = seekBar.getWidth();
                 long time = progress * mVideoDuration / 100;
-                // int offset =(int)(width - (150dp /2)) /100 *;
+                int offset =(int)(width - 75) /100;
                 showVideoPreviewFrame(mVideoUri, time, mVideoProgressPreviewImageView);
                 RelativeLayout.LayoutParams layoutParams =
                         (RelativeLayout.LayoutParams) mVideoProgressPreviewLayout.getLayoutParams();
-                // layoutParams.leftMargin = offset;
+                layoutParams.leftMargin = offset;
                 mVideoProgressPreviewLayout.setLayoutParams(layoutParams);
                 mVideoProgress = progress;
             }
@@ -193,9 +193,9 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             mIsTouchOnSeekBar = false;
-            // if (mVideoProgress >= 0) {
-            //     seekBar.setProgress();
-            // }
+            if (mVideoProgress >= 0) {
+                seekBar.setProgress((int)(mVideoProgress / mVideoDuration * 100));
+            }
             mVideoProgressPreviewLayout.setVisibility(View.GONE);
         }
     };
@@ -313,11 +313,10 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
             super.run();
             while (mMediaPlayer != null && isRuuning) {
                 try {
-                    // TODO: 2019/6/16 研究一下
-                    // if (!mIsTouchOnSeekBar && mMediaPlayer.isPlaying()) {
-                    //     int videoProgress = mMediaPlayer.getCurrentPosition();
-                    //     mControllerProgress.setProgress((int) (videoProgress * 1.0 / mVideoDuration * 100));
-                    // }
+                    if (!mIsTouchOnSeekBar && mMediaPlayer.isPlaying()) {
+                        int videoProgress = mMediaPlayer.getCurrentPosition();
+                        mControllerProgress.setProgress((int) (videoProgress * 1.0 / mVideoDuration * 100));
+                    }
                     try {
                         this.sleep(100);
                     } catch (InterruptedException e) {

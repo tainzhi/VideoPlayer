@@ -12,5 +12,5 @@
     <color name="douyu_colorPrimaryDark">#D54B00</color>
     <color name="douyu_colorAccent">#ff630e</color>
 
-    <color name="video_player_panel_background">#30000000</color>
+    <color name="video_player_panel_background">#40000000</color>
 </resources>

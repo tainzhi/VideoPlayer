@@ -1,8 +1,7 @@
 VideoPlayer
 
 ## Info
-This is a repository about my videoplayer
-
+这是一个视频播放器，又不仅仅是一个播放器。它不仅能观看本地视频，还能看斗鱼直播， 能看央视和各大地方卫士，能看美剧和电影。许多功能正在紧张的开发中。。。敬请期待
 ![demo](./demo.gif)
 
 ## 参考
@@ -12,12 +11,15 @@ This is a repository about my videoplayer
 - [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
 - [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer) 
 
-## 基于
+## 功能简介
+
+## 依赖框架和技术
 MVP, retrofit2, rxjava2
 
 ## 实现简介
 - MainActivity: 
-- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频
+- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频; 进度条可以预览视频(该功能有bug)
+- 
 
 
 ## Todo
@@ -44,6 +46,8 @@ MVP, retrofit2, rxjava2
 - [ ]搭建一个局域网服务器, 提供美剧tab的搜索和展示
 - [ ]升级RxJava1.x到RxJava2.x
 - [ ]kotlin实现
+- [ ]学习竞品: MX播放器, XPlayer, VLC, VideoPlayer等播放列表, 播放界面(全屏透明状态栏)等功能, 实现它们
+- [ ]学习Douyu新版, 看有什么想实现的功能; 如果能逆向出直播源就更好了
 
 
 ## Notes
