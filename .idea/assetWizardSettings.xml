@@ -33,9 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_video_player_pause" />
-                            <entry key="sourceFile" value="C:\Users\muqing\Downloads\Rectangle.svg" />
+                            <entry key="outputName" value="ic_video_player_play" />
+                            <entry key="sourceFile" value="C:\Users\muqing\Downloads\Play.svg" />
                           </map>
                         </option>
                       </PersistentState>
