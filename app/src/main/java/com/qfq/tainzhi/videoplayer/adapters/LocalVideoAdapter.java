@@ -145,6 +145,8 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
         LocalVideoBean video = mLists.get(position);
         if (video.getThumbnailPath() != null) {
             holder.thumb.setImageURI(Uri.fromFile(new File(video.getThumbnailPath())));
+        } else {
+            holder.thumb.setImageResource(R.drawable.ic_video_default_thumbnail);
         }
         holder.title.setText(video.getTitle());
         holder.size.setText(video.getSize());
