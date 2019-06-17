@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.internal.reflect.ReflectionAccessor;
 import com.qfq.tainzhi.videoplayer.FloatWindow;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.util.WindowUtil;
@@ -55,8 +56,9 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
     private ImageView mControllerControl;
     private SeekBar mControllerProgress;
     private ImageView mControllerFloatWindow;
-    private LinearLayout mVideoProgressPreviewLayout;
-    private ImageView mVideoProgressPreviewImageView;
+    // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
+    // private LinearLayout mVideoProgressPreviewLayout;
+    // private ImageView mVideoProgressPreviewImageView;
     private boolean mVideoPlayOrPause = false; // play state is true, stop state is false;
     final private Handler mHandler = new Handler() {
         @Override
@@ -149,7 +151,8 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
             mVideoPlayOrPause = true;
             mUpdateSeekBarThread = new UpdateSeekBarThread("UpdateSeekBarThread");
             mUpdateSeekBarThread.start();
-            startGetVideoPreviewFrame(mVideoUri, mVideoDuration);
+            // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
+            // startGetVideoPreviewFrame(mVideoUri, mVideoDuration);
             Log.v(TAG, "MediaPlayer.start()");
         }
     };
@@ -171,23 +174,25 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
                 msg.what = CONTROLLER_SEEK_TO;
                 msg.arg1 = videoProgress;
                 mHandler.sendMessage(msg);
-                
-                int width = seekBar.getWidth();
-                long time = progress * mVideoDuration / 100;
-                int offset =(int)(width - 75) /100;
-                showVideoPreviewFrame(mVideoUri, time, mVideoProgressPreviewImageView);
-                RelativeLayout.LayoutParams layoutParams =
-                        (RelativeLayout.LayoutParams) mVideoProgressPreviewLayout.getLayoutParams();
-                layoutParams.leftMargin = offset;
-                mVideoProgressPreviewLayout.setLayoutParams(layoutParams);
                 mVideoProgress = progress;
+    
+                // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
+                // int width = seekBar.getWidth();
+                // long time = progress * mVideoDuration / 100;
+                // int offset =(int)(width - 75) /100;
+                // showVideoPreviewFrame(mVideoUri, time, mVideoProgressPreviewImageView);
+                // RelativeLayout.LayoutParams layoutParams =
+                //         (RelativeLayout.LayoutParams) mVideoProgressPreviewLayout.getLayoutParams();
+                // layoutParams.leftMargin = offset;
+                // mVideoProgressPreviewLayout.setLayoutParams(layoutParams);
             }
         }
         
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
             mIsTouchOnSeekBar = true;
-            mVideoProgressPreviewLayout.setVisibility(View.VISIBLE);
+            // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
+            // mVideoProgressPreviewLayout.setVisibility(View.VISIBLE);
         }
         
         @Override
@@ -196,7 +201,8 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
             if (mVideoProgress >= 0) {
                 seekBar.setProgress((int)(mVideoProgress / mVideoDuration * 100));
             }
-            mVideoProgressPreviewLayout.setVisibility(View.GONE);
+            // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
+            // mVideoProgressPreviewLayout.setVisibility(View.GONE);
         }
     };
     
@@ -227,10 +233,11 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
                 (ImageView) findViewById(R.id.video_player_bottom_panel_play);
         mControllerProgress = (SeekBar) findViewById(R.id.activity_default_video_player_player_controller_progress);
         mControllerFloatWindow = (ImageView) findViewById(R.id.video_player_bottom_panel_float_window);
-        mVideoProgressPreviewLayout =
-                (LinearLayout)findViewById(R.id.video_player_progress_preview_layout);
-        mVideoProgressPreviewImageView =
-                (ImageView)findViewById(R.id.video_player_progress_preview_iv);
+        // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
+        // mVideoProgressPreviewLayout =
+        //         (LinearLayout)findViewById(R.id.video_player_progress_preview_layout);
+        // mVideoProgressPreviewImageView =
+        //         (ImageView)findViewById(R.id.video_player_progress_preview_iv);
         
         //Hide TitleBar and ControllerBar 5s later
         mHandler.sendEmptyMessageDelayed(HIDE_CONTROLLER_BAR, HIDE_CONTROLLER_BAR_DELAY);
@@ -333,35 +340,36 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
         }
     }
     
-    private void startGetVideoPreviewFrame(Uri url, long videoDuration) {
-        for (int i = 0; i < 100; i++) {
-            long time = i * videoDuration / 100;
-            int width = WindowUtil.dip2px(this, 150);
-            int height = WindowUtil.dip2px(this, 100);
-            Glide.with(this.getApplicationContext())
-                    .setDefaultRequestOptions(
-                            new RequestOptions()
-                                    .frame(1000 * time)
-                                    .override(width, height)
-                                    .centerCrop())
-                    .load(url).preload(width, height);
-        }
-    }
-    
-    private void showVideoPreviewFrame(Uri url, long time,
-                                       ImageView imageView) {
-        int width = WindowUtil.dip2px(this, 150);
-        int height = WindowUtil.dip2px(this, 100);
-        Glide.with(this.getApplicationContext())
-                .setDefaultRequestOptions(
-                        new RequestOptions()
-                                .onlyRetrieveFromCache(true)
-                                .frame(1000 * time)
-                                .override(width, height)
-                                .dontAnimate()
-                                .centerCrop())
-                .load(url)
-                .into(imageView);
-    }
+    // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
+    // private void startGetVideoPreviewFrame(Uri url, long videoDuration) {
+    //     for (int i = 0; i < 100; i++) {
+    //         long time = i * videoDuration / 100;
+    //         int width = WindowUtil.dip2px(this, 150);
+    //         int height = WindowUtil.dip2px(this, 100);
+    //         Glide.with(this.getApplicationContext())
+    //                 .setDefaultRequestOptions(
+    //                         new RequestOptions()
+    //                                 .frame(1000 * time)
+    //                                 .override(width, height)
+    //                                 .centerCrop())
+    //                 .load(url).preload(width, height);
+    //     }
+    // }
+    //
+    // private void showVideoPreviewFrame(Uri url, long time,
+    //                                    ImageView imageView) {
+    //     int width = WindowUtil.dip2px(this, 150);
+    //     int height = WindowUtil.dip2px(this, 100);
+    //     Glide.with(this.getApplicationContext())
+    //             .setDefaultRequestOptions(
+    //                     new RequestOptions()
+    //                             .onlyRetrieveFromCache(true)
+    //                             .frame(1000 * time)
+    //                             .override(width, height)
+    //                             .dontAnimate()
+    //                             .centerCrop())
+    //             .load(url)
+    //             .into(imageView);
+    // }
 }
 
