@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 import com.qfq.tainzhi.videoplayer.R;
@@ -77,20 +78,11 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
         mDouyuLivePresenter = new DouyuLivePresenter(this);
         mDouyuLivePresenter.getRoomList(mChannelId, mChannelTitle, mOffset);
         mAdapter = new DouyuChannelRoomAdapter(getContext(), mChannelRooms);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startPlay(mChannelRooms.get(position).getRoom_id(),
-                        mChannelRooms.get(position).getNickname());
-        
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            startPlay(mChannelRooms.get(position).getRoom_id(),
+                    mChannelRooms.get(position).getNickname());
         });
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override public void onLoadMoreRequested() {
-                Logger.d("moffset:%s", mOffset);
-                onLoadMore();
-            }
-        }, mRecyclerView);
+        mAdapter.setOnLoadMoreListener(() -> onLoadMore(), mRecyclerView);
       
         initView();
         ViewGroup parent = (ViewGroup) mView.getParent();
@@ -146,8 +138,8 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
     }
     
     private void startPlay(int roomId, String title) {
-        String path = "http://tx2play1.douyucdn" +
-                              ".cn/live/237974rptJVwMilG_4000p.flv";
+        String path = "https://tc-tct.douyucdn2" +
+                              ".cn/dyliveflv1a/288016rlols5_4000p.flv?wsAuth=8b486029039b56bea5890018f8fbc0c5&token=web-h5-89457769-288016-88ecb324a2c68d24b31f3321f9e5b8bdd61f2d4174ff5fb3&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=";
         Intent intent = new Intent(getContext(),
                 DefaultPlayActivity.class);
         intent.setData(Uri.parse(path));

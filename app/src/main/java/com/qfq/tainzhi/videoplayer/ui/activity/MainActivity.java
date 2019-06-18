@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity
         if (DouyuChannelFragment.getInstance() != null) {
             ft.remove(DouyuChannelFragment.getInstance());
         }
+        
     }
     
     @Override
