@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.R2;
 import com.qfq.tainzhi.videoplayer.adapters.DouyuChannelAdapter;
@@ -57,21 +57,30 @@ public class DouyuChannelFragment extends Fragment implements SwipeRefreshLayout
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_douyu_channel,
+        mView = inflater.inflate(R.layout.fragment_douyu_channel,
                 container, false);
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, mView);
         mChannels = new ArrayList<>();
         mDouyuChannelPresenter = new DouyuChannelPresenter(this);
     
         mAdapter = new DouyuChannelAdapter(getContext(),
                 mChannels);
+        mAdapter.setOnItemClickListener((adapter, view, position)-> {
+            // REFACTOR: 2019/6/18 待重构: fragment覆盖在最上面, 暂时想不到好的解决办法
+            // FragmentTransaction ft = getFragmentManager().beginTransaction();
+            // ft.replace(R.id.container,
+            //         DouyuLiveFragment.newInstance(mChannels.get(position).getId(),
+            //                 mChannels.get(position).getName()));
+            //
+            // ft.commit();
+        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
     
         mDouyuChannelPresenter.getChannelList();
         mRefreshLayout.setRefreshing(true);
         
-        return view;
+        return mView;
     }
     
     public void showData(List<DouyuChannelBean> channels) {
