@@ -1,7 +1,8 @@
 VideoPlayer
 
 ## Info
-![demo](./demo.gif | width=600)
+<img src="./demo.gif" alt="alt text" height="300">
+
 这是一个视频播放器，又不仅仅是一个播放器。它不仅能观看本地视频，还能看斗鱼直播， 能看央视和各大地方卫士，能看美剧和电影。许多功能正在紧张的开发中。。。敬请期待
 ## 参考
 - [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android) 
@@ -22,7 +23,6 @@ MVP, retrofit2, rxjava2
 ## 实现简介
 - MainActivity: 
 - DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频; 
-- 
 
 
 ## Todo
