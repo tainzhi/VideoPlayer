@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.R2;
 import com.qfq.tainzhi.videoplayer.adapters.TVChannelAdapter;
 import com.qfq.tainzhi.videoplayer.bean.TVChannelBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.TVPresenter;
@@ -24,9 +24,6 @@ import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by muqing on 2019/6/4.
@@ -62,9 +59,13 @@ public class TVFragment extends BaseFragment implements SwipeRefreshLayout.OnRef
             startPlay(mChannelList.get(position).getUrl(),
                     mChannelList.get(position).getName());
         });
-        
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+    
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
+        
         mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.zhuganzi));
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setRefreshing(true);
