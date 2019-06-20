@@ -7,7 +7,6 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 
-import java.security.cert.LDAPCertStoreParameters;
 import java.util.ArrayList;
 import java.util.List;
 
