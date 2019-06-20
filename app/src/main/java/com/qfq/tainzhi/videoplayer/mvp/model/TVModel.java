@@ -42,35 +42,33 @@ public class TVModel {
     public List<String> getDefaultChannels() {
         List<String> result = new ArrayList<>();
         try {
-            InputStream instream =
+            InputStream inputStream =
                     mContext.getResources().openRawResource(R.raw.default_tv_channels);
-            if (instream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(instream);
-                BufferedReader buffer = new BufferedReader(inputStreamReader);
-    
-                String line;
-                //            3*file*http://116.199.5.51:8114/index.m3u8?Fsv_chan_hls_se_idx=10&FvSeid=1&Fsv_ctype=LIVES&Fsv_otype=1&Provider_id=&Pcontent_id=.m3u8
-                //            3*title*CCTV  2   财经Vk
-                Pattern channelUrlPattern = Pattern.compile("file.(http.*m3u8)");
-                Pattern channelPattern = Pattern.compile("title.(.*)[\n\f\r]{0,2}");
-                boolean pair = false;
-                while ((line = buffer.readLine()) != null) {
-                    Matcher channelUrlMatcher = channelUrlPattern.matcher(line);
-                    if (channelUrlMatcher.find()) {
-                        String url = channelUrlMatcher.group(1);
-                        result.add(url);
-                        pair = true;
-                        continue;
-                    }
-                    Matcher channelMatcher = channelPattern.matcher(line);
-                    if (channelMatcher.find() && pair) {
-                        pair = false;
-                        String name = channelMatcher.group(1);
-                        result.add(name);
-                    }
+            BufferedReader buffer =
+                    new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            //            3*file*http://116.199.5.51:8114/index.m3u8?Fsv_chan_hls_se_idx=10&FvSeid=1&Fsv_ctype=LIVES&Fsv_otype=1&Provider_id=&Pcontent_id=.m3u8
+            //            3*title*CCTV  2   财经Vk
+            Pattern channelUrlPattern = Pattern.compile("file.(http.*m3u8)");
+            Pattern channelPattern = Pattern.compile("title.(.*)[\n\f\r]{0,2}");
+            boolean pair = false;
+            while ((line = buffer.readLine()) != null) {
+                Matcher channelUrlMatcher = channelUrlPattern.matcher(line);
+                if (channelUrlMatcher.find()) {
+                    String url = channelUrlMatcher.group(1);
+                    result.add(url);
+                    pair = true;
+                    continue;
+                }
+                Matcher channelMatcher = channelPattern.matcher(line);
+                if (channelMatcher.find() && pair) {
+                    pair = false;
+                    String name = channelMatcher.group(1);
+                    result.add(name);
                 }
             }
-            instream.close();
+            inputStream.close();
         } catch(java.io.FileNotFoundException e) {
             Logger.d("default tv channel file not found!");
         }
