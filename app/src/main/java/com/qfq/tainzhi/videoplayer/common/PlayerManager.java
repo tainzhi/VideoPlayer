@@ -26,6 +26,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.orhanobut.logger.Logger;
+import com.qfq.tainzhi.videoplayer.R;
+import com.qfq.tainzhi.videoplayer.widget.media.IRenderView;
+import com.qfq.tainzhi.videoplayer.widget.media.IjkVideoView;
+
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
@@ -191,7 +196,7 @@ public class PlayerManager {
         portrait=getScreenOrientation()== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         
         if (!playerSupport) {
-            DebugLog.e("播放器不支持此设备");
+            Logger.e("播放器不支持此设备");
         }
         
         //woc 这个没实现
@@ -207,12 +212,12 @@ public class PlayerManager {
     private void statusChange(int newStatus) {
         status=newStatus;
         if (!isLive && newStatus==STATUS_COMPLETED) {
-            DebugLog.d("statusChange STATUS_COMPLETED...");
+            Logger.d("statusChange STATUS_COMPLETED...");
             if (playerStateListener != null){
                 playerStateListener.onComplete();
             }
         }else if (newStatus == STATUS_ERROR) {
-            DebugLog.d("statusChange STATUS_ERROR...");
+            Logger.d("statusChange STATUS_ERROR...");
             if (playerStateListener != null){
                 playerStateListener.onError();
             }
@@ -221,9 +226,9 @@ public class PlayerManager {
             if (playerStateListener != null){
                 playerStateListener.onLoading();
             }
-            DebugLog.d("statusChange STATUS_LOADING...");
+            Logger.d("statusChange STATUS_LOADING...");
         } else if (newStatus == STATUS_PLAYING) {
-            DebugLog.d("statusChange STATUS_PLAYING...");
+            Logger.d("statusChange STATUS_PLAYING...");
             if (playerStateListener != null){
                 playerStateListener.onPlay();
             }
@@ -392,7 +397,7 @@ public class PlayerManager {
             s = "off";
         }
         
-        DebugLog.d("onVolumeSlide:"+s);
+        Logger.d("onVolumeSlide:"+s);
     }
     
     private void onProgressSlide(float percent) {
@@ -412,7 +417,7 @@ public class PlayerManager {
         int showDelta = (int) delta / 1000;
         if (showDelta != 0) {
             String text = showDelta > 0 ? ("+" + showDelta) : "" + showDelta;
-            DebugLog.d("onProgressSlide:" + text);
+            Logger.d("onProgressSlide:" + text);
         }
     }
     
@@ -430,7 +435,7 @@ public class PlayerManager {
                 brightness = 0.01f;
             }
         }
-        DebugLog.d("brightness:"+brightness+",percent:"+ percent);
+        Logger.d("brightness:"+brightness+",percent:"+ percent);
         WindowManager.LayoutParams lpa = activity.getWindow().getAttributes();
         lpa.screenBrightness = brightness + percent;
         if (lpa.screenBrightness > 1.0f){

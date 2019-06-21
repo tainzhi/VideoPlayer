@@ -25,6 +25,7 @@ import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
+import com.qfq.tainzhi.videoplayer.ui.activity.IjkPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +143,7 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
     
     private void startPlay(int id, String title, long duration) {
         Intent intent = new Intent(getContext(),
-                DefaultPlayActivity.class);
+                IjkPlayerActivity.class);
         Uri videoUri =
                 ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
         intent.setData(videoUri);

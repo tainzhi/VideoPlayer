@@ -21,6 +21,7 @@ import com.qfq.tainzhi.videoplayer.bean.TVChannelBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.TVPresenter;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.ITVPresenter;
 import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
+import com.qfq.tainzhi.videoplayer.ui.activity.IjkPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +98,7 @@ public class TVFragment extends BaseFragment implements SwipeRefreshLayout.OnRef
     
     private void startPlay(String url, String name) {
         Intent intent = new Intent(getContext(),
-                DefaultPlayActivity.class);
+                IjkPlayerActivity.class);
         intent.setData(Uri.parse(url));
         Logger.d(url);
         intent.putExtra("title", name);
