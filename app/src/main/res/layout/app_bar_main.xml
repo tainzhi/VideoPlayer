@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="false"
-    android:background="@drawable/side_nav_bar"
-    android:theme="@style/AppTheme.AppBarOverlay"
-    tools:context=".ui.activity.MainActivity">
+    android:background="@color/colorPrimary"
+    android:theme="@style/AppTheme.AppBarOverlay">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

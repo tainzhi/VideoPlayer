@@ -24,6 +24,25 @@ MVP, retrofit2, rxjava2
 - MainActivity: 
 - DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频; 
 
+## 斗鱼直播源的获取(未实现)
+**Note**: @2019年6月5日17:33:56之前: 手动方式有效，python方式无效，反编译不会
+
+### 手动获取
+斗鱼原先提供的v1可以直接获取直播地址的api已经失效，暂时无法获取地址。Demo中使用了一个24h直播间https://www.douyu.com/3346305，手动获取地址，来测试。
+ [斗鱼直播源破解参考](https://www.52pojie.cn/thread-957638-1-1.html)
+ 
+具体破解步骤：
+- 假设原直播源地址为`http://hlsa.douyucdn.cn/live/431935rYIJ0kKhQ4_550/playlist.m3u8?wsSecret=924a83c6700d9d802a7717f1068811f6&wsTime=1558565155&token=h5-douyu-0-431935-373ef2a3e162f552b55145ccdd4571a3&did=h5_did`
+- 直播源地址格式固定为`http://hlsa.douyucdn.cn/live/*_550/playlist/*`. 
+- 替换hlsa为tx2play1, _550为普通清晰度，去除改为默认最高清晰度
+- 最终结果`http://tx2play1.douyucdn.cn/live/431935rYIJ0kKhQ4.flv`
+
+### python破解方式参考(失效)
+- [youtube-dl](https://github.com/ytdl-org/youtube-dl/blob/c3bcd206eb031de30179c88ac7acd806a477ceae/youtube_dl/extractor/douyutv.py)
+- [you-get](https://github.com/soimort/you-get/blob/0811aed29c528e1f5994c81f126b05afbf146dd2/src/you_get/extractors/douyutv.py)
+- [streamlink](https://github.com/streamlink/streamlink/blob/fb6a00c86bbf752b578ea317cdede242a2b4e836/src/streamlink/plugins/douyutv.py)
+
+### 反编译app获取地址
 
 ## Todo
 - [ ] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能

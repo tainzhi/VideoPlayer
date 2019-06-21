@@ -4,6 +4,7 @@
     android:id="@+id/l_video_player_top_panel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/video_player_panel_background"
     android:orientation="horizontal">
 
     <ImageView
@@ -29,13 +30,13 @@
         android:id="@+id/video_player_top_panel_system_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/video_player_top_panel_battery"
         android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="40dp"
+        android:layout_toStartOf="@+id/video_player_top_panel_battery"
+        android:text="12:00:00"
         android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:text="12:00:00" />
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/video_player_top_panel_battery"

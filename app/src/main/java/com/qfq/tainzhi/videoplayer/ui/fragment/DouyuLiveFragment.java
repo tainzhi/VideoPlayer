@@ -138,6 +138,7 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
     }
     
     private void startPlay(int roomId, String title) {
+        // REFACTOR: 2019/6/21 待重构 怎么通过房间号获取房间的直播源
         String path = "https://tc-tct.douyucdn2" +
                               ".cn/dyliveflv1a/288016rlols5_4000p.flv?wsAuth=8b486029039b56bea5890018f8fbc0c5&token=web-h5-89457769-288016-88ecb324a2c68d24b31f3321f9e5b8bdd61f2d4174ff5fb3&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=";
         Intent intent = new Intent(getContext(),

@@ -1,8 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="DefaultTheme" parent="Theme.AppCompat.Light">
+    <style name="DefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="MainActivityTheme" parent="Theme.AppCompat.Light">
@@ -39,6 +43,13 @@
     <style name="Widget.Design.BottomNavigationView" parent="">
         <item name="itemBackground">?attr/selectableItemBackgroundBorderless</item>
         <item name="elevation">@dimen/design_bottom_navigation_elevation</item>
+    </style>
+
+    <style name="TranslucentTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

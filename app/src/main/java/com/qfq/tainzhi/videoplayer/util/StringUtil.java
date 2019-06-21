@@ -1,5 +1,8 @@
 package com.qfq.tainzhi.videoplayer.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by muqing on 2019/6/12.
  * Email: qfq61@qq.com
@@ -55,5 +58,15 @@ public class StringUtil {
         String month = date.substring(4, 6);
         String day = date.substring(6, 8);
         return year + "/" + month + "/" + day;
+    }
+    
+    /**
+     * 获取当前系统时间 返回格式"HH:mm:ss"
+     *
+     * @return
+     */
+    public static String formatSystemTime() {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        return format.format(new Date());
     }
 }
