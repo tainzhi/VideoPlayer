@@ -1,6 +1,10 @@
 package com.qfq.tainzhi.videoplayer.util;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.util.MonthDisplayHelper;
+import android.view.WindowManager;
 
 /**
  * Created by muqing on 2019/6/16.
@@ -21,5 +25,14 @@ public class WindowUtil {
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
+    }
+    
+    public static int[] getScreenSize(Context context) {
+        WindowManager wm =
+                (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(displayMetrics);
+        return new int[] {displayMetrics.widthPixels,
+                displayMetrics.heightPixels};
     }
 }

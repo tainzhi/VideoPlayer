@@ -13,5 +13,5 @@ public interface IIjkPlayerPresenter {
     
     void getPlayerInfo(int roomId);
     
-    void dismissVolAlpha();
+    void dismissVolumePanel();
 }

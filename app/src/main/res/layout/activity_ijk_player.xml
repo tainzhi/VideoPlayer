@@ -10,12 +10,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/video_player_panel_background">
+        android:layout_height="match_parent">
 
         <include
             layout="@layout/video_player_top_panel"
-
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentTop="true" />
@@ -32,16 +30,19 @@
             android:id="@+id/ll_video_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_centerInParent="true">
 
             <ImageView
                 android:id="@+id/iv_video_volume"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/ic_video_player_volume" />
 
             <TextView
                 android:id="@+id/tv_video_volume"
+                android:textSize="44sp"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="90%"/>
