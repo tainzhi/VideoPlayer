@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity
     public static final int FRAGMENT_LIKE = 4;
     private static final String POSITION = "position";
     private static final String SELECTED_ITEM = "bottomNavigationSelectItem";
+    
+    
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
     @BindView(R2.id.container)

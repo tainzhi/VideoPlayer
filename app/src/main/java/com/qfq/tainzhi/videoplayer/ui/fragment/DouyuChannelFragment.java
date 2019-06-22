@@ -67,12 +67,12 @@ public class DouyuChannelFragment extends Fragment implements SwipeRefreshLayout
                 mChannels);
         mAdapter.setOnItemClickListener((adapter, view, position)-> {
             // REFACTOR: 2019/6/18 待重构: fragment覆盖在最上面, 暂时想不到好的解决办法
-            // FragmentTransaction ft = getFragmentManager().beginTransaction();
-            // ft.replace(R.id.container,
-            //         DouyuLiveFragment.newInstance(mChannels.get(position).getId(),
-            //                 mChannels.get(position).getName()));
-            //
-            // ft.commit();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.remove(this);
+            ft.add(R.id.container,
+                    new DouyuLiveFragment(mChannels.get(position).getId(),
+                            mChannels.get(position).getName(), true));
+            ft.commit();
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
