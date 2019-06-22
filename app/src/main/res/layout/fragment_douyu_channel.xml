@@ -3,7 +3,6 @@
     android:id="@+id/douyu_channel_refresh_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/douyu_colorAccent"
     android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/douyu_channel_list"

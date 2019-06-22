@@ -79,7 +79,7 @@ public class DouyuFragment extends BaseFragment {
         mFragmentList = new ArrayList<>();
         
         for (int i = 0; i < mTitleList.length; i++) {
-            mFragmentList.add(DouyuLiveFragment.newInstance(mIdList[i],
+            mFragmentList.add(new DouyuLiveFragment(mIdList[i],
                     mTitleList[i]));
         }
     }
@@ -99,8 +99,9 @@ public class DouyuFragment extends BaseFragment {
     @OnClick(R2.id.add_channel_iv)
     public void onClick() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.hide(mInstance);
-        ft.add(R.id.container, DouyuChannelFragment.newInstance());
+        ft.hide(this);
+        ft.add(R.id.container,
+            DouyuChannelFragment.newInstance());
         ft.commit();
     }
     

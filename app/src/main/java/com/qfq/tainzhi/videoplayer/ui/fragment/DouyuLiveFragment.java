@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,6 +24,7 @@ import com.qfq.tainzhi.videoplayer.adapters.DouyuChannelRoomAdapter;
 import com.qfq.tainzhi.videoplayer.bean.DouyuRoomBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.DouyuLivePresenter;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.IDouyuLivePresenter;
+import com.qfq.tainzhi.videoplayer.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +35,7 @@ import java.util.List;
  * Email: qfq61@qq.com
  */
 public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private static final String CHANNEL_ID = "channel_id";
-    private static final String CHANNEL_TITLE = "channel_title";
-    
+    private boolean mIsFromChannel = false;
     private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private String mChannelTitle;
@@ -46,23 +46,17 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
     private DouyuChannelRoomAdapter mAdapter;
     private int mOffset = 0;
     
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mChannelId = bundle.getInt(CHANNEL_ID, 0);
-            mChannelTitle = bundle.getString(CHANNEL_TITLE);
-        }
+    public DouyuLiveFragment(int id, String title) {
+        mChannelId = id;
+        mChannelTitle = title;
     }
     
-    public static DouyuLiveFragment newInstance(int id, String title) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(CHANNEL_ID, id);
-        bundle.putString(CHANNEL_TITLE, title);
-        DouyuLiveFragment douyuLiveFragment = new DouyuLiveFragment();
-        douyuLiveFragment.setArguments(bundle);
-        return douyuLiveFragment;
+    public DouyuLiveFragment(int id, String title,
+                                                boolean isFromChannel) {
+        mChannelId = id;
+        mChannelTitle = title;
+        mIsFromChannel = isFromChannel;
+
     }
     
     @Nullable
@@ -146,5 +140,14 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
         intent.setData(Uri.parse(path));
         intent.putExtra("title", title);
         startActivity(intent);
+        if (mIsFromChannel) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.remove(this);
+            ft.show(DouyuFragment.newInstance());
+            ft.commit();
+            Logger.d("tag=%s", this.getTag());
+            Logger.d("onDestroy");
+            onDestroy();
+        }
     }
 }
