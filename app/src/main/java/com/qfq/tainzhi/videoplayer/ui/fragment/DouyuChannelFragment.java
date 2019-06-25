@@ -98,4 +98,5 @@ public class DouyuChannelFragment extends Fragment implements SwipeRefreshLayout
     public void onRefresh() {
         mRefreshLayout.setRefreshing(false);
     }
+    
 }
