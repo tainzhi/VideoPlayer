@@ -15,16 +15,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.loadmore.LoadMoreView;
-import com.orhanobut.logger.Logger;
-import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.adapters.DouyuChannelRoomAdapter;
 import com.qfq.tainzhi.videoplayer.bean.DouyuRoomBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.DouyuLivePresenter;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.IDouyuLivePresenter;
-import com.qfq.tainzhi.videoplayer.ui.activity.MainActivity;
+import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +48,11 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
     }
     
     public DouyuLiveFragment(int id, String title,
-                                                boolean isFromChannel) {
+                             boolean isFromChannel) {
         mChannelId = id;
         mChannelTitle = title;
         mIsFromChannel = isFromChannel;
-
+    
     }
     
     @Nullable
@@ -77,12 +73,13 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
                     mChannelRooms.get(position).getNickname());
         });
         mAdapter.setOnLoadMoreListener(() -> onLoadMore(), mRecyclerView);
-      
+    
         initView();
         ViewGroup parent = (ViewGroup) mView.getParent();
         if (parent != null) {
             parent.removeView(mView);
         }
+    
         return mView;
     }
     
@@ -140,14 +137,16 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
         intent.setData(Uri.parse(path));
         intent.putExtra("title", title);
         startActivity(intent);
+        
+        removeThisFragment();
+    }
+    
+    public void removeThisFragment() {
         if (mIsFromChannel) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.remove(this);
             ft.show(DouyuFragment.newInstance());
             ft.commit();
-            Logger.d("tag=%s", this.getTag());
-            Logger.d("onDestroy");
-            onDestroy();
         }
     }
 }
