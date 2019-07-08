@@ -26,6 +26,14 @@ VideoPlayer
 - [弹弹play 概念版，弹弹play系列应用安卓平台上的实现，是一个提供了视频播放（本地+局域网）和弹幕加载（在线+本地）功能的本地播放器](https://github.com/xyoye/DanDanPlayForAndroid) 
 - [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
 - [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer) 
+- 其他的videoplayer:
+  [1](https://github.com/danylovolokh/VideoPlayerManager),
+  [2](https://github.com/blizzard-op/VideoPlayerKit),
+  [3](https://github.com/macdonst/VideoPlayer),
+  [4](https://github.com/ihmpavel/expo-video-player),
+  [5](https://github.com/boredream/VideoPlayer),
+  [6](https://github.com/Zhaoss/VideoPlayerDemo),
+  [7](https://github.com/googlesamples/android-VideoPlayer)
 
 ## 功能简介
 - 切换播放器: 默认播放器(基于android自带的MediaPlayer), 基于ijkplayer的播放器
@@ -68,7 +76,9 @@ MVP, retrofit2, rxjava2
 - [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
 - [ ] 电视频道
 > - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
-> - [ ]可以显示当前正在播放的内容(这个需要爬虫爬取结果, 用个热点小图标显示)
+> - [ ] 可以显示当前正在播放的内容(这个需要爬虫爬取结果,
+>       用个热点小图标显示):
+>       [动画效果参考](https://github.com/ybq/Android-SpinKit)
 > - [ ]爬取频道的标志图片, 用圆形图片显示; 三级缓存实现
 > - [ ]该界面搜索: 是搜索的卫视频道 
 > - [ ]列表滑动删除: [列表滑动删除](https://www.androidhive.info/2017/09/android-recyclerview-swipe-delete-undo-using-itemtouchhelper/?utm_source=recyclerview&utm_medium=site&utm_campaign=refer_article) 
