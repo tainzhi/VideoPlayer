@@ -26,6 +26,7 @@ VideoPlayer
 - [弹弹play 概念版，弹弹play系列应用安卓平台上的实现，是一个提供了视频播放（本地+局域网）和弹幕加载（在线+本地）功能的本地播放器](https://github.com/xyoye/DanDanPlayForAndroid) 
 - [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
 - [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer) 
+- [支持软硬解码](https://www.jianshu.com/p/93b7f7ec2d04)
 - 其他的videoplayer:
   [1](https://github.com/danylovolokh/VideoPlayerManager),
   [2](https://github.com/blizzard-op/VideoPlayerKit),
