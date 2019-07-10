@@ -26,7 +26,6 @@ import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.R2;
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuChannelFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment;
-import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuLiveFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.LikeFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.LocalVideoFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment;
@@ -239,10 +238,12 @@ public class MainActivity extends AppCompatActivity
     
     private void hideFragment(FragmentTransaction ft) {
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            if (fragment instanceof DouyuChannelFragment) {
-                ft.remove(fragment);
-            } else if (fragment instanceof DouyuLiveFragment) {
-                ((DouyuLiveFragment) fragment).removeThisFragment();
+            String tag = fragment.getTag();
+            if (tag != null) {
+                if (tag.equals(DouyuChannelFragment.DOUYU_CHANNEL_TAG) ||
+                            tag.equals(DouyuChannelFragment.DOUYU_CHANNEL_TO_LIVE)) {
+                    ft.remove(fragment);
+                }
             }
         }
         if (mLocalVideoFragment != null) {
