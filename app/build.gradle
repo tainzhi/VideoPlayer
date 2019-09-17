@@ -60,4 +60,7 @@ dependencies {
     implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    implementation "org.permissionsdispatcher:permissionsdispatcher:4.5.0"
+    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
 }
