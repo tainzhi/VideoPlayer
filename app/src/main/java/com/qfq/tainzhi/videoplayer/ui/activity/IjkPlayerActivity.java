@@ -30,7 +30,7 @@ import com.qfq.tainzhi.videoplayer.mvp.presenter.IjkPlayerPresenter;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.IIjkPlayerPresenter;
 import com.qfq.tainzhi.videoplayer.util.StringUtil;
 import com.qfq.tainzhi.videoplayer.util.WindowUtil;
-import com.qfq.tainzhi.videoplayer.widget.media.IjkVideoView;
+import com.qfq.tainzhi.videoplayer.media.IjkVideoView;
 
 import java.text.NumberFormat;
 
