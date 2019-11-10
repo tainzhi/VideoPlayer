@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer.widget.media;
+package com.qfq.tainzhi.videoplayer.media;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
