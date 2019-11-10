@@ -28,8 +28,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.widget.media.IRenderView;
-import com.qfq.tainzhi.videoplayer.widget.media.IjkVideoView;
+import com.qfq.tainzhi.videoplayer.media.IRenderView;
+import com.qfq.tainzhi.videoplayer.media.IjkVideoView;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
