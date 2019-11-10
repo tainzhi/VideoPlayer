@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer.media;
+package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.graphics.SurfaceTexture;
 import android.view.Surface;
