@@ -20,6 +20,8 @@ import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 
+import com.qfq.tainzhi.videoplayer.my_media.IRenderView;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
