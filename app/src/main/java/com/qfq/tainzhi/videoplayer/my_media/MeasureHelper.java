@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer.media;
+package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.content.Context;
 import android.view.View;

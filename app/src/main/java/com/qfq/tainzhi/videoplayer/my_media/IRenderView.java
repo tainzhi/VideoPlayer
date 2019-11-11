@@ -19,7 +19,7 @@ public interface IRenderView {
     int AR_ASPECT_FILL_PARENT = 1; // may clip
     int AR_ASPECT_WRAP_CONTENT = 2;
     int AR_MATCH_PARENT = 3;
-    int AR_16_9_FIT_PARENT = 4;
+    int AR_16_9_FIT_PARENT = 4; // w/h
     int AR_4_3_FIT_PARENT = 5;
     
     View getView();
