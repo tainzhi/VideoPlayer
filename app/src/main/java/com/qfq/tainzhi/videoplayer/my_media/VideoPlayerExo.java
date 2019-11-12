@@ -35,6 +35,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
 import com.qfq.tainzhi.videoplayer.R;
+import com.qfq.tainzhi.videoplayer.media.BaseVideoView;
 
 /**
  * @author: tainzhi
@@ -47,7 +48,7 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 		Player.EventListener,
 				VideoListener {
 	
-	private SimpleExoPlayer simpleExoPlayer;
+	public SimpleExoPlayer simpleExoPlayer;
 	private Runnable callback;
 	private long previousSeek = 0;
 	

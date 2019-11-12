@@ -3,6 +3,7 @@ package com.qfq.tainzhi.videoplayer.media;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,6 +19,10 @@ import androidx.annotation.Nullable;
 
 import com.qfq.tainzhi.videoplayer.my_media.IRenderView;
 import com.qfq.tainzhi.videoplayer.my_media.MeasureHelper;
+import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerBase;
+import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerExo;
+import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerIjk;
+import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerSystem;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -123,14 +128,20 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
             mSurfaceHolder = surfaceHolder;
         }
         
-        public void bindToMediaPlayer(IMediaPlayer mp) {
+        public void bindToMediaPlayer(VideoPlayerBase mp) {
             if (mp != null) {
                 if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
                             (mp instanceof ISurfaceTextureHolder)) {
                     ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
                     textureHolder.setSurfaceTexture(null);
                 }
-                mp.setDisplay(mSurfaceHolder);
+                if (mp instanceof VideoPlayerSystem) {
+                    ((VideoPlayerSystem) mp).mMediaPlayer.setDisplay(mSurfaceHolder);
+                } else if (mp instanceof VideoPlayerIjk) {
+                    ((VideoPlayerIjk)mp).mIjkMediaPlayer.setDisplay(mSurfaceHolder);
+                } else if (mp instanceof VideoPlayerExo) {
+                    ((VideoPlayerExo)mp).simpleExoPlayer.setVideoSurfaceHolder(mSurfaceHolder);
+                }
             }
         }
         
