@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.Surface;
 
+import com.qfq.tainzhi.videoplayer.media.BaseVideoView;
+
 import java.io.IOException;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -28,7 +30,7 @@ public class VideoPlayerIjk extends VideoPlayerBase implements
 				IMediaPlayer.OnSeekCompleteListener,
 				IMediaPlayer.OnTimedTextListener {
 	
-	IjkMediaPlayer mIjkMediaPlayer;
+	public IjkMediaPlayer mIjkMediaPlayer;
 	
 	public VideoPlayerIjk(BaseVideoView baseVideoView) {
 		super(baseVideoView);

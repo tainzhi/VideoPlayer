@@ -9,6 +9,8 @@ import android.view.Surface;
 
 import androidx.annotation.RequiresApi;
 
+import com.qfq.tainzhi.videoplayer.media.BaseVideoView;
+
 import java.lang.reflect.Method;
 
 /**
@@ -61,7 +63,7 @@ public class VideoPlayerSystem extends VideoPlayerBase implements
 				method.invoke(mMediaPlayer, mBaseVideoView.mDataSource.getUrl());
 				mMediaPlayer.prepareAsync();
 				// fixme
-				mMediaPlayer.setSurface(new Surface());
+				// mMediaPlayer.setSurface(new Surface());
 				// mMediaPlayer.setDisplay();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -147,10 +149,10 @@ public class VideoPlayerSystem extends VideoPlayerBase implements
 		mMediaPlayer.setPlaybackParams(pp);
 	}
 	
-	@Override
-	public void setRenderView(IRenderView renderView) {
-	
-	}
+	// @Override
+	// public void setRenderView(IRenderView renderView) {
+	//
+	// }
 	
 	
 	@Override
