@@ -12,6 +12,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -168,7 +169,7 @@ public class TextureRenderView extends TextureView implements IRenderView {
 		}
 		
 		@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-		public void bindToMediaPlayer(IMediaPlayer mp) {
+		public void bindToMediaPlayer(VideoPlayerBase mp) {
 			if (mp == null)
 				return;
 			if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&

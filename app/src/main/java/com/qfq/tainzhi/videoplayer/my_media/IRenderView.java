@@ -39,7 +39,7 @@ public interface IRenderView {
     void removeRenderCallback(@NonNull IRenderCallback callback);
     
     interface ISurfaceHolder {
-        void bindToMediaPlayer(IMediaPlayer mp);
+        void bindToMediaPlayer(VideoPlayerBase mp);
         
         @NonNull
         IRenderView getRenderView();

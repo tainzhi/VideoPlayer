@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.TextureView;
 
+import com.qfq.tainzhi.videoplayer.media.BaseVideoView;
+
 /**
  * @author: tainzhi
  * @mail: qfq61@qq.com
