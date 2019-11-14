@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.Surface;
 
-import com.qfq.tainzhi.videoplayer.media.BaseVideoView;
 
 import java.io.IOException;
 
@@ -71,17 +70,18 @@ public class VideoPlayerIjk extends VideoPlayerBase implements
 			mIjkMediaPlayer.setOnSeekCompleteListener(VideoPlayerIjk.this);
 			mIjkMediaPlayer.setOnTimedTextListener(VideoPlayerIjk.this);
 			
-			try {
-				mIjkMediaPlayer.setDataSource(jzvd.jzDataSource.getCurrentUrl().toString());
+			// try {
+			{
+				// mIjkMediaPlayer.setDataSource(jzvd.jzDataSource.getCurrentUrl().toString());
 				mIjkMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 				mIjkMediaPlayer.setScreenOnWhilePlaying(true);
 				mIjkMediaPlayer.prepareAsync();
 				
-				mIjkMediaPlayer.setSurface(new Surface(jzvd.textureView.getSurfaceTexture()));
-				mIjkMediaPlayer.setDisplay(hodler);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				// mIjkMediaPlayer.setSurface(new Surface(jzvd.textureView.getSurfaceTexture()));
+				// mIjkMediaPlayer.setDisplay(hodler);
+				// } catch (IOException e) {
+				// 	e.printStackTrace();
+				}
 		});
 	}
 	
@@ -105,7 +105,7 @@ public class VideoPlayerIjk extends VideoPlayerBase implements
 		if (mMediaHandler != null && mMediaHandlerThread != null && mIjkMediaPlayer != null) {
 			HandlerThread tmpHandlThread = mMediaHandlerThread;
 			IjkMediaPlayer tmpMediaPlayer = mIjkMediaPlayer;
-			JZMediaInterface.saved_surface = null;
+			// JZMediaInterface.saved_surface = null;
 			
 			mMediaHandler.post(() -> {
 				tmpMediaPlayer.setSurface(null);
@@ -155,6 +155,7 @@ public class VideoPlayerIjk extends VideoPlayerBase implements
 	@Override
 	public boolean onInfo(IMediaPlayer iMediaPlayer, int what, int extra) {
 		mHandler.post(() -> mBaseVideoView.onInfo(what, extra));
+		return true;
 	}
 	
 	@Override

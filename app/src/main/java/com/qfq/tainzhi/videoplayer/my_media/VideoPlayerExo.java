@@ -35,7 +35,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.media.BaseVideoView;
 
 /**
  * @author: tainzhi
@@ -84,30 +83,30 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 			
 			// 2. Create the player
 			
-			RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
+			// RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
 			simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(context, renderersFactory, trackSelector, loadControl);
 			// Produces DataSource instances through which media data is loaded.
 			DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
 					Util.getUserAgent(context, context.getResources().getString(R.string.app_name)));
 			
-			String currUrl = jzvd.jzDataSource.getCurrentUrl().toString();
+			// String currUrl = jzvd.jzDataSource.getCurrentUrl().toString();
 			MediaSource videoSource;
-			if (currUrl.contains(".m3u8")) {
-				videoSource = new HlsMediaSource.Factory(dataSourceFactory)
-						              .createMediaSource(Uri.parse(currUrl), handler, null);
-			} else {
-				videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-						              .createMediaSource(Uri.parse(currUrl));
-			}
+			// if (currUrl.contains(".m3u8")) {
+			// 	// videoSource = new HlsMediaSource.Factory(dataSourceFactory)
+			// 	// 		              .createMediaSource(Uri.parse(currUrl), handler, null);
+			// } else {
+			// 	videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+			// 			              .createMediaSource(Uri.parse(currUrl));
+			// }
 			
 			simpleExoPlayer.addVideoListener(this);
-			Boolean isLoop = mBaseVideoView.looping;
-			if (isLoop) {
-				simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
-			} else {
-				simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_OFF);
-			}
-			simpleExoPlayer.prepare(videoSource);
+			// // Boolean isLoop = mBaseVideoView.looping;
+			// if (isLoop) {
+			// 	simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
+			// } else {
+			// 	simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_OFF);
+			// }
+			// simpleExoPlayer.prepare(videoSource);
 			simpleExoPlayer.setPlayWhenReady(true);
 			callback = new OnBufferUpdate();
 			
@@ -130,7 +129,7 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 		if (time != previousSeek) {
 			simpleExoPlayer.seekTo(time);
 			previousSeek = time;
-			mBaseVideoView.seekInAdvance = time;
+			// mBaseVideoView.seekInAdvance = time;
 		}
 	}
 	
@@ -139,7 +138,7 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 		if (mMediaHandler != null && mMediaHandlerThread != null && simpleExoPlayer != null) {
 			HandlerThread tmpHandlerThread = mMediaHandlerThread;
 			SimpleExoPlayer tmpMediaPlayer = simpleExoPlayer;
-			BaseVideoView.SAVED_SURFACE = null;
+			// BaseVideoView.SAVED_SURFACE = null;
 			
 			mMediaHandler.post(() -> {
 				tmpMediaPlayer.release();
@@ -181,7 +180,7 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 	
 	@Override
 	public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
-		handler.post(() -> jzvd.onVideoSizeChanged(width, height));
+		// handler.post(() -> jzvd.onVideoSizeChanged(width, height));
 	}
 	
 	@Override
@@ -217,7 +216,7 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 					break;
 				case Player.STATE_READY:
 					if (playWhenReady) {
-						mBaseVideoView.onStatePlaying();
+						// mBaseVideoView.onStatePlaying();
 					} else {
 					
 					}
@@ -262,10 +261,10 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 		mHandler.post(() -> mBaseVideoView.onSeekComplete());
 	}
 	
-	@Override
-	public void setSurface(Surface surface) {
-		simpleExoPlayer.setVideoSurface(surface);
-	}
+	// @Override
+	// public void setSurface(Surface surface) {
+	// 	simpleExoPlayer.setVideoSurface(surface);
+	// }
 	
 	
 	private class OnBufferUpdate implements Runnable {

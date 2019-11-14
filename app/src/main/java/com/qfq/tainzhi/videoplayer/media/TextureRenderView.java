@@ -16,7 +16,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.qfq.tainzhi.videoplayer.my_media.IRenderView;
 import com.qfq.tainzhi.videoplayer.my_media.MeasureHelper;
 
 import java.lang.ref.WeakReference;
