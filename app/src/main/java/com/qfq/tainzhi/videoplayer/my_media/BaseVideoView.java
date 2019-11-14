@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer.media;
+package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -26,6 +26,8 @@ import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerBase;
 import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerSystem;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -71,7 +73,7 @@ public class BaseVideoView extends FrameLayout {
 	
 	// All the stuff we need for playing and showing a video
 	private IRenderView.ISurfaceHolder mSurfaceHolder = null;
-	private IMediaPlayer mMediaPlayer = null;
+	private VideoPlayerBase mMediaPlayer = null;
 	// private int         mAudioSession;
 	private int mVideoWidth;
 	private int mVideoHeight;
@@ -190,25 +192,25 @@ public class BaseVideoView extends FrameLayout {
 	
 	public void setRenderView(IRenderView renderView) {
 		if (mRenderView != null) {
-			if (mMediaPlayer != null)
-				mMediaPlayer.setDisplay(null);
-			
+			// if (mMediaPlayer != null)
+			// 	mMediaPlayer.setDisplay(null);
+
 			View renderUIView = mRenderView.getView();
 			mRenderView.removeRenderCallback(mSHCallback);
 			mRenderView = null;
 			removeView(renderUIView);
 		}
-		
+
 		if (renderView == null)
 			return;
-		
+
 		mRenderView = renderView;
 		renderView.setAspectRatio(mCurrentAspectRatio);
 		if (mVideoWidth > 0 && mVideoHeight > 0)
 			renderView.setVideoSize(mVideoWidth, mVideoHeight);
 		if (mVideoSarNum > 0 && mVideoSarDen > 0)
 			renderView.setVideoSampleAspectRatio(mVideoSarNum, mVideoSarDen);
-		
+
 		View renderUIView = mRenderView.getView();
 		LayoutParams lp = new LayoutParams(
 				LayoutParams.WRAP_CONTENT,
@@ -216,10 +218,11 @@ public class BaseVideoView extends FrameLayout {
 				Gravity.CENTER);
 		renderUIView.setLayoutParams(lp);
 		addView(renderUIView);
-		
+
 		mRenderView.addRenderCallback(mSHCallback);
 		mRenderView.setVideoRotation(mVideoRotationDegree);
 	}
+
 	
 	public void setRender(int render) {
 		switch (render) {
@@ -227,14 +230,13 @@ public class BaseVideoView extends FrameLayout {
 				setRenderView(null);
 				break;
 			case RENDER_TEXTURE_VIEW: {
-				TextureRenderView renderView = new TextureRenderView(getContext());
-				if (mMediaPlayer != null) {
-					renderView.getSurfaceHolder().bindToMediaPlayer(mMediaPlayer);
-					renderView.setVideoSize(mMediaPlayer.getVideoWidth(), mMediaPlayer.getVideoHeight());
-					renderView.setVideoSampleAspectRatio(mMediaPlayer.getVideoSarNum(), mMediaPlayer.getVideoSarDen());
-					renderView.setAspectRatio(mCurrentAspectRatio);
-				}
-				setRenderView(renderView);
+				// TextureRenderView renderView = new TextureRenderView(getContext());
+				// if (mMediaPlayer != null) {
+				// 	renderView.getSurfaceHolder().bindToMediaPlayer(mMediaPlayer);
+				// 	renderView.setVideoSize(mMediaPlayer.getVideoWidth(), mMediaPlayer.getVideoHeight());
+				// 	renderView.setVideoSampleAspectRatio(mMediaPlayer.getVideoSarNum(), mMediaPlayer.getVideoSarDen());
+				// 	renderView.setAspectRatio(mCurrentAspectRatio);
+				// } setRenderView(renderView);
 				break;
 			}
 			case RENDER_SURFACE_VIEW: {
@@ -288,121 +290,39 @@ public class BaseVideoView extends FrameLayout {
 	// REMOVED: addSubtitleSource
 	// REMOVED: mPendingSubtitleTracks
 	
-	public void stopPlayback() {
-		if (mMediaPlayer != null) {
-			mMediaPlayer.stop();
-			mMediaPlayer.release();
-			mMediaPlayer = null;
-			mCurrentState = STATE_IDLE;
-			mTargetState = STATE_IDLE;
-			AudioManager am = (AudioManager) mAppContext.getSystemService(Context.AUDIO_SERVICE);
-			am.abandonAudioFocus(null);
-		}
-	}
+	// public void stopPlayback() {
+	// 	if (mMediaPlayer != null) {
+	// 		mMediaPlayer.stop();
+	// 		mMediaPlayer.release();
+	// 		mMediaPlayer = null;
+	// 		mCurrentState = STATE_IDLE;
+	// 		mTargetState = STATE_IDLE;
+	// 		AudioManager am = (AudioManager) mAppContext.getSystemService(Context.AUDIO_SERVICE);
+	// 		am.abandonAudioFocus(null);
+	// 	}
+	// }
 	
 	private void openVideo() {
-		if (mUri == null || mSurfaceHolder == null) {
-			// not ready for playback just yet, will try again later
-			return;
-		}
 		// we shouldn't clear the target state, because somebody might have
 		// called start() previously
-		release(false);
+		try {
+			Constructor<VideoPlayerBase> constructor =
+					mediaPlayerClass.getConstructor(VideoPlayerBase.class);
+			this.mediaPlayer =constructor.newInstance(this);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 		
 		AudioManager am = (AudioManager) mAppContext.getSystemService(Context.AUDIO_SERVICE);
 		am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 		
-		try {
-			if (usingAndroidPlayer) {
-				mMediaPlayer = new AndroidMediaPlayer();
-			} else {
-				IjkMediaPlayer ijkMediaPlayer = null;
-				if (mUri != null) {
-					ijkMediaPlayer = new IjkMediaPlayer();
-					ijkMediaPlayer.native_setLogLevel(IjkMediaPlayer.IJK_LOG_DEBUG);
-					
-					if (usingMediaCodec) {
-						ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);
-						if (usingMediaCodecAutoRotate) {
-							ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 1);
-						} else {
-							ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 0);
-						}
-					} else {
-						ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 0);
-					}
-					
-					if (usingOpenSLES) {
-						ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 1);
-					} else {
-						ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 0);
-					}
-					
-					if (TextUtils.isEmpty(pixelFormat)) {
-						ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
-					} else {
-						ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", pixelFormat);
-					}
-					ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 1);
-					ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0);
-					
-					ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
-					ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 10000000);
-					ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1);
-					
-					ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
-				}
-				mMediaPlayer = ijkMediaPlayer;
-			}
-			
-			if (enableBackgroundPlay) {
-				mMediaPlayer = new TextureMediaPlayer(mMediaPlayer);
-			}
-			
-			// TODO: create SubtitleController in MediaPlayer, but we need
-			// a context for the subtitle renderers
-			final Context context = getContext();
-			// REMOVED: SubtitleController
-			
-			// REMOVED: mAudioSession
-			mMediaPlayer.setOnPreparedListener(mPreparedListener);
-			mMediaPlayer.setOnVideoSizeChangedListener(mSizeChangedListener);
-			mMediaPlayer.setOnCompletionListener(mCompletionListener);
-			mMediaPlayer.setOnErrorListener(mErrorListener);
-			mMediaPlayer.setOnInfoListener(mInfoListener);
-			mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
-			mCurrentBufferPercentage = 0;
-			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				mMediaPlayer.setDataSource(mAppContext, mUri, mHeaders);
-			} else {
-				mMediaPlayer.setDataSource(mUri.toString());
-			}
-			bindSurfaceHolder(mMediaPlayer, mSurfaceHolder);
-			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-			mMediaPlayer.setScreenOnWhilePlaying(true);
-			mMediaPlayer.prepareAsync();
-			
-			// REMOVED: mPendingSubtitleTracks
-			
-			// we don't set the target state here either, but preserve the
-			// target state that was there before.
-			mCurrentState = STATE_PREPARING;
-			attachMediaController();
-		} catch (IOException ex) {
-			Log.w(TAG, "Unable to open content: " + mUri, ex);
-			mCurrentState = STATE_ERROR;
-			mTargetState = STATE_ERROR;
-			mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
-			return;
-		} catch (IllegalArgumentException ex) {
-			Log.w(TAG, "Unable to open content: " + mUri, ex);
-			mCurrentState = STATE_ERROR;
-			mTargetState = STATE_ERROR;
-			mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
-			return;
-		} finally {
-			// REMOVED: mPendingSubtitleTracks.clear();
-		}
+		initRenders();
 	}
 	
 	
@@ -412,7 +332,7 @@ public class BaseVideoView extends FrameLayout {
 			return;
 		
 		if (holder == null) {
-			mp.setDisplay(null);
+			// mp.setDisplay(null);
 			return;
 		}
 		
@@ -464,21 +384,21 @@ public class BaseVideoView extends FrameLayout {
 			mSurfaceHolder = null;
 			// REMOVED: if (mMediaController != null) mMediaController.hide();
 			// REMOVED: release(true);
-			releaseWithoutStop();
+			// releaseWithoutStop();
 		}
 	};
 	
-	public void releaseWithoutStop() {
-		if (mMediaPlayer != null)
-			mMediaPlayer.setDisplay(null);
-	}
+	// public void releaseWithoutStop() {
+	// 	if (mMediaPlayer != null)
+	// 		mMediaPlayer.setDisplay(null);
+	// }
 	
 	/*
 	 * release the media player in any state
 	 */
 	public void release(boolean cleartargetstate) {
 		if (mMediaPlayer != null) {
-			mMediaPlayer.reset();
+			// mMediaPlayer.reset();
 			mMediaPlayer.release();
 			mMediaPlayer = null;
 			// REMOVED: mPendingSubtitleTracks.clear();

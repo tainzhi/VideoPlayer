@@ -17,7 +17,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.qfq.tainzhi.videoplayer.my_media.IRenderView;
 import com.qfq.tainzhi.videoplayer.my_media.MeasureHelper;
 import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerBase;
 import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerExo;
@@ -128,20 +127,14 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
             mSurfaceHolder = surfaceHolder;
         }
         
-        public void bindToMediaPlayer(VideoPlayerBase mp) {
+        public void bindToMediaPlayer(IMediaPlayer mp) {
             if (mp != null) {
                 if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
                             (mp instanceof ISurfaceTextureHolder)) {
                     ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
                     textureHolder.setSurfaceTexture(null);
                 }
-                if (mp instanceof VideoPlayerSystem) {
-                    ((VideoPlayerSystem) mp).mMediaPlayer.setDisplay(mSurfaceHolder);
-                } else if (mp instanceof VideoPlayerIjk) {
-                    ((VideoPlayerIjk)mp).mIjkMediaPlayer.setDisplay(mSurfaceHolder);
-                } else if (mp instanceof VideoPlayerExo) {
-                    ((VideoPlayerExo)mp).simpleExoPlayer.setVideoSurfaceHolder(mSurfaceHolder);
-                }
+                mp.setDisplay(mSurfaceHolder);
             }
         }
         

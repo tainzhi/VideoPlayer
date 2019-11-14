@@ -122,7 +122,7 @@ public class TextureRenderView extends TextureView implements IRenderView {
 	// TextureViewHolder
 	//-----------------
 	
-	public IRenderView.ISurfaceHolder getSurfaceHodler() {
+	public IRenderView.ISurfaceHolder getSurfaceHolder() {
 		return new InternalSurfaceHolder(this, surfaceCallback.surfaceTexture, surfaceCallback);
 	}
 	
@@ -185,7 +185,13 @@ public class TextureRenderView extends TextureView implements IRenderView {
 					textureHolder.setSurfaceTextureHost(this.textureRenderView.surfaceCallback);
 				}
 			} else {
-				mp.setSurface(openSurface());
+				if (mp instanceof VideoPlayerSystem) {
+					((VideoPlayerSystem) mp).mMediaPlayer.setSurface(openSurface());
+				} else if (mp instanceof VideoPlayerIjk) {
+					((VideoPlayerIjk) mp).mIjkMediaPlayer.setSurface(openSurface());
+				} else if (mp instanceof VideoPlayerExo) {
+					((VideoPlayerExo) mp).simpleExoPlayer.setVideoSurface(openSurface());
+				}
 			}
 		}
 		

@@ -5,11 +5,8 @@ import android.media.PlaybackParams;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.view.Surface;
 
 import androidx.annotation.RequiresApi;
-
-import com.qfq.tainzhi.videoplayer.media.BaseVideoView;
 
 import java.lang.reflect.Method;
 
