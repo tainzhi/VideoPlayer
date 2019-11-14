@@ -138,7 +138,6 @@ public class BaseVideoView extends FrameLayout {
 		mAppContext = context.getApplicationContext();
 		
 		initBackground();
-		initRenders();
 		
 		mVideoWidth = 0;
 		mVideoHeight = 0;
@@ -158,11 +157,17 @@ public class BaseVideoView extends FrameLayout {
 				VideoPlayerSystem.class);
 	}
 	
+	public void setUp(Uri uri) {
+		setUp(new DataSource(uri), IRenderView.AR_ASPECT_FIT_PARENT,
+				VideoPlayerSystem.class);
+	}
+	
 	public void setUp(DataSource dataSource, int aspectRatio, Class mediaPlayerClass) {
 		this.mDataSource = dataSource;
 		this.mAspectRatio = IRenderView.AR_ASPECT_FILL_PARENT;
 		this.mediaPlayerClass = mediaPlayerClass;
 		onStateIdle();
+		openVideo();
 	}
 	
 	public void onStateIdle() {
