@@ -1,7 +1,9 @@
 package com.qfq.tainzhi.videoplayer.my_media;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.PlaybackParams;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -55,9 +57,9 @@ public class VideoPlayerSystem extends VideoPlayerBase implements
 				mMediaPlayer.setOnInfoListener(VideoPlayerSystem.this);
 				mMediaPlayer.setOnVideoSizeChangedListener(VideoPlayerSystem.this);
 				Class<MediaPlayer> clazz = MediaPlayer.class;
-				Method method = clazz.getDeclaredMethod("setDataSource", String.class);
+				Method method = clazz.getDeclaredMethod("setDataSource", Context.class, Uri.class);
 				//fixme
-				method.invoke(mMediaPlayer, mBaseVideoView.mDataSource.getUrl());
+				method.invoke(mMediaPlayer, mBaseVideoView.getContext(), mBaseVideoView.mDataSource.getUri());
 				mMediaPlayer.prepareAsync();
 				// fixme
 				// mMediaPlayer.setSurface(new Surface());
