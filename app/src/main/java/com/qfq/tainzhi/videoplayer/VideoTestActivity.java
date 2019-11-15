@@ -26,6 +26,6 @@ public class VideoTestActivity extends AppCompatActivity {
 		long mVideoDuration = bundle.getLong("duration", 0);
 		int mVideoProgress = bundle.getInt("progress", 0);
 		
-		videoView.setUp(mVideoUri);
+		// videoView.setUp(mVideoUri);
 	}
 }

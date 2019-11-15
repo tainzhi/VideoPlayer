@@ -187,7 +187,7 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
 			
 			ISurfaceHolder surfaceHolder = null;
 			if (mSurfaceHolder != null) {
-				if (surfaceHolder != null) {
+				if (surfaceHolder == null) {
 					surfaceHolder = new InternalSurfaceHolder(weakSurfaceView.get(),
 							mSurfaceHolder);
 				}
