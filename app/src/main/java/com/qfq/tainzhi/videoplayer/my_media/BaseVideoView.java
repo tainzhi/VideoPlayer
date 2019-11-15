@@ -138,6 +138,7 @@ public class BaseVideoView extends FrameLayout {
 		mAppContext = context.getApplicationContext();
 		
 		initBackground();
+		initRenders();
 		
 		mVideoWidth = 0;
 		mVideoHeight = 0;
@@ -149,6 +150,13 @@ public class BaseVideoView extends FrameLayout {
 		// REMOVED: mPendingSubtitleTracks = new Vector<Pair<InputStream, MediaFormat>>();
 		mCurrentState = STATE_IDLE;
 		mTargetState = STATE_IDLE;
+		initPlayer();
+	}
+	
+	private void initPlayer() {
+		this.mAspectRatio = IRenderView.AR_ASPECT_FILL_PARENT;
+		this.mediaPlayerClass = VideoPlayerSystem.class;
+		onStateIdle();
 	}
 	
 	public void setUp(String url, String title) {
@@ -167,7 +175,7 @@ public class BaseVideoView extends FrameLayout {
 		this.mAspectRatio = IRenderView.AR_ASPECT_FILL_PARENT;
 		this.mediaPlayerClass = mediaPlayerClass;
 		onStateIdle();
-		openVideo();
+		// openVideo();
 	}
 	
 	public void onStateIdle() {
@@ -326,8 +334,6 @@ public class BaseVideoView extends FrameLayout {
 		
 		AudioManager am = (AudioManager) mAppContext.getSystemService(Context.AUDIO_SERVICE);
 		am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-		
-		initRenders();
 	}
 	
 	
