@@ -2,7 +2,7 @@ package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
-import android.net.Uri;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,7 +20,6 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
 
 /**
@@ -104,7 +103,7 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
 	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		measureHelper.doMeasure(widthMeasureSpec, heightMeasureSpec);
 		setMeasuredDimension(measureHelper.getMeasuredWidth(), measureHelper.getMeasuredHeight());
 	}
 	
@@ -118,14 +117,15 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
 			this.surfaceHolder = surfaceHolder;
 		}
 		
-		public void bindToMediaPlayer(VideoPlayerBase mp) {
+		public void bindToMediaPlayer(MediaPlayer mp) {
 			if (mp != null) {
-				if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
-						    (mp instanceof ISurfaceTextureHolder)) {
-					ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
-					textureHolder.setSurfaceTexture(null);
-				}
-				// mp.setDisplay(surfaceHolder);
+				// if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
+				// 		    (mp instanceof ISurfaceTextureHolder)) {
+				// 	ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
+				// 	textureHolder.setSurfaceTexture(null);
+				// }
+				// // mp.setDisplay(surfaceHolder);
+				mp.setDisplay(surfaceHolder);
 			}
 		}
 		

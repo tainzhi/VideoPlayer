@@ -11,14 +11,15 @@ import android.os.HandlerThread;
  * @description: 所有 player 的基类
  **/
 
-public abstract class VideoPlayerBase {
+public abstract class MediaInterface {
 	
 	public static IRenderView sIRenderView;
 	protected HandlerThread mMediaHandlerThread;
 	protected Handler mMediaHandler;
 	protected Handler mHandler;
 	public BaseVideoView mBaseVideoView;
-	public VideoPlayerBase(BaseVideoView baseVideoView) {
+	
+	public MediaInterface(BaseVideoView baseVideoView) {
 		mBaseVideoView = baseVideoView;
 	}
 	

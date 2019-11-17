@@ -8,8 +8,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerBase;
-
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**

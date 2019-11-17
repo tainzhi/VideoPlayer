@@ -1,11 +1,9 @@
 package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
-import android.view.Surface;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -18,10 +16,8 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
@@ -43,7 +39,7 @@ import com.qfq.tainzhi.videoplayer.R;
  * @description:
  **/
 
-public class VideoPlayerExo extends VideoPlayerBase implements
+public class MediaExo extends MediaInterface implements
 		Player.EventListener,
 				VideoListener {
 	
@@ -53,7 +49,7 @@ public class VideoPlayerExo extends VideoPlayerBase implements
 	
 	private String TAG = this.getClass().getSimpleName();
 	
-	public VideoPlayerExo(BaseVideoView baseVideoView) { super(baseVideoView); }
+	public MediaExo(BaseVideoView baseVideoView) { super(baseVideoView); }
 	
 	@Override
 	public void start() {

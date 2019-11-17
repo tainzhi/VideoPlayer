@@ -3,7 +3,6 @@ package com.qfq.tainzhi.videoplayer.media;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,10 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.qfq.tainzhi.videoplayer.my_media.MeasureHelper;
-import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerBase;
-import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerExo;
-import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerIjk;
-import com.qfq.tainzhi.videoplayer.my_media.VideoPlayerSystem;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;

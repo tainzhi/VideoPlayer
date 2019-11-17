@@ -1,14 +1,13 @@
 package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
  * Created by muqing on 2019/6/1.
@@ -39,7 +38,7 @@ public interface IRenderView {
     void removeRenderCallback(@NonNull IRenderCallback callback);
     
     interface ISurfaceHolder {
-        void bindToMediaPlayer(VideoPlayerBase mp);
+        void bindToMediaPlayer(MediaPlayer mp);
         
         @NonNull
         IRenderView getRenderView();
