@@ -3,10 +3,7 @@ package com.qfq.tainzhi.videoplayer.my_media;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.view.Surface;
 
-
-import java.io.IOException;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -19,7 +16,7 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
  * @description:
  **/
 
-public class VideoPlayerIjk extends VideoPlayerBase implements
+public class MediaIjk extends MediaInterface implements
 		IMediaPlayer.OnPreparedListener,
 				IMediaPlayer.OnVideoSizeChangedListener,
 				IMediaPlayer.OnCompletionListener,
@@ -31,7 +28,7 @@ public class VideoPlayerIjk extends VideoPlayerBase implements
 	
 	public IjkMediaPlayer mIjkMediaPlayer;
 	
-	public VideoPlayerIjk(BaseVideoView baseVideoView) {
+	public MediaIjk(BaseVideoView baseVideoView) {
 		super(baseVideoView);
 	}
 	
@@ -61,14 +58,14 @@ public class VideoPlayerIjk extends VideoPlayerBase implements
 			mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024);
 			mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
 			
-			mIjkMediaPlayer.setOnPreparedListener(VideoPlayerIjk.this);
-			mIjkMediaPlayer.setOnVideoSizeChangedListener(VideoPlayerIjk.this);
-			mIjkMediaPlayer.setOnCompletionListener(VideoPlayerIjk.this);
-			mIjkMediaPlayer.setOnErrorListener(VideoPlayerIjk.this);
-			mIjkMediaPlayer.setOnInfoListener(VideoPlayerIjk.this);
-			mIjkMediaPlayer.setOnBufferingUpdateListener(VideoPlayerIjk.this);
-			mIjkMediaPlayer.setOnSeekCompleteListener(VideoPlayerIjk.this);
-			mIjkMediaPlayer.setOnTimedTextListener(VideoPlayerIjk.this);
+			mIjkMediaPlayer.setOnPreparedListener(MediaIjk.this);
+			mIjkMediaPlayer.setOnVideoSizeChangedListener(MediaIjk.this);
+			mIjkMediaPlayer.setOnCompletionListener(MediaIjk.this);
+			mIjkMediaPlayer.setOnErrorListener(MediaIjk.this);
+			mIjkMediaPlayer.setOnInfoListener(MediaIjk.this);
+			mIjkMediaPlayer.setOnBufferingUpdateListener(MediaIjk.this);
+			mIjkMediaPlayer.setOnSeekCompleteListener(MediaIjk.this);
+			mIjkMediaPlayer.setOnTimedTextListener(MediaIjk.this);
 			
 			// try {
 			{

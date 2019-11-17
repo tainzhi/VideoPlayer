@@ -3,6 +3,7 @@ package com.qfq.tainzhi.videoplayer.my_media;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,7 +13,6 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +21,6 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost;
 
@@ -169,30 +168,30 @@ public class TextureRenderView extends TextureView implements IRenderView {
 		}
 		
 		@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-		public void bindToMediaPlayer(VideoPlayerBase mp) {
-			if (mp == null)
-				return;
-			if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
-					    (mp instanceof ISurfaceTextureHolder)) {
-				ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
-				textureRenderView.surfaceCallback.setOwnSurfaceTexture(false);
-				
-				SurfaceTexture surfaceTexture = textureHolder.getSurfaceTexture();
-				if (surfaceTexture != null) {
-					textureRenderView.setSurfaceTexture(surfaceTexture);
-				} else {
-					textureHolder.setSurfaceTexture(this.surfaceTexture);
-					textureHolder.setSurfaceTextureHost(this.textureRenderView.surfaceCallback);
-				}
-			} else {
-				if (mp instanceof VideoPlayerSystem) {
-					((VideoPlayerSystem) mp).mMediaPlayer.setSurface(openSurface());
-				} else if (mp instanceof VideoPlayerIjk) {
-					((VideoPlayerIjk) mp).mIjkMediaPlayer.setSurface(openSurface());
-				} else if (mp instanceof VideoPlayerExo) {
-					((VideoPlayerExo) mp).simpleExoPlayer.setVideoSurface(openSurface());
-				}
-			}
+		public void bindToMediaPlayer(MediaPlayer mp) {
+			// if (mp == null)
+			// 	return;
+			// if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
+			// 		    (mp instanceof ISurfaceTextureHolder)) {
+			// 	ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
+			// 	textureRenderView.surfaceCallback.setOwnSurfaceTexture(false);
+			//
+			// 	SurfaceTexture surfaceTexture = textureHolder.getSurfaceTexture();
+			// 	if (surfaceTexture != null) {
+			// 		textureRenderView.setSurfaceTexture(surfaceTexture);
+			// 	} else {
+			// 		textureHolder.setSurfaceTexture(this.surfaceTexture);
+			// 		textureHolder.setSurfaceTextureHost(this.textureRenderView.surfaceCallback);
+			// 	}
+			// } else {
+			// 	if (mp instanceof MediaSystem) {
+			// 		((MediaSystem) mp).mMediaPlayer.setSurface(openSurface());
+			// 	} else if (mp instanceof MediaIjk) {
+			// 		((MediaIjk) mp).mIjkMediaPlayer.setSurface(openSurface());
+			// 	} else if (mp instanceof MediaExo) {
+			// 		((MediaExo) mp).simpleExoPlayer.setVideoSurface(openSurface());
+			// 	}
+			// }
 		}
 		
 		@NonNull
