@@ -7,8 +7,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.view.Surface;
 
 import androidx.annotation.RequiresApi;
+
+import com.google.android.exoplayer2.source.dash.manifest.SegmentBase;
 
 import java.lang.reflect.Method;
 
@@ -19,7 +22,7 @@ import java.lang.reflect.Method;
  * @description: android 系统自带播放器
  **/
 
-public class VideoPlayerSystem extends VideoPlayerBase implements
+public class MediaSystem extends MediaInterface implements
 		MediaPlayer.OnPreparedListener,
 				MediaPlayer.OnCompletionListener,
 				MediaPlayer.OnBufferingUpdateListener,
@@ -30,7 +33,7 @@ public class VideoPlayerSystem extends VideoPlayerBase implements
 	
 	public MediaPlayer mMediaPlayer;
 	
-	public VideoPlayerSystem(BaseVideoView baseVideoView) {
+	public MediaSystem(BaseVideoView baseVideoView) {
 		super(baseVideoView);
 	}
 	
@@ -49,21 +52,20 @@ public class VideoPlayerSystem extends VideoPlayerBase implements
 				// TODO: 2019-11-10 是否循环
 				mMediaPlayer.setLooping(false);
 				mMediaPlayer.setScreenOnWhilePlaying(true);
-				mMediaPlayer.setOnPreparedListener(VideoPlayerSystem.this);
-				mMediaPlayer.setOnCompletionListener(VideoPlayerSystem.this);
-				mMediaPlayer.setOnBufferingUpdateListener(VideoPlayerSystem.this);
-				mMediaPlayer.setOnSeekCompleteListener(VideoPlayerSystem.this);
-				mMediaPlayer.setOnErrorListener(VideoPlayerSystem.this);
-				mMediaPlayer.setOnInfoListener(VideoPlayerSystem.this);
-				mMediaPlayer.setOnVideoSizeChangedListener(VideoPlayerSystem.this);
+				mMediaPlayer.setOnPreparedListener(MediaSystem.this);
+				mMediaPlayer.setOnCompletionListener(MediaSystem.this);
+				mMediaPlayer.setOnBufferingUpdateListener(MediaSystem.this);
+				mMediaPlayer.setOnSeekCompleteListener(MediaSystem.this);
+				mMediaPlayer.setOnErrorListener(MediaSystem.this);
+				mMediaPlayer.setOnInfoListener(MediaSystem.this);
+				mMediaPlayer.setOnVideoSizeChangedListener(MediaSystem.this);
 				Class<MediaPlayer> clazz = MediaPlayer.class;
 				Method method = clazz.getDeclaredMethod("setDataSource", Context.class, Uri.class);
 				//fixme
-				method.invoke(mMediaPlayer, mBaseVideoView.getContext(), mBaseVideoView.mDataSource.getUri());
+				method.invoke(mMediaPlayer, mBaseVideoView.getContext(), mBaseVideoView.videoUri);
+				mBaseVideoView.mSurfaceHodler.bindToMediaPlayer(mMediaPlayer);
 				mMediaPlayer.prepareAsync();
 				// fixme
-				// mMediaPlayer.setSurface(new Surface());
-				// mMediaPlayer.setDisplay();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -101,7 +103,7 @@ public class VideoPlayerSystem extends VideoPlayerBase implements
 		if (mMediaHandler != null && mMediaHandlerThread != null && mMediaHandler != null) {
 			HandlerThread tmpHandlerThread = mMediaHandlerThread;
 			MediaPlayer tmpMediaPlayer = mMediaPlayer;
-			VideoPlayerBase.sIRenderView = null;
+			MediaInterface.sIRenderView = null;
 			
 			mMediaHandler.post(() -> {
 				tmpMediaPlayer.setSurface(null);
