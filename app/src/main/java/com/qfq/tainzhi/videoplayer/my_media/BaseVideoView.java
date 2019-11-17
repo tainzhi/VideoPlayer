@@ -112,6 +112,14 @@ public class BaseVideoView extends FrameLayout {
 	public Uri videoUri;
 	public IRenderView.ISurfaceHolder mSurfaceHodler;
 	
+	public static final int MEDIA_TYPE_SYSTEM = 0;
+	public static final int MEDIA_TYPE_IJK = 1;
+	public static final int MEDIA_TYPE_EXO = 2;
+	public static final int RENDER_TYPE_SURFACE_VIEW = 0;
+	public static final int RENDER_TYPE_TEXTURE_VIEW = 1;
+	public int mMediaType = MEDIA_TYPE_SYSTEM;
+	public int mRenderType = RENDER_TYPE_TEXTURE_VIEW;
+	
 	public int positionInList = -1;//很想干掉它
 	public int videoRotation = 0;
 	public int seekToManulPosition = -1;
@@ -136,8 +144,8 @@ public class BaseVideoView extends FrameLayout {
 	IRenderView.IRenderCallback mRenderCallBack = new IRenderView.IRenderCallback() {
 		@Override
 		public void onSurfaceCreated(@NonNull IRenderView.ISurfaceHolder holder, int width, int height) {
+			Logger.d("");
 			if (holder.getRenderView() != mRenderView) {
-				Logger.d("");
 				return;
 			}
 			mSurfaceHodler = holder;
@@ -310,9 +318,26 @@ public class BaseVideoView extends FrameLayout {
 		this.videoUri = uri;
 		this.screen = SCREEN_NORMAL;
 		onStateNormal();
-		this.mediaInterfaceClass = MediaSystem.class;
+		setMediaPlayerType();
 		
 		startVideo();
+	}
+	
+	/**
+	 * 设置 MediaPlayer 的 type
+	 */
+	public void setMediaPlayerType() {
+		switch (mMediaType) {
+			case MEDIA_TYPE_SYSTEM:
+				this.mediaInterfaceClass = MediaSystem.class;
+				break;
+			case MEDIA_TYPE_IJK:
+				this.mediaInterfaceClass = MediaIjk.class;
+				break;
+			case MEDIA_TYPE_EXO:
+				this.mediaInterfaceClass = MediaExo.class;
+				break;
+		}
 	}
 	
 	public void setMediaInterface(Class mediaInterfaceClass) {
@@ -729,8 +754,17 @@ public class BaseVideoView extends FrameLayout {
 	}
 	
 	public void setRenderView() {
-		Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
-		mRenderView = new SurfaceRenderView(getContext());
+		Logger.d("");
+		switch (mRenderType) {
+			case RENDER_TYPE_SURFACE_VIEW:
+				mRenderView = new SurfaceRenderView(getContext());
+				break;
+			case RENDER_TYPE_TEXTURE_VIEW:
+				mRenderView = new TextureRenderView(getContext());
+				break;
+			default:
+				break;
+		}
 		mRenderView.addRenderCallback(mRenderCallBack);
 		View renderUIView = mRenderView.getView();
 		
@@ -755,13 +789,15 @@ public class BaseVideoView extends FrameLayout {
 	// }
 	
 	public void onVideoSizeChanged(int width, int height) {
-		Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
-		// 	if (textureView != null) {
-		// 		if (videoRotation != 0) {
-		// 			textureView.setRotation(videoRotation);
-		// 		}
-		// 		textureView.setVideoSize(width, height);
-		// 	}
+		Logger.d("widht=" + width + ", height=" + height);
+		if (mRenderView != null) {
+			// if (videoRotation != 0) {
+			// 	mRenderView.setRotation(videoRotation);
+			// }
+			if (width != 0 && height != 0) {
+				mRenderView.setVideoSize(width, height);
+			}
+			}
 	}
 	
 	// public void startProgressTimer() {

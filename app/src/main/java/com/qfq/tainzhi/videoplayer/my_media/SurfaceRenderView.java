@@ -16,11 +16,16 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * @author: tainzhi
@@ -119,15 +124,27 @@ public class SurfaceRenderView extends SurfaceView implements IRenderView {
 		
 		public void bindToMediaPlayer(MediaPlayer mp) {
 			if (mp != null) {
-				// if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
-				// 		    (mp instanceof ISurfaceTextureHolder)) {
-				// 	ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
-				// 	textureHolder.setSurfaceTexture(null);
-				// }
-				// // mp.setDisplay(surfaceHolder);
 				mp.setDisplay(surfaceHolder);
 			}
 		}
+		
+		@Override
+		public void bindToMediaPlayer(IMediaPlayer mp) {
+			if (mp != null) {
+				if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
+						    (mp instanceof ISurfaceTextureHolder)) {
+					ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
+					textureHolder.setSurfaceTexture(null);
+				}
+				mp.setDisplay(surfaceHolder);
+			}
+		}
+		
+		@Override
+		public void bindToMediaPlayer(ExoPlayer mp) {
+			((SimpleExoPlayer) mp).setVideoSurfaceHolder(surfaceHolder);
+		}
+		
 		
 		@NonNull
 		@Override

@@ -9,6 +9,11 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.exoplayer2.ExoPlayer;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+
 /**
  * Created by muqing on 2019/6/1.
  * Email: qfq61@qq.com
@@ -39,6 +44,10 @@ public interface IRenderView {
     
     interface ISurfaceHolder {
         void bindToMediaPlayer(MediaPlayer mp);
+    
+        void bindToMediaPlayer(IMediaPlayer mp);
+    
+        void bindToMediaPlayer(ExoPlayer mp);
         
         @NonNull
         IRenderView getRenderView();
