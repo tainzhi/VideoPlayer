@@ -1,6 +1,7 @@
 package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
@@ -16,8 +17,10 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
@@ -61,6 +64,7 @@ public class MediaExo extends MediaInterface implements
 		Log.d(TAG, "prepare");
 		Context context = mBaseVideoView.getContext();
 		release();
+		mMediaHandlerThread = new HandlerThread("VideoPlayer");
 		mMediaHandlerThread.start();
 		mMediaHandler = new Handler(mMediaHandlerThread.getLooper());
 		mHandler = new Handler();
@@ -74,12 +78,9 @@ public class MediaExo extends MediaInterface implements
 					C.LENGTH_UNSET,
 					false);
 			
-			RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
-			simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
-			
 			// 2. Create the player
 			
-			// RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
+			RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
 			simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(context, renderersFactory, trackSelector, loadControl);
 			// Produces DataSource instances through which media data is loaded.
 			DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
@@ -88,25 +89,26 @@ public class MediaExo extends MediaInterface implements
 			// String currUrl = jzvd.jzDataSource.getCurrentUrl().toString();
 			MediaSource videoSource;
 			// if (currUrl.contains(".m3u8")) {
-			// 	// videoSource = new HlsMediaSource.Factory(dataSourceFactory)
-			// 	// 		              .createMediaSource(Uri.parse(currUrl), handler, null);
+			// 	videoSource = new HlsMediaSource.Factory(dataSourceFactory)
+			// 			              .createMediaSource(Uri.parse(currUrl), handler, null);
 			// } else {
 			// 	videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
 			// 			              .createMediaSource(Uri.parse(currUrl));
 			// }
+			videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+					              .createMediaSource(mBaseVideoView.videoUri);
 			
 			simpleExoPlayer.addVideoListener(this);
-			// // Boolean isLoop = mBaseVideoView.looping;
+			// Boolean isLoop = mBaseVideoView.looping;
 			// if (isLoop) {
 			// 	simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
 			// } else {
 			// 	simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_OFF);
 			// }
-			// simpleExoPlayer.prepare(videoSource);
+			simpleExoPlayer.prepare(videoSource);
 			simpleExoPlayer.setPlayWhenReady(true);
 			callback = new OnBufferUpdate();
-			
-			// simpleExoPlayer.setVideoSurfaceHolder();
+			mBaseVideoView.mSurfaceHodler.bindToMediaPlayer(simpleExoPlayer);
 		});
 	}
 	

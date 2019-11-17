@@ -1,9 +1,14 @@
 package com.qfq.tainzhi.videoplayer.my_media;
 
+import android.content.Context;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.view.Surface;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -67,17 +72,21 @@ public class MediaIjk extends MediaInterface implements
 			mIjkMediaPlayer.setOnSeekCompleteListener(MediaIjk.this);
 			mIjkMediaPlayer.setOnTimedTextListener(MediaIjk.this);
 			
-			// try {
-			{
-				// mIjkMediaPlayer.setDataSource(jzvd.jzDataSource.getCurrentUrl().toString());
+			try {
 				mIjkMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 				mIjkMediaPlayer.setScreenOnWhilePlaying(true);
-				mIjkMediaPlayer.prepareAsync();
 				
-				// mIjkMediaPlayer.setSurface(new Surface(jzvd.textureView.getSurfaceTexture()));
-				// mIjkMediaPlayer.setDisplay(hodler);
-				// } catch (IOException e) {
-				// 	e.printStackTrace();
+				Class<IjkMediaPlayer> clazz = IjkMediaPlayer.class;
+				Method method = clazz.getDeclaredMethod("setDataSource", Context.class, Uri.class);
+				method.invoke(mIjkMediaPlayer, mBaseVideoView.getContext(), mBaseVideoView.videoUri);
+				mBaseVideoView.mSurfaceHodler.bindToMediaPlayer(mIjkMediaPlayer);
+				mIjkMediaPlayer.prepareAsync();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
 				}
 		});
 	}

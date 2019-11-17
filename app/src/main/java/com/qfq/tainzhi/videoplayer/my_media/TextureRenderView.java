@@ -17,12 +17,18 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.orhanobut.logger.Logger;
+
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * @author: tainzhi
@@ -169,29 +175,36 @@ public class TextureRenderView extends TextureView implements IRenderView {
 		
 		@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 		public void bindToMediaPlayer(MediaPlayer mp) {
-			// if (mp == null)
-			// 	return;
-			// if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
-			// 		    (mp instanceof ISurfaceTextureHolder)) {
-			// 	ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
-			// 	textureRenderView.surfaceCallback.setOwnSurfaceTexture(false);
-			//
-			// 	SurfaceTexture surfaceTexture = textureHolder.getSurfaceTexture();
-			// 	if (surfaceTexture != null) {
-			// 		textureRenderView.setSurfaceTexture(surfaceTexture);
-			// 	} else {
-			// 		textureHolder.setSurfaceTexture(this.surfaceTexture);
-			// 		textureHolder.setSurfaceTextureHost(this.textureRenderView.surfaceCallback);
-			// 	}
-			// } else {
-			// 	if (mp instanceof MediaSystem) {
-			// 		((MediaSystem) mp).mMediaPlayer.setSurface(openSurface());
-			// 	} else if (mp instanceof MediaIjk) {
-			// 		((MediaIjk) mp).mIjkMediaPlayer.setSurface(openSurface());
-			// 	} else if (mp instanceof MediaExo) {
-			// 		((MediaExo) mp).simpleExoPlayer.setVideoSurface(openSurface());
-			// 	}
-			// }
+			if (mp == null)
+				return;
+			mp.setSurface(openSurface());
+		}
+		
+		@Override
+		public void bindToMediaPlayer(IMediaPlayer mp) {
+			
+			if (mp == null)
+				return;
+			if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
+					    (mp instanceof ISurfaceTextureHolder)) {
+				ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
+				textureRenderView.surfaceCallback.setOwnSurfaceTexture(false);
+				
+				SurfaceTexture surfaceTexture = textureHolder.getSurfaceTexture();
+				if (surfaceTexture != null) {
+					textureRenderView.setSurfaceTexture(surfaceTexture);
+				} else {
+					textureHolder.setSurfaceTexture(this.surfaceTexture);
+					textureHolder.setSurfaceTextureHost(this.textureRenderView.surfaceCallback);
+				}
+			} else {
+				mp.setSurface(openSurface());
+			}
+		}
+		
+		@Override
+		public void bindToMediaPlayer(ExoPlayer mp) {
+			((SimpleExoPlayer) mp).setVideoSurface(openSurface());
 		}
 		
 		@NonNull
@@ -270,6 +283,7 @@ public class TextureRenderView extends TextureView implements IRenderView {
 		
 		@Override
 		public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+			Logger.d("");
 			this.surfaceTexture = surfaceTexture;
 			isFormatChanged = false;
 			width = 0;

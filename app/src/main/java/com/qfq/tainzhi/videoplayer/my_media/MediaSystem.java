@@ -12,6 +12,7 @@ import android.view.Surface;
 import androidx.annotation.RequiresApi;
 
 import com.google.android.exoplayer2.source.dash.manifest.SegmentBase;
+import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Method;
 
@@ -38,8 +39,14 @@ public class MediaSystem extends MediaInterface implements
 	}
 	
 	@Override
+	public void start() {
+		Logger.d("");
+		mMediaHandler.post(() -> { mMediaPlayer.start();});
+	}
+	
+	@Override
 	public void prepare() {
-		
+		Logger.d("create mediaplayer");
 		release();
 		mMediaHandlerThread = new HandlerThread("QVideoPlayer");
 		mMediaHandlerThread.start();
@@ -61,7 +68,6 @@ public class MediaSystem extends MediaInterface implements
 				mMediaPlayer.setOnVideoSizeChangedListener(MediaSystem.this);
 				Class<MediaPlayer> clazz = MediaPlayer.class;
 				Method method = clazz.getDeclaredMethod("setDataSource", Context.class, Uri.class);
-				//fixme
 				method.invoke(mMediaPlayer, mBaseVideoView.getContext(), mBaseVideoView.videoUri);
 				mBaseVideoView.mSurfaceHodler.bindToMediaPlayer(mMediaPlayer);
 				mMediaPlayer.prepareAsync();
@@ -70,11 +76,6 @@ public class MediaSystem extends MediaInterface implements
 				e.printStackTrace();
 			}
 		});
-	}
-	
-	@Override
-	public void start() {
-		mMediaHandler.post(() -> { mMediaPlayer.start();});
 	}
 	
 	@Override
@@ -150,14 +151,9 @@ public class MediaSystem extends MediaInterface implements
 		mMediaPlayer.setPlaybackParams(pp);
 	}
 	
-	// @Override
-	// public void setRenderView(IRenderView renderView) {
-	//
-	// }
-	
-	
 	@Override
 	public void onBufferingUpdate(MediaPlayer mediaPlayer, int percent) {
+		Logger.d("");
 		mHandler.post(()->mBaseVideoView.setBufferProgress(percent));
 	}
 	
@@ -168,6 +164,7 @@ public class MediaSystem extends MediaInterface implements
 	
 	@Override
 	public boolean onError(MediaPlayer mediaPlayer, int what, int extra) {
+		Logger.d("");
 		mHandler.post(() -> mBaseVideoView.onError(what, extra));
 		return true;
 	}
@@ -180,7 +177,7 @@ public class MediaSystem extends MediaInterface implements
 	
 	@Override
 	public void onPrepared(MediaPlayer mediaPlayer) {
-		// FIXME: 2019-11-11 mp3音频
+		Logger.d("");
 		mHandler.post(() -> mBaseVideoView.onPrepared());
 	}
 	
@@ -191,6 +188,7 @@ public class MediaSystem extends MediaInterface implements
 	
 	@Override
 	public void onVideoSizeChanged(MediaPlayer mediaPlayer, int width, int height) {
+		Logger.d("width=" + width + ", height=" + height);
 		mHandler.post(() -> mBaseVideoView.onVideoSizeChanged(width, height));
 	}
 }
