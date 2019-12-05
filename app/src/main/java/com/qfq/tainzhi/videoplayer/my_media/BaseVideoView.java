@@ -2,43 +2,23 @@ package com.qfq.tainzhi.videoplayer.my_media;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
-import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.my_media.DataSource;
-import com.qfq.tainzhi.videoplayer.my_media.IRenderView;
-import com.qfq.tainzhi.videoplayer.my_media.MediaInterface;
-import com.qfq.tainzhi.videoplayer.my_media.MediaSystem;
-import com.qfq.tainzhi.videoplayer.my_media.SurfaceRenderView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by muqing on 2019/6/1.
@@ -87,7 +67,7 @@ public class BaseVideoView extends FrameLayout {
 				case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
 					try {
 						BaseVideoView player = CURRENT_VIDEO_VIEW;
-						if (player != null && player.state == CURRENT_VIDEO_VIEW.STATE_PLAYING) {
+						if (player != null && player.state == STATE_PLAYING) {
 							// player.startButton.performClick();
 						}
 					} catch (IllegalStateException e) {
@@ -117,7 +97,7 @@ public class BaseVideoView extends FrameLayout {
 	public static final int MEDIA_TYPE_EXO = 2;
 	public static final int RENDER_TYPE_SURFACE_VIEW = 0;
 	public static final int RENDER_TYPE_TEXTURE_VIEW = 1;
-	public int mMediaType = MEDIA_TYPE_SYSTEM;
+	public int mMediaType = MEDIA_TYPE_IJK;
 	public int mRenderType = RENDER_TYPE_TEXTURE_VIEW;
 	
 	public int positionInList = -1;//很想干掉它
@@ -238,14 +218,13 @@ public class BaseVideoView extends FrameLayout {
 	
 	public static boolean backPress() {
 		Log.i(TAG, "backPress");
+		//退出直接进入的全屏
+		// CURRENT_VIDEO_VIEW.clearFloatScreen();
 		if (CONTAINER_LIST.size() != 0 && CURRENT_VIDEO_VIEW != null) {//判断条件，因为当前所有goBack都是回到普通窗口
 			// CURRENT_VIDEO_VIEW.gotoScreenNormal();
 			return true;
-		} else if (CONTAINER_LIST.size() == 0 && CURRENT_VIDEO_VIEW != null && CURRENT_VIDEO_VIEW.screen != SCREEN_NORMAL) {//退出直接进入的全屏
-			// CURRENT_VIDEO_VIEW.clearFloatScreen();
-			return true;
-		}
-		return false;
+		} else
+			return CONTAINER_LIST.size() == 0 && CURRENT_VIDEO_VIEW != null && CURRENT_VIDEO_VIEW.screen != SCREEN_NORMAL;
 	}
 	
 	public static void setCurrentJzvd(BaseVideoView videoView) {
@@ -789,7 +768,7 @@ public class BaseVideoView extends FrameLayout {
 	// }
 	
 	public void onVideoSizeChanged(int width, int height) {
-		Logger.d("widht=" + width + ", height=" + height);
+		Logger.d("width=" + width + ", height=" + height);
 		if (mRenderView != null) {
 			// if (videoRotation != 0) {
 			// 	mRenderView.setRotation(videoRotation);
