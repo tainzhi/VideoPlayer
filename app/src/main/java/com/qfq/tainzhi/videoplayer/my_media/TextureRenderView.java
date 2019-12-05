@@ -28,7 +28,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost;
-import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * @author: tainzhi
@@ -151,9 +150,16 @@ public class TextureRenderView extends TextureView implements IRenderView {
 	}
 	
 	@Override
+	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+		super.onLayout(changed, left, top, right, bottom);
+		Logger.d(String.format("getWidth=%d getHeight=%d", getWidth(), getHeight()));
+	}
+	
+	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		measureHelper.doMeasure(widthMeasureSpec, heightMeasureSpec);
-		super.onMeasure(measureHelper.getMeasuredWidth(), measureHelper.getMeasuredHeight());
+		setMeasuredDimension(measureHelper.getMeasuredWidth(), measureHelper.getMeasuredHeight());
+		// super.onMeasure(480, 720);
 	}
 	
 	//--------------------
