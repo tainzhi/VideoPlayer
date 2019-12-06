@@ -20,16 +20,24 @@ import java.util.*
  */
 class BaseVideoView : FrameLayout {
     var state = -1
-    var screen = -1
     var dataSource: DataSource? = null
     var widthRatio = 0
     var heightRatio = 0
+
     var mediaInterface: MediaInterface? = null
-    var mRenderView: IRenderView? = null
     var videoUri: Uri? = null
+
+    var mRenderView: IRenderView? = null
     var mSurfaceHodler: IRenderView.ISurfaceHolder? = null
-    var mMediaType = MEDIA_TYPE_IJK
-    var mRenderType = RENDER_TYPE_TEXTURE_VIEW
+
+    var mediaType = Constant.PLAYER_TYPE.SYSTEM_PLAYER
+    var renderType = Constant.RENDER_TYPE.SURFACE_VIEW
+    var aspectRatio = Constant.ASPECT_RATIO.AR_ASPECT_FIT_PARENT
+    var screenType = Constant.SCREEN_TYPE.SCREEN_FULL_SCREEN
+
+    // 是否循环播放
+    val loop: Boolean = false
+
     var positionInList = -1 //很想干掉它
     var videoRotation = 0
     var seekToManulPosition = -1
@@ -132,22 +140,10 @@ class BaseVideoView : FrameLayout {
     fun setUp(uri: Uri?) {
         if (System.currentTimeMillis() - gobakFullscreenTime < 200) return
         videoUri = uri
-        screen = SCREEN_NORMAL
         onStateNormal()
-        setMediaPlayerType()
         startVideo()
     }
 
-    /**
-     * 设置 MediaPlayer 的 type
-     */
-    fun setMediaPlayerType() {
-        when (mMediaType) {
-            MEDIA_TYPE_SYSTEM -> mediaInterface = MediaSystem(this)
-            MEDIA_TYPE_IJK -> mediaInterface = MediaIjk(this)
-            MEDIA_TYPE_EXO -> mediaInterface = MediaExo(this)
-        }
-    }
 
     // @Override
 // public void onClick(View v) {
@@ -482,22 +478,13 @@ class BaseVideoView : FrameLayout {
     fun startVideo() {
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ")
         setCurrentJzvd(this)
-//        try {
-////            val constructor: Constructor<MediaInterface> = mediaInterfaceClass
-////                    .getConstructor<MediaInterface>(BaseVideoView::class.java) as MediaInterface
-////            val constructor = mediaInterfaceClass!!.getConstructor(BaseVideoView::class)
-////            mediaInterface = constructor.newInstance(this)
-//            val constructor = mediaInterfaceClass!!::constructors
-//
-//        } catch (e: NoSuchMethodException) {
-//            e.printStackTrace()
-//        } catch (e: IllegalAccessException) {
-//            e.printStackTrace()
-//        } catch (e: InstantiationException) {
-//            e.printStackTrace()
-//        } catch (e: InvocationTargetException) {
-//            e.printStackTrace()
-//        }
+
+        when (mediaType) {
+            MEDIA_TYPE_SYSTEM -> mediaInterface = MediaSystem(this)
+            MEDIA_TYPE_IJK -> mediaInterface = MediaIjk(this)
+            MEDIA_TYPE_EXO -> mediaInterface = MediaExo(this)
+        }
+
         setRenderView()
         mAudioManager = applicationContext!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mAudioManager!!.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
@@ -527,7 +514,7 @@ class BaseVideoView : FrameLayout {
 // 	mediaInterface.prepare();
 // }
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        if (screen == SCREEN_FULLSCREEN || screen == SCREEN_TINY) {
+        if (screenType == SCREEN_FULLSCREEN || screenType == SCREEN_TINY) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
             return
         }
@@ -544,14 +531,14 @@ class BaseVideoView : FrameLayout {
     }
 
     fun setRenderView() {
-        Logger.d("")
-        when (mRenderType) {
+        when (renderType) {
             RENDER_TYPE_SURFACE_VIEW -> mRenderView = SurfaceRenderView(context)
             RENDER_TYPE_TEXTURE_VIEW -> mRenderView = TextureRenderView(context)
             else -> {
             }
         }
         mRenderView!!.addRenderCallback(mRenderCallBack)
+        mRenderView!!.setAspectRatio(aspectRatio)
         val renderUIView = mRenderView?.view
         val layoutParams = LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -981,7 +968,8 @@ class BaseVideoView : FrameLayout {
             return if (CONTAINER_LIST.size != 0 && CURRENT_VIDEO_VIEW != null) { //判断条件，因为当前所有goBack都是回到普通窗口
 // CURRENT_VIDEO_VIEW.gotoScreenNormal();
                 true
-            } else CONTAINER_LIST.size == 0 && CURRENT_VIDEO_VIEW != null && CURRENT_VIDEO_VIEW!!.screen != SCREEN_NORMAL
+            } else CONTAINER_LIST.size == 0 && CURRENT_VIDEO_VIEW != null && CURRENT_VIDEO_VIEW!!
+                    .screenType != SCREEN_NORMAL
         }
 
         fun setCurrentJzvd(videoView: BaseVideoView?) {

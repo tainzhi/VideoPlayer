@@ -16,7 +16,7 @@ import com.qfq.tainzhi.videoplayer.my_media.MediaSystem
  * @date: 2019-11-10 19:10
  * @description: android 系统自带播放器
  */
-class MediaSystem(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
+class MediaSystem(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
     var mMediaPlayer: MediaPlayer? = null
     override fun start() {
         Logger.d("")
@@ -33,8 +33,7 @@ class MediaSystem(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView)
         mMediaHandler!!.post {
             try {
                 mMediaPlayer = MediaPlayer()
-                // TODO: 2019-11-10 是否循环
-                mMediaPlayer!!.isLooping = false
+                mMediaPlayer!!.isLooping = mBaseVideoView.loop
                 mMediaPlayer!!.setScreenOnWhilePlaying(true)
                 mMediaPlayer!!.setOnPreparedListener(this@MediaSystem)
                 mMediaPlayer!!.setOnCompletionListener(this@MediaSystem)
@@ -45,10 +44,9 @@ class MediaSystem(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView)
                 mMediaPlayer!!.setOnVideoSizeChangedListener(this@MediaSystem)
                 val clazz = MediaPlayer::class.java
                 val method = clazz.getDeclaredMethod("setDataSource", Context::class.java, Uri::class.java)
-                method.invoke(mMediaPlayer, mBaseVideoView!!.context, mBaseVideoView!!.videoUri)
-                mBaseVideoView!!.mSurfaceHodler!!.bindToMediaPlayer(mMediaPlayer)
+                method.invoke(mMediaPlayer, mBaseVideoView.context, mBaseVideoView.videoUri)
+                mBaseVideoView.mSurfaceHodler!!.bindToMediaPlayer(mMediaPlayer)
                 mMediaPlayer!!.prepareAsync()
-                // fixme
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -76,12 +74,12 @@ class MediaSystem(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView)
         if (mMediaHandler != null && mMediaHandlerThread != null && mMediaHandler != null) {
             val tmpHandlerThread = mMediaHandlerThread!!
             val tmpMediaPlayer = mMediaPlayer
-            MediaInterface.Companion.sIRenderView = null
-            mMediaHandler!!.post(Runnable {
+            sIRenderView = null
+            mMediaHandler!!.post {
                 tmpMediaPlayer!!.setSurface(null)
                 tmpMediaPlayer.release()
                 tmpHandlerThread.quit()
-            })
+            }
             mMediaPlayer = null
         }
     }
@@ -118,35 +116,35 @@ class MediaSystem(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView)
 
     override fun onBufferingUpdate(mediaPlayer: MediaPlayer, percent: Int) {
         Logger.d("")
-        mHandler!!.post { mBaseVideoView!!.setBufferProgress(percent) }
+        mHandler!!.post { mBaseVideoView.setBufferProgress(percent) }
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
-        mHandler!!.post { mBaseVideoView!!.onAutoCompletion() }
+        mHandler!!.post { mBaseVideoView.onAutoCompletion() }
     }
 
     override fun onError(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
         Logger.d("")
-        mHandler!!.post { mBaseVideoView!!.onError(what, extra) }
+        mHandler!!.post { mBaseVideoView.onError(what, extra) }
         return true
     }
 
     override fun onInfo(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
-        mHandler!!.post { mBaseVideoView!!.onInfo(what, extra) }
+        mHandler!!.post { mBaseVideoView.onInfo(what, extra) }
         return false
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         Logger.d("")
-        mHandler!!.post { mBaseVideoView!!.onPrepared() }
+        mHandler!!.post { mBaseVideoView.onPrepared() }
     }
 
     override fun onSeekComplete(mediaPlayer: MediaPlayer) {
-        mHandler!!.post { mBaseVideoView!!.onSeekComplete() }
+        mHandler!!.post { mBaseVideoView.onSeekComplete() }
     }
 
     override fun onVideoSizeChanged(mediaPlayer: MediaPlayer, width: Int, height: Int) {
         Logger.d("width=$width, height=$height")
-        mHandler!!.post { mBaseVideoView!!.onVideoSizeChanged(width, height) }
+        mHandler!!.post { mBaseVideoView.onVideoSizeChanged(width, height) }
     }
 }

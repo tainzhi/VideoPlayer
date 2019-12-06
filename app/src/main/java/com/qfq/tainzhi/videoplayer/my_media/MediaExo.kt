@@ -20,7 +20,7 @@ import com.qfq.tainzhi.videoplayer.R
  * @date: 2019-11-11 11:41
  * @description:
  */
-class MediaExo(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), Player.EventListener, VideoListener {
+class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Player.EventListener, VideoListener {
     private lateinit var simpleExoPlayer: SimpleExoPlayer
     private var callback: Runnable? = null
     private var previousSeek: Long = 0
@@ -31,7 +31,7 @@ class MediaExo(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), P
 
     override fun prepare() {
         Log.d(TAG, "prepare")
-        val context = mBaseVideoView!!.context
+        val context = mBaseVideoView.context
         release()
         mMediaHandlerThread = HandlerThread("VideoPlayer")
         mMediaHandlerThread!!.start()
@@ -55,25 +55,25 @@ class MediaExo(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), P
             // String currUrl = jzvd.jzDataSource.getCurrentUrl().toString();
             val videoSource: MediaSource
             // if (currUrl.contains(".m3u8")) {
-// 	videoSource = new HlsMediaSource.Factory(dataSourceFactory)
-// 			              .createMediaSource(Uri.parse(currUrl), handler, null);
-// } else {
-// 	videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-// 			              .createMediaSource(Uri.parse(currUrl));
-// }
+            // 	videoSource = new HlsMediaSource.Factory(dataSourceFactory)
+            // 			              .createMediaSource(Uri.parse(currUrl), handler, null);
+            // } else {
+            // 	videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+            // 			              .createMediaSource(Uri.parse(currUrl));
+            // }
             videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(mBaseVideoView!!.videoUri)
+                    .createMediaSource(mBaseVideoView.videoUri)
             simpleExoPlayer.addVideoListener(this)
-            // Boolean isLoop = mBaseVideoView.looping;
-// if (isLoop) {
-// 	simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
-// } else {
-// 	simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_OFF);
-// }
+            val isLoop = mBaseVideoView.loop
+            if (isLoop) {
+                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+            } else {
+                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_OFF
+            }
             simpleExoPlayer.prepare(videoSource)
-            simpleExoPlayer?.playWhenReady = true
+            simpleExoPlayer.playWhenReady = true
             callback = OnBufferUpdate()
-            mBaseVideoView!!.mSurfaceHodler!!.bindToMediaPlayer(simpleExoPlayer)
+            mBaseVideoView.mSurfaceHodler!!.bindToMediaPlayer(simpleExoPlayer)
         }
     }
 
@@ -159,7 +159,7 @@ class MediaExo(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), P
                 } else {
                 }
                 Player.STATE_ENDED -> {
-                    mBaseVideoView!!.onAutoCompletion()
+                    mBaseVideoView.onAutoCompletion()
                 }
             }
         }
@@ -169,24 +169,20 @@ class MediaExo(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), P
     override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {}
     override fun onPlayerError(error: ExoPlaybackException) {
         Log.e(TAG, "onPlayError$error")
-        mHandler!!.post { mBaseVideoView!!.onError(1000, 1000) }
+        mHandler!!.post { mBaseVideoView.onError(1000, 1000) }
     }
 
     override fun onPositionDiscontinuity(reason: Int) {}
     override fun onPlaybackSuppressionReasonChanged(playbackSuppressionReason: Int) {}
     override fun onSeekProcessed() {
-        mHandler!!.post { mBaseVideoView!!.onSeekComplete() }
+        mHandler!!.post { mBaseVideoView.onSeekComplete() }
     }
 
-    // @Override
-// public void setSurface(Surface surface) {
-// 	simpleExoPlayer.setVideoSurface(surface);
-// }
     private inner class OnBufferUpdate : Runnable {
         override fun run() {
             if (simpleExoPlayer != null) {
                 val percent = simpleExoPlayer.bufferedPercentage
-                mHandler!!.post { mBaseVideoView!!.setBufferProgress(percent) }
+                mHandler!!.post { mBaseVideoView.setBufferProgress(percent) }
                 if (percent < 100) {
                     mHandler!!.postDelayed(callback, 300)
                 } else {
