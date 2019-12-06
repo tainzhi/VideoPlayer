@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException
  * @date: 2019-11-11 06:55
  * @description:
  */
-class MediaIjk(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
+class MediaIjk(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
     private lateinit var mIjkMediaPlayer: IjkMediaPlayer
     override fun start() {
         if (mIjkMediaPlayer != null) mIjkMediaPlayer.start()
@@ -53,8 +53,8 @@ class MediaIjk(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), I
                 mIjkMediaPlayer.setScreenOnWhilePlaying(true)
                 val clazz = IjkMediaPlayer::class.java
                 val method = clazz.getDeclaredMethod("setDataSource", Context::class.java, Uri::class.java)
-                method.invoke(mIjkMediaPlayer, mBaseVideoView!!.context, mBaseVideoView!!.videoUri)
-                mBaseVideoView!!.mSurfaceHodler!!.bindToMediaPlayer(mIjkMediaPlayer)
+                method.invoke(mIjkMediaPlayer, mBaseVideoView.context, mBaseVideoView.videoUri)
+                mBaseVideoView.mSurfaceHodler!!.bindToMediaPlayer(mIjkMediaPlayer)
                 mIjkMediaPlayer.prepareAsync()
             } catch (e: NoSuchMethodException) {
                 e.printStackTrace()
@@ -105,32 +105,32 @@ class MediaIjk(baseVideoView: BaseVideoView?) : MediaInterface(baseVideoView), I
     }
 
     override fun onBufferingUpdate(iMediaPlayer: IMediaPlayer, percent: Int) {
-        mHandler!!.post { mBaseVideoView!!.setBufferProgress(percent) }
+        mHandler!!.post { mBaseVideoView.setBufferProgress(percent) }
     }
 
     override fun onCompletion(iMediaPlayer: IMediaPlayer) {}
     override fun onError(iMediaPlayer: IMediaPlayer, what: Int, extra: Int): Boolean {
-        mHandler!!.post { mBaseVideoView!!.onError(what, extra) }
+        mHandler!!.post { mBaseVideoView.onError(what, extra) }
         return true
     }
 
     override fun onInfo(iMediaPlayer: IMediaPlayer, what: Int, extra: Int): Boolean {
-        mHandler!!.post { mBaseVideoView!!.onInfo(what, extra) }
+        mHandler!!.post { mBaseVideoView.onInfo(what, extra) }
         return true
     }
 
     override fun onPrepared(iMediaPlayer: IMediaPlayer) {
-        mHandler!!.post { mBaseVideoView!!.onPrepared() }
+        mHandler!!.post { mBaseVideoView.onPrepared() }
     }
 
     override fun onSeekComplete(iMediaPlayer: IMediaPlayer) {
-        mHandler!!.post { mBaseVideoView!!.onSeekComplete() }
+        mHandler!!.post { mBaseVideoView.onSeekComplete() }
     }
 
     override fun onTimedText(iMediaPlayer: IMediaPlayer, ijkTimedText: IjkTimedText) {}
     override fun onVideoSizeChanged(iMediaPlayer: IMediaPlayer, i: Int, i1: Int, i2: Int, i3: Int) {
         mHandler!!.post {
-            mBaseVideoView!!.onVideoSizeChanged(iMediaPlayer.videoWidth,
+            mBaseVideoView.onVideoSizeChanged(iMediaPlayer.videoWidth,
                     iMediaPlayer.videoHeight)
         }
     }

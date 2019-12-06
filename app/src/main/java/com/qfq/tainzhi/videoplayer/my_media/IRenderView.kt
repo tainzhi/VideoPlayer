@@ -49,13 +49,4 @@ interface IRenderView {
 
         fun onSurfaceDestroyed(holder: ISurfaceHolder)
     }
-
-    companion object {
-        const val AR_ASPECT_FIT_PARENT = 0 // without clip
-        const val AR_ASPECT_FILL_PARENT = 1 // may clip
-        const val AR_ASPECT_WRAP_CONTENT = 2
-        const val AR_MATCH_PARENT = 3
-        const val AR_16_9_FIT_PARENT = 4 // w/h
-        const val AR_4_3_FIT_PARENT = 5
-    }
 }
