@@ -51,6 +51,9 @@ MVP, retrofit2, rxjava2
 ## 斗鱼直播源的获取(未实现)
 **Note**: @2019年6月5日17:33:56之前: 手动方式有效，python方式无效，反编译不会
 
+### 斗鱼官方api
+[douyu开发者平台:3月公测](https://open.douyu.com/)
+
 ### 手动获取
 斗鱼原先提供的v1可以直接获取直播地址的api已经失效，暂时无法获取地址。Demo中使用了一个24h直播间https://www.douyu.com/3346305，手动获取地址，来测试。
  [斗鱼直播源破解参考](https://www.52pojie.cn/thread-957638-1-1.html)
