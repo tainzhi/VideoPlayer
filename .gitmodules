@@ -1,0 +1,3 @@
+[submodule "buildSrc"]
+	path = buildSrc
+	url = git@github.com:tainzhi/android_buildSrc.git
