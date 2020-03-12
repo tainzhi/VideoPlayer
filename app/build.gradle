@@ -1,42 +1,120 @@
+import com.tainzhi.android.buildsrc.Libs
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Libs.Version.compileSdkVersion
+    buildToolsVersion Libs.Version.buildToolsVersion
+
     defaultConfig {
-        applicationId "aterk.tainzhi.videoplayer"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+
+        applicationId "com.tanzhi.android.videoplayer"
+        minSdkVersion Libs.Version.minSdkVersion
+        targetSdkVersion Libs.Version.targetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode gitVersionCode()
+        versionName gitVersionTag()
+
+        // 第三方库 AppUpdate
+        // 每个应用拥有不同的authorities，防止相同在同一个手机上无法同时安装
+        resValue "string", "authorities", applicationId
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
     buildTypes {
-        release {
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-
         debug {
-            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
         }
     }
+
     productFlavors {
-    }
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        android.applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "QWanAndroid_${variant.versionName}${variant.flavorName}_${variant.buildType.name}.apk"
+            }
+        }
     }
 
-    lintOptions {
-        disable 'GoogleAppIndexingWarning'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
 }
 
+gradle.projectsEvaluated {
+
+    assembleRelease.doLast {
+        // 升级内容以 \n 分割
+        def updateDescription = "1.修改了一些异常bug\n2.提升了性能"
+        addDownloadUrl(updateDescription)
+    }
+
+}
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.AndroidX.appcompat
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.AndroidX.preference
+    implementation Libs.AndroidX.constraintlayout
+    implementation Libs.AndroidX.viewPager2
+    implementation Libs.AndroidX.swiperefresh
+    implementation Libs.AndroidX.Navigation.fragment
+    implementation Libs.AndroidX.Navigation.ui
+    implementation Libs.AndroidX.Lifecycle.viewmodelKtx
+    implementation Libs.AndroidX.Lifecycle.livedata
+    implementation Libs.AndroidX.Lifecycle.extensions
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
+
+    implementation Libs.Google.material
+
+    implementation Libs.Coroutines.android
+
+    implementation Libs.Koin.scope
+    implementation Libs.Koin.viewmodel
+
+    implementation Libs.Retrofit.retrofit
+    implementation Libs.Retrofit.gsonConverter
+    implementation Libs.OkHttp.loggingInterceptor
+    implementation Libs.cookietar
+
+    implementation Libs.Glide.glide
+    kapt Libs.Glide.compiler
+
+    debugImplementation Libs.leakCanary
+
+    implementation Libs.timber
+    implementation Libs.baseRecyclerViewAdapterHelper
+    implementation Libs.youthBanner
+    implementation Libs.tencentTbssdk
+    implementation Libs.vertialTabLayout
+    implementation Libs.flowlayout
+    implementation Libs.licenseDialog
+    implementation Libs.appUpdate
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -71,9 +149,51 @@ dependencies {
     annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
 
     implementation "com.google.android.exoplayer:exoplayer:2.10.7"
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-repositories {
-    mavenCentral()
+
+
+// get git commit counts, ie 73
+static def gitVersionCode() {
+    def cmd = 'git rev-list HEAD --first-parent --count'
+    cmd.execute().text.trim().toInteger()
+}
+
+// after you run `git tag`, then you can retrieve it
+static def gitVersionTag() {
+    def cmd = 'git describe --tags'
+    def version = cmd.execute().text.trim()
+
+    def pattern = "-(\\d+)-g"
+    def matcher = version =~ pattern
+    if (matcher) {
+        version = version.substring(0, matcher.start()) + "." + matcher[0][1]
+    } else {
+        version = version + ".0"
+    }
+    return version
+}
+
+// assembleRelease后会在app/build/outpus/apk/release/目录下生成apk和outpus.json
+// outpus.json已经有apk的一些信息，比如versionCode和versionNumber
+// 默认缺少打包时间和更新描述，在这里添加
+// 并添加下载路径
+// 我要把包通过github action上传到 https://gitee.com/qinmen/GithubServer/WanAndroid 方便下载
+static def addDownloadUrl (String updateDescription) {
+    def currentTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone("UTC"))
+    def inputJsonPath = "app/build/outputs/apk/release/output.json"
+    def inputFile = new File(inputJsonPath)
+    def json = new JsonSlurper().parseText(inputFile.text)
+    def apkFileName = json.elements[0].outputFile
+    def versionCode = json.elements[0].versionCode
+    def downloadUrl = "https://gitee.com/qinmen/GithubServer/raw/master/WanAndroid" + apkFileName
+    def backupDownloadUrl = "https://github.com/tainzhi/WanAndroid/releases/download/" + gitVersionTag() + "/" + apkFileName
+    def dataMap = [ 'versionCode': versionCode,
+                    'description': updateDescription,
+                    'url': downloadUrl,
+                    'url_backup': backupDownloadUrl,
+                    'time': currentTime,
+                    'apkName': apkFileName]
+    def updateMap = [ 'errorCode': 0, 'data': dataMap, 'errorMsg': '']
+    def outputJsonPath = "app/build/outputs/apk/release/update.json"
+    (new File(outputJsonPath)).write(new JsonOutput().toJson(updateMap))
 }
