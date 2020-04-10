@@ -8,7 +8,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
-
 android {
     compileSdkVersion Libs.Version.compileSdkVersion
     buildToolsVersion Libs.Version.buildToolsVersion
@@ -110,7 +109,7 @@ dependencies {
     implementation Libs.baseRecyclerViewAdapterHelper
     implementation Libs.youthBanner
     implementation Libs.tencentTbssdk
-    implementation Libs.vertialTabLayout
+    implementation Libs.verticalTabLayout
     implementation Libs.flowlayout
     implementation Libs.licenseDialog
     implementation Libs.appUpdate
