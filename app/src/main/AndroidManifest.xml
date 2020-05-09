@@ -11,12 +11,11 @@
 	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 	
 	<application
-		android:name=".App" android:allowBackup="true" android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name" android:banner="@string/app_name">
+		android:name=".App" android:allowBackup="true" android:banner="@string/app_name" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/MyTheme.DayNight">
 		<activity
-			android:name=".ui.activity.MainActivity" android:configChanges="orientation|screenSize|keyboardHidden" android:label="@string/title_activity_main" android:theme="@style/DefaultTheme" />
+			android:name=".ui.activity.MainActivity" android:configChanges="orientation|screenSize|keyboardHidden" android:label="@string/title_activity_main" />
 		<activity
-			android:name=".ui.activity.SplashActivity" android:configChanges="orientation|screenSize|uiMode" android:label="@string/app_name" android:screenOrientation="fullSensor" android:theme="@style/SplashTheme">
+			android:name="com.tainzhi.android.videoplayer.ui.SplashActivity" android:theme="@style/SplashTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				
@@ -25,13 +24,12 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".ui.activity.DefaultPlayActivity" android:keepScreenOn="true" android:screenOrientation="fullSensor" android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+			android:name=".ui.activity.DefaultPlayActivity" android:keepScreenOn="true" android:screenOrientation="fullSensor" />
 		<activity
-			android:name=".ui.activity.IjkPlayerActivity" android:keepScreenOn="true" android:screenOrientation="fullSensor" android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+			android:name=".ui.activity.IjkPlayerActivity" android:keepScreenOn="true" android:screenOrientation="fullSensor" />
 		<activity
-			android:name=".DoubleVideoPlayerActivity" android:screenOrientation="fullSensor" android:theme="@style/DefaultTheme" />
-		<activity
-			android:name=".VideoTestActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+			android:name=".DoubleVideoPlayerActivity" android:screenOrientation="fullSensor" />
+		<activity android:name=".VideoTestActivity" />
 	</application>
 
 </manifest>

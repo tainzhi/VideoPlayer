@@ -12,4 +12,25 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="design_bottom_navigation_elevation">8dp</dimen>
+    
+    
+    
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_micro">4dp</dimen>
+    
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    
+    <dimen name="icon_small">18dp</dimen>
+    
+    <dimen name="component_label_horizontal_margin">@dimen/margin_normal</dimen>
+    
+    <dimen name="elevation_default_top_app_bar">4dp</dimen>
+    
+    <!--Emphasis modifiers for "on" colors-->
+    <dimen name="alpha_emphasis_high">@dimen/material_emphasis_high_type</dimen>
+    <dimen name="alpha_emphasis_medium">@dimen/material_emphasis_medium</dimen>
+    <dimen name="alpha_emphasis_disabled">@dimen/material_emphasis_disabled</dimen>
+    
 </resources>
