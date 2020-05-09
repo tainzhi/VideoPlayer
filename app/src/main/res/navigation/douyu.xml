@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/douyu"
+	app:startDestination="@id/douyuFragment">
+	
+	<fragment
+		android:id="@+id/douyuFragment"
+		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment"
+		android:label="DouyuFragment" />
+</navigation>

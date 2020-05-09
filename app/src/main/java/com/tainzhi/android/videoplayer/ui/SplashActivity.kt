@@ -3,7 +3,6 @@ package com.tainzhi.android.videoplayer.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.qfq.tainzhi.videoplayer.ui.activity.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 

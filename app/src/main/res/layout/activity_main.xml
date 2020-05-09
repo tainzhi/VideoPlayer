@@ -29,7 +29,7 @@
             app:itemTextColor="@drawable/nav_item_color_state"
             app:labelVisibilityMode="labeled"
             app:layout_behavior="com.qfq.tainzhi.videoplayer.widget.BottomNavigationBehavior"
-            app:menu="@menu/bottom_navigation_main" />
+            app:menu="@menu/main_bottom_navigation" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
