@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/tv"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/tv"
 	app:startDestination="@id/TVFragment">
 	
 	<fragment
 		android:id="@+id/TVFragment"
 		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment"
+		tools:layout="@layout/fragment_tv"
 		android:label="TVFragment" />
 </navigation>

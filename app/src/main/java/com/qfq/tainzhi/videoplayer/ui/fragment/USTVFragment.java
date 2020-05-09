@@ -29,7 +29,7 @@ public class USTVFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_local_video, container, false);
+        mView = inflater.inflate(R.layout.fragment_us_tv, container, false);
         return mView;
     }
     
