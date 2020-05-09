@@ -177,7 +177,7 @@ static def gitVersionTag() {
 // 默认缺少打包时间和更新描述，在这里添加
 // 并添加下载路径
 // 我要把包通过github action上传到 https://gitee.com/qinmen/GithubServer/WanAndroid 方便下载
-static def addDownloadUrl (String updateDescription) {
+static def addDownloadUrl(String updateDescription) {
     def currentTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone("UTC"))
     def inputJsonPath = "app/build/outputs/apk/release/output.json"
     def inputFile = new File(inputJsonPath)
@@ -186,13 +186,13 @@ static def addDownloadUrl (String updateDescription) {
     def versionCode = json.elements[0].versionCode
     def downloadUrl = "https://gitee.com/qinmen/GithubServer/raw/master/WanAndroid" + apkFileName
     def backupDownloadUrl = "https://github.com/tainzhi/WanAndroid/releases/download/" + gitVersionTag() + "/" + apkFileName
-    def dataMap = [ 'versionCode': versionCode,
-                    'description': updateDescription,
-                    'url': downloadUrl,
-                    'url_backup': backupDownloadUrl,
-                    'time': currentTime,
-                    'apkName': apkFileName]
-    def updateMap = [ 'errorCode': 0, 'data': dataMap, 'errorMsg': '']
+    def dataMap = ['versionCode': versionCode,
+                   'description': updateDescription,
+                   'url'        : downloadUrl,
+                   'url_backup' : backupDownloadUrl,
+                   'time'       : currentTime,
+                   'apkName'    : apkFileName]
+    def updateMap = ['errorCode': 0, 'data': dataMap, 'errorMsg': '']
     def outputJsonPath = "app/build/outputs/apk/release/update.json"
     (new File(outputJsonPath)).write(new JsonOutput().toJson(updateMap))
 }
