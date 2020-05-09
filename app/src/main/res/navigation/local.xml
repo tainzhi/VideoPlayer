@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/local"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/local"
 	app:startDestination="@id/localVideoFragment">
 	
 	<fragment
 		android:id="@+id/localVideoFragment"
 		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.LocalVideoFragment"
+		tools:layout="@layout/fragment_local_video"
 		android:label="LocalVideoFragment" />
 </navigation>
