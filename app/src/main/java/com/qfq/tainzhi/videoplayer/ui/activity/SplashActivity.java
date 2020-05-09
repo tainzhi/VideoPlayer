@@ -21,17 +21,34 @@ import permissions.dispatcher.RuntimePermissions;
  */
 @RuntimePermissions
 public class SplashActivity extends AppCompatActivity implements ISplashActivityView {
-    private ISplashPresenter mSplashPresenter;
-    
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mSplashPresenter = new SplashPresenter(this);
-        mSplashPresenter.setDelay();
-    }
-    
-    @Override
-    public void enterApp() {
-    
-    }
+	private ISplashPresenter mSplashPresenter;
+	
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mSplashPresenter = new SplashPresenter(this);
+		mSplashPresenter.setDelay();
+	}
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		// NOTE: delegate the permission handling to generated method
+		SplashActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+	
+	@Override
+	public void enterApp() {
+		SplashActivityPermissionsDispatcher.startActivityWithPermissionCheck(this);
+	}
+	
+	@NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE})
+	public void startActivity() {
+		startActivity(new Intent(this, MainActivity.class));
+		finish();
+	}
 }

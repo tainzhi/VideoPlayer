@@ -63,7 +63,7 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
 			startPlay(mChannelRooms.get(position).getRoom_id(),
 					mChannelRooms.get(position).getNickname());
 		});
-		mAdapter.setOnLoadMoreListener(() -> onLoadMore(), mRecyclerView);
+		// mAdapter.setOnLoadMoreListener(() -> onLoadMore(), mRecyclerView);
 		
 		initView();
 		ViewGroup parent = (ViewGroup) mView.getParent();
@@ -116,7 +116,7 @@ public class DouyuLiveFragment extends Fragment implements SwipeRefreshLayout.On
 	
 	public void setLoadComplete() {
 		mRefreshLayout.setRefreshing(false);
-		mAdapter.loadMoreComplete();
+		// mAdapter.loadMoreComplete();
 	}
 	
 	private void startPlay(int roomId, String title) {

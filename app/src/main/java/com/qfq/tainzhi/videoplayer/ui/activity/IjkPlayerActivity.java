@@ -24,7 +24,7 @@ import androidx.annotation.RequiresApi;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.R2;
+
 import com.qfq.tainzhi.videoplayer.common.PlayerManager;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.IjkPlayerPresenter;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.IIjkPlayerPresenter;
@@ -44,35 +44,35 @@ import butterknife.OnClick;
  */
 public class IjkPlayerActivity extends Activity implements PlayerManager.PlayerStateListener {
     
-    @BindView(R2.id.video_view)
+    @BindView(R.id.video_view)
     IjkVideoView mVideoView;
-    @BindView(R2.id.video_player_top_panel_back)
+    @BindView(R.id.video_player_top_panel_back)
     ImageView mVideoPlayerTopPanelBack;
-    @BindView(R2.id.video_player_top_panel_video_title)
+    @BindView(R.id.video_player_top_panel_video_title)
     TextView mVideoPlayerTopPanelVideoTitle;
-    @BindView(R2.id.video_player_top_panel_system_time)
+    @BindView(R.id.video_player_top_panel_system_time)
     TextView mVideoPlayerTopPanelSystemTime;
-    @BindView(R2.id.video_player_top_panel_battery)
+    @BindView(R.id.video_player_top_panel_battery)
     ImageView mVideoPlayerTopPanelBattery;
-    @BindView(R2.id.l_video_player_top_panel)
+    @BindView(R.id.l_video_player_top_panel)
     RelativeLayout mVideoPlayerTopPanel;
-    @BindView(R2.id.video_player_bottom_panel_play)
+    @BindView(R.id.video_player_bottom_panel_play)
     ImageView mVideoPlayerBottomPanelPlay;
-    @BindView(R2.id.activity_default_video_player_player_controller_progress)
+    @BindView(R.id.activity_default_video_player_player_controller_progress)
     SeekBar mActivityDefaultVideoPlayerPlayerControllerProgress;
-    @BindView(R2.id.video_player_bottom_panel_float_window)
+    @BindView(R.id.video_player_bottom_panel_float_window)
     ImageView mVideoPlayerBottomPanelFloatWindow;
-    @BindView(R2.id.video_player_bottom_panel_follow)
+    @BindView(R.id.video_player_bottom_panel_follow)
     ImageView mVideoPlayerBottomPanelFollow;
-    @BindView(R2.id.l_video_player_bottom_panel)
+    @BindView(R.id.l_video_player_bottom_panel)
     LinearLayout mVideoPlayerBottomPanel;
-    @BindView(R2.id.iv_video_volume)
+    @BindView(R.id.iv_video_volume)
     ImageView mIvVideoVolume;
-    @BindView(R2.id.tv_video_volume)
+    @BindView(R.id.tv_video_volume)
     TextView mTvVideoVolume;
-    @BindView(R2.id.ll_video_volume)
+    @BindView(R.id.ll_video_volume)
     LinearLayout mLlVideoVolume;
-    @BindView(R2.id.video_player_loading_animation)
+    @BindView(R.id.video_player_loading_animation)
     ImageView mVideoPlayerLoadingAnimation;
     
     private PlayerManager mPlayerManager;

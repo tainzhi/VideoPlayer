@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.R2;
+
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuChannelFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment;
 import com.qfq.tainzhi.videoplayer.ui.fragment.LikeFragment;
@@ -42,15 +42,15 @@ public class MainActivity extends AppCompatActivity
 	private static final String SELECTED_ITEM = "bottomNavigationSelectItem";
 	
 	
-	@BindView(R2.id.toolbar)
+	@BindView(R.id.toolbar)
 	Toolbar toolbar;
-	@BindView(R2.id.container)
+	@BindView(R.id.container)
 	FrameLayout container;
-	@BindView(R2.id.bottom_navigation)
+	@BindView(R.id.bottom_navigation)
 	BottomNavigationView mBottomNavigationView;
-	@BindView(R2.id.nav_view)
+	@BindView(R.id.nav_view)
 	NavigationView mNavigationView;
-	@BindView(R2.id.drawer_layout)
+	@BindView(R.id.drawer_layout)
 	DrawerLayout mDrawerLayout;
 	private int[] mTitles = {
 			R.string.title_local_video,

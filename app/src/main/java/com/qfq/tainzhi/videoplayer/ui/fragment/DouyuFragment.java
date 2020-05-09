@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.R2;
+
 import com.qfq.tainzhi.videoplayer.adapters.ChannelPagerAdapter;
 
 import java.util.ArrayList;
@@ -31,13 +31,13 @@ import butterknife.OnClick;
  */
 public class DouyuFragment extends BaseFragment {
 	private static DouyuFragment mInstance = null;
-	@BindView(R2.id.tab_layout_channel)
+	@BindView(R.id.tab_layout_channel)
 	TabLayout mTabLayout;
-	@BindView(R2.id.add_channel_iv)
+	@BindView(R.id.add_channel_iv)
 	ImageView mAddChannel;
-	@BindView(R2.id.header_layout)
+	@BindView(R.id.header_layout)
 	LinearLayout mLinearLayout;
-	@BindView(R2.id.view_pager_douyu_channels)
+	@BindView(R.id.view_pager_douyu_channels)
 	ViewPager mViewPager;
 	
 	private View mView;
@@ -71,7 +71,7 @@ public class DouyuFragment extends BaseFragment {
 		Logger.d("");
 	}
 	
-	@OnClick(R2.id.add_channel_iv)
+	@OnClick(R.id.add_channel_iv)
 	public void onClick() {
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		ft.hide(this);
