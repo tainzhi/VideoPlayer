@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="textColorPrimary" format="color"/>
-    <attr name="viewBackground" format="color"/>
+	
+	<attr name="alphaEmphasisHigh" format="float" />
+	<attr name="alphaEmphasisMedium" format="float" />
+	<attr name="alphaEmphasisDisabled" format="float" />
+	
+	<attr name="textColorPrimary" format="color"/>
+	<attr name="viewBackground" format="color"/>
 </resources>

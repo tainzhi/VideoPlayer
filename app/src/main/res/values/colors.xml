@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#DE3346</color>
-    <color name="colorPrimaryDark">#B32D3C</color>
-    <color name="colorAccent">#6D151F</color>
+    <!--Color-->
+    
+    <!--Material uses an organized approach to applying color by providing a set of attributes -->
+    <!--which define the color of generalized UI elements such as backgrounds, surfaces, type -->
+    <!--and icons. Using these attributes throughout your app makes it easy to change a single -->
+    <!--color, or the entire theme, and have those changes cascade through the interface.-->
+    
+    <!--Color is customized by overriding Material Components color attributes with custom -->
+    <!--color values. In this project, your theme’s color attributes are already overridden -->
+    <!--with default values defined in this file, color.xml.  Change any of the values in -->
+    <!--this file to see changes applied across all elements of your app.-->
+    
+    <!--LIGHT COLOR THEME-->
+    
+    <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
+    <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
+    <!--selection controls.-->
     <color name="zhuganzi">#511d23</color>
     <color name="Blue_Grey">#607d8b</color>
     <color name="textColorPrimary">#FFC107</color>
@@ -10,10 +24,34 @@
     <color name="item_not_checkted">@android:color/white</color>
     <color name="item_checkted">#FFC107</color>
     <color name="line_divider">@android:color/white</color>
-
+    
     <color name="douyu_colorPrimary">#ff7830</color>
     <color name="douyu_colorPrimaryDark">#D54B00</color>
     <color name="douyu_colorAccent">#EBB79B</color>
-
+    
+    
     <color name="video_player_panel_background">#60000000</color>
+    
+    <color name="color_primary">#de3346</color>
+    <color name="color_primary_dark">#b32d3c</color>
+    <color name="color_primary_variant">#6d151f</color>
+    <color name="color_secondary">#ffc107</color>
+    <color name="color_secondary_variant">#d54b00</color>
+    <color name="color_accent">#6d151f</color>
+    
+    <!--colorBackground appears behind scrollable content and is used for the default window-->
+    <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
+    <!--and menus. colorError is used to indicate an error state for components such as-->
+    <!--text fields.-->
+    <color name="color_background">#ffffff</color>
+    <color name="color_surface">#ffffff</color>
+    <color name="color_error">#b00020</color>
+    
+    <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
+    <!--on which they appear.-->
+    <color name="color_on_primary">#ffffff</color>
+    <color name="color_on_secondary">#000000</color>
+    <color name="color_on_background">#000000</color>
+    <color name="color_on_surface">#000000</color>
+    <color name="color_on_error">#ffffff</color>
 </resources>
