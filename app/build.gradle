@@ -8,6 +8,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+apply from: '../test_dependencies.gradle'
+
 android {
     compileSdkVersion Libs.Version.compileSdkVersion
     buildToolsVersion Libs.Version.buildToolsVersion

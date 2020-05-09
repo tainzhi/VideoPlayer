@@ -9,5 +9,5 @@
 		android:id="@+id/douyuFragment"
 		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment"
 		tools:layout="@layout/fragment_douyu"
-		android:label="DouyuFragment" />
+		android:label="@string/title_douyu" />
 </navigation>

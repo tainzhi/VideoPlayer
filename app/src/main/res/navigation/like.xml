@@ -9,5 +9,5 @@
 		android:id="@+id/likeFragment"
 		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.LikeFragment"
 		tools:layout="@layout/fragment_like"
-		android:label="LikeFragment" />
+		android:label="@string/title_like" />
 </navigation>
