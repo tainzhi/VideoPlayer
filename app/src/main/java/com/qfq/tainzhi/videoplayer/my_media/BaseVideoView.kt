@@ -76,10 +76,10 @@ class BaseVideoView : FrameLayout {
         override fun onSurfaceDestroyed(holder: IRenderView.ISurfaceHolder) {}
     }
 
-    constructor(context: Context?) : super(context) { // init(context);
+    constructor(context: Context?) : super(context!!) { // init(context);
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) { // init(context);
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) { // init(context);
     }
 
     // public static void clearSavedProgress(Context context, String url) {
