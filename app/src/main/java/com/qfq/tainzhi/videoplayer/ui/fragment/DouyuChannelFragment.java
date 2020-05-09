@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.R2;
+
 import com.qfq.tainzhi.videoplayer.adapters.DouyuChannelAdapter;
 import com.qfq.tainzhi.videoplayer.bean.DouyuChannelBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.DouyuChannelPresenter;
@@ -34,9 +34,9 @@ public class DouyuChannelFragment extends Fragment implements SwipeRefreshLayout
 	public static String DOUYU_CHANNEL_TAG = "douyu_channel";
 	public static String DOUYU_CHANNEL_TO_LIVE = "from_channel_to_live";
 	private static DouyuChannelFragment mInstance;
-	@BindView(R2.id.douyu_channel_list)
+	@BindView(R.id.douyu_channel_list)
 	RecyclerView mRecyclerView;
-	@BindView(R2.id.douyu_channel_refresh_layout)
+	@BindView(R.id.douyu_channel_refresh_layout)
 	SwipeRefreshLayout mRefreshLayout;
 	
 	private View mView;
