@@ -31,7 +31,7 @@ public class DouyuChannelRoomAdapter extends BaseQuickAdapter<DouyuRoomBean,
                 .setText(R.id.tv_room_name, room.getRoom_name())
                 .setText(R.id.tv_online, room.getOnline() + "位观众");
         Glide.with(mContext).load(room.getRoom_src()).fitCenter()
-                .error(R.mipmap.default_dota2)
+                .error(R.drawable.default_dota2)
                 .into((RoundCornerImageView)holder.getView(R.id.iv_room));
         
     }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="?attr/colorPrimary"/>
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/ic_launcher"/>
-    </item>
+	<item android:drawable="@android:color/white" />
+	<item
+		android:gravity="bottom|center_horizontal"
+		android:width="64dp"
+		android:height="64dp"
+		android:bottom="64dp"
+		android:drawable="@drawable/ic_video" />
 
 </layer-list>
