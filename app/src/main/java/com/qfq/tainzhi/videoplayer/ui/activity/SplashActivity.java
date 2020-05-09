@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.SplashPresenter;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.ISplashPresenter;
 import com.qfq.tainzhi.videoplayer.ui.activity.impl.ISplashActivityView;
+import com.tainzhi.android.videoplayer.ui.MainActivity;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;

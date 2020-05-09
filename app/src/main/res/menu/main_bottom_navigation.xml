@@ -4,21 +4,26 @@
     <item
         android:id="@+id/local"
         android:icon="@drawable/ic_local"
+        android:contentDescription="@string/title_local_video"
         android:title="@string/title_local_video"/>
     <item
         android:id="@+id/douyu"
         android:icon="@drawable/ic_douyu"
+        android:contentDescription="@string/title_douyu"
         android:title="@string/title_douyu"/>
     <item
         android:id="@+id/tv"
         android:icon="@drawable/ic_tv"
+        android:contentDescription="@string/title_tv"
         android:title="@string/title_tv"/>
     <item
         android:id="@+id/us_tv"
         android:icon="@drawable/ic_ustv"
+        android:contentDescription="@string/title_ustv"
         android:title="@string/title_ustv"/>
     <item
         android:id="@+id/like"
         android:icon="@drawable/ic_like"
+        android:contentDescription="@string/title_like"
         android:title="@string/title_like"/>
 </menu>

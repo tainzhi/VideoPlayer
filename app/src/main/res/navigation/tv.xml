@@ -9,5 +9,5 @@
 		android:id="@+id/TVFragment"
 		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment"
 		tools:layout="@layout/fragment_tv"
-		android:label="TVFragment" />
+		android:label="@string/title_tv" />
 </navigation>
