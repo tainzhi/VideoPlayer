@@ -9,5 +9,5 @@
 		android:id="@+id/USTVFragment"
 		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.USTVFragment"
 		tools:layout="@layout/fragment_us_tv"
-		android:label="USTVFragment" />
+		android:label="@string/title_ustv" />
 </navigation>

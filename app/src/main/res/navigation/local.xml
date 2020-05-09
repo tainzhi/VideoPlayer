@@ -9,5 +9,5 @@
 		android:id="@+id/localVideoFragment"
 		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.LocalVideoFragment"
 		tools:layout="@layout/fragment_local_video"
-		android:label="LocalVideoFragment" />
+		android:label="@string/title_local_video" />
 </navigation>
