@@ -126,23 +126,23 @@ public class MainActivity extends AppCompatActivity
 		mNavigationView.setNavigationItemSelectedListener(this);
 		mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 			switch (item.getItemId()) {
-				case R.id.action_local_video:
+				case R.id.local:
 					showFragment(FRAGMENT_LOCAL_VIDEO);
 					doubleClick(FRAGMENT_LOCAL_VIDEO);
 					break;
-				case R.id.action_douyu:
+				case R.id.douyu:
 					showFragment(FRAGMENT_DOUYU);
 					doubleClick(FRAGMENT_DOUYU);
 					break;
-				case R.id.action_tv:
+				case R.id.tv:
 					showFragment(FRAGMENT_TV);
 					doubleClick(FRAGMENT_TV);
 					break;
-				case R.id.action_ustv:
+				case R.id.us_tv:
 					showFragment(FRAGMENT_USTV);
 					doubleClick(FRAGMENT_USTV);
 					break;
-				case R.id.action_like:
+				case R.id.like:
 					showFragment(FRAGMENT_LIKE);
 					doubleClick(FRAGMENT_LIKE);
 					break;
