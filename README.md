@@ -46,7 +46,10 @@ MVP, retrofit2, rxjava2
 
 ## 实现简介
 - MainActivity: 
-- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频; 
+- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频;
+
+## 各大卫视网络源和图标
+- [gitee: tv-source](https://gitee.com/forterli/project/tree/master/mini_program/tv_video/data)
 
 ## 斗鱼直播源的获取(未实现)
 **Note**: @2019年6月5日17:33:56之前: 手动方式有效，python方式无效，反编译不会
@@ -70,6 +73,7 @@ MVP, retrofit2, rxjava2
 - [streamlink](https://github.com/streamlink/streamlink/blob/fb6a00c86bbf752b578ea317cdede242a2b4e836/src/streamlink/plugins/douyutv.py)
 
 ### 反编译app获取地址
+
 
 ## Todo
 - [x] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
