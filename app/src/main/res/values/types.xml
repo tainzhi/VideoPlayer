@@ -37,55 +37,55 @@
 	<!--letterSpacing, etc. to define a custom appearance for each and see how they are -->
 	<!--applied globally across your app.-->
 	
-	<style name="TextAppearance.MyTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+	<style name="TextAppearance.AppTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+	<style name="TextAppearance.AppTheme.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+	<style name="TextAppearance.AppTheme.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+	<style name="TextAppearance.AppTheme.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+	<style name="TextAppearance.AppTheme.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+	<style name="TextAppearance.AppTheme.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+	<style name="TextAppearance.AppTheme.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+	<style name="TextAppearance.AppTheme.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Body1" parent="TextAppearance.MaterialComponents.Body1">
+	<style name="TextAppearance.AppTheme.Body1" parent="TextAppearance.MaterialComponents.Body1">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Body2" parent="TextAppearance.MaterialComponents.Body2">
+	<style name="TextAppearance.AppTheme.Body2" parent="TextAppearance.MaterialComponents.Body2">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Button" parent="TextAppearance.MaterialComponents.Button">
+	<style name="TextAppearance.AppTheme.Button" parent="TextAppearance.MaterialComponents.Button">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Caption" parent="TextAppearance.MaterialComponents.Caption">
+	<style name="TextAppearance.AppTheme.Caption" parent="TextAppearance.MaterialComponents.Caption">
 		<!--Your custom type style here-->
 	</style>
 	
-	<style name="TextAppearance.MyTheme.Overline" parent="TextAppearance.MaterialComponents.Overline">
+	<style name="TextAppearance.AppTheme.Overline" parent="TextAppearance.MaterialComponents.Overline">
 		<!--Your custom type style here-->
 	</style>
 
