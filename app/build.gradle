@@ -74,6 +74,8 @@ gradle.projectsEvaluated {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation(Libs.jsoup)
+
     implementation Libs.Kotlin.stdlib
     implementation Libs.AndroidX.appcompat
     implementation Libs.AndroidX.coreKtx
@@ -115,6 +117,7 @@ dependencies {
     implementation Libs.flowlayout
     implementation Libs.licenseDialog
     implementation Libs.appUpdate
+
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0'
