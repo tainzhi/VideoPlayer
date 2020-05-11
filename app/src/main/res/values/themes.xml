@@ -17,10 +17,10 @@
 <resources>
 	
 	<!--Top level DayNight theme to be used in AndroidManifest.xml-->
-	<style name="MyTheme.DayNight" parent="Base.MyTheme" />
+	<style name="AppTheme.DayNight" parent="Base.AppTheme" />
 	
 	<!--Base custom theme which will be shared between both light and dark theme variants-->
-	<style name="Base.MyTheme" parent="Base.MaterialThemeBuilder">
+	<style name="Base.AppTheme" parent="Base.MaterialThemeBuilder">
 		<!--Material color attributes -->
 		<item name="colorPrimary">@color/color_primary</item>
 		<item name="colorPrimaryDark">@color/color_primary_dark</item>
@@ -41,33 +41,33 @@
 		<item name="colorOnError">@color/color_on_error</item>
 		
 		<!--Material type attributes-->
-		<item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
-		<item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
-		<item name="textAppearanceHeadline3">@style/TextAppearance.MyTheme.Headline3</item>
-		<item name="textAppearanceHeadline4">@style/TextAppearance.MyTheme.Headline4</item>
-		<item name="textAppearanceHeadline5">@style/TextAppearance.MyTheme.Headline5</item>
-		<item name="textAppearanceHeadline6">@style/TextAppearance.MyTheme.Headline6</item>
-		<item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
-		<item name="textAppearanceSubtitle2">@style/TextAppearance.MyTheme.Subtitle2</item>
-		<item name="textAppearanceBody1">@style/TextAppearance.MyTheme.Body1</item>
-		<item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
-		<item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
-		<item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
-		<item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
+		<item name="textAppearanceHeadline1">@style/TextAppearance.AppTheme.Headline1</item>
+		<item name="textAppearanceHeadline2">@style/TextAppearance.AppTheme.Headline2</item>
+		<item name="textAppearanceHeadline3">@style/TextAppearance.AppTheme.Headline3</item>
+		<item name="textAppearanceHeadline4">@style/TextAppearance.AppTheme.Headline4</item>
+		<item name="textAppearanceHeadline5">@style/TextAppearance.AppTheme.Headline5</item>
+		<item name="textAppearanceHeadline6">@style/TextAppearance.AppTheme.Headline6</item>
+		<item name="textAppearanceSubtitle1">@style/TextAppearance.AppTheme.Subtitle1</item>
+		<item name="textAppearanceSubtitle2">@style/TextAppearance.AppTheme.Subtitle2</item>
+		<item name="textAppearanceBody1">@style/TextAppearance.AppTheme.Body1</item>
+		<item name="textAppearanceBody2">@style/TextAppearance.AppTheme.Body2</item>
+		<item name="textAppearanceButton">@style/TextAppearance.AppTheme.Button</item>
+		<item name="textAppearanceCaption">@style/TextAppearance.AppTheme.Caption</item>
+		<item name="textAppearanceOverline">@style/TextAppearance.AppTheme.Overline</item>
 		
 <!--		&lt;!&ndash;Material shape attributes&ndash;&gt;-->
-<!--		<item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent-->
+<!--		<item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.AppTheme.SmallComponent-->
 <!--		</item>-->
-<!--		<item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent-->
+<!--		<item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.AppTheme.MediumComponent-->
 <!--		</item>-->
-<!--		<item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent-->
+<!--		<item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.AppTheme.LargeComponent-->
 <!--		</item>-->
 <!--		-->
 <!--		&lt;!&ndash;Component styles&ndash;&gt;-->
 <!--		<item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert-->
 <!--		</item>-->
-<!--		<item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>-->
-<!--		<item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>-->
+<!--		<item name="bottomSheetDialogTheme">@style/ThemeOverlay.AppTheme.BottomSheetDialog</item>-->
+<!--		<item name="navigationViewStyle">@style/Widget.AppTheme.NavigationView</item>-->
 <!--		<item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>-->
 	</style>
 	
