@@ -31,4 +31,6 @@ dependencies {
     androidTestImplementation Libs.AndroidX.Test.Espresso.contrib
     androidTestImplementation Libs.AndroidX.Test.Espresso.intents
 
+    androidTestImplementation Libs.AndroidX.WorkManager.workTesting
+
 }

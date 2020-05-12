@@ -88,9 +88,11 @@ dependencies {
     implementation Libs.AndroidX.Lifecycle.viewmodelKtx
     implementation Libs.AndroidX.Lifecycle.livedata
     implementation Libs.AndroidX.Lifecycle.extensions
+
     implementation Libs.AndroidX.Room.runtime
     implementation Libs.AndroidX.Room.ktx
     kapt Libs.AndroidX.Room.compiler
+    implementation Libs.AndroidX.WorkManager.workRuntimeKtx
 
     implementation Libs.Google.material
 
