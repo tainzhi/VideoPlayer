@@ -1,4 +1,3 @@
-VideoPlayer
 
 <!-- vim-markdown-toc GFM -->
 
@@ -18,6 +17,9 @@ VideoPlayer
 <img src="./demo.gif" alt="项目demo" height="300">
 
 这是一个视频播放器，又不仅仅是一个播放器。它不仅能观看本地视频，还能看斗鱼直播， 能看央视和各大地方卫士，能看美剧和电影。许多功能正在紧张的开发中。。。敬请期待
+
+## 测试驱动开发
+- 先完成功能模块: 读取卫视列表到database, test成功
 ## 参考
 - [iToutiao相关设计也实现](https://github.com/iMeiji/Toutiao)
 - [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android) 
@@ -40,6 +42,7 @@ VideoPlayer
 - 切换播放器: 默认播放器(基于android自带的MediaPlayer), 基于ijkplayer的播放器
 - ~~[Bug]进度条可以预览视频(该功能有bug): 实现方法比较另类, 用Glide加载, 某些格式的视频需要能解码的库; 窗口暂时不能移动~~
 - ~~[Bug]斗鱼直播源暂时不会逆向获得, 故使用了一个官方赛事MSI 4000分辨率的一个源替代来演示~~
+
 
 ## 依赖框架和技术
 MVP, retrofit2, rxjava2
