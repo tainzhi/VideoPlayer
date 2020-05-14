@@ -1,10 +1,14 @@
 <resources>
     <style name="AppTheme.Splash" parent="AppTheme.DayNight">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
-        <item name="android:statusBarColor">@android:color/transparent</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+<!--        &lt;!&ndash;Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色&ndash;&gt;-->
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
         <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <style name="animation_single_video_player_progress_popwindow" parent="android:Animation">

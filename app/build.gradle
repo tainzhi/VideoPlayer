@@ -151,9 +151,6 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
-    implementation "org.permissionsdispatcher:permissionsdispatcher:4.5.0"
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
-
     implementation "com.google.android.exoplayer:exoplayer:2.10.7"
 }
 
