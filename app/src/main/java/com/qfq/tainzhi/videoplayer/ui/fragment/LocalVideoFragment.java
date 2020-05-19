@@ -2,7 +2,6 @@ package com.qfq.tainzhi.videoplayer.ui.fragment;
 
 import android.app.AlertDialog;
 import android.content.ContentUris;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,11 +21,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.VideoTestActivity;
 import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
-import com.qfq.tainzhi.videoplayer.ui.activity.DefaultPlayActivity;
-import com.qfq.tainzhi.videoplayer.ui.activity.IjkPlayerActivity;
+import com.tainzhi.android.videoplayer.ui.PlayVideoViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,14 +139,12 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         Logger.d("");
     }
     
-    private void startPlay(int id, String title, long duration) {
-        Intent intent = new Intent(getContext(),
-                VideoTestActivity.class);
+    private void startPlay(int id, String name, long duration) {
         Uri videoUri =
                 ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
-        intent.setData(videoUri);
-        intent.putExtra("title", title);
-        intent.putExtra("duration", duration);
-        startActivity(intent);
+    
+        // IjkPlayerActivity.startPlay(requireActivity(), videoUri, name, duration, 0);
+        PlayVideoViewActivity.startPlay(requireActivity(), videoUri, name, duration, 0);
     }
+    
 }
