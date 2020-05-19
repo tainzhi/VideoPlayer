@@ -3,7 +3,7 @@ package com.qfq.tainzhi.videoplayer.my_media
 import android.content.Context
 import android.view.View
 import android.view.View.MeasureSpec
-import com.qfq.tainzhi.videoplayer.my_media.Constant.ASPECT_RATIO
+import com.qfq.tainzhi.videoplayer.my_media.Constant.AspectRatio
 import java.lang.ref.WeakReference
 
 /**
@@ -21,7 +21,7 @@ class MeasureHelper(view: View) {
         private set
     var measuredHeight = 0
         private set
-    private var mCurrentAspectRatio: Int = ASPECT_RATIO.AR_MATCH_PARENT
+    private var mCurrentAspectRatio: Int = AspectRatio.AR_MATCH_PARENT
     val view: View?
         get() = mWeakView?.get()
 
@@ -56,7 +56,7 @@ class MeasureHelper(view: View) {
         }
         var width = View.getDefaultSize(mVideoWidth, widthMeasureSpec)
         var height = View.getDefaultSize(mVideoHeight, heightMeasureSpec)
-        if (mCurrentAspectRatio == ASPECT_RATIO.AR_MATCH_PARENT) {
+        if (mCurrentAspectRatio == AspectRatio.AR_MATCH_PARENT) {
             width = widthMeasureSpec
             height = heightMeasureSpec
         } else if (mVideoWidth > 0 && mVideoHeight > 0) {
@@ -68,15 +68,15 @@ class MeasureHelper(view: View) {
                 val specAspectRatio = widthSpecSize.toFloat() / heightSpecSize.toFloat()
                 var displayAspectRatio: Float
                 when (mCurrentAspectRatio) {
-                    ASPECT_RATIO.AR_16_9_FIT_PARENT -> {
+                    AspectRatio.AR_16_9_FIT_PARENT -> {
                         displayAspectRatio = 16.0f / 9.0f
                         if (mVideoRotationDegree == 90 || mVideoRotationDegree == 270) displayAspectRatio = 1.0f / displayAspectRatio
                     }
-                    ASPECT_RATIO.AR_4_3_FIT_PARENT -> {
+                    AspectRatio.AR_4_3_FIT_PARENT -> {
                         displayAspectRatio = 4.0f / 3.0f
                         if (mVideoRotationDegree == 90 || mVideoRotationDegree == 270) displayAspectRatio = 1.0f / displayAspectRatio
                     }
-                    ASPECT_RATIO.AR_ASPECT_FIT_PARENT, ASPECT_RATIO.AR_ASPECT_FILL_PARENT, ASPECT_RATIO.AR_ASPECT_WRAP_CONTENT -> {
+                    AspectRatio.AR_ASPECT_FIT_PARENT, AspectRatio.AR_ASPECT_FILL_PARENT, AspectRatio.AR_ASPECT_WRAP_CONTENT -> {
                         displayAspectRatio = mVideoWidth.toFloat() / mVideoHeight.toFloat()
                         if (mVideoSarNum > 0 && mVideoSarDen > 0) displayAspectRatio = displayAspectRatio * mVideoSarNum / mVideoSarDen
                     }
@@ -87,21 +87,21 @@ class MeasureHelper(view: View) {
                 }
                 val shouldBeWider = displayAspectRatio > specAspectRatio
                 when (mCurrentAspectRatio) {
-                    ASPECT_RATIO.AR_ASPECT_FIT_PARENT, ASPECT_RATIO.AR_16_9_FIT_PARENT, ASPECT_RATIO.AR_4_3_FIT_PARENT -> if (shouldBeWider) { // too wide, fix width
+                    AspectRatio.AR_ASPECT_FIT_PARENT, AspectRatio.AR_16_9_FIT_PARENT, AspectRatio.AR_4_3_FIT_PARENT -> if (shouldBeWider) { // too wide, fix width
                         width = widthSpecSize
                         height = (width / displayAspectRatio).toInt()
                     } else { // too high, fix height
                         height = heightSpecSize
                         width = (height * displayAspectRatio).toInt()
                     }
-                    ASPECT_RATIO.AR_ASPECT_FILL_PARENT -> if (shouldBeWider) { // not high enough, fix height
+                    AspectRatio.AR_ASPECT_FILL_PARENT -> if (shouldBeWider) { // not high enough, fix height
                         height = heightSpecSize
                         width = (height * displayAspectRatio).toInt()
                     } else { // not wide enough, fix width
                         width = widthSpecSize
                         height = (width / displayAspectRatio).toInt()
                     }
-                    ASPECT_RATIO.AR_ASPECT_WRAP_CONTENT -> if (shouldBeWider) { // too wide, fix width
+                    AspectRatio.AR_ASPECT_WRAP_CONTENT -> if (shouldBeWider) { // too wide, fix width
                         width = Math.min(mVideoWidth, widthSpecSize)
                         height = (width / displayAspectRatio).toInt()
                     } else { // too high, fix height
@@ -163,12 +163,12 @@ class MeasureHelper(view: View) {
         fun getAspectRatioText(context: Context?, aspectRatio: Int): String {
             val text: String
             text = when (aspectRatio) {
-                ASPECT_RATIO.AR_ASPECT_FIT_PARENT -> "Aspect / Fit parent"
-                ASPECT_RATIO.AR_ASPECT_FILL_PARENT -> "Aspect / Fill parent"
-                ASPECT_RATIO.AR_ASPECT_WRAP_CONTENT -> "Aspect / Wrap conten"
-                ASPECT_RATIO.AR_MATCH_PARENT -> "Free / Fill parent"
-                ASPECT_RATIO.AR_16_9_FIT_PARENT -> "16:9 / Fit parent"
-                ASPECT_RATIO.AR_4_3_FIT_PARENT -> "4:3 / Fit parent"
+                AspectRatio.AR_ASPECT_FIT_PARENT -> "Aspect / Fit parent"
+                AspectRatio.AR_ASPECT_FILL_PARENT -> "Aspect / Fill parent"
+                AspectRatio.AR_ASPECT_WRAP_CONTENT -> "Aspect / Wrap conten"
+                AspectRatio.AR_MATCH_PARENT -> "Free / Fill parent"
+                AspectRatio.AR_16_9_FIT_PARENT -> "16:9 / Fit parent"
+                AspectRatio.AR_4_3_FIT_PARENT -> "4:3 / Fit parent"
                 else -> "NA"
             }
             return text

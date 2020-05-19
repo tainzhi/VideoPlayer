@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.VideoView;
 
-import com.qfq.tainzhi.videoplayer.my_media.BaseVideoView;
-
 public class VideoTestActivity extends AppCompatActivity {
 	
 	@Override
@@ -16,7 +14,7 @@ public class VideoTestActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video_test);
 		
-		 BaseVideoView videoView = findViewById(R.id.video_view);
+		 VideoView videoView = findViewById(R.id.video_view);
 		
 		
 		Intent intent = getIntent();
