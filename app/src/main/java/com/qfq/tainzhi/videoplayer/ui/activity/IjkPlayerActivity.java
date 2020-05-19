@@ -93,6 +93,22 @@ public class IjkPlayerActivity extends Activity implements PlayerManager.PlayerS
     private float mBrightness = -1f;
     private float startY = 0, startX;
     
+    private static String VIDEO_RUL = "url";
+    private static String VIDEO_NAME = "name";
+    private static String VIDEO_DURATION = "duration";
+    private static String VIDEO_PROGRESS = "progress";
+    
+    public static void startPlay(Context starter, Uri uri, String name, long duration, long progress) {
+        Intent intent = new Intent(starter, IjkPlayerActivity.class);
+        intent.setData(uri);
+        Logger.d(uri.toString());
+        intent.putExtra(VIDEO_NAME, name);
+        intent.putExtra(VIDEO_DURATION, duration);
+        intent.putExtra(VIDEO_PROGRESS, progress);
+        starter.startActivity(intent);
+    }
+    
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,10 +124,9 @@ public class IjkPlayerActivity extends Activity implements PlayerManager.PlayerS
         
         Intent intent = getIntent();
         mVideoUri = intent.getData();
-        Bundle bundle = intent.getExtras();
-        mVideoTitle = bundle.getString("title");
-        mVideoDuration = bundle.getLong("duration", 0);
-        mVideoProgress = bundle.getInt("progress", 0);
+        mVideoTitle = intent.getStringExtra(VIDEO_NAME);
+        mVideoDuration = intent.getLongExtra(VIDEO_DURATION, 0);
+        mVideoProgress = intent.getLongExtra(VIDEO_PROGRESS, 0);
         
         int[] screenSize = WindowUtil.getScreenSize(this);
         mScreenWidth = screenSize[0];
