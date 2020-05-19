@@ -21,10 +21,11 @@ interface IRenderView {
     fun setAspectRatio(aspectRatio: Int)
     fun addRenderCallback(callback: IRenderCallback)
     fun removeRenderCallback(callback: IRenderCallback)
+
     interface ISurfaceHolder {
-        fun bindToMediaPlayer(mp: MediaPlayer?)
-        fun bindToMediaPlayer(mp: IMediaPlayer?)
-        fun bindToMediaPlayer(mp: ExoPlayer?)
+        fun bindToMediaPlayer(mp: MediaPlayer)
+        fun bindToMediaPlayer(mp: IMediaPlayer)
+        fun bindToMediaPlayer(mp: ExoPlayer)
         val renderView: IRenderView
         val surfaceHolder: SurfaceHolder?
         fun openSurface(): Surface?

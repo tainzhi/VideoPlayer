@@ -9,7 +9,7 @@ import android.os.HandlerThread
  * @date: 2019-11-10 18:50
  * @description: 所有 player 的基类
  */
-abstract class MediaInterface(var mBaseVideoView: BaseVideoView) {
+abstract class IMediaPlayer(var mVideoView: VideoView) {
     protected var mMediaHandlerThread: HandlerThread? = null
     protected var mMediaHandler: Handler? = null
     protected var mHandler: Handler? = null

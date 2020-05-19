@@ -138,12 +138,12 @@ class TextureRenderView : TextureView, IRenderView {
                                         override val surfaceTexture: SurfaceTexture?,
                                         private val iSurfaceTextureHost: ISurfaceTextureHost?) : IRenderView.ISurfaceHolder {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        override fun bindToMediaPlayer(mp: MediaPlayer?) {
+        override fun bindToMediaPlayer(mp: MediaPlayer) {
             if (mp == null) return
             mp.setSurface(openSurface())
         }
 
-        override fun bindToMediaPlayer(mp: IMediaPlayer?) {
+        override fun bindToMediaPlayer(mp: IMediaPlayer) {
             if (mp == null) return
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
                     mp is ISurfaceTextureHolder) {
@@ -161,7 +161,7 @@ class TextureRenderView : TextureView, IRenderView {
             }
         }
 
-        override fun bindToMediaPlayer(mp: ExoPlayer?) {
+        override fun bindToMediaPlayer(mp: ExoPlayer) {
             (mp as SimpleExoPlayer?)!!.setVideoSurface(openSurface())
         }
 

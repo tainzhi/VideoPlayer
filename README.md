@@ -20,6 +20,10 @@
 
 ## 测试驱动开发
 - 先完成功能模块: 读取卫视列表到database, test成功
+
+## 实现的功能
+- PlayVideoViewActivity: VideoView+MediaController简单播放功能
+
 ## 参考
 - [iToutiao相关设计也实现](https://github.com/iMeiji/Toutiao)
 - [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android) 

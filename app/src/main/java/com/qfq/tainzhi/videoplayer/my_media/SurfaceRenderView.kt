@@ -26,8 +26,8 @@ import java.util.concurrent.ConcurrentHashMap
  * @description:
  */
 class SurfaceRenderView : SurfaceView, IRenderView {
-    private val TAG = this.javaClass.simpleName
-    private val measureHelper: MeasureHelper
+    private val tag = this.javaClass.simpleName
+    private val measureHelper: MeasureHelper = MeasureHelper(this)
     private var surfaceCallback: SurfaceCallback? = null
 
     constructor(context: Context) : super(context)
@@ -39,10 +39,9 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        measureHelper = MeasureHelper(this)
         surfaceCallback = SurfaceCallback(this)
         holder.addCallback(surfaceCallback)
-//        holder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL)
+       // holder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL)
     }
 
     override val view: View
@@ -68,7 +67,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     }
 
     override fun setVideoRotation(degree: Int) {
-        Log.e(TAG, "SurfaceView doesn't support rotation ($degree)!\n")
+        Log.e(tag, "SurfaceView doesn't support rotation ($degree)!\n")
     }
 
     override fun setAspectRatio(aspectRatio: Int) {
@@ -83,11 +82,11 @@ class SurfaceRenderView : SurfaceView, IRenderView {
 
     private class InternalSurfaceHolder(private val surfaceRenderView: SurfaceRenderView,
                                         override val surfaceHolder: SurfaceHolder?) : IRenderView.ISurfaceHolder {
-        override fun bindToMediaPlayer(mp: MediaPlayer?) {
+        override fun bindToMediaPlayer(mp: MediaPlayer) {
             mp?.setDisplay(surfaceHolder)
         }
 
-        override fun bindToMediaPlayer(mp: IMediaPlayer?) {
+        override fun bindToMediaPlayer(mp: IMediaPlayer) {
             if (mp != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
                         mp is ISurfaceTextureHolder) {
@@ -98,7 +97,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             }
         }
 
-        override fun bindToMediaPlayer(mp: ExoPlayer?) {
+        override fun bindToMediaPlayer(mp: ExoPlayer) {
             (mp as SimpleExoPlayer?)!!.setVideoSurfaceHolder(surfaceHolder)
         }
 
@@ -128,7 +127,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
         private var format = 0
         private var width = 0
         private var height = 0
-        private val weakSurfaceView: WeakReference<SurfaceRenderView>
+        private val weakSurfaceView: WeakReference<SurfaceRenderView> = WeakReference(surfaceView)
         private val renderCallbackMap: MutableMap<IRenderView.IRenderCallback, Any> = ConcurrentHashMap()
         fun addRenderCallback(callback: IRenderView.IRenderCallback) {
             renderCallbackMap[callback] = callback
@@ -191,14 +190,11 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             }
         }
 
-        init {
-            weakSurfaceView = WeakReference(surfaceView)
-        }
     }
 
-    //-------------------------
-// Accessibility
-//-------------------------
+    // -------------------------
+    // Accessibility
+    // -------------------------
     override fun onInitializeAccessibilityEvent(event: AccessibilityEvent) {
         super.onInitializeAccessibilityEvent(event)
         event.className = SurfaceRenderView::class.java.name
