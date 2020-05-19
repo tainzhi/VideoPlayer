@@ -39,7 +39,8 @@ class IMediaSystem(videoView: VideoView) : IMediaPlayer(videoView),
         mMediaHandler!!.post {
             try {
                 mMediaPlayer = MediaPlayer()
-                mMediaPlayer!!.isLooping = mVideoView.loop
+                // TODO: 2020/5/19
+                // mMediaPlayer!!.isLooping = mVideoView.loop
                 mMediaPlayer!!.setScreenOnWhilePlaying(true)
                 mMediaPlayer!!.setOnPreparedListener(this@IMediaSystem)
                 mMediaPlayer!!.setOnCompletionListener(this@IMediaSystem)
@@ -51,7 +52,7 @@ class IMediaSystem(videoView: VideoView) : IMediaPlayer(videoView),
                 val clazz = MediaPlayer::class.java
                 val method = clazz.getDeclaredMethod("setDataSource", Context::class.java, Uri::class.java)
                 method.invoke(mMediaPlayer, mVideoView.context, mVideoView.videoUri)
-                mVideoView.mSurfaceHodler!!.bindToMediaPlayer(mMediaPlayer)
+                mVideoView.mSurfaceHolder!!.bindToMediaPlayer(mMediaPlayer)
                 mMediaPlayer!!.prepareAsync()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -146,7 +147,7 @@ class IMediaSystem(videoView: VideoView) : IMediaPlayer(videoView),
     }
 
     override fun onSeekComplete(mediaPlayer: MediaPlayer) {
-        mHandler!!.post { mVideoView.onSeekComplete() }
+        mHandler!!.post { mVideoView.onSeekCompleted() }
     }
 
     override fun onVideoSizeChanged(mediaPlayer: MediaPlayer, width: Int, height: Int) {
