@@ -64,7 +64,8 @@ class IMediaExo(videoView: VideoView) : IMediaPlayer(videoView), Player.EventLis
             videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(mVideoView.videoUri)
             simpleExoPlayer.addVideoListener(this)
-            val isLoop = mVideoView.loop
+            // TODO: 2020/5/19  
+            // val isLoop = mVideoView.loop
             if (isLoop) {
                 simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
             } else {
@@ -175,7 +176,7 @@ class IMediaExo(videoView: VideoView) : IMediaPlayer(videoView), Player.EventLis
     override fun onPositionDiscontinuity(reason: Int) {}
     override fun onPlaybackSuppressionReasonChanged(playbackSuppressionReason: Int) {}
     override fun onSeekProcessed() {
-        mHandler!!.post { mVideoView.onSeekComplete() }
+        mHandler!!.post { mVideoView.onSeekCompleted() }
     }
 
     private inner class OnBufferUpdate : Runnable {
