@@ -5,7 +5,6 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
-import com.qfq.tainzhi.videoplayer.my_media.MediaIjk
 import tv.danmaku.ijk.media.player.IMediaPlayer
 import tv.danmaku.ijk.media.player.IjkMediaPlayer
 import tv.danmaku.ijk.media.player.IjkTimedText
@@ -17,7 +16,7 @@ import java.lang.reflect.InvocationTargetException
  * @date: 2019-11-11 06:55
  * @description:
  */
-class MediaIjk(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
+class IMediaIjk(videoView: VideoView) : IMediaPlayer(videoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
     private lateinit var mIjkMediaPlayer: IjkMediaPlayer
     override fun start() {
         if (mIjkMediaPlayer != null) mIjkMediaPlayer.start()
@@ -25,7 +24,7 @@ class MediaIjk(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), IM
 
     override fun prepare() {
         release()
-        mMediaHandlerThread = HandlerThread("BaseVideoView")
+        mMediaHandlerThread = HandlerThread("VideoView")
         mMediaHandlerThread!!.start()
         mMediaHandler = Handler(mMediaHandlerThread!!.looper)
         mHandler = Handler()
@@ -40,21 +39,21 @@ class MediaIjk(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), IM
             mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48)
             mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024.toLong())
             mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1)
-            mIjkMediaPlayer.setOnPreparedListener(this@MediaIjk)
-            mIjkMediaPlayer.setOnVideoSizeChangedListener(this@MediaIjk)
-            mIjkMediaPlayer.setOnCompletionListener(this@MediaIjk)
-            mIjkMediaPlayer.setOnErrorListener(this@MediaIjk)
-            mIjkMediaPlayer.setOnInfoListener(this@MediaIjk)
-            mIjkMediaPlayer.setOnBufferingUpdateListener(this@MediaIjk)
-            mIjkMediaPlayer.setOnSeekCompleteListener(this@MediaIjk)
-            mIjkMediaPlayer.setOnTimedTextListener(this@MediaIjk)
+            mIjkMediaPlayer.setOnPreparedListener(this@IMediaIjk)
+            mIjkMediaPlayer.setOnVideoSizeChangedListener(this@IMediaIjk)
+            mIjkMediaPlayer.setOnCompletionListener(this@IMediaIjk)
+            mIjkMediaPlayer.setOnErrorListener(this@IMediaIjk)
+            mIjkMediaPlayer.setOnInfoListener(this@IMediaIjk)
+            mIjkMediaPlayer.setOnBufferingUpdateListener(this@IMediaIjk)
+            mIjkMediaPlayer.setOnSeekCompleteListener(this@IMediaIjk)
+            mIjkMediaPlayer.setOnTimedTextListener(this@IMediaIjk)
             try {
                 mIjkMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
                 mIjkMediaPlayer.setScreenOnWhilePlaying(true)
                 val clazz = IjkMediaPlayer::class.java
                 val method = clazz.getDeclaredMethod("setDataSource", Context::class.java, Uri::class.java)
-                method.invoke(mIjkMediaPlayer, mBaseVideoView.context, mBaseVideoView.videoUri)
-                mBaseVideoView.mSurfaceHodler!!.bindToMediaPlayer(mIjkMediaPlayer)
+                method.invoke(mIjkMediaPlayer, mVideoView.context, mVideoView.videoUri)
+                mVideoView.mSurfaceHodler!!.bindToMediaPlayer(mIjkMediaPlayer)
                 mIjkMediaPlayer.prepareAsync()
             } catch (e: NoSuchMethodException) {
                 e.printStackTrace()
@@ -105,32 +104,32 @@ class MediaIjk(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), IM
     }
 
     override fun onBufferingUpdate(iMediaPlayer: IMediaPlayer, percent: Int) {
-        mHandler!!.post { mBaseVideoView.setBufferProgress(percent) }
+        mHandler!!.post { mVideoView.setBufferProgress(percent) }
     }
 
     override fun onCompletion(iMediaPlayer: IMediaPlayer) {}
     override fun onError(iMediaPlayer: IMediaPlayer, what: Int, extra: Int): Boolean {
-        mHandler!!.post { mBaseVideoView.onError(what, extra) }
+        mHandler!!.post { mVideoView.onError(what, extra) }
         return true
     }
 
     override fun onInfo(iMediaPlayer: IMediaPlayer, what: Int, extra: Int): Boolean {
-        mHandler!!.post { mBaseVideoView.onInfo(what, extra) }
+        mHandler!!.post { mVideoView.onInfo(what, extra) }
         return true
     }
 
     override fun onPrepared(iMediaPlayer: IMediaPlayer) {
-        mHandler!!.post { mBaseVideoView.onPrepared() }
+        mHandler!!.post { mVideoView.onPrepared() }
     }
 
     override fun onSeekComplete(iMediaPlayer: IMediaPlayer) {
-        mHandler!!.post { mBaseVideoView.onSeekComplete() }
+        mHandler!!.post { mVideoView.onSeekComplete() }
     }
 
     override fun onTimedText(iMediaPlayer: IMediaPlayer, ijkTimedText: IjkTimedText) {}
     override fun onVideoSizeChanged(iMediaPlayer: IMediaPlayer, i: Int, i1: Int, i2: Int, i3: Int) {
         mHandler!!.post {
-            mBaseVideoView.onVideoSizeChanged(iMediaPlayer.videoWidth,
+            mVideoView.onVideoSizeChanged(iMediaPlayer.videoWidth,
                     iMediaPlayer.videoHeight)
         }
     }

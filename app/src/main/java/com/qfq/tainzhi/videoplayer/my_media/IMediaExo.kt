@@ -20,18 +20,18 @@ import com.qfq.tainzhi.videoplayer.R
  * @date: 2019-11-11 11:41
  * @description:
  */
-class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Player.EventListener, VideoListener {
+class IMediaExo(videoView: VideoView) : IMediaPlayer(videoView), Player.EventListener, VideoListener {
     private lateinit var simpleExoPlayer: SimpleExoPlayer
     private var callback: Runnable? = null
     private var previousSeek: Long = 0
-    private val TAG = this.javaClass.simpleName
+    private val tag = this.javaClass.simpleName
     override fun start() {
         simpleExoPlayer.playWhenReady = true
     }
 
     override fun prepare() {
-        Log.d(TAG, "prepare")
-        val context = mBaseVideoView.context
+        Log.d(tag, "prepare")
+        val context = mVideoView.context
         release()
         mMediaHandlerThread = HandlerThread("VideoPlayer")
         mMediaHandlerThread!!.start()
@@ -62,9 +62,9 @@ class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Pl
             // 			              .createMediaSource(Uri.parse(currUrl));
             // }
             videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(mBaseVideoView.videoUri)
+                    .createMediaSource(mVideoView.videoUri)
             simpleExoPlayer.addVideoListener(this)
-            val isLoop = mBaseVideoView.loop
+            val isLoop = mVideoView.loop
             if (isLoop) {
                 simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
             } else {
@@ -73,7 +73,7 @@ class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Pl
             simpleExoPlayer.prepare(videoSource)
             simpleExoPlayer.playWhenReady = true
             callback = OnBufferUpdate()
-            mBaseVideoView.mSurfaceHodler!!.bindToMediaPlayer(simpleExoPlayer)
+            mVideoView.mSurfaceHodler!!.bindToMediaPlayer(simpleExoPlayer)
         }
     }
 
@@ -88,7 +88,7 @@ class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Pl
         if (time != previousSeek) {
             simpleExoPlayer.seekTo(time)
             previousSeek = time
-            // mBaseVideoView.seekInAdvance = time;
+            // mVideoView.seekInAdvance = time;
         }
     }
 
@@ -96,7 +96,7 @@ class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Pl
         if (mMediaHandler != null && mMediaHandlerThread != null && simpleExoPlayer != null) {
             val tmpHandlerThread = mMediaHandlerThread!!
             val tmpMediaPlayer: SimpleExoPlayer? = simpleExoPlayer
-            // BaseVideoView.SAVED_SURFACE = null;
+            // VideoView.SAVED_SURFACE = null;
             mMediaHandler!!.post {
                 tmpMediaPlayer?.release()
                 tmpHandlerThread.quit()
@@ -133,11 +133,11 @@ class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Pl
     }
 
     override fun onRenderedFirstFrame() {
-        Log.d(TAG, "onRenderedFirstFrame")
+        Log.d(tag, "onRenderedFirstFrame")
     }
 
     override fun onTimelineChanged(timeline: Timeline, manifest: Any?, reason: Int) {
-        Log.d(TAG, "onTimelineChanged")
+        Log.d(tag, "onTimelineChanged")
     }
 
     override fun onTracksChanged(trackGroupArray: TrackGroupArray,
@@ -145,21 +145,21 @@ class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Pl
     }
 
     override fun onLoadingChanged(isLoading: Boolean) {
-        Log.d(TAG, "onLoadingChanged")
+        Log.d(tag, "onLoadingChanged")
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        Log.d(TAG, "onPlayStateChanged")
+        Log.d(tag, "onPlayStateChanged")
         mHandler!!.post {
             when (playbackState) {
                 Player.STATE_IDLE -> {
                 }
                 Player.STATE_BUFFERING -> mHandler!!.post(callback)
-                Player.STATE_READY -> if (playWhenReady) { // mBaseVideoView.onStatePlaying();
+                Player.STATE_READY -> if (playWhenReady) { // mVideoView.onStatePlaying();
                 } else {
                 }
                 Player.STATE_ENDED -> {
-                    mBaseVideoView.onAutoCompletion()
+                    mVideoView.onAutoCompletion()
                 }
             }
         }
@@ -168,21 +168,21 @@ class MediaExo(baseVideoView: BaseVideoView) : MediaInterface(baseVideoView), Pl
     override fun onRepeatModeChanged(repeatMode: Int) {}
     override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {}
     override fun onPlayerError(error: ExoPlaybackException) {
-        Log.e(TAG, "onPlayError$error")
-        mHandler!!.post { mBaseVideoView.onError(1000, 1000) }
+        Log.e(tag, "onPlayError$error")
+        mHandler!!.post { mVideoView.onError(1000, 1000) }
     }
 
     override fun onPositionDiscontinuity(reason: Int) {}
     override fun onPlaybackSuppressionReasonChanged(playbackSuppressionReason: Int) {}
     override fun onSeekProcessed() {
-        mHandler!!.post { mBaseVideoView.onSeekComplete() }
+        mHandler!!.post { mVideoView.onSeekComplete() }
     }
 
     private inner class OnBufferUpdate : Runnable {
         override fun run() {
             if (simpleExoPlayer != null) {
                 val percent = simpleExoPlayer.bufferedPercentage
-                mHandler!!.post { mBaseVideoView.setBufferProgress(percent) }
+                mHandler!!.post { mVideoView.setBufferProgress(percent) }
                 if (percent < 100) {
                     mHandler!!.postDelayed(callback, 300)
                 } else {

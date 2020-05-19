@@ -8,24 +8,23 @@ package com.qfq.tainzhi.videoplayer.my_media
  **/
 
 object Constant {
-    object PLAYER_TYPE {
-        const val SYSTEM_PLAYER = 0
-        const val IJK_PLAYER = 1
-        const val EXO_PLAYER = 2
-
+    object PlayerType {
+        const val SYSTEM_PLAYER = 0 // Android系统自带的MediaPlayer
+        const val IJK_PLAYER = 1    // IjkPlayer
+        const val EXO_PLAYER = 2    // ExoPlayer
     }
 
-    object RENDER_TYPE {
+    object RenderType {
         const val SURFACE_VIEW = 0
         const val TEXTURE_VIEW = 1
     }
 
-    object SCREEN_TYPE {
+    object ScreenType {
         const val SCREEN_FULL_SCREEN = 0
         const val SCREEN_TINY = 1
     }
 
-    object ASPECT_RATIO {
+    object AspectRatio {
         const val AR_ASPECT_FIT_PARENT = 0 // without clip
         const val AR_ASPECT_FILL_PARENT = 1 // may clip
         const val AR_ASPECT_WRAP_CONTENT = 2
