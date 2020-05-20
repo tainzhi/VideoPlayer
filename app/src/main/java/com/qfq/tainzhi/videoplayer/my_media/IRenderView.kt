@@ -1,12 +1,9 @@
 package com.qfq.tainzhi.videoplayer.my_media
 
 import android.graphics.SurfaceTexture
-import android.media.MediaPlayer
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.View
-import com.google.android.exoplayer2.ExoPlayer
-import tv.danmaku.ijk.media.player.IMediaPlayer
 
 /**
  * Created by muqing on 2019/6/1.
@@ -23,9 +20,10 @@ interface IRenderView {
     fun removeRenderCallback(callback: IRenderCallback)
 
     interface ISurfaceHolder {
-        fun bindToMediaPlayer(mp: MediaPlayer)
-        fun bindToMediaPlayer(mp: IMediaPlayer)
-        fun bindToMediaPlayer(mp: ExoPlayer)
+        // fun bindToMediaPlayer(mp: MediaPlayer)
+        // fun bindToMediaPlayer(mp: IMediaPlayer)
+        // fun bindToMediaPlayer(mp: ExoPlayer)
+        fun bindToMediaPlayer(mp: IMediaInterface)
         val renderView: IRenderView
         val surfaceHolder: SurfaceHolder?
         fun openSurface(): Surface?

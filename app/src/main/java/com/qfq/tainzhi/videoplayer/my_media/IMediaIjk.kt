@@ -5,6 +5,8 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
+import android.view.Surface
+import android.view.SurfaceHolder
 import tv.danmaku.ijk.media.player.IMediaPlayer
 import tv.danmaku.ijk.media.player.IjkMediaPlayer
 import tv.danmaku.ijk.media.player.IjkTimedText
@@ -16,10 +18,18 @@ import java.lang.reflect.InvocationTargetException
  * @date: 2019-11-11 06:55
  * @description:
  */
-class IMediaIjk(videoView: VideoView) : IMediaPlayer(videoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
+class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
     private lateinit var mIjkMediaPlayer: IjkMediaPlayer
     override fun start() {
         if (mIjkMediaPlayer != null) mIjkMediaPlayer.start()
+    }
+
+    override fun setDisplay(surfaceHolder: SurfaceHolder) {
+        mIjkMediaPlayer.setDisplay(surfaceHolder)
+    }
+
+    override fun setDisplay(surface: Surface) {
+        mIjkMediaPlayer.setSurface(surface)
     }
 
     override fun prepare() {
@@ -52,8 +62,8 @@ class IMediaIjk(videoView: VideoView) : IMediaPlayer(videoView), IMediaPlayer.On
                 mIjkMediaPlayer.setScreenOnWhilePlaying(true)
                 val clazz = IjkMediaPlayer::class.java
                 val method = clazz.getDeclaredMethod("setDataSource", Context::class.java, Uri::class.java)
-                method.invoke(mIjkMediaPlayer, mVideoView.context, mVideoView.videoUri)
-                mVideoView.mSurfaceHodler!!.bindToMediaPlayer(mIjkMediaPlayer)
+                method.invoke(mIjkMediaPlayer, mVideoView.context, mVideoView.mVideoUri)
+                mVideoView.mSurfaceHolder?.bindToMediaPlayer(this)
                 mIjkMediaPlayer.prepareAsync()
             } catch (e: NoSuchMethodException) {
                 e.printStackTrace()
@@ -123,7 +133,7 @@ class IMediaIjk(videoView: VideoView) : IMediaPlayer(videoView), IMediaPlayer.On
     }
 
     override fun onSeekComplete(iMediaPlayer: IMediaPlayer) {
-        mHandler!!.post { mVideoView.onSeekComplete() }
+        mHandler!!.post { mVideoView.onSeekCompleted() }
     }
 
     override fun onTimedText(iMediaPlayer: IMediaPlayer, ijkTimedText: IjkTimedText) {}
