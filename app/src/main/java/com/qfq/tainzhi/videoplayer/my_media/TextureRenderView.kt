@@ -3,7 +3,6 @@ package com.qfq.tainzhi.videoplayer.my_media
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.SurfaceTexture
-import android.media.MediaPlayer
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
@@ -13,10 +12,7 @@ import android.view.TextureView
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.orhanobut.logger.Logger
-import tv.danmaku.ijk.media.player.IMediaPlayer
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost
 import java.lang.ref.WeakReference
@@ -138,32 +134,61 @@ class TextureRenderView : TextureView, IRenderView {
                                         override val surfaceTexture: SurfaceTexture?,
                                         private val iSurfaceTextureHost: ISurfaceTextureHost?) : IRenderView.ISurfaceHolder {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        override fun bindToMediaPlayer(mp: MediaPlayer) {
-            if (mp == null) return
-            mp.setSurface(openSurface())
-        }
+        // override fun bindToMediaPlayer(mp: MediaPlayer) {
+        //     if (mp == null) return
+        //     mp.setSurface(openSurface())
+        // }
+        //
+        // override fun bindToMediaPlayer(mp: IMediaPlayer) {
+        //     if (mp == null) return
+        //     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
+        //             mp is ISurfaceTextureHolder) {
+        //         val textureHolder = mp as ISurfaceTextureHolder
+        //         textureRenderView.surfaceCallback!!.setOwnSurfaceTexture(false)
+        //         val surfaceTexture = textureHolder.surfaceTexture
+        //         if (surfaceTexture != null) {
+        //             textureRenderView.surfaceTexture = surfaceTexture
+        //         } else {
+        //             textureHolder.surfaceTexture = this.surfaceTexture
+        //             textureHolder.setSurfaceTextureHost(textureRenderView.surfaceCallback)
+        //         }
+        //     } else {
+        //         mp.setSurface(openSurface())
+        //     }
+        //
+        // }
+        //
+        // override fun bindToMediaPlayer(mp: ExoPlayer) {
+        //     (mp as SimpleExoPlayer?)!!.setVideoSurface(openSurface())
+        // }
 
-        override fun bindToMediaPlayer(mp: IMediaPlayer) {
-            if (mp == null) return
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
-                    mp is ISurfaceTextureHolder) {
-                val textureHolder = mp as ISurfaceTextureHolder
-                textureRenderView.surfaceCallback!!.setOwnSurfaceTexture(false)
-                val surfaceTexture = textureHolder.surfaceTexture
-                if (surfaceTexture != null) {
-                    textureRenderView.surfaceTexture = surfaceTexture
-                } else {
-                    textureHolder.surfaceTexture = this.surfaceTexture
-                    textureHolder.setSurfaceTextureHost(textureRenderView.surfaceCallback)
+
+        override fun bindToMediaPlayer(mp: IMediaInterface) {
+            when(mp) {
+                is IMediaSystem -> {
+                    mp.setDisplay(openSurface())
                 }
-            } else {
-                mp.setSurface(openSurface())
+                is IMediaIjk -> {
+                    if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (mp is ISurfaceTextureHolder)) {
+                        textureRenderView.surfaceCallback?.setOwnSurfaceTexture(false)
+                        val textureHolder = mp as ISurfaceTextureHolder
+                        if (textureHolder != null) {
+                            textureRenderView.surfaceTexture = surfaceTexture
+                        } else {
+                            (mp as ISurfaceTextureHolder).run {
+                                surfaceTexture = surfaceTexture
+                                setSurfaceTextureHost(textureRenderView.surfaceCallback)
+                            }
+                        }
+                    }
+                    mp.setDisplay(openSurface())
+                }
+                is IMediaExo -> {
+                    mp.setDisplay(openSurface())
+                }
             }
         }
 
-        override fun bindToMediaPlayer(mp: ExoPlayer) {
-            (mp as SimpleExoPlayer?)!!.setVideoSurface(openSurface())
-        }
 
         override val renderView: IRenderView
             get() = textureRenderView
@@ -171,8 +196,8 @@ class TextureRenderView : TextureView, IRenderView {
         override val surfaceHolder: SurfaceHolder?
             get() = null
 
-        override fun openSurface(): Surface? {
-            return surfaceTexture?.let { Surface(it) }
+        override fun openSurface(): Surface {
+            return surfaceTexture.let { Surface(it) }
         }
 
     }
