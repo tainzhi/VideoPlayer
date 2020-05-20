@@ -2,7 +2,6 @@ package com.qfq.tainzhi.videoplayer.my_media
 
 import android.content.Context
 import android.graphics.SurfaceTexture
-import android.media.MediaPlayer
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
@@ -12,9 +11,6 @@ import android.view.SurfaceView
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.SimpleExoPlayer
-import tv.danmaku.ijk.media.player.IMediaPlayer
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
@@ -81,24 +77,23 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     }
 
     private class InternalSurfaceHolder(private val surfaceRenderView: SurfaceRenderView,
-                                        override val surfaceHolder: SurfaceHolder?) : IRenderView.ISurfaceHolder {
-        override fun bindToMediaPlayer(mp: MediaPlayer) {
-            mp?.setDisplay(surfaceHolder)
-        }
+                                        override val surfaceHolder: SurfaceHolder) : IRenderView.ISurfaceHolder {
 
-        override fun bindToMediaPlayer(mp: IMediaPlayer) {
-            if (mp != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
-                        mp is ISurfaceTextureHolder) {
-                    val textureHolder = mp as ISurfaceTextureHolder
-                    textureHolder.surfaceTexture = null
+        override fun bindToMediaPlayer(mp: IMediaInterface) {
+            when (mp) {
+                is IMediaSystem -> {
+                    mp.setDisplay(surfaceHolder)
                 }
-                mp.setDisplay(surfaceHolder)
+                is IMediaIjk -> {
+                    if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (mp is ISurfaceTextureHolder)) {
+                        (mp as ISurfaceTextureHolder).surfaceTexture = null
+                    }
+                    mp.setDisplay(surfaceHolder)
+                }
+                is IMediaExo -> {
+                    mp.setDisplay(surfaceHolder)
+                }
             }
-        }
-
-        override fun bindToMediaPlayer(mp: ExoPlayer) {
-            (mp as SimpleExoPlayer?)!!.setVideoSurfaceHolder(surfaceHolder)
         }
 
         override val renderView: IRenderView
@@ -135,13 +130,13 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             if (mSurfaceHolder != null) {
                 if (surfaceHolder == null) {
                     surfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                            mSurfaceHolder)
+                            mSurfaceHolder!!)
                 }
                 callback.onSurfaceCreated(surfaceHolder, width, height)
             }
             if (isFormatChanged) {
                 if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!, mSurfaceHolder)
+                    surfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!, mSurfaceHolder!!)
                 }
                 callback.onSurfaceChanged(surfaceHolder, format, width, height)
             }
@@ -158,7 +153,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             width = 0
             height = 0
             val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder)
+                    mSurfaceHolder!!)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceCreated(surfaceHolder, 0, 0)
             }
@@ -171,7 +166,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             width = i1
             height = i2
             val surfaceHolder1: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder)
+                    mSurfaceHolder!!)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceChanged(surfaceHolder1, i, i1, i2)
             }
@@ -184,7 +179,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             width = 0
             height = 0
             val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder)
+                    mSurfaceHolder!!)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceDestroyed(surfaceHolder)
             }

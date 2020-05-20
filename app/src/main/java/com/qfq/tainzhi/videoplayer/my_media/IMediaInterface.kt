@@ -2,6 +2,8 @@ package com.qfq.tainzhi.videoplayer.my_media
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.view.Surface
+import android.view.SurfaceHolder
 
 /**
  * @author: tainzhi
@@ -9,7 +11,7 @@ import android.os.HandlerThread
  * @date: 2019-11-10 18:50
  * @description: 所有 player 的基类
  */
-abstract class IMediaPlayer(var mVideoView: VideoView) {
+abstract class IMediaInterface(var mVideoView: VideoView) {
     protected var mMediaHandlerThread: HandlerThread? = null
     protected var mMediaHandler: Handler? = null
     protected var mHandler: Handler? = null
@@ -23,6 +25,8 @@ abstract class IMediaPlayer(var mVideoView: VideoView) {
     abstract val duration: Long
     abstract fun setVolume(leftVoluem: Float, rightVolume: Float)
     abstract fun setSpeed(speed: Float)
+    abstract fun setDisplay(surfaceHolder: SurfaceHolder)
+    abstract fun setDisplay(surface: Surface)
 
     companion object {
         var sIRenderView: IRenderView? = null
