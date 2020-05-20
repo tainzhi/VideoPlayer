@@ -3,6 +3,8 @@ package com.qfq.tainzhi.videoplayer.my_media
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import android.view.Surface
+import android.view.SurfaceHolder
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
@@ -20,13 +22,21 @@ import com.qfq.tainzhi.videoplayer.R
  * @date: 2019-11-11 11:41
  * @description:
  */
-class IMediaExo(videoView: VideoView) : IMediaPlayer(videoView), Player.EventListener, VideoListener {
+class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.EventListener, VideoListener {
     private lateinit var simpleExoPlayer: SimpleExoPlayer
     private var callback: Runnable? = null
     private var previousSeek: Long = 0
     private val tag = this.javaClass.simpleName
     override fun start() {
         simpleExoPlayer.playWhenReady = true
+    }
+
+    override fun setDisplay(surfaceHolder: SurfaceHolder) {
+        simpleExoPlayer.setVideoSurfaceHolder(surfaceHolder)
+    }
+
+    override fun setDisplay(surface: Surface) {
+        simpleExoPlayer.setVideoSurface(surface)
     }
 
     override fun prepare() {
@@ -62,19 +72,19 @@ class IMediaExo(videoView: VideoView) : IMediaPlayer(videoView), Player.EventLis
             // 			              .createMediaSource(Uri.parse(currUrl));
             // }
             videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(mVideoView.videoUri)
+                    .createMediaSource(mVideoView.mVideoUri)
             simpleExoPlayer.addVideoListener(this)
             // TODO: 2020/5/19  
             // val isLoop = mVideoView.loop
-            if (isLoop) {
-                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
-            } else {
-                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_OFF
-            }
+            // if (isLoop) {
+            //     simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+            // } else {
+            //     simpleExoPlayer.repeatMode = Player.REPEAT_MODE_OFF
+            // }
             simpleExoPlayer.prepare(videoSource)
             simpleExoPlayer.playWhenReady = true
             callback = OnBufferUpdate()
-            mVideoView.mSurfaceHodler!!.bindToMediaPlayer(simpleExoPlayer)
+            mVideoView.mSurfaceHolder!!.bindToMediaPlayer(this)
         }
     }
 

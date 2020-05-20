@@ -21,7 +21,7 @@ class VideoView @JvmOverloads constructor(
         const val TAG = "VideoView"
     }
     private var mediaPlayerClass: Class<*>? = null
-    private var iMediaPlayer: IMediaPlayer? = null
+    private var iMediaPlayer: IMediaInterface? = null
 
     var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
 
@@ -30,7 +30,11 @@ class VideoView @JvmOverloads constructor(
     var enableSurfaceView = true
     var enableTextureView = false
 
-    var videoUri: Uri? = null
+    var mVideoUri: Uri? = null
+        set(value) {
+            field = value
+            openVideo()
+        }
 
     var videoWidth = 0
     var videoHeight = 0
@@ -44,9 +48,9 @@ class VideoView @JvmOverloads constructor(
 
     private val renderType = Constant.RenderType.SURFACE_VIEW
 
-    init {
-        setMediaPlayer()
+    private fun openVideo() {
         initRender()
+        setMediaPlayer()
     }
 
     /**
@@ -120,10 +124,6 @@ class VideoView @JvmOverloads constructor(
         }
     }
 
-    fun setVideoUri(videoUri: Uri) {
-        this@VideoView.videoUri = videoUri
-    }
-
     fun onPrepared() {
         Log.i(TAG, "onPrepared ")
         iMediaPlayer?.start()
@@ -156,7 +156,7 @@ class VideoView @JvmOverloads constructor(
 
 
 
-    private fun bindSurfaceHolder(mp: IMediaPlayer?, holder: IRenderView.ISurfaceHolder?) {
+    private fun bindSurfaceHolder(mp: IMediaInterface?, holder: IRenderView.ISurfaceHolder?) {
         if (mp == null) return
 
         if (holder == null) {
