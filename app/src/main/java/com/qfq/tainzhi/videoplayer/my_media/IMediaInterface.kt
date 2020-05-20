@@ -15,6 +15,8 @@ abstract class IMediaInterface(var mVideoView: VideoView) {
     protected var mMediaHandlerThread: HandlerThread? = null
     protected var mMediaHandler: Handler? = null
     protected var mHandler: Handler? = null
+    protected var mSurface: Surface? = null
+    protected var mSurfaceHolder: SurfaceHolder? = null
     abstract fun start()
     abstract fun prepare()
     abstract fun pause()
@@ -30,6 +32,10 @@ abstract class IMediaInterface(var mVideoView: VideoView) {
 
     companion object {
         var sIRenderView: IRenderView? = null
+    }
+
+    fun initialized(): Boolean {
+        return mSurface != null || mSurfaceHolder != null
     }
 
 }

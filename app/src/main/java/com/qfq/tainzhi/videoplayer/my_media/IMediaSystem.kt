@@ -63,10 +63,12 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun setDisplay(surfaceHolder: SurfaceHolder) {
+        mSurfaceHolder = surfaceHolder
         mMediaPlayer?.setDisplay(surfaceHolder)
     }
 
     override fun setDisplay(surface: Surface) {
+        mSurface = surface
         mMediaPlayer?.setSurface(surface)
     }
 
