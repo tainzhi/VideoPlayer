@@ -2,7 +2,6 @@ package com.qfq.tainzhi.videoplayer.my_media
 
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
 import android.view.Surface
 import android.view.SurfaceHolder
 import com.google.android.exoplayer2.*
@@ -40,7 +39,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun prepare() {
-        Log.d(tag, "prepare")
+        logD()
         val context = mVideoView.context
         release()
         mMediaHandlerThread = HandlerThread("VideoPlayer")
@@ -144,11 +143,11 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun onRenderedFirstFrame() {
-        Log.d(tag, "onRenderedFirstFrame")
+        logD()
     }
 
     override fun onTimelineChanged(timeline: Timeline, manifest: Any?, reason: Int) {
-        Log.d(tag, "onTimelineChanged")
+        logD()
     }
 
     override fun onTracksChanged(trackGroupArray: TrackGroupArray,
@@ -156,11 +155,11 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun onLoadingChanged(isLoading: Boolean) {
-        Log.d(tag, "onLoadingChanged")
+        logD()
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        Log.d(tag, "onPlayStateChanged")
+        logD()
         mHandler!!.post {
             when (playbackState) {
                 Player.STATE_IDLE -> {
@@ -179,7 +178,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     override fun onRepeatModeChanged(repeatMode: Int) {}
     override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {}
     override fun onPlayerError(error: ExoPlaybackException) {
-        Log.e(tag, "onPlayError$error")
+        logD()
         mHandler!!.post { mVideoView.onError(1000, 1000) }
     }
 

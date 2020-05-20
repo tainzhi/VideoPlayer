@@ -24,8 +24,6 @@ import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.VideoTestActivity;
 import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
-import com.qfq.tainzhi.videoplayer.ui.activity.IjkPlayerActivity;
-import com.tainzhi.android.videoplayer.ui.PlayVideoViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;

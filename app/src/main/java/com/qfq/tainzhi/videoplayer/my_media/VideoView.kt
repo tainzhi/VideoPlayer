@@ -1,6 +1,11 @@
 package com.qfq.tainzhi.videoplayer.my_media
 
 import android.content.Context
+import android.content.pm.ActivityInfo
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
@@ -15,26 +20,24 @@ import android.widget.FrameLayout
 
 class VideoView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr),
+    SensorEventListener {
 
     companion object {
         const val TAG = "VideoView"
+
     }
     private var mediaPlayerClass: Class<*>? = null
     private var iMediaPlayer: IMediaInterface? = null
 
-    var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
+    // 上一次通过翻船屏幕, 自动全屏时间
+    var lastAutoFullScreenTime = 0
 
     var mSurfaceHolder: IRenderView.ISurfaceHolder? = null
     private var mRenderView: IRenderView? = null
     var enableSurfaceView = true
     var enableTextureView = false
 
-    var videoUri: Uri? = null
-        set(value) {
-            field = value
-            openVideo()
-        }
 
     var videoWidth = 0
     var videoHeight = 0
@@ -42,21 +45,49 @@ class VideoView @JvmOverloads constructor(
     var videoSarNum = 0
     var videoSarDen = 0
 
-    var aspectRatio = Constant.AspectRatio.AR_ASPECT_FILL_PARENT
-
     var videoRotationDegree = 0
 
-    private val renderType = Constant.RenderType.SURFACE_VIEW
+
+    init {
+    }
+
+    var videoUri: Uri? = null
+        set(value) {
+            field = value
+            openVideo()
+        }
+
+    @Constant.PlayerTypeMode
+    var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
+
+    @Constant.RenderTypeMode
+    var renderType = Constant.RenderType.SURFACE_VIEW
+        set(value) {
+            field = value
+            setRender(value)
+        }
+
+    @Constant.ScreenTypeMode
+    var screenType = Constant.ScreenType.FULL_SCREEN
+        set(value) {
+            field = value
+            if (value == Constant.ScreenType.FULL_SCREEN)
+                setFullScreen()
+        }
+
+    var aspectRatio = Constant.AspectRatio.AR_ASPECT_FILL_PARENT
+
+
 
     private fun openVideo() {
-        initRender()
+        setRender()
         setMediaPlayer()
     }
 
     /**
      * 初始化渲染器
      */
-    private fun initRender() {
+    private fun setRender(render: Int = Constant.RenderType.SURFACE_VIEW) {
         when(renderType) {
             Constant.RenderType.SURFACE_VIEW -> {
                 setRenderView(SurfaceRenderView(context))
@@ -124,6 +155,46 @@ class VideoView @JvmOverloads constructor(
         }
     }
 
+    // 设置全屏
+    private fun setFullScreen() {
+
+    }
+
+    /**
+     * 直接全屏(横屏)播放视频
+     *
+     * @param context 播放activity
+     * @param uri uri of video
+     * @param videoName name of video
+     */
+    fun startFullScreenDirectly(context: Context, uri: Uri, videoName: String = "") {
+        Util.hideStatusBar(context)
+        Util.hideActionBar(context)
+        Util.setRequestedOrientation(context, Constant.FULL_SCREEN_ORIENTATION)
+        Util.hideSystemUI(context)
+        // val viewGroup: ViewGroup = Util.scanForActivity(context)?.window?.decorView as ViewGroup
+        // val layoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        // viewGroup.addView(this, layoutParams)
+
+        videoUri = uri
+    }
+
+    fun autoFullScreen(x: Int) {
+
+        if ((state == STATE_PLAYING || state == STATE_PAUSE)
+                && (screenType != Constant.ScreenType.FULL_SCREEN)
+                && (screenType != Constant.ScreenType.TINY_SCREEN)) {
+            if (x > 0) {
+                Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+            } else {
+                Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE)
+            }
+            gotoFullScreen()
+        }
+    }
+
+
+
     fun onPrepared() {
         Log.i(TAG, "onPrepared ")
         iMediaPlayer?.start()
@@ -162,8 +233,6 @@ class VideoView @JvmOverloads constructor(
     fun onAutoCompletion() {
         // TODO: 2020/5/19
     }
-
-
 
     private fun bindSurfaceHolder(mp: IMediaInterface?, holder: IRenderView.ISurfaceHolder?) {
         if (mp == null) return
@@ -204,4 +273,22 @@ class VideoView @JvmOverloads constructor(
             TODO("Not yet implemented")
         }
     }
+}
+
+class AutoFullScreenListener(val videoView: VideoView): SensorEventListener {
+    private var lastAutoFullScreenTime = 0l
+
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        val x = event.values[SensorManager.DATA_X]
+        if (x < -12 || x > 12) {
+            if (System.currentTimeMillis() - lastAutoFullScreenTime > 2000) {
+                videoView.autoFullScreen(x)
+                lastAutoFullScreenTime = System.currentTimeMillis()
+            }
+        }
+    }
+
 }
