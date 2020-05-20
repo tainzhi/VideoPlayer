@@ -9,7 +9,6 @@ import android.os.HandlerThread
 import android.view.Surface
 import android.view.SurfaceHolder
 import androidx.annotation.RequiresApi
-import com.orhanobut.logger.Logger
 
 /**
  * @author: tainzhi
@@ -27,12 +26,12 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         MediaPlayer.OnVideoSizeChangedListener {
     var mMediaPlayer: MediaPlayer? = null
     override fun start() {
-        Logger.d("")
+        logD()
         mMediaHandler!!.post { mMediaPlayer!!.start() }
     }
 
     override fun prepare() {
-        Logger.d("create mediaplayer")
+        logD()
         release()
         mMediaHandlerThread = HandlerThread("QVideoPlayer")
         mMediaHandlerThread!!.start()
@@ -134,7 +133,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onBufferingUpdate(mediaPlayer: MediaPlayer, percent: Int) {
-        Logger.d("")
+        logD()
         mHandler!!.post { mVideoView.setBufferProgress(percent) }
     }
 
@@ -143,7 +142,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onError(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
-        Logger.d("")
+        logD()
         mHandler!!.post { mVideoView.onError(what, extra) }
         return true
     }
@@ -154,7 +153,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
-        Logger.d("")
+        logD()
         mHandler!!.post { mVideoView.onPrepared() }
     }
 
@@ -163,7 +162,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onVideoSizeChanged(mediaPlayer: MediaPlayer, width: Int, height: Int) {
-        Logger.d("width=$width, height=$height")
+        logD("width=$width, height=$height")
         mHandler!!.post { mVideoView.onVideoSizeChanged(width, height) }
     }
 }
