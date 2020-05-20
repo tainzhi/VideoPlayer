@@ -139,7 +139,16 @@ class VideoView @JvmOverloads constructor(
     }
 
     fun onVideoSizeChanged(width: Int, height: Int) {
-        // TODO: 2020/5/19
+        videoWidth = width
+        videoHeight = height
+        if (width != 0 && height != 0) {
+            mRenderView?.let {
+                it.setVideoSize(width, height)
+                // TODO: 2020/5/20 for IjkMediaPlayer
+                // it.setVideoSampleAspectRatio(videoSarNum, videoSarDen)
+            }
+            requestLayout()
+        }
     }
 
     fun onInfo(what: Int, extra: Int) {
@@ -175,7 +184,8 @@ class VideoView @JvmOverloads constructor(
             }
             mSurfaceHolder = holder
             // iMediaPlayer?.let { bindSurfaceHolder(it, holder) }
-            if (iMediaPlayer != null) {
+            if (iMediaPlayer == null) return
+            if (iMediaPlayer!!.initialized()) {
                 bindSurfaceHolder(iMediaPlayer, mSurfaceHolder)
             } else {
                 iMediaPlayer?.prepare()
@@ -183,7 +193,11 @@ class VideoView @JvmOverloads constructor(
         }
 
         override fun onSurfaceChanged(holder: IRenderView.ISurfaceHolder, format: Int, width: Int, height: Int) {
-            TODO("Not yet implemented")
+            if (holder.renderView != mRenderView) {
+                Log.e(TAG, "onSurfaceCreated: unmatched render callback\n")
+                return
+            }
+            iMediaPlayer?.start()
         }
 
         override fun onSurfaceDestroyed(holder: IRenderView.ISurfaceHolder) {

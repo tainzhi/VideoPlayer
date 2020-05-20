@@ -137,10 +137,10 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
     }
 
     override fun onTimedText(iMediaPlayer: IMediaPlayer, ijkTimedText: IjkTimedText) {}
-    override fun onVideoSizeChanged(iMediaPlayer: IMediaPlayer, i: Int, i1: Int, i2: Int, i3: Int) {
+    override fun onVideoSizeChanged(iMediaPlayer: IMediaPlayer, width: Int, height: Int, sarNum: Int, sarDen: Int) {
         mHandler!!.post {
-            mVideoView.onVideoSizeChanged(iMediaPlayer.videoWidth,
-                    iMediaPlayer.videoHeight)
+            // TODO: 2020/5/20 怎么处理sarNum, sarDen
+            mVideoView.onVideoSizeChanged(width, height)
         }
     }
 }
