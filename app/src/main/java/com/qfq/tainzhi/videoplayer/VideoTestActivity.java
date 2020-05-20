@@ -1,11 +1,12 @@
 package com.qfq.tainzhi.videoplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.qfq.tainzhi.videoplayer.my_media.VideoView;
 
 public class VideoTestActivity extends AppCompatActivity {
 	
@@ -24,6 +25,6 @@ public class VideoTestActivity extends AppCompatActivity {
 		long mVideoDuration = bundle.getLong("duration", 0);
 		int mVideoProgress = bundle.getInt("progress", 0);
 		
-		videoView.setUp(mVideoUri);
+		videoView.setVideoUri(mVideoUri);
 	}
 }

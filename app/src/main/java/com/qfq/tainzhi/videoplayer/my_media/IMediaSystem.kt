@@ -6,6 +6,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
+import android.view.Surface
+import android.view.SurfaceHolder
 import androidx.annotation.RequiresApi
 import com.orhanobut.logger.Logger
 
@@ -15,7 +17,7 @@ import com.orhanobut.logger.Logger
  * @date: 2019-11-10 19:10
  * @description: android 系统自带播放器
  */
-class IMediaSystem(videoView: VideoView) : IMediaPlayer(videoView),
+class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener,
         MediaPlayer.OnBufferingUpdateListener,
@@ -52,12 +54,20 @@ class IMediaSystem(videoView: VideoView) : IMediaPlayer(videoView),
                 val clazz = MediaPlayer::class.java
                 val method = clazz.getDeclaredMethod("setDataSource", Context::class.java, Uri::class.java)
                 method.invoke(mMediaPlayer, mVideoView.context, mVideoView.videoUri)
-                mVideoView.mSurfaceHolder!!.bindToMediaPlayer(mMediaPlayer)
+                mVideoView.mSurfaceHolder!!.bindToMediaPlayer(this)
                 mMediaPlayer!!.prepareAsync()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun setDisplay(surfaceHolder: SurfaceHolder) {
+        mMediaPlayer?.setDisplay(surfaceHolder)
+    }
+
+    override fun setDisplay(surface: Surface) {
+        mMediaPlayer?.setSurface(surface)
     }
 
     override fun pause() {
