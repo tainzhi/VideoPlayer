@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.FrameLayout
 import com.qfq.tainzhi.videoplayer.my_media.Constant.PlayState.STATE_PAUSE
 import com.qfq.tainzhi.videoplayer.my_media.Constant.PlayState.STATE_PLAYING
@@ -86,6 +87,7 @@ class VideoView @JvmOverloads constructor(
     private fun openVideo() {
         setRender()
         setMediaPlayer()
+        Util.scanForActivity(context)?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     /**
@@ -255,7 +257,10 @@ class VideoView @JvmOverloads constructor(
     }
 
     fun onAutoCompletion() {
-        // TODO: 2020/5/19
+        logD()
+        Runtime.getRuntime().gc()
+        iMediaPlayer?.release()
+        Util.scanForActivity(context)?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     private fun bindSurfaceHolder(mp: IMediaInterface?, holder: IRenderView.ISurfaceHolder?) {
