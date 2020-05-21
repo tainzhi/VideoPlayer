@@ -278,7 +278,6 @@ public class IjkPlayerActivity extends Activity implements PlayerManager.PlayerS
                 if (mIsPlay) {
                     mIsPlay = false;
                     mVideoPlayerBottomPanelPlay.setImageResource(R.drawable.ic_video_player_pause);
-                    // REFACTOR: 2019/6/21 Rxjava2
                     //  autoHidePanel需要再处理1个mIsPanel, 判断是否隐藏
                     mPlayerManager.pause();
                 } else {
@@ -288,10 +287,8 @@ public class IjkPlayerActivity extends Activity implements PlayerManager.PlayerS
                 }
                 break;
             case R.id.video_player_bottom_panel_follow:
-                // TODO: 2019/6/20
                 break;
             case R.id.video_player_bottom_panel_float_window:
-                // TODO: 2019/6/20
                 break;
         }
     }
@@ -351,7 +348,6 @@ public class IjkPlayerActivity extends Activity implements PlayerManager.PlayerS
         @Override
         public void onReceive(Context context, Intent intent) {
             int level = intent.getIntExtra("level", 100);
-            // REFACTOR: 2019/6/21 待重构 添加更多电池电量信息显示
             if (level > 90) {
                 mVideoPlayerTopPanelBattery.setImageResource(R.drawable.ic_video_player_battery_0);
             } else if (level > 10) {

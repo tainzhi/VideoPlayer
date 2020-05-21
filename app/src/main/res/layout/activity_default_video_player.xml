@@ -27,7 +27,6 @@
             android:layout_alignParentBottom="true"
             android:gravity="bottom" />
 
-        <!--REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频-->
         <!--<LinearLayout-->
             <!--android:id="@+id/video_player_progress_preview_layout"-->
             <!--android:layout_width="150dp"-->

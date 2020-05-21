@@ -26,7 +26,7 @@ import java.io.IOException;
  * the Activity is pausing because it's "finished" (indicating that we're leaving the Activity
  * for a nontrivial amount of time), the video decoders are shut down.
  * <p>
- * TODO: consider shutting down when the screen is turned off, to preserve battery.
+ * consider shutting down when the screen is turned off, to preserve battery.
  */
 public class DoubleVideoPlayerActivity extends Activity {
     private static final String TAG = "VideoPlayer/DoubleVideoPlayerActivity";
@@ -127,7 +127,7 @@ public class DoubleVideoPlayerActivity extends Activity {
          */
         public void stopPlayback() {
             mPlayThread.requestStop();
-            // TODO: wait for the playback thread to stop so we don't kill the Surface
+            // wait for the playback thread to stop so we don't kill the Surface
             //       before the video stops
             
             // We don't need this any more, so null it out.  This also serves as a signal
