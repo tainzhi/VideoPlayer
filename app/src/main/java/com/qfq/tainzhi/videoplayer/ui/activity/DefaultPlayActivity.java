@@ -23,12 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.internal.reflect.ReflectionAccessor;
 import com.qfq.tainzhi.videoplayer.FloatWindow;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.util.WindowUtil;
 
 import java.io.IOException;
 
@@ -56,7 +52,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
     private ImageView mControllerControl;
     private SeekBar mControllerProgress;
     private ImageView mControllerFloatWindow;
-    // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
     // private LinearLayout mVideoProgressPreviewLayout;
     // private ImageView mVideoProgressPreviewImageView;
     private boolean mVideoPlayOrPause = false; // play state is true, stop state is false;
@@ -151,7 +146,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
             mVideoPlayOrPause = true;
             mUpdateSeekBarThread = new UpdateSeekBarThread("UpdateSeekBarThread");
             mUpdateSeekBarThread.start();
-            // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
             // startGetVideoPreviewFrame(mVideoUri, mVideoDuration);
             Log.v(TAG, "MediaPlayer.start()");
         }
@@ -176,7 +170,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
                 mHandler.sendMessage(msg);
                 mVideoProgress = progress;
     
-                // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
                 // int width = seekBar.getWidth();
                 // long time = progress * mVideoDuration / 100;
                 // int offset =(int)(width - 75) /100;
@@ -191,7 +184,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
             mIsTouchOnSeekBar = true;
-            // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
             // mVideoProgressPreviewLayout.setVisibility(View.VISIBLE);
         }
         
@@ -201,7 +193,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
             if (mVideoProgress >= 0) {
                 seekBar.setProgress((int)(mVideoProgress / mVideoDuration * 100));
             }
-            // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
             // mVideoProgressPreviewLayout.setVisibility(View.GONE);
         }
     };
@@ -233,7 +224,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
                 (ImageView) findViewById(R.id.video_player_bottom_panel_play);
         mControllerProgress = (SeekBar) findViewById(R.id.activity_default_video_player_player_controller_progress);
         mControllerFloatWindow = (ImageView) findViewById(R.id.video_player_bottom_panel_float_window);
-        // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
         // mVideoProgressPreviewLayout =
         //         (LinearLayout)findViewById(R.id.video_player_progress_preview_layout);
         // mVideoProgressPreviewImageView =
@@ -276,21 +266,18 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
     
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        // TODO Auto-generated method stub
         mMediaPlayer.setDisplay(mSurfaceHolder);
     }
     
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
                                int height) {
-        // TODO Auto-generated method stub
         
     }
     
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // TODO Auto-generated method stub
-        
+    
     }
     
     private void initTransition() {
@@ -327,7 +314,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
                     try {
                         this.sleep(100);
                     } catch (InterruptedException e) {
-                        //FIXME: exception
                     }
                 } catch (IllegalStateException e) {
                     Log.e(TAG, "MediaPlay state wrong ", e);
@@ -340,7 +326,6 @@ public class DefaultPlayActivity extends Activity implements SurfaceHolder.Callb
         }
     }
     
-    // REFACTOR: 2019/6/17 待重构: 进度条小窗口预览视频
     // private void startGetVideoPreviewFrame(Uri url, long videoDuration) {
     //     for (int i = 0; i < 100; i++) {
     //         long time = i * videoDuration / 100;

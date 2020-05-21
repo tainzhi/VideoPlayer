@@ -21,16 +21,10 @@ public class App extends MultiDexApplication {
         
         initTheme();
         
-        // TODO: 2019/6/10 add leakcnary
-        // if (BuildConfig.DEBUG) {
-        //     SdkManager.initStetho(this);
-        //     SdkManager.initLeakCanary(this);
-        // }
         Logger.addLogAdapter(new AndroidLogAdapter());
     }
     
     private void initTheme() {
-        // TODO: 2019/6/10 add theme change
     }
     
 }

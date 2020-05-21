@@ -30,7 +30,6 @@ public class HorizontalGridViewAdapter extends RecyclerView.Adapter<HorizontalGr
     
     private final static String TAG = "VideoPlayer/HorizontalGridViewAdapter";
     private final static int THUMB_COUNT = 30;
-    // FIXME: 2016/3/9
     // The cache must be cleared before activity finished
     private DiskLruImageCache mDiskLruCache;
     private Context mContext;

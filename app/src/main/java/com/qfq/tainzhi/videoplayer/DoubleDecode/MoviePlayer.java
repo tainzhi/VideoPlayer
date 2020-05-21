@@ -36,7 +36,7 @@ import java.nio.ByteBuffer;
 /**
  * Plays the video track from a movie file to a Surface.
  * <p>
- * TODO: needs more advanced shuttle controls (pause/resume, skip)
+ * needs more advanced shuttle controls (pause/resume, skip)
  */
 public class MoviePlayer {
     private static final String TAG = "VideoPlayer/DoubleDecode/MoviePlayer";
@@ -68,7 +68,7 @@ public class MoviePlayer {
         mFrameCallback = frameCallback;
         
         // Pop the file open and pull out the video characteristics.
-        // TODO: consider leaving the extractor open.  Should be able to just seek back to
+        // consider leaving the extractor open.  Should be able to just seek back to
         //       the start after each iteration of play.  Need to rearrange the API a bit --
         //       currently play() is taking an all-in-one open+work+release approach.
         MediaExtractor extractor = null;
@@ -397,7 +397,6 @@ public class MoviePlayer {
         /**
          * Called immediately after the frame render call returns.  The frame may not have
          * actually been rendered yet.
-         * TODO: is this actually useful?
          */
         void postRender();
         
