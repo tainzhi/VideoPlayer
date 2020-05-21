@@ -36,6 +36,18 @@ object Constant {
         const val AR_4_3_FIT_PARENT = 5
     }
 
+    object PlayState {
+        const val STATE_IDLE = -1
+        const val STATE_NORMAL = 0
+        const val STATE_PREPARING = 1
+        const val STATE_PREPARING_CHANGING_URL = 2
+        const val STATE_PREPARED = 3
+        const val STATE_PLAYING = 4
+        const val STATE_PAUSE = 5
+        const val STATE_AUTO_COMPLETE = 6
+        const val STATE_ERROR = 7
+    }
+
     const val FULL_SCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
     const val NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 

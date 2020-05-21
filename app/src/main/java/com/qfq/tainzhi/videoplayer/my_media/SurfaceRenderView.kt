@@ -77,9 +77,10 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     }
 
     private class InternalSurfaceHolder(private val surfaceRenderView: SurfaceRenderView,
-                                        override val surfaceHolder: SurfaceHolder) : IRenderView.ISurfaceHolder {
+                                        override val surfaceHolder: SurfaceHolder?) : IRenderView.ISurfaceHolder {
 
         override fun bindToMediaPlayer(mp: IMediaInterface) {
+            if (surfaceHolder == null) return
             when (mp) {
                 is IMediaSystem -> {
                     mp.setDisplay(surfaceHolder)
@@ -179,7 +180,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             width = 0
             height = 0
             val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder!!)
+                    mSurfaceHolder)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceDestroyed(surfaceHolder)
             }

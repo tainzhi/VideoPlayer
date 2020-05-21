@@ -10,7 +10,10 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
 import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.qfq.tainzhi.videoplayer.my_media.Constant.PlayState.STATE_PAUSE
+import com.qfq.tainzhi.videoplayer.my_media.Constant.PlayState.STATE_PLAYING
 
 /**
  * Created by muqing on 2019/6/1.
@@ -20,8 +23,7 @@ import android.widget.FrameLayout
 
 class VideoView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr),
-    SensorEventListener {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     companion object {
         const val TAG = "VideoView"
@@ -77,6 +79,8 @@ class VideoView @JvmOverloads constructor(
 
     var aspectRatio = Constant.AspectRatio.AR_ASPECT_FILL_PARENT
 
+    // 播放器状态
+    var state = Constant.PlayState.STATE_PLAYING
 
 
     private fun openVideo() {
@@ -126,7 +130,7 @@ class VideoView @JvmOverloads constructor(
         val renderUIView = mRenderView?.view
         renderUIView?.layoutParams = LayoutParams(
                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT,
+               LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER)
         addView(renderUIView)
 
@@ -168,21 +172,26 @@ class VideoView @JvmOverloads constructor(
      * @param videoName name of video
      */
     fun startFullScreenDirectly(context: Context, uri: Uri, videoName: String = "") {
-        Util.hideStatusBar(context)
-        Util.hideActionBar(context)
-        Util.setRequestedOrientation(context, Constant.FULL_SCREEN_ORIENTATION)
-        Util.hideSystemUI(context)
+        fullScreenHideAll(context)
         // val viewGroup: ViewGroup = Util.scanForActivity(context)?.window?.decorView as ViewGroup
+        // viewGroup.removeAllViews()
         // val layoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         // viewGroup.addView(this, layoutParams)
 
         videoUri = uri
     }
 
-    fun autoFullScreen(x: Int) {
+    private fun fullScreenHideAll(context: Context) {
+        Util.hideStatusBar(context)
+        Util.hideActionBar(context)
+        Util.setRequestedOrientation(context, Constant.FULL_SCREEN_ORIENTATION)
+        Util.hideSystemUI(context)
+    }
+
+    fun autoFullScreen(x: Float) {
 
         if ((state == STATE_PLAYING || state == STATE_PAUSE)
-                && (screenType != Constant.ScreenType.FULL_SCREEN)
+                // && (screenType != Constant.ScreenType.FULL_SCREEN)
                 && (screenType != Constant.ScreenType.TINY_SCREEN)) {
             if (x > 0) {
                 Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
@@ -191,6 +200,21 @@ class VideoView @JvmOverloads constructor(
             }
             gotoFullScreen()
         }
+    }
+
+    private fun gotoFullScreen() {
+        val parentView: ViewGroup = parent as ViewGroup
+        // if (screenType == Constant.ScreenType.FULL_SCREEN) {
+        //     val childLayoutParams = this@VideoView.layoutParams
+        //     (parentView).removeView(this@VideoView)
+        //     // ((Util.scanForActivity(context))?.window?.decorView as ViewGroup)
+        //     //         .addView(this@VideoView, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        //     parentView.addView(this@VideoView, childLayoutParams)
+        // } else {
+        //     // todo
+        //     parentView.addView(this)
+        // }
+        fullScreenHideAll(context)
     }
 
 
@@ -270,13 +294,13 @@ class VideoView @JvmOverloads constructor(
         }
 
         override fun onSurfaceDestroyed(holder: IRenderView.ISurfaceHolder) {
-            TODO("Not yet implemented")
+            logD()
         }
     }
 }
 
 class AutoFullScreenListener(val videoView: VideoView): SensorEventListener {
-    private var lastAutoFullScreenTime = 0l
+    private var lastAutoFullScreenTime = 0L
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
     }
@@ -285,7 +309,8 @@ class AutoFullScreenListener(val videoView: VideoView): SensorEventListener {
         val x = event.values[SensorManager.DATA_X]
         if (x < -12 || x > 12) {
             if (System.currentTimeMillis() - lastAutoFullScreenTime > 2000) {
-                videoView.autoFullScreen(x)
+                // TODO: 2020/5/21 翻转还有问题
+                // videoView.autoFullScreen(x)
                 lastAutoFullScreenTime = System.currentTimeMillis()
             }
         }
