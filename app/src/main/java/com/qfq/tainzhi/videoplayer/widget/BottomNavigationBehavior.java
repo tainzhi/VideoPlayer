@@ -12,7 +12,6 @@ import androidx.core.view.ViewCompat;
  * Created by muqing on 2019/6/9.
  * Email: qfq61@qq.com
  */
-// REFACTOR: 2019/6/10 待重构 添加behavior
 
 public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<View> {
 

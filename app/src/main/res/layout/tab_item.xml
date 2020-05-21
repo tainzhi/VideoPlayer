@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <!--<todo>添加图标</todo>-->
     <!--<ImageView-->
         <!--android:id="@+id/tab_image"-->
         <!--android:layout_width="24dp"-->

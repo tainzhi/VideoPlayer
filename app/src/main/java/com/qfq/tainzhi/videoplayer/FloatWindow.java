@@ -77,7 +77,6 @@ public class FloatWindow implements SurfaceHolder.Callback {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     Log.v(TAG, "onTouch ACTION_MOVE");
-                    // TODO: 2016/1/24 fix ACTION_MOVE shake issue
                     float distanceX = lastX - mFloatWindowPositionX;
                     float distanceY = lastY - mFloatWindowPositionY;
                     
@@ -158,7 +157,6 @@ public class FloatWindow implements SurfaceHolder.Callback {
             @Override
             public void onClick(View v) {
                 Log.v(TAG, "back to full screen play window");
-                // TODO: 2016/1/23 back to full play window
                 Intent backIntent = new Intent(mContext, DefaultPlayActivity.class);
                 backIntent.setData(mVideoUri);
                 backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -250,20 +248,17 @@ public class FloatWindow implements SurfaceHolder.Callback {
     
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        // TODO Auto-generated method stub
         mMediaPlayer.setDisplay(mSurfaceHolder);
     }
     
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
                                int height) {
-        // TODO Auto-generated method stub
         
     }
     
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // TODO Auto-generated method stub
-        
+    
     }
 }
