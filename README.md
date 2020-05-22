@@ -2,15 +2,17 @@
 <!-- vim-markdown-toc GFM -->
 
 * [Info](#info)
-* [参考](#参考)
-* [功能简介](#功能简介)
+* [测试驱动开发](#测试驱动开发)
+* [实现的功能](#实现的功能)
 * [依赖框架和技术](#依赖框架和技术)
-* [实现简介](#实现简介)
+* [各大卫视网络源和图标](#各大卫视网络源和图标)
 * [斗鱼直播源的获取(未实现)](#斗鱼直播源的获取未实现)
+    - [斗鱼官方api](#斗鱼官方api)
     - [手动获取](#手动获取)
     - [python破解方式参考(失效)](#python破解方式参考失效)
     - [反编译app获取地址](#反编译app获取地址)
 * [Todo](#todo)
+* [参考](#参考)
 
 <!-- vim-markdown-toc -->
 ## Info
@@ -24,36 +26,10 @@
 ## 实现的功能
 - PlayVideoViewActivity: VideoView+MediaController简单播放功能
 
-## 参考
-- [iToutiao相关设计也实现](https://github.com/iMeiji/Toutiao)
-- [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android) 
-- [abigfishtv ios 大鱼电视直播 基于ijkplayer的播放器 700多个电视台 包括央视，各地方台，卫视，熊猫直播，社会化分享，登陆，仿微博等 (支持iphonex)](https://github.com/clyhs/ABigFishTV) 
-- [各种视频播放所需要的功能集](https://github.com/yangchong211/YCVideoPlayer) 
-- [弹弹play 概念版，弹弹play系列应用安卓平台上的实现，是一个提供了视频播放（本地+局域网）和弹幕加载（在线+本地）功能的本地播放器](https://github.com/xyoye/DanDanPlayForAndroid) 
-- [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
-- [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer) 
-- [支持软硬解码](https://www.jianshu.com/p/93b7f7ec2d04)
-- 其他的videoplayer:
-  [1](https://github.com/danylovolokh/VideoPlayerManager),
-  [2](https://github.com/blizzard-op/VideoPlayerKit),
-  [3](https://github.com/macdonst/VideoPlayer),
-  [4](https://github.com/ihmpavel/expo-video-player),
-  [5](https://github.com/boredream/VideoPlayer),
-  [6](https://github.com/Zhaoss/VideoPlayerDemo),
-  [7](https://github.com/googlesamples/android-VideoPlayer)
-
-## 功能简介
-- 切换播放器: 默认播放器(基于android自带的MediaPlayer), 基于ijkplayer的播放器
-- ~~[Bug]进度条可以预览视频(该功能有bug): 实现方法比较另类, 用Glide加载, 某些格式的视频需要能解码的库; 窗口暂时不能移动~~
-- ~~[Bug]斗鱼直播源暂时不会逆向获得, 故使用了一个官方赛事MSI 4000分辨率的一个源替代来演示~~
-
-
 ## 依赖框架和技术
-MVP, retrofit2, rxjava2
+- master分支(第一版): MVP, retrofit2, rxjava2等等
+- kotlin分支(当前开发版): kotlin, MVVM(google jetpack), jsoup, ijkplayer, mediaplayer, exoplayer...
 
-## 实现简介
-- MainActivity: 
-- DefaultPlayActivity: 使用handler作为异步机制, 使用android自带的视频库播放视频;
 
 ## 各大卫视网络源和图标
 - [gitee: tv-source](https://gitee.com/forterli/project/tree/master/mini_program/tv_video/data)
@@ -85,10 +61,10 @@ MVP, retrofit2, rxjava2
 ## Todo
 - [x] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
 - [x] 斗鱼更多游戏频道界面点击没有效果, 因为暂时无法解决fragment覆盖及销毁和逻辑的问题
+- [ ] 缩略实现, 参考我的印象笔记相同内容
+- [ ] 本地列表第一个是最近的播放记录, 记录播放位置, 并显示上次播放到的时间点的缩略图
 - [ ] 实现沉浸式状态栏: [参考1](https://www.jianshu.com/p/dc20e98b9a90) [参考2](https://blog.csdn.net/u013647382/article/details/51603141) 
 - [ ] 申请权限管理
-- [ ] navitationdrawler添加切换player的菜单
-- [ ] [Recyclerview covered by BottomNavigationView](https://stackoverflow.com/questions/41199801/recyclerview-covered-by-bottomnavigationview)
 - [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
 - [ ] 电视频道
 > - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
@@ -106,14 +82,28 @@ MVP, retrofit2, rxjava2
 - [ ] 记录视频播放记录
 - [ ] 混淆编译
 - [ ] 添加自动测试模块
-- [ ] ExoPlayer, vitamio:[部署参考](https://github.com/tainzhi/QDouyu/tree/v0.1), ijkplayer提供切换接口
 - [ ] 搭建一个局域网服务器, 提供全国视频爬取的链接
 - [ ] 搭建一个局域网服务器, 提供美剧tab的搜索和展示
-- [ ] 升级RxJava1.x到RxJava2.x
-- [ ] kotlin实现
 - [ ] 学习竞品: MX播放器, XPlayer, VLC, VideoPlayer等播放列表, 播放界面(全屏透明状态栏)等功能, 实现它们
 - [ ] 学习Douyu新版, 看有什么想实现的功能; 如果能逆向出直播源就更好了
 
 
+## 参考
+- [iToutiao相关设计也实现](https://github.com/iMeiji/Toutiao)
+- [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android)
+- [abigfishtv ios 大鱼电视直播 基于ijkplayer的播放器 700多个电视台 包括央视，各地方台，卫视，熊猫直播，社会化分享，登陆，仿微博等 (支持iphonex)](https://github.com/clyhs/ABigFishTV)
+- [各种视频播放所需要的功能集](https://github.com/yangchong211/YCVideoPlayer)
+- [弹弹play 概念版，弹弹play系列应用安卓平台上的实现，是一个提供了视频播放（本地+局域网）和弹幕加载（在线+本地）功能的本地播放器](https://github.com/xyoye/DanDanPlayForAndroid)
+- [后期项目怎么优化](https://github.com/yangchong211/LifeHelper)
+- [QSVideoPlayer](https://github.com/tohodog/QSVideoPlayer)
+- [支持软硬解码](https://www.jianshu.com/p/93b7f7ec2d04)
+- 其他的videoplayer:
+  [1](https://github.com/danylovolokh/VideoPlayerManager),
+  [2](https://github.com/blizzard-op/VideoPlayerKit),
+  [3](https://github.com/macdonst/VideoPlayer),
+  [4](https://github.com/ihmpavel/expo-video-player),
+  [5](https://github.com/boredream/VideoPlayer),
+  [6](https://github.com/Zhaoss/VideoPlayerDemo),
+  [7](https://github.com/googlesamples/android-VideoPlayer)
 
 
