@@ -51,7 +51,7 @@ object Constant {
     const val FULL_SCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
     const val NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-    @Target(AnnotationTarget.PROPERTY, AnnotationTarget.PROPERTY_SETTER)
+    @Target(AnnotationTarget.PROPERTY, AnnotationTarget.PROPERTY_SETTER, AnnotationTarget.VALUE_PARAMETER)
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(value = [
         RenderType.SURFACE_VIEW,
