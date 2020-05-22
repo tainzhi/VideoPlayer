@@ -13,7 +13,6 @@ import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.util.Util
 import com.google.android.exoplayer2.video.VideoListener
-import com.qfq.tainzhi.videoplayer.R
 
 /**
  * @author: tainzhi
@@ -60,7 +59,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
             simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(context, renderersFactory, trackSelector, loadControl)
             // Produces DataSource instances through which media data is loaded.
             val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(context,
-                    Util.getUserAgent(context, context.resources.getString(R.string.app_name)))
+                    Util.getUserAgent(context, "QMediaPlayer"))
             // String currUrl = jzvd.jzDataSource.getCurrentUrl().toString();
             val videoSource: MediaSource
             // if (currUrl.contains(".m3u8")) {
@@ -73,7 +72,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
             videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(mVideoView.videoUri)
             simpleExoPlayer.addVideoListener(this)
-            // TODO: 2020/5/19  
+            // TODO: 2020/5/19
             // val isLoop = mVideoView.loop
             // if (isLoop) {
             //     simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
