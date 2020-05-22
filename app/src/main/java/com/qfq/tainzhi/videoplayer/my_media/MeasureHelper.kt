@@ -1,6 +1,5 @@
 package com.qfq.tainzhi.videoplayer.my_media
 
-import android.content.Context
 import android.view.View
 import android.view.View.MeasureSpec
 import com.qfq.tainzhi.videoplayer.my_media.Constant.AspectRatio
@@ -45,8 +44,8 @@ class MeasureHelper(view: View) {
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
-    fun doMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) { //Log.i("@@@@", "onMeasure(" + MeasureSpec.toString(widthMeasureSpec) + ", "
-//        + MeasureSpec.toString(heightMeasureSpec) + ")");
+    fun doMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        // logD("${MeasureSpec.toString(widthMeasureSpec)}, ${MeasureSpec.toString(heightMeasureSpec)}")
         var widthMeasureSpec = widthMeasureSpec
         var heightMeasureSpec = heightMeasureSpec
         if (mVideoRotationDegree == 90 || mVideoRotationDegree == 270) {
@@ -156,26 +155,24 @@ class MeasureHelper(view: View) {
     }
 
     fun setAspectRatio(aspectRatio: Int) {
+        logD(getAspectRatioText(aspectRatio = aspectRatio))
         mCurrentAspectRatio = aspectRatio
     }
 
-    companion object {
-        fun getAspectRatioText(context: Context?, aspectRatio: Int): String {
-            val text: String
-            text = when (aspectRatio) {
-                AspectRatio.AR_ASPECT_FIT_PARENT -> "Aspect / Fit parent"
-                AspectRatio.AR_ASPECT_FILL_PARENT -> "Aspect / Fill parent"
-                AspectRatio.AR_ASPECT_WRAP_CONTENT -> "Aspect / Wrap conten"
-                AspectRatio.AR_MATCH_PARENT -> "Free / Fill parent"
-                AspectRatio.AR_16_9_FIT_PARENT -> "16:9 / Fit parent"
-                AspectRatio.AR_4_3_FIT_PARENT -> "4:3 / Fit parent"
-                else -> "NA"
-            }
-            return text
-        }
-    }
 
     init {
         mWeakView = WeakReference(view)
+    }
+
+    companion object {
+        fun getAspectRatioText(aspectRatio: Int) = when (aspectRatio) {
+            AspectRatio.AR_ASPECT_FIT_PARENT -> "Aspect / Fit parent"
+            AspectRatio.AR_ASPECT_FILL_PARENT -> "Aspect / Fill parent"
+            AspectRatio.AR_ASPECT_WRAP_CONTENT -> "Aspect / Wrap conten"
+            AspectRatio.AR_MATCH_PARENT -> "Free / Fill parent"
+            AspectRatio.AR_16_9_FIT_PARENT -> "16:9 / Fit parent"
+            AspectRatio.AR_4_3_FIT_PARENT -> "4:3 / Fit parent"
+            else -> "NA"
+        }
     }
 }

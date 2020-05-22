@@ -115,12 +115,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
         }
     }
 
-    override val currentPosition: Long
-        get() = if (simpleExoPlayer != null) {
-            simpleExoPlayer.currentPosition
-        } else {
-            0
-        }
+    override val currentPosition = simpleExoPlayer.contentPosition ?: 0
 
     override val duration: Long
         get() = if (simpleExoPlayer != null) {

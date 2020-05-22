@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi
  * @author: tainzhi
  * @mail: qfq61@qq.com
  * @date: 2019-11-10 19:10
- * @description: android 系统自带播放器
+ * @description: 封装android 系统自带播放器
  */
 class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         MediaPlayer.OnPreparedListener,
@@ -24,7 +24,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         MediaPlayer.OnErrorListener,
         MediaPlayer.OnInfoListener,
         MediaPlayer.OnVideoSizeChangedListener {
-    var mMediaPlayer: MediaPlayer? = null
+    private var mMediaPlayer: MediaPlayer? = null
     override fun start() {
         logD()
         mMediaHandler!!.post { mMediaPlayer!!.start() }
@@ -75,8 +75,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         mMediaHandler!!.post { mMediaPlayer!!.pause() }
     }
 
-    override val isPlaying: Boolean
-        get() = mMediaPlayer!!.isPlaying
+    override val isPlaying = mMediaPlayer?.isPlaying ?: false
 
     override fun seekTo(time: Long) {
         mMediaHandler!!.post {
@@ -102,19 +101,9 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         }
     }
 
-    override val currentPosition: Long
-        get() = if (mMediaPlayer != null) {
-            mMediaPlayer!!.currentPosition.toLong()
-        } else {
-            0
-        }
+    override val currentPosition = mMediaPlayer?.currentPosition?.toLong() ?: 0
 
-    override val duration: Long
-        get() = if (mMediaPlayer != null) {
-            mMediaPlayer!!.duration.toLong()
-        } else {
-            0
-        }
+    override val duration = mMediaPlayer?.duration?.toLong() ?: 0
 
     override fun setVolume(leftVoluem: Float, rightVolume: Float) {
         if (mMediaHandler == null) return
@@ -133,21 +122,23 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onBufferingUpdate(mediaPlayer: MediaPlayer, percent: Int) {
-        logD()
+        logD("percent=$percent")
         mHandler!!.post { mVideoView.setBufferProgress(percent) }
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
+        logD()
         mHandler!!.post { mVideoView.onAutoCompletion() }
     }
 
     override fun onError(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
-        logD()
+        logD("what:$what, extra:$extra")
         mHandler!!.post { mVideoView.onError(what, extra) }
         return true
     }
 
     override fun onInfo(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
+        logD("what:$what, extra:$extra")
         mHandler!!.post { mVideoView.onInfo(what, extra) }
         return false
     }
@@ -158,6 +149,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onSeekComplete(mediaPlayer: MediaPlayer) {
+        logD()
         mHandler!!.post { mVideoView.onSeekCompleted() }
     }
 
