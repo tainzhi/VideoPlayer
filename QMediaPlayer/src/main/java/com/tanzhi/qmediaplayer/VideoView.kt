@@ -13,8 +13,11 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_ERROR
+import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_IDLE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PAUSE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PLAYING
+import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PREPARED
 
 /**
  * Created by muqing on 2019/6/1.
@@ -33,7 +36,7 @@ class VideoView @JvmOverloads constructor(
     private var mediaPlayerClass: Class<*>? = null
     private var iMediaPlayer: IMediaInterface? = null
 
-    // 上一次通过翻船屏幕, 自动全屏时间
+    // 上一次通过翻转屏幕, 自动全屏时间
     var lastAutoFullScreenTime = 0
 
     var mSurfaceHolder: IRenderView.ISurfaceHolder? = null
@@ -83,7 +86,7 @@ class VideoView @JvmOverloads constructor(
         }
 
     // 播放器状态
-    var state = Constant.PlayState.STATE_PLAYING
+    private var state = STATE_IDLE
 
 
     private fun openVideo() {
@@ -161,6 +164,7 @@ class VideoView @JvmOverloads constructor(
             }
             else -> null
         }
+        state = STATE_IDLE
     }
 
     // 设置全屏
@@ -232,8 +236,9 @@ class VideoView @JvmOverloads constructor(
 
     fun onPrepared() {
         Log.i(TAG, "onPrepared ")
+        state = STATE_PREPARED
         iMediaPlayer?.start()
-        // TODO: 2020/5/19
+        state = STATE_PLAYING
     }
 
     fun setBufferProgress(percent: Int) {
@@ -264,6 +269,7 @@ class VideoView @JvmOverloads constructor(
 
     fun onError(what: Int, extra: Int) {
         // TODO: 2020/5/19
+        state = STATE_ERROR
     }
 
     /**
