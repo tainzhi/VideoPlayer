@@ -2,7 +2,6 @@ package com.qfq.tainzhi.videoplayer.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -13,12 +12,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 import com.qfq.tainzhi.videoplayer.util.StringUtil;
-import com.qfq.tainzhi.videoplayer.widget.RoundCornerImageView;
 
 import java.io.File;
 import java.util.List;
@@ -48,6 +45,7 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
                 MediaStore.Video.Media._ID,
                 MediaStore.Video.Media.DATA,
                 MediaStore.Video.Media.SIZE,
+				MediaStore.Video.Media.ORIENTATION,
                 MediaStore.Video.Media.TITLE,
                 MediaStore.Video.Media.DURATION,
                 MediaStore.Video.Media.RESOLUTION,
@@ -78,6 +76,8 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
                     cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
             String resolution =
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.RESOLUTION));
+            String orientation =
+					cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ORIENTATION));
             String date_added =
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_ADDED));
             String date_modified =
@@ -87,7 +87,7 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
             String create_date = getVideoCreatDate(path);
             String thumbnailsPath = getThumbnailPath(id);
             LocalVideoBean item = new LocalVideoBean(id, path, size_s, title,
-                    duration, resolution, date_added,
+                    duration, resolution, orientation, date_added,
                     date_modified, date_taken, create_date, thumbnailsPath);
             mLists.add(item);
             cursor.moveToNext();
