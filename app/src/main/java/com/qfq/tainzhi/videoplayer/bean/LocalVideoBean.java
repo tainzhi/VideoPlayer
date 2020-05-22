@@ -12,6 +12,7 @@ public class LocalVideoBean {
     String title;
     long duration; //多少秒
     String resolution;
+    String orientation;
     String date_created;
     String date_modified;
     String date_taken;
@@ -19,7 +20,7 @@ public class LocalVideoBean {
     String thumbnailPath;
     
     public LocalVideoBean(int mId, String mPath, String mSize, String mTitle,
-                          long mDuration, String mResolution,
+                          long mDuration, String mResolution, String orientation,
                           String mDate_created, String mDate_modified, String mDate_taken, String mCreateDate, String mThumbnailPath) {
         id = mId;
         path = mPath;
@@ -33,8 +34,16 @@ public class LocalVideoBean {
         createDate = mCreateDate;
         thumbnailPath = mThumbnailPath;
     }
-    
-    public int getId() {
+	
+	public String getOrientation() {
+		return orientation;
+	}
+	
+	public void setOrientation(String orientation) {
+		this.orientation = orientation;
+	}
+	
+	public int getId() {
         return id;
     }
     

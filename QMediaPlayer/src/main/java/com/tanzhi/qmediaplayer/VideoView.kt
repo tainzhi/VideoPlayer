@@ -50,6 +50,8 @@ class VideoView @JvmOverloads constructor(
 
     var videoRotationDegree = 0
 
+    private var screenOrientation = 0
+
     var videoUri: Uri? = null
         set(value) {
             field = value
@@ -243,6 +245,7 @@ class VideoView @JvmOverloads constructor(
     }
 
     fun onVideoSizeChanged(width: Int, height: Int) {
+        setScreenOrientation(width, height)
         videoWidth = width
         videoHeight = height
         if (width != 0 && height != 0) {
@@ -261,6 +264,20 @@ class VideoView @JvmOverloads constructor(
 
     fun onError(what: Int, extra: Int) {
         // TODO: 2020/5/19
+    }
+
+    /**
+     * @param width 视频宽
+     * @param height 视频高
+     *
+     * 如果width < height, 则该视频是竖屏视频, 需要竖屏全屏播放
+     */
+    private fun setScreenOrientation(width: Int, height: Int) {
+        if (width > 0 && height > 0) {
+            screenOrientation = 90
+            Util.setRequestedOrientation(Util.scanForActivity(context)!!
+                    , ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        }
     }
 
     fun onAutoCompletion() {
