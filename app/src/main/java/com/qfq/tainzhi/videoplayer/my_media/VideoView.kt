@@ -50,10 +50,6 @@ class VideoView @JvmOverloads constructor(
 
     var videoRotationDegree = 0
 
-
-    init {
-    }
-
     var videoUri: Uri? = null
         set(value) {
             field = value
@@ -79,6 +75,10 @@ class VideoView @JvmOverloads constructor(
         }
 
     var aspectRatio = Constant.AspectRatio.AR_ASPECT_FILL_PARENT
+        set(value) {
+            field = value
+            setScreenAspectRatio(value)
+        }
 
     // 播放器状态
     var state = Constant.PlayState.STATE_PLAYING
@@ -164,6 +164,13 @@ class VideoView @JvmOverloads constructor(
     // 设置全屏
     private fun setFullScreen() {
 
+    }
+
+    /**
+     * @param aspectRatio 宽高比率
+     */
+    private fun setScreenAspectRatio(aspectRatio: Int) {
+        mRenderView?.setAspectRatio(aspectRatio)
     }
 
     /**
