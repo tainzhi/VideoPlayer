@@ -8,9 +8,9 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.orhanobut.logger.Logger
-import com.qfq.tainzhi.videoplayer.my_media.AutoFullScreenListener
-import com.qfq.tainzhi.videoplayer.my_media.Constant
-import com.qfq.tainzhi.videoplayer.my_media.VideoView
+import com.tanzhi.qmediaplayer.AutoFullScreenListener
+import com.tanzhi.qmediaplayer.Constant
+import com.tanzhi.qmediaplayer.VideoView
 
 class VideoTestActivity : AppCompatActivity() {
     private lateinit var autoFullScreenListener: AutoFullScreenListener
