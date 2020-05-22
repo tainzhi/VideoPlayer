@@ -64,9 +64,8 @@ class VideoView @JvmOverloads constructor(
     @Constant.PlayerTypeMode
     var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
 
-    @Constant.RenderTypeMode
     var renderType = Constant.RenderType.SURFACE_VIEW
-        set(value) {
+        set(@Constant.RenderTypeMode value) {
             field = value
             setRender(value)
         }
