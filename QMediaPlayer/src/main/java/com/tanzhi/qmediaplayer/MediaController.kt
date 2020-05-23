@@ -1,12 +1,11 @@
 package com.tanzhi.qmediaplayer
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.PixelFormat
-import android.media.AudioManager
 import android.util.AttributeSet
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 
 /**
  * @author:      tainzhi
@@ -19,60 +18,48 @@ class MediaController @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private lateinit var anchor: View
-    private lateinit var root: View
-    private lateinit var windowManager: WindowManager
-    private lateinit var window: Window
-    private lateinit var decor: View
-    private lateinit var decorLayoutParams: WindowManager.LayoutParams
+    private lateinit var root: ConstraintLayout
     private var isShowing = false
+
+    lateinit var videoView: VideoView
 
     companion object {
         const val DefaultTimeout = 3000
     }
 
-    init {
-        initFloatingWindowLayout()
-        initFloatingWindow()
+    fun setParentView(parent: ConstraintLayout) {
+        root = parent
+        val content = makeControllerView()
+        parent.addView(content, ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
     }
 
-    private fun initFloatingWindowLayout() {
-        decorLayoutParams = WindowManager.LayoutParams().apply {
-            gravity = Gravity.TOP or Gravity.LEFT
-            height = WindowManager.LayoutParams.WRAP_CONTENT
-            x = 0
-            format = PixelFormat.TRANSLUCENT
-            type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL
-            flags = flags or
-                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM or
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                    WindowManager.LayoutParams.FLAG_SPLIT_TOUCH
-            token = null
-            windowAnimations = 0
-        }
+    private fun makeControllerView() : View{
+        val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        // TODO: 2020/5/23 orientaion inflate port or land
+        val root = inflate.inflate(R.layout.media_controller_port, null)
+        initControllView(root)
+        return root
     }
 
-    private fun initFloatingWindow() {
-        windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        /**
-         * 初始化窗口。
-         * PhoneWindow为隐藏API，可以从Activity中取。
-         * 对下面用到API的代码 进行修改，但不是全部。
-         */
-        window = (context as Activity).window.apply {
-            setWindowManager(windowManager, null, null)
-            requestFeature(Window.FEATURE_NO_TITLE)
-            setContentView(this@MediaController)
-            setBackgroundDrawableResource(android.R.color.transparent)
-            setVolumeControlStream(AudioManager.STREAM_MUSIC)
-        }
-        decor = window.decorView
-        decor.setOnTouchListener(this)
-
-        focusable = View.FOCUSABLE
-        isFocusableInTouchMode = true
-        descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
-        requestFocus()
+    private fun initControllView(view: View) {
 
     }
+
+    fun hide() {
+
+    }
+
+    fun show() {
+
+    }
+
+    // TODO: 2020/5/23
+    // private val layoutChangeListener =
+    //         OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+    //             updateFloatingWindowLayout()
+    //             if (isShowing) {
+    //                 windowManager.updateViewLayout(decor, decorLayoutParams)
+    //             }
+    //         }
+
 }
