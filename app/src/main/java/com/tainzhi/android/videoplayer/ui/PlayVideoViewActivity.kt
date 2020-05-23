@@ -23,9 +23,7 @@ class PlayVideoViewActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_videoview_mediacontroller)
 
-        val mediaController = MediaController(this).apply {
-
-        }
+        val mediaController = MediaController(this)
         videoView.run {
             setMediaController(mediaController)
             setVideoURI(videoUri)

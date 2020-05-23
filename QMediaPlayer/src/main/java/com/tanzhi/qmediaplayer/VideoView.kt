@@ -13,6 +13,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_ERROR
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_IDLE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PAUSE
@@ -35,6 +36,13 @@ class VideoView @JvmOverloads constructor(
     }
     private var mediaPlayerClass: Class<*>? = null
     private var iMediaPlayer: IMediaInterface? = null
+    
+    var mediaController: MediaController? = null
+        set(value) {
+            field?.hide()
+            field = value
+            attachMediaController()
+        }
 
     // 上一次通过翻转屏幕, 自动全屏时间
     var lastAutoFullScreenTime = 0
@@ -166,6 +174,19 @@ class VideoView @JvmOverloads constructor(
         state = STATE_IDLE
     }
 
+    /**
+     * 设置controller
+     */
+    private fun attachMediaController() {
+        if (iMediaPlayer != null && mediaController != null) {
+            mediaController?.run {
+                videoView = this@VideoView
+                setParentView(this@VideoView.parent as ConstraintLayout)
+            }
+
+        }
+    }
+
     // 设置全屏
     private fun setFullScreen() {
 
@@ -194,6 +215,7 @@ class VideoView @JvmOverloads constructor(
 
         videoUri = uri
     }
+    
 
     private fun fullScreenHideAll(context: Context) {
         Util.hideStatusBar(context)

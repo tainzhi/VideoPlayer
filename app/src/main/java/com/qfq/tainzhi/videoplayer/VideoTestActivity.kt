@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.orhanobut.logger.Logger
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
 import com.tanzhi.qmediaplayer.Constant
+import com.tanzhi.qmediaplayer.MediaController
 import com.tanzhi.qmediaplayer.VideoView
 
 class VideoTestActivity : AppCompatActivity() {
@@ -28,6 +29,7 @@ class VideoTestActivity : AppCompatActivity() {
         val mVideoProgress = bundle.getInt(VIDEO_PROGRESS, 0)
         videoView.renderType = Constant.RenderType.SURFACE_VIEW
         videoView.startFullScreenDirectly(this, mVideoUri!!)
+        videoView.mediaController = MediaController(this)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         autoFullScreenListener = AutoFullScreenListener(videoView)
     }
