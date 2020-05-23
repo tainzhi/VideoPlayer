@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	
+	<View
+		android:id="@+id/top_panel_bg"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:background="@android:color/background_dark"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHeight_percent="0.08"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<ImageView
+		android:id="@+id/backIv"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginStart="16dp"
+		app:layout_constraintBottom_toBottomOf="@id/top_panel_bg"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@id/top_panel_bg"
+		app:layout_constraintVertical_bias="0.65"
+		app:layout_constraintWidth_percent="0.05"
+		app:srcCompat="@drawable/ic_arrow_back" />
+	
+	<TextView
+		android:id="@+id/textView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:text="This is a video title"
+		android:textColor="@android:color/white"
+		android:textSize="20sp"
+		app:layout_constraintBottom_toBottomOf="@+id/backIv"
+		app:layout_constraintStart_toEndOf="@+id/backIv"
+		app:layout_constraintTop_toTopOf="@+id/backIv" />
+	
+	<ImageView
+		android:id="@+id/changeRender"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:background="@drawable/round_black_bg"
+		android:padding="6dp"
+		android:src="@drawable/ic_render"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/top_panel_bg"
+		app:layout_constraintWidth_percent="0.1" />
+	
+	<ImageView
+		android:id="@+id/changePlayerIv"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginStart="16dp"
+		android:background="@drawable/round_black_bg"
+		android:padding="6dp"
+		android:src="@drawable/ic_change_player"
+		app:layout_constraintBottom_toBottomOf="@+id/changeScaleTypeIv"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toEndOf="@+id/changeScaleTypeIv"
+		app:layout_constraintTop_toTopOf="@+id/changeScaleTypeIv"
+		app:layout_constraintWidth_percent="0.1" />
+	
+	<ImageView
+		android:id="@+id/changeScaleTypeIv"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginStart="16dp"
+		android:background="@drawable/round_black_bg"
+		android:padding="6dp"
+		android:src="@drawable/ic_scale_type"
+		app:layout_constraintBottom_toBottomOf="@+id/changeRender"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toEndOf="@+id/changeRender"
+		app:layout_constraintTop_toTopOf="@+id/changeRender"
+		app:layout_constraintWidth_percent="0.1" />
+	
+	<ProgressBar
+		android:id="@+id/progressBar"
+		style="@android:style/Widget.ProgressBar.Horizontal"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginBottom="20dp"
+		app:layout_constraintBottom_toTopOf="@+id/bottom_panel_bg"
+		app:layout_constraintDimensionRatio="h, 635:10"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintWidth_percent="0.6" />
+	
+	<TextView
+		android:id="@+id/textView2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="TextView"
+		tools:layout_editor_absoluteX="337dp"
+		tools:layout_editor_absoluteY="640dp" />
+	
+	<TextView
+		android:id="@+id/textView3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="TextView"
+		tools:layout_editor_absoluteX="16dp"
+		tools:layout_editor_absoluteY="640dp" />
+	
+	
+	<!--	bottom控制栏-->
+	<View
+		android:id="@+id/bottom_panel_bg"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:background="@android:color/background_dark"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHeight_percent="0.08"
+		app:layout_constraintStart_toStartOf="parent" />
+	
+	<ImageView
+		android:id="@+id/playPauseIv"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintEnd_toEndOf="@id/bottom_panel_bg"
+		app:layout_constraintStart_toStartOf="@id/bottom_panel_bg"
+		app:layout_constraintTop_toTopOf="@+id/bottom_panel_bg"
+		app:layout_constraintWidth_percent="0.1"
+		app:srcCompat="@drawable/ic_play" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
