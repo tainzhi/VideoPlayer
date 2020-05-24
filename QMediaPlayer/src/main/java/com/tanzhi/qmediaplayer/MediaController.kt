@@ -1,11 +1,9 @@
 package com.tanzhi.qmediaplayer
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.view.ViewGroup
 
 /**
  * @author:      tainzhi
@@ -14,11 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
  * @description: 播放控制器, 添加控制按钮, 控制[VideoView]播放
  **/
 
-class MediaController @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+class MediaController(val context: Context) {
 
-    private lateinit var root: ConstraintLayout
+    private lateinit var root: ViewGroup
     private var isShowing = false
 
     lateinit var videoView: VideoView
@@ -27,10 +23,10 @@ class MediaController @JvmOverloads constructor(
         const val DefaultTimeout = 3000
     }
 
-    fun setParentView(parent: ConstraintLayout) {
+    fun setParentView(parent: ViewGroup) {
         root = parent
         val content = makeControllerView()
-        parent.addView(content, ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+        parent.addView(content, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
     private fun makeControllerView() : View{
