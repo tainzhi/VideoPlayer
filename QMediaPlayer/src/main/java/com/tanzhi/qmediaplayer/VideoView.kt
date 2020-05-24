@@ -86,7 +86,7 @@ class VideoView @JvmOverloads constructor(
                 setFullScreen()
         }
 
-    var aspectRatio = Constant.AspectRatio.AR_ASPECT_FILL_PARENT
+    var aspectRatio = Constant.AspectRatio.AR_16_9_FIT_PARENT
         set(value) {
             field = value
             setScreenAspectRatio(value)
@@ -181,7 +181,8 @@ class VideoView @JvmOverloads constructor(
         if (iMediaPlayer != null && mediaController != null) {
             mediaController?.run {
                 videoView = this@VideoView
-                setParentView(this@VideoView.parent as ConstraintLayout)
+                // setParentView(this@VideoView.parent as ConstraintLayout)
+                setParentView(this@VideoView as ViewGroup)
             }
 
         }
