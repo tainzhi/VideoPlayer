@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.SeekBar
 import android.widget.TextView
 
 /**
@@ -19,9 +20,14 @@ class MediaController(val context: Context) {
     private lateinit var root: ViewGroup
     var isShowing = false
 
+    private var isDragging = false
+
     lateinit var videoView: VideoView
 
     private lateinit var playPauseBtn: ImageButton
+    private lateinit var progressSeekbar: SeekBar
+    private lateinit var endTimeTv: TextView
+    private lateinit var currentTimeTv: TextView
 
     companion object {
         const val DefaultTimeout = 3000
@@ -74,6 +80,47 @@ class MediaController(val context: Context) {
 
     }
 
+    private val seekBarChangeListener = object: SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            val duration = videoView.videoDuration
+            val newPosition = duration * progress / 1000L
+            videoView.seekTo(duration * progress / 1000L)
+            currentTimeTv.text = Util.stringForTime(newPosition)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            isDragging = true
+            root.removeCallbacks(showProgress)
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            isDragging = false
+            setProgress()
+            root.post(showProgress)
+        }
+    }
+
+    private val showProgress = object :Runnable {
+        override fun run() {
+            val pos = setProgress()
+            if (!isDragging && isShowing && videoView.isPlaying) {
+                root.postDelayed(this , 1000L - (pos % 1000))
+            }
+        }
+
+    }
+
+    private fun setProgress() : Int{
+        val position = videoView.videoCurrentPosition
+        val duration = videoView.videoDuration
+        if (duration > 0) {
+            progressSeekbar.progress = 1000 * position.toInt() / duration.toInt()
+        }
+        currentTimeTv.text = Util.stringForTime(position)
+        endTimeTv.text = Util.stringForTime(duration)
+        return position.toInt()
+    }
+
     // TODO: 2020/5/23
     // private val layoutChangeListener =
     //         OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
@@ -82,5 +129,6 @@ class MediaController(val context: Context) {
     //                 windowManager.updateViewLayout(decor, decorLayoutParams)
     //             }
     //         }
+
 
 }

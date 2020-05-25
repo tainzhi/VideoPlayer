@@ -57,6 +57,8 @@ class VideoView @JvmOverloads constructor(
     var videoSarDen = 0
 
     var videoTitle = ""
+    var videoCurrentPosition = iMediaPlayer?.currentPosition ?: 0
+    var videoDuration = iMediaPlayer?.duration ?: 0
 
     var videoRotationDegree = 0
 
@@ -263,6 +265,9 @@ class VideoView @JvmOverloads constructor(
         iMediaPlayer?.pause()
     }
 
+    fun seekTo(progress: Long) {
+        iMediaPlayer?.seekTo(progress)
+    }
 
     fun onPrepared() {
         Log.i(TAG, "onPrepared ")
