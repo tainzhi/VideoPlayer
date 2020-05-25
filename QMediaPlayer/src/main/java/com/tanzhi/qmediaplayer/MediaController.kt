@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 
 /**
  * @author:      tainzhi
@@ -15,9 +17,11 @@ import android.view.ViewGroup
 class MediaController(val context: Context) {
 
     private lateinit var root: ViewGroup
-    private var isShowing = false
+    var isShowing = false
 
     lateinit var videoView: VideoView
+
+    private lateinit var playPauseBtn: ImageButton
 
     companion object {
         const val DefaultTimeout = 3000
@@ -38,7 +42,28 @@ class MediaController(val context: Context) {
     }
 
     private fun initControllView(view: View) {
+        view.findViewById<TextView>(R.id.videoTitleTv).text = videoView.videoTitle
+        playPauseBtn = view.findViewById<ImageButton>(R.id.playPauseIv)
+        playPauseBtn.setOnClickListener {
+            doPausePause()
+        }
+        updatePausePlay()
+    }
 
+    private fun updatePausePlay() {
+        if (videoView.isPlaying) {
+            playPauseBtn.setImageResource(R.drawable.ic_play)
+        } else {
+            playPauseBtn.setImageResource(R.drawable.ic_pause)
+        }
+    }
+
+    private fun doPausePause() {
+        if (videoView.isPlaying) {
+            videoView.start()
+        } else {
+            videoView.pause()
+        }
     }
 
     fun hide() {
