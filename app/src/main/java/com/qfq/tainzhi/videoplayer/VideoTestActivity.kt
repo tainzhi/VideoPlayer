@@ -24,12 +24,15 @@ class VideoTestActivity : AppCompatActivity() {
         val intent = intent
         val mVideoUri = intent.data
         val bundle = intent.extras
-        val mVideoTitle = bundle!!.getString(VIDEO_NAME)
+        var mVideoTitle = bundle!!.getString(VIDEO_NAME)
         val mVideoDuration = bundle.getLong(VIDEO_DURATION, 0)
         val mVideoProgress = bundle.getInt(VIDEO_PROGRESS, 0)
-        videoView.renderType = Constant.RenderType.SURFACE_VIEW
-        videoView.startFullScreenDirectly(this, mVideoUri!!)
-        videoView.mediaController = MediaController(this)
+        videoView.run {
+            videoTitle = mVideoTitle!!
+            renderType = Constant.RenderType.SURFACE_VIEW
+            startFullScreenDirectly(this@VideoTestActivity, mVideoUri!!)
+            mediaController = MediaController(this@VideoTestActivity)
+        }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         autoFullScreenListener = AutoFullScreenListener(videoView)
     }

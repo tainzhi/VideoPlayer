@@ -9,11 +9,8 @@ import android.hardware.SensorManager
 import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
-import android.view.Gravity
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_ERROR
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_IDLE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PAUSE
@@ -59,6 +56,8 @@ class VideoView @JvmOverloads constructor(
     var videoSarNum = 0
     var videoSarDen = 0
 
+    var videoTitle = ""
+
     var videoRotationDegree = 0
 
     private var screenOrientation = 0
@@ -91,6 +90,8 @@ class VideoView @JvmOverloads constructor(
             field = value
             setScreenAspectRatio(value)
         }
+
+    var isPlaying = iMediaPlayer?.isPlaying ?: false
 
     // 播放器状态
     private var state = STATE_IDLE
@@ -254,12 +255,19 @@ class VideoView @JvmOverloads constructor(
         fullScreenHideAll(context)
     }
 
+    fun start() {
+        iMediaPlayer?.start()
+    }
+
+    fun pause() {
+        iMediaPlayer?.pause()
+    }
 
 
     fun onPrepared() {
         Log.i(TAG, "onPrepared ")
         state = STATE_PREPARED
-        iMediaPlayer?.start()
+        start()
         state = STATE_PLAYING
     }
 
@@ -327,7 +335,71 @@ class VideoView @JvmOverloads constructor(
         holder.bindToMediaPlayer(mp)
     }
 
-    private val mSHCallback = object: IRenderView.IRenderCallback {
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN &&
+                isInPlaybackState() &&
+                mediaController != null
+        ) {
+            toggleMediaControllerVisibility()
+        }
+        return super.onTouchEvent(event)
+    }
+
+    private fun toggleMediaControllerVisibility() {
+        if (mediaController!!.isShowing) {
+            mediaController!!.hide()
+        } else {
+            mediaController!!.show()
+        }
+    }
+
+
+    private fun isInPlaybackState() = iMediaPlayer != null &&
+            state != Constant.PlayState.STATE_ERROR &&
+            state != Constant.PlayState.STATE_IDLE &&
+            state != Constant.PlayState.STATE_PREPARING
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        val isKeyCodeSupported = keyCode != KeyEvent.KEYCODE_BACK &&
+                keyCode != KeyEvent.KEYCODE_VOLUME_UP &&
+                keyCode != KeyEvent.KEYCODE_VOLUME_DOWN &&
+                keyCode != KeyEvent.KEYCODE_VOLUME_MUTE &&
+                keyCode != KeyEvent.KEYCODE_MENU &&
+                keyCode != KeyEvent.KEYCODE_CALL &&
+                keyCode != KeyEvent.KEYCODE_ENDCALL
+        if (isInPlaybackState() && isKeyCodeSupported && mediaController != null) {
+            if (keyCode == KeyEvent.KEYCODE_HEADSETHOOK ||
+                    keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+                if (iMediaPlayer!!.isPlaying) {
+                    pause()
+                    mediaController!!.show()
+                } else {
+                    iMediaPlayer?.start()
+                    mediaController!!.hide()
+                }
+                return true
+            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
+                if (!iMediaPlayer!!.isPlaying) {
+                    start()
+                    mediaController!!.hide()
+                }
+                return true
+            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP
+                    || keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
+                if (iMediaPlayer!!.isPlaying) {
+                    pause()
+                    mediaController!!.show()
+                }
+                return true
+            } else {
+                toggleMediaControllerVisibility()
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    private val mSHCallback = object : IRenderView.IRenderCallback {
         override fun onSurfaceCreated(holder: IRenderView.ISurfaceHolder, width: Int, height: Int) {
             if (holder.renderView != mRenderView) {
                 Log.e(TAG, "onSurfaceCreated: unmatched render callback\n")
