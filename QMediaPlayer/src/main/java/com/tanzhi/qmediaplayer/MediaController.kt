@@ -49,26 +49,22 @@ class MediaController(val context: Context) {
 
     private fun initControllView(view: View) {
         view.findViewById<TextView>(R.id.videoTitleTv).text = videoView.videoTitle
-        playPauseBtn = view.findViewById<ImageButton>(R.id.playPauseIv)
+        playPauseBtn = view.findViewById<ImageButton>(R.id.playPauseBtn)
         playPauseBtn.setOnClickListener {
-            doPausePause()
+            doPlayPause()
         }
-        updatePausePlay()
+        view.findViewById<SeekBar>(R.id.progressBar).setOnSeekBarChangeListener(seekBarChangeListener)
+        currentTimeTv = view.findViewById(R.id.currentTimeTv)
+        endTimeTv = view.findViewById(R.id.endTimeTv)
     }
 
-    private fun updatePausePlay() {
+    private fun doPlayPause() {
         if (videoView.isPlaying) {
-            playPauseBtn.setImageResource(R.drawable.ic_play)
-        } else {
-            playPauseBtn.setImageResource(R.drawable.ic_pause)
-        }
-    }
-
-    private fun doPausePause() {
-        if (videoView.isPlaying) {
-            videoView.start()
-        } else {
             videoView.pause()
+            playPauseBtn.setImageResource(R.drawable.ic_pause)
+        } else {
+            videoView.start()
+            playPauseBtn.setImageResource(R.drawable.ic_play)
         }
     }
 
