@@ -40,8 +40,8 @@
 		app:layout_constraintStart_toEndOf="@+id/backIv"
 		app:layout_constraintTop_toTopOf="@+id/backIv" />
 	
-	<ImageView
-		android:id="@+id/changeRender"
+	<ImageButton
+		android:id="@+id/changeRenderBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginStart="16dp"
@@ -54,61 +54,67 @@
 		app:layout_constraintTop_toBottomOf="@id/top_panel_bg"
 		app:layout_constraintWidth_percent="0.1" />
 	
-	<ImageView
-		android:id="@+id/changePlayerIv"
+	<ImageButton
+		android:id="@+id/changePlayerBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginStart="16dp"
 		android:background="@drawable/round_black_bg"
 		android:padding="6dp"
 		android:src="@drawable/ic_change_player"
-		app:layout_constraintBottom_toBottomOf="@+id/changeScaleTypeIv"
+		app:layout_constraintBottom_toBottomOf="@+id/changeScaleTypeBtn"
 		app:layout_constraintDimensionRatio="1:1"
-		app:layout_constraintStart_toEndOf="@+id/changeScaleTypeIv"
-		app:layout_constraintTop_toTopOf="@+id/changeScaleTypeIv"
+		app:layout_constraintStart_toEndOf="@+id/changeScaleTypeBtn"
+		app:layout_constraintTop_toTopOf="@+id/changeScaleTypeBtn"
 		app:layout_constraintWidth_percent="0.1" />
 	
-	<ImageView
-		android:id="@+id/changeScaleTypeIv"
+	<ImageButton
+		android:id="@+id/changeScaleTypeBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginStart="16dp"
 		android:background="@drawable/round_black_bg"
 		android:padding="6dp"
 		android:src="@drawable/ic_scale_type"
-		app:layout_constraintBottom_toBottomOf="@+id/changeRender"
+		app:layout_constraintBottom_toBottomOf="@+id/changeRenderBtn"
 		app:layout_constraintDimensionRatio="1:1"
-		app:layout_constraintStart_toEndOf="@+id/changeRender"
-		app:layout_constraintTop_toTopOf="@+id/changeRender"
+		app:layout_constraintStart_toEndOf="@+id/changeRenderBtn"
+		app:layout_constraintTop_toTopOf="@+id/changeRenderBtn"
 		app:layout_constraintWidth_percent="0.1" />
 	
-	<ProgressBar
+	<SeekBar
 		android:id="@+id/progressBar"
-		style="@android:style/Widget.ProgressBar.Horizontal"
+		style="@style/PlayProgress"
 		android:layout_width="0dp"
-		android:layout_height="0dp"
+		android:layout_height="wrap_content"
+		android:maxHeight="3dp"
 		android:layout_marginBottom="20dp"
+		android:thumb="@drawable/round_black_bg"
+		android:thumbTint="?attr/colorPrimary"
+		tools:progress="50"
 		app:layout_constraintBottom_toTopOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="h, 635:10"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintWidth_percent="0.6" />
+		app:layout_constraintWidth_percent="0.65" />
 	
 	<TextView
-		android:id="@+id/textView2"
+		android:id="@+id/endTimeTv"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="TextView"
-		tools:layout_editor_absoluteX="337dp"
-		tools:layout_editor_absoluteY="640dp" />
+		tools:text="1:60:59"
+		app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+		app:layout_constraintStart_toEndOf="@+id/progressBar"
+		app:layout_constraintTop_toTopOf="@+id/progressBar" />
 	
 	<TextView
-		android:id="@+id/textView3"
+		android:id="@+id/currentTimeTv"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="TextView"
-		tools:layout_editor_absoluteX="16dp"
-		tools:layout_editor_absoluteY="640dp" />
+		tools:text="00:38"
+		app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+		app:layout_constraintEnd_toStartOf="@+id/progressBar"
+		app:layout_constraintTop_toTopOf="@+id/progressBar" />
 	
 	
 	<!--	bottom控制栏-->
@@ -122,16 +128,18 @@
 		app:layout_constraintHeight_percent="0.08"
 		app:layout_constraintStart_toStartOf="parent" />
 	
-	<ImageView
-		android:id="@+id/playPauseIv"
+	<ImageButton
+		android:id="@+id/playPauseBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
+		android:background="@android:color/transparent"
 		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="@id/bottom_panel_bg"
 		app:layout_constraintStart_toStartOf="@id/bottom_panel_bg"
 		app:layout_constraintTop_toTopOf="@+id/bottom_panel_bg"
 		app:layout_constraintWidth_percent="0.1"
+		android:scaleType="fitXY"
 		app:srcCompat="@drawable/ic_play" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

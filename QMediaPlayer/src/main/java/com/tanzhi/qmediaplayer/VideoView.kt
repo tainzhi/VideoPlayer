@@ -93,7 +93,10 @@ class VideoView @JvmOverloads constructor(
             setScreenAspectRatio(value)
         }
 
-    var isPlaying = iMediaPlayer?.isPlaying ?: false
+    var isPlaying = false
+        get() {
+            return iMediaPlayer?.isPlaying ?: false
+        }
 
     // 播放器状态
     private var state = STATE_IDLE
