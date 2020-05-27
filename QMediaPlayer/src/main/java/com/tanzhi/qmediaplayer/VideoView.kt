@@ -98,7 +98,7 @@ class VideoView @JvmOverloads constructor(
                 setFullScreen()
         }
 
-    var aspectRatio = Constant.AspectRatio.AR_16_9_FIT_PARENT
+    var aspectRatio = Constant.AspectRatio.AR_ASPECT_FILL_PARENT
         set(value) {
             field = value
             setScreenAspectRatio(value)
@@ -299,7 +299,8 @@ class VideoView @JvmOverloads constructor(
     }
 
     fun onVideoSizeChanged(width: Int, height: Int) {
-        setScreenOrientation(width, height)
+        // FIXME: 2020/5/27  
+        // setScreenOrientation(width, height)
         videoWidth = width
         videoHeight = height
         if (width != 0 && height != 0) {
