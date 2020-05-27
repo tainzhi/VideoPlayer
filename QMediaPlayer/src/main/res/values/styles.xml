@@ -3,4 +3,17 @@
 	<style name="PlayProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
 		<item name="android:progressDrawable">@drawable/play_progress_drawable</item>
 	</style>
+	
+	<style name="PlayDialog" parent="@android:style/Theme.Dialog">
+		
+		<item name="android:windowBackground">@android:color/transparent</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowAnimationStyle">@style/DialogToastAnim</item>
+		<item name="android:backgroundDimEnabled">false</item>
+	</style>
+	
+	<style name="DialogToastAnim" parent="@android:style/Animation">
+		<item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+		<item name="android:windowExitAnimation">@android:anim/fade_out</item>
+	</style>
 </resources>
