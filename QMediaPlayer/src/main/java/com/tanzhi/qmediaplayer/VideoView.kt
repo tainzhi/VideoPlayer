@@ -6,6 +6,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.media.AudioManager
 import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
@@ -41,6 +42,14 @@ class VideoView @JvmOverloads constructor(
             attachMediaController()
         }
 
+    private val audioMediaController by lazy {
+        (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).apply {
+            requestAudioFocus(onAudioChangeListener,
+                AudioManager.STREAM_MUSIC,
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+        }
+    }
+
     // 上一次通过翻转屏幕, 自动全屏时间
     var lastAutoFullScreenTime = 0
 
@@ -57,6 +66,8 @@ class VideoView @JvmOverloads constructor(
     var videoSarDen = 0
 
     var videoTitle = ""
+
+    // FIXME: 2020/5/27 最好添加判断, 只要在播放时才返回当前进度
     var videoCurrentPosition = iMediaPlayer?.currentPosition ?: 0
     var videoDuration = iMediaPlayer?.duration ?: 0
 
@@ -188,7 +199,7 @@ class VideoView @JvmOverloads constructor(
             mediaController?.run {
                 videoView = this@VideoView
                 // setParentView(this@VideoView.parent as ConstraintLayout)
-                setParentView(this@VideoView as ViewGroup)
+                setParentView(this@VideoView.parent as ViewGroup)
             }
 
         }
@@ -350,7 +361,10 @@ class VideoView @JvmOverloads constructor(
         ) {
             toggleMediaControllerVisibility()
         }
-        return super.onTouchEvent(event)
+        if (mediaController?.isShowing == true) {
+            mediaController?.dispathTouchEvent(event)
+        }
+        return false
     }
 
     private fun toggleMediaControllerVisibility() {
@@ -432,6 +446,19 @@ class VideoView @JvmOverloads constructor(
 
         override fun onSurfaceDestroyed(holder: IRenderView.ISurfaceHolder) {
             logD()
+        }
+    }
+
+    // FIXME: 2020/5/27 AudioManager
+    private val onAudioChangeListener = object: AudioManager.OnAudioFocusChangeListener {
+        override fun onAudioFocusChange(focusChange: Int) {
+            when(focusChange) {
+                // FIXME: 2020/5/27
+                // AudioManager.AUDIOFOCUS_GAIN, AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> Unit
+                // AudioManager.AUDIOFOCUS_LOSS -> {
+                //     releaseAllVideos()
+                // }
+            }
         }
     }
 }

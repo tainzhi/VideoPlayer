@@ -45,7 +45,6 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
                 MediaStore.Video.Media._ID,
                 MediaStore.Video.Media.DATA,
                 MediaStore.Video.Media.SIZE,
-				MediaStore.Video.Media.ORIENTATION,
                 MediaStore.Video.Media.TITLE,
                 MediaStore.Video.Media.DURATION,
                 MediaStore.Video.Media.RESOLUTION,
@@ -76,8 +75,7 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
                     cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
             String resolution =
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.RESOLUTION));
-            String orientation =
-					cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ORIENTATION));
+            String orientation = "0";
             String date_added =
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_ADDED));
             String date_modified =

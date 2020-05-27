@@ -1,12 +1,14 @@
 package com.tanzhi.qmediaplayer
 
+import android.app.Dialog
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.media.AudioManager
+import android.provider.Settings
+import android.view.*
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
+import kotlin.math.abs
 
 /**
  * @author:      tainzhi
@@ -18,9 +20,15 @@ import android.widget.TextView
 class MediaController(val context: Context) {
 
     private lateinit var root: ViewGroup
-    var isShowing = false
 
+    // 当前MediaController是否显示
+    var isShowing = true
+
+    // 是否在拖动进度条
     private var isDragging = false
+
+    var parentWidth = 0
+    var parentHeight = 0
 
     lateinit var videoView: VideoView
 
@@ -29,22 +37,31 @@ class MediaController(val context: Context) {
     private lateinit var endTimeTv: TextView
     private lateinit var currentTimeTv: TextView
 
+    private val audioManager by lazy {
+        (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager)
+    }
+
     companion object {
         const val DefaultTimeout = 3000
+
+        // 滑动灵敏度
+        const val MOVE_DETECT_THRESHOLD = 80
     }
 
     fun setParentView(parent: ViewGroup) {
         root = parent
-        val content = makeControllerView()
-        parent.addView(content, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        parentWidth = parent.width
+        parentHeight = parent.height
+        val contentView = makeControllerView().apply { setOnTouchListener(onTouchListener) }
+        parent.addView(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    private fun makeControllerView() : View{
+    private fun makeControllerView() : View {
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         // TODO: 2020/5/23 orientaion inflate port or land
-        val root = inflate.inflate(R.layout.media_controller_port, null)
-        initControllView(root)
-        return root
+        val contentView = inflate.inflate(R.layout.media_controller_port, null)
+        initControllView(contentView)
+        return contentView
     }
 
     private fun initControllView(view: View) {
@@ -76,7 +93,191 @@ class MediaController(val context: Context) {
 
     }
 
-    private val seekBarChangeListener = object: SeekBar.OnSeekBarChangeListener {
+    fun dispathTouchEvent(event: MotionEvent) {
+        val x = event.x
+        val y = event.y
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                downX = event.x
+                downY = event.y
+                changeVolume = false
+                changePosition = false
+                changeBrightness = false
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val deltaX = event.x - downX
+                var deltaY = event.y - downY
+                val absDeltaX = abs(deltaX)
+                val absDeltaY = abs(deltaY)
+                if (!changeVolume && !changePosition && !changeBrightness) {
+                    // 水平滑动, 快进或者快退视频
+                    if (absDeltaX > absDeltaY && absDeltaX >= MOVE_DETECT_THRESHOLD) {
+                        changePosition = true
+                        gestureDownPosition = videoView.videoCurrentPosition
+                    }
+                    // 竖直滑动, 改变亮度或者音量
+                    else if (absDeltaX < absDeltaY && absDeltaY >= MOVE_DETECT_THRESHOLD) {
+                        // 左边改变亮度
+                        if (downX < parentWidth / 2) {
+                            changeBrightness = true
+                            val lp = Util.getWindow(context).attributes
+                            if (lp.screenBrightness < 0) {
+                                try {
+                                    gestureDownBrightness = Settings.System.getFloat(context.contentResolver, Settings.System.SCREEN_BRIGHTNESS)
+                                } catch (e: Settings.SettingNotFoundException) {
+                                    e.printStackTrace()
+                                }
+                            } else {
+                                gestureDownBrightness = lp.screenBrightness * 255
+                            }
+                        } else {
+                            changeVolume = true
+                            gestureDownVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                        }
+                    }
+                }
+                if (changePosition) {
+                    // TODO: 2020/5/27
+                }
+                if (changeBrightness) {
+                    // TODO: 2020/5/27
+                }
+                if (changeVolume) {
+                    deltaY = -deltaY
+                    val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                    val deltaVolume = maxVolume * deltaY * 3 / parentHeight
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (gestureDownVolume + deltaVolume).toInt(), 0)
+                    val volumePercent = gestureDownVolume * 100 / maxVolume + deltaY * 3 * 100 / parentHeight
+                    showVolumeDialog(-deltaY, volumePercent)
+                }
+
+            }
+            MotionEvent.ACTION_UP -> {
+                dismissVolumeDialog()
+            }
+        }
+    }
+
+    // private val onTouchListener = View.OnTouchListener { v, event ->
+    //     val x = event.x
+    //     val y = event.y
+    //     when(event.action) {
+    //         MotionEvent.ACTION_DOWN -> {
+    //         }
+    //     }
+    //     false
+    // }
+
+    var downX = 0f
+    var downY = 0f
+    var changeVolume = false
+    var changePosition = false
+    var changeBrightness = false
+    var gestureDownPosition = 0L // 触摸屏幕时的视频播放进度
+    var gestureDownBrightness = 0f // 触摸屏幕时的视频亮度
+    var gestureDownVolume = 0 // 触摸屏幕时的声音大小
+    private val onTouchListener = object : View.OnTouchListener {
+        override fun onTouch(v: View, event: MotionEvent): Boolean {
+            val x = event.x
+            val y = event.y
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    downX = event.x
+                    downY = event.y
+                    changeVolume = false
+                    changePosition = false
+                    changeBrightness = false
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val deltaX = event.x - downX
+                    var deltaY = event.y - downY
+                    val absDeltaX = abs(deltaX)
+                    val absDeltaY = abs(deltaY)
+                    if (!changeVolume && !changePosition && !changeBrightness) {
+                        // 水平滑动, 快进或者快退视频
+                        if (absDeltaX > absDeltaY && absDeltaX >= MOVE_DETECT_THRESHOLD) {
+                            changePosition = true
+                            gestureDownPosition = videoView.videoCurrentPosition
+                        }
+                        // 竖直滑动, 改变亮度或者音量
+                        else if (absDeltaX < absDeltaY && absDeltaY >= MOVE_DETECT_THRESHOLD) {
+                            // 左边改变亮度
+                            if (downX < parentWidth / 2) {
+                                changeBrightness = true
+                                val lp = Util.getWindow(context).attributes
+                                if (lp.screenBrightness < 0) {
+                                    try {
+                                        gestureDownBrightness = Settings.System.getFloat(context.contentResolver, Settings.System.SCREEN_BRIGHTNESS)
+                                    } catch (e: Settings.SettingNotFoundException) {
+                                        e.printStackTrace()
+                                    }
+                                } else {
+                                    gestureDownBrightness = lp.screenBrightness * 255
+                                }
+                            } else {
+                                changeVolume = true
+                                gestureDownVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                            }
+                        }
+                    }
+                    if (changePosition) {
+                        // TODO: 2020/5/27
+                    }
+                    if (changeBrightness) {
+                        // TODO: 2020/5/27
+                    }
+                    if (changeVolume) {
+                        deltaY = -deltaY
+                        val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                        val deltaVolume = maxVolume * deltaY * 3 / parentHeight
+                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (gestureDownVolume + deltaVolume).toInt(), 0)
+                        val volumePercent = gestureDownVolume * 100 / maxVolume + deltaY * 3 * 100 / parentHeight
+                        showVolumeDialog(-deltaY, volumePercent)
+                    }
+
+                }
+                MotionEvent.ACTION_UP -> {
+                    dismissVolumeDialog()
+                }
+            }
+            return false
+        }
+    }
+
+    private var volumeDialog: Dialog? = null
+    private fun showVolumeDialog(deltaY: Float, volumePercent: Float) {
+        if (volumeDialog == null) {
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
+            volumeDialog = createDialogWithView(view)
+        }
+        if (volumeDialog!!.isShowing) volumeDialog?.show()
+    }
+
+    private fun dismissVolumeDialog() {
+        volumeDialog?.dismiss()
+    }
+
+    private var brightnessDialog: Dialog? = null
+    private fun showBrightnessDialog(deltaY: Float, v: Float) {
+
+    }
+
+    private fun createDialogWithView(view: View): Dialog {
+        val dialog = Dialog(context, R.style.PlayDialog)
+        dialog.setContentView(view)
+        val window = dialog.window?.apply {
+            addFlags(Window.FEATURE_ACTION_BAR)
+            addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
+            addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+        val lp = window?.attributes
+        lp?.gravity = Gravity.CENTER
+        window?.attributes = lp
+        return dialog
+    }
+
+    private val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             val duration = videoView.videoDuration
             val newPosition = duration * progress / 1000L
