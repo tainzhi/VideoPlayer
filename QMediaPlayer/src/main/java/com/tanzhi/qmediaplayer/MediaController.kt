@@ -5,9 +5,7 @@ import android.content.Context
 import android.media.AudioManager
 import android.provider.Settings
 import android.view.*
-import android.widget.ImageButton
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import kotlin.math.abs
 
 /**
@@ -53,7 +51,9 @@ class MediaController(val context: Context) {
         parentWidth = parent.width
         parentHeight = parent.height
         val contentView = makeControllerView().apply { setOnTouchListener(onTouchListener) }
-        parent.addView(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        val decorView = Util.scanForActivity(context)!!.window.decorView
+        (decorView as ViewGroup).addView(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        // root.addView(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
     private fun makeControllerView() : View {
@@ -158,16 +158,6 @@ class MediaController(val context: Context) {
         }
     }
 
-    // private val onTouchListener = View.OnTouchListener { v, event ->
-    //     val x = event.x
-    //     val y = event.y
-    //     when(event.action) {
-    //         MotionEvent.ACTION_DOWN -> {
-    //         }
-    //     }
-    //     false
-    // }
-
     var downX = 0f
     var downY = 0f
     var changeVolume = false
@@ -240,17 +230,37 @@ class MediaController(val context: Context) {
                     dismissVolumeDialog()
                 }
             }
-            return false
+            return true
         }
     }
 
     private var volumeDialog: Dialog? = null
+    private lateinit var dialogVolumeIv: ImageView
+    private lateinit var dialogVolumeTv: TextView
+    private lateinit var dialogVolumeProgressBar: ProgressBar
     private fun showVolumeDialog(deltaY: Float, volumePercent: Float) {
         if (volumeDialog == null) {
             val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
+            dialogVolumeIv = view.findViewById<ImageView>(R.id.dialogVolumeIv)
+            dialogVolumeTv = view.findViewById<TextView>(R.id.dialogVolumeTv)
+            dialogVolumeProgressBar = view.findViewById<ProgressBar>(R.id.dialogVolumeProgressBar)
+
             volumeDialog = createDialogWithView(view)
         }
-        if (volumeDialog!!.isShowing) volumeDialog?.show()
+        if (volumePercent <= 0) {
+            dialogVolumeIv.setImageResource(R.drawable.ic_volume_off)
+        } else {
+            dialogVolumeIv.setImageResource(R.drawable.ic_volume)
+        }
+        var volume = 0
+        if (volumePercent > 100) {
+            volume = 100
+        } else if (volumePercent < 0) {
+            volume = 0
+        }
+        dialogVolumeTv.text = "${volume}%"
+        dialogVolumeProgressBar.progress = volume
+        if (!volumeDialog!!.isShowing) volumeDialog?.show()
     }
 
     private fun dismissVolumeDialog() {
@@ -265,15 +275,13 @@ class MediaController(val context: Context) {
     private fun createDialogWithView(view: View): Dialog {
         val dialog = Dialog(context, R.style.PlayDialog)
         dialog.setContentView(view)
-        val window = dialog.window?.apply {
+        dialog.window?.run {
             addFlags(Window.FEATURE_ACTION_BAR)
             addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
             addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.CENTER)
         }
-        val lp = window?.attributes
-        lp?.gravity = Gravity.CENTER
-        window?.attributes = lp
         return dialog
     }
 
