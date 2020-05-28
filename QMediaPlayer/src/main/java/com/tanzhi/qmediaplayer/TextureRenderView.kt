@@ -12,7 +12,6 @@ import android.view.TextureView
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import com.orhanobut.logger.Logger
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost
 import java.lang.ref.WeakReference
@@ -94,9 +93,9 @@ class TextureRenderView : TextureView, IRenderView {
         surfaceCallback!!.removeReanderCallback(callback)
     }
 
-    //-----------------
-// TextureViewHolder
-//-----------------
+    // -----------------
+    // TextureViewHolder
+    // -----------------
     val surfaceHolder: IRenderView.ISurfaceHolder
         get() = InternalSurfaceHolder(this, surfaceCallback!!.surfaceTexture, surfaceCallback)
 
@@ -118,7 +117,6 @@ class TextureRenderView : TextureView, IRenderView {
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        Logger.d(String.format("getWidth=%d getHeight=%d", width, height))
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -240,7 +238,6 @@ class TextureRenderView : TextureView, IRenderView {
         }
 
         override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, i: Int, i1: Int) {
-            Logger.d("")
             this.surfaceTexture = surfaceTexture
             isFormatChanged = false
             width = 0
@@ -279,8 +276,8 @@ class TextureRenderView : TextureView, IRenderView {
 
         override fun onSurfaceTextureUpdated(surfaceTexture: SurfaceTexture) {}
         //-------------------------
-// ISurfaceTextureHost
-//-------------------------
+    // ISurfaceTextureHost
+    //-------------------------
         override fun releaseSurfaceTexture(surfaceTexture: SurfaceTexture) {
             if (surfaceTexture == null) {
                 Log.d(TAG, "releaseSurfaceTexture: null")
