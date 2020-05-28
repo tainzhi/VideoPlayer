@@ -214,7 +214,19 @@ class MediaController(val context: Context) {
                         // TODO: 2020/5/27
                     }
                     if (changeBrightness) {
-                        // TODO: 2020/5/27
+                        deltaY = -deltaY
+                        val deltaBrightness = 255 * deltaY * 3 / parentHeight
+                        val params = Util.getWindow(context).attributes
+                        if ((gestureDownBrightness + deltaBrightness) / 255 >= 1) {
+                            params.screenBrightness = 1f
+                        } else if((gestureDownBrightness + deltaBrightness) / 255 <= 0) {
+                            params.screenBrightness = 0.01f
+                        } else {
+                            params.screenBrightness =  (gestureDownBrightness + deltaBrightness) / 255
+                        }
+                        Util.getWindow(context).attributes = params
+                        val brightnessPercent = (gestureDownBrightness * 100 / 255 + deltaY * 3 * 100 /parentHeight)
+                        showBrightnessDialog(brightnessPercent.toInt())
                     }
                     if (changeVolume) {
                         deltaY = -deltaY
@@ -227,6 +239,8 @@ class MediaController(val context: Context) {
 
                 }
                 MotionEvent.ACTION_UP -> {
+                    dismissProgressDialog()
+                    dismissBrightnessDialog()
                     dismissVolumeDialog()
                 }
             }
@@ -268,9 +282,43 @@ class MediaController(val context: Context) {
     }
 
     private var brightnessDialog: Dialog? = null
-    private fun showBrightnessDialog(deltaY: Float, v: Float) {
+    private fun showBrightnessDialog(brightnessPercent: Int) {
+        if (brightnessDialog == null) {
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
+            // FIXME: 2020/5/28
+        }
+        if (!brightnessDialog!!.isShowing) {
+            brightnessDialog!!.show()
+        }
+        var brightness = 0
+        if (brightnessPercent > 100) {
+            brightness = 100
+        } else if (brightnessPercent < 0) {
+            brightness = 0
+        }
 
     }
+
+    private fun dismissBrightnessDialog() {
+        brightnessDialog?.dismiss()
+    }
+
+    var progressDialog: Dialog? = null
+    private fun showProgressDialog(deltaX: Int, seekTime: String, seekTimePosition: Long, totalTime: String, totalTimeDuration: Long) {
+        if (progressDialog == null) {
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
+            // FIXME: 2020/5/28
+        }
+        if (!progressDialog!!.isShowing) {
+            progressDialog!!.show()
+        }
+        // TODO: 2020/5/28  
+    }
+
+    private fun dismissProgressDialog() {
+        progressDialog?.dismiss()
+    }
+
 
     private fun createDialogWithView(view: View): Dialog {
         val dialog = Dialog(context, R.style.PlayDialog)
