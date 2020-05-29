@@ -37,8 +37,6 @@ interface IRenderView {
          */
         fun onSurfaceCreated(holder: ISurfaceHolder, width: Int, height: Int)
 
-        fun onSurfaceCreated(surface: Surface, width: Int, height: Int)
-
         /**
          * @param holder
          * @param format could be 0

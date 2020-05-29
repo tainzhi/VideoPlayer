@@ -9,7 +9,6 @@ import android.view.SurfaceHolder
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.IMediaInterface
-import com.tanzhi.qmediaplayer.logD
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
 
@@ -20,10 +19,10 @@ import java.util.concurrent.ConcurrentHashMap
  * @description: GLSurfaceView渲染
  **/
 
-class GLRenderView: GLSurfaceView, IRenderView, GLRenderView.GLRenderViewListener {
+class GLRenderView : GLSurfaceView, IRenderView, GLRenderViewListener {
 
     private val measureHelper by lazy { MeasureHelper(this) }
-    private val surfaceCallback by lazy{ SurfaceCallback(this) }
+    private val surfaceCallback by lazy { SurfaceCallback(this) }
 
     constructor(context: Context, renderer: Renderer) : super(context) {
         setRenderer(renderer)
@@ -40,25 +39,25 @@ class GLRenderView: GLSurfaceView, IRenderView, GLRenderView.GLRenderViewListene
     // ------------------------
     override fun setVideoSize(videoWidth: Int, videoHeight: Int) {
         if (videoWidth > 0 && videoHeight > 0) {
-            measureHelper!!.setVideoSize(videoWidth, videoHeight)
+            measureHelper.setVideoSize(videoWidth, videoHeight)
             requestLayout()
         }
     }
 
     override fun setVideoSampleAspectRatio(videoSarNum: Int, videoSarDen: Int) {
         if (videoSarNum > 0 && videoSarDen > 0) {
-            measureHelper!!.setVideoSampleAspectRatio(videoSarNum, videoSarDen)
+            measureHelper.setVideoSampleAspectRatio(videoSarNum, videoSarDen)
             requestLayout()
         }
     }
 
     override fun setVideoRotation(degree: Int) {
-        measureHelper!!.setVideoRotation(degree)
+        measureHelper.setVideoRotation(degree)
         rotation = degree.toFloat()
     }
 
     override fun setAspectRatio(aspectRatio: Int) {
-        measureHelper!!.setVideoRotation(aspectRatio)
+        measureHelper.setVideoRotation(aspectRatio)
         requestLayout()
     }
 
@@ -75,7 +74,7 @@ class GLRenderView: GLSurfaceView, IRenderView, GLRenderView.GLRenderViewListene
         surfaceCallback.removerenderCallback(callback)
     }
 
-    inner class InternalSurfaceHolder(glRenderView: GLRenderView, surface: Surface): IRenderView.ISurfaceHolder {
+    inner class InternalSurfaceHolder(glRenderView: GLRenderView, surface: Surface) : IRenderView.ISurfaceHolder {
         override fun bindToMediaPlayer(mp: IMediaInterface) {
             TODO("Not yet implemented")
         }
@@ -99,29 +98,30 @@ class GLRenderView: GLSurfaceView, IRenderView, GLRenderView.GLRenderViewListene
         private var isFormatChanged = false
         private var width = 0
         private var height = 0
-        private var ownSurfaceTexture = true
-        private var willDetachFromWindow = false
-        private var didDetachFromWindow = false
         private val weakRenderView: WeakReference<GLRenderView> = WeakReference(renderView)
         private val renderCallbackMap: MutableMap<IRenderView.IRenderCallback, Any> = ConcurrentHashMap()
-        fun setOwnSurfaceTexture(ownSurfaceTexture: Boolean) {
-            this.ownSurfaceTexture = ownSurfaceTexture
-        }
 
         fun addRenderCallback(callback: IRenderView.IRenderCallback) {
             renderCallbackMap[callback] = callback
-            var surfaceHolder: IRenderView.ISurfaceHolder? = null
-            if (surfaceTexture != null) {
-                if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakRenderView.get()!!, surfaceTexture!!)
-                }
-                callback.onSurfaceCreated(surfaceHolder, width, height)
-            }
-            if (isFormatChanged) {
-                if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakRenderView.get()!!, surfaceTexture!!)
-                }
-                callback.onSurfaceChanged(surfaceHolder, 0, width, height)
+            // var surfaceHolder: IRenderView.ISurfaceHolder? = null
+            // if (surfaceTexture != null) {
+            //     if (surfaceHolder == null) {
+            //         surfaceHolder = InternalSurfaceHolder(weakRenderView.get(), surfaceTexture)
+            //     }
+            //     callback.onSurfaceCreated(surfaceHolder, width, height)
+            // }
+            // if (isFormatChanged) {
+            //     if (surfaceHolder == null) {
+            //         surfaceHolder = InternalSurfaceHolder(weakRenderView.get(), surfaceTexture)
+            //     }
+            //     callback.onSurfaceChanged(surfaceHolder, 0, width, height)
+            // }
+        }
+
+        fun postSurface(surface: Surface) {
+            for (callback in renderCallbackMap.keys) {
+                val surfaceHolder = InternalSurfaceHolder(this@GLRenderView, surface)
+                callback.onSurfaceCreated(surfaceHolder, 0, 0)
             }
         }
 
@@ -129,20 +129,10 @@ class GLRenderView: GLSurfaceView, IRenderView, GLRenderView.GLRenderViewListene
             renderCallbackMap.remove(callback)
         }
 
-
-        fun willDetachFromWindow() {
-            logD("willDetachFromWindow()")
-            willDetachFromWindow = true
-        }
-
-        fun didDetachFromWindow() {
-            logD("didDetachFromWindow()")
-            didDetachFromWindow = true
-        }
     }
 
     override fun onSurfaceAvailable(surface: Surface) {
-        TODO("Not yet implemented")
+        surfaceCallback.postSurface(surface)
     }
 
     //--------------------
