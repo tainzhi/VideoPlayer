@@ -1,7 +1,9 @@
-package com.tanzhi.qmediaplayer
+package com.tanzhi.qmediaplayer.render
 
 import android.view.View
 import android.view.View.MeasureSpec
+import com.tanzhi.qmediaplayer.Constant
+import com.tanzhi.qmediaplayer.logD
 import java.lang.ref.WeakReference
 
 /**
@@ -22,6 +24,10 @@ class MeasureHelper(view: View) {
     private var mCurrentAspectRatio: Int = Constant.AspectRatio.AR_MATCH_PARENT
     val view: View?
         get() = mWeakView?.get()
+
+    init {
+        mWeakView = WeakReference(view)
+    }
 
     fun setVideoSize(videoWidth: Int, videoHeight: Int) {
         mVideoWidth = videoWidth
@@ -156,11 +162,6 @@ class MeasureHelper(view: View) {
     fun setAspectRatio(aspectRatio: Int) {
         logD(getAspectRatioText(aspectRatio = aspectRatio))
         mCurrentAspectRatio = aspectRatio
-    }
-
-
-    init {
-        mWeakView = WeakReference(view)
     }
 
     companion object {
