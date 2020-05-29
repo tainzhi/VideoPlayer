@@ -3,7 +3,6 @@ package com.tanzhi.qmediaplayer.render
 import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.SurfaceHolder
-import android.view.View
 import com.tanzhi.qmediaplayer.IMediaInterface
 
 /**
@@ -11,7 +10,6 @@ import com.tanzhi.qmediaplayer.IMediaInterface
  * Email: qfq61@qq.com
  */
 interface IRenderView {
-    val view: View
     fun shouldWaitForResize(): Boolean
     fun setVideoSize(videoWidth: Int, videoHeight: Int)
     fun setVideoSampleAspectRatio(videoSarNum: Int, videoSarDen: Int)
@@ -38,6 +36,8 @@ interface IRenderView {
          * @param height could be 0
          */
         fun onSurfaceCreated(holder: ISurfaceHolder, width: Int, height: Int)
+
+        fun onSurfaceCreated(surface: Surface, width: Int, height: Int)
 
         /**
          * @param holder

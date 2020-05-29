@@ -37,8 +37,6 @@ class SurfaceRenderView : SurfaceView, IRenderView {
        // holder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL)
     }
 
-    override val view = this
-
     override fun shouldWaitForResize(): Boolean {
         return true
     }
@@ -76,7 +74,6 @@ class SurfaceRenderView : SurfaceView, IRenderView {
                                         override val surfaceHolder: SurfaceHolder) : IRenderView.ISurfaceHolder {
 
         override fun bindToMediaPlayer(mp: IMediaInterface) {
-            if (surfaceHolder == null) return
             when (mp) {
                 is IMediaSystem -> {
                     mp.setDisplay(surfaceHolder)
@@ -100,7 +97,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             get() = null
 
         override fun openSurface(): Surface? {
-            return surfaceHolder?.surface
+            return surfaceHolder.surface
         }
 
     }
@@ -113,7 +110,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
         surfaceCallback.removeRenderCallback(callback)
     }
 
-    private class SurfaceCallback(surfaceView: SurfaceRenderView) : SurfaceHolder.Callback {
+    inner class SurfaceCallback(surfaceView: SurfaceRenderView) : SurfaceHolder.Callback {
         private var mSurfaceHolder: SurfaceHolder? = null
         private var isFormatChanged = false
         private var format = 0
