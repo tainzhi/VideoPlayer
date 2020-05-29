@@ -1,16 +1,15 @@
-package com.tanzhi.qmediaplayer
+package com.tanzhi.qmediaplayer.render
 
 import android.content.Context
 import android.graphics.SurfaceTexture
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.tanzhi.qmediaplayer.*
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
@@ -22,9 +21,8 @@ import java.util.concurrent.ConcurrentHashMap
  * @description:
  */
 class SurfaceRenderView : SurfaceView, IRenderView {
-    private val tag = this.javaClass.simpleName
-    private val measureHelper: MeasureHelper = MeasureHelper(this)
-    private var surfaceCallback: SurfaceCallback? = null
+    private val measureHelper: MeasureHelper by lazy{ MeasureHelper(this) }
+    private val surfaceCallback: SurfaceCallback by lazy {SurfaceCallback(this) }
 
     constructor(context: Context) : super(context)
 
@@ -35,13 +33,11 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        surfaceCallback = SurfaceCallback(this)
         holder.addCallback(surfaceCallback)
        // holder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL)
     }
 
-    override val view: View
-        get() = this
+    override val view = this
 
     override fun shouldWaitForResize(): Boolean {
         return true
@@ -63,7 +59,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     }
 
     override fun setVideoRotation(degree: Int) {
-        Log.e(tag, "SurfaceView doesn't support rotation ($degree)!\n")
+        logD("degree=${degree}")
     }
 
     override fun setAspectRatio(aspectRatio: Int) {
@@ -77,7 +73,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     }
 
     private class InternalSurfaceHolder(private val surfaceRenderView: SurfaceRenderView,
-                                        override val surfaceHolder: SurfaceHolder?) : IRenderView.ISurfaceHolder {
+                                        override val surfaceHolder: SurfaceHolder) : IRenderView.ISurfaceHolder {
 
         override fun bindToMediaPlayer(mp: IMediaInterface) {
             if (surfaceHolder == null) return
@@ -110,11 +106,11 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     }
 
     override fun addRenderCallback(callback: IRenderView.IRenderCallback) {
-        surfaceCallback!!.addRenderCallback(callback)
+        surfaceCallback.addRenderCallback(callback)
     }
 
     override fun removeRenderCallback(callback: IRenderView.IRenderCallback) {
-        surfaceCallback!!.removeRenderCallback(callback)
+        surfaceCallback.removeRenderCallback(callback)
     }
 
     private class SurfaceCallback(surfaceView: SurfaceRenderView) : SurfaceHolder.Callback {
@@ -180,7 +176,7 @@ class SurfaceRenderView : SurfaceView, IRenderView {
             width = 0
             height = 0
             val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder)
+                    mSurfaceHolder!!)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceDestroyed(surfaceHolder)
             }

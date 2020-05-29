@@ -17,6 +17,9 @@ import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_IDLE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PAUSE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PLAYING
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PREPARED
+import com.tanzhi.qmediaplayer.render.IRenderView
+import com.tanzhi.qmediaplayer.render.SurfaceRenderView
+import com.tanzhi.qmediaplayer.render.TextureRenderView
 
 /**
  * Created by muqing on 2019/6/1.
@@ -53,6 +56,7 @@ class VideoView @JvmOverloads constructor(
     // 上一次通过翻转屏幕, 自动全屏时间
     var lastAutoFullScreenTime = 0
 
+    var mSurfaceHolder: IRenderView.ISurfaceHolder? = null
     private var mRenderView: IRenderView? = null
     var enableSurfaceView = true
     var enableTextureView = false
@@ -81,7 +85,7 @@ class VideoView @JvmOverloads constructor(
         }
 
     @Constant.PlayerTypeMode
-    var mediaPlayerType = Constant.PlayerType.IJK_PLAYER
+    var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
 
     var renderType = Constant.RenderType.SURFACE_VIEW
         set(@Constant.RenderTypeMode value) {
@@ -426,10 +430,11 @@ class VideoView @JvmOverloads constructor(
             if (holder.renderView != mRenderView) {
                 Log.e(TAG, "onSurfaceCreated: unmatched render callback\n")
             }
+            mSurfaceHolder = holder
             // iMediaPlayer?.let { bindSurfaceHolder(it, holder) }
             if (iMediaPlayer == null) return
             if (iMediaPlayer!!.initialized()) {
-                bindSurfaceHolder(iMediaPlayer, holder)
+                bindSurfaceHolder(iMediaPlayer, mSurfaceHolder)
             } else {
                 iMediaPlayer?.prepare()
             }
