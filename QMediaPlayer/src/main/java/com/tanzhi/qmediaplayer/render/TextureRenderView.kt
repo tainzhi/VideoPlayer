@@ -1,17 +1,16 @@
-package com.tanzhi.qmediaplayer
+package com.tanzhi.qmediaplayer.render
 
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.SurfaceTexture
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.TextureView
-import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.tanzhi.qmediaplayer.*
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost
 import java.lang.ref.WeakReference
@@ -25,94 +24,70 @@ import java.util.concurrent.ConcurrentHashMap
  */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 class TextureRenderView : TextureView, IRenderView {
-    private var measureHelper: MeasureHelper? = null
-    private var surfaceCallback: SurfaceCallback? = null
+    private val measureHelper: MeasureHelper by lazy { MeasureHelper(this) }
+    private val surfaceCallback: SurfaceCallback by lazy { SurfaceCallback(this) }
 
-    constructor(context: Context) : super(context) {
-        initView(context)
-    }
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        initView(context)
-    }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initView(context)
-    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initView(context)
-    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
-    private fun initView(context: Context) {
-        measureHelper = MeasureHelper(this)
-        surfaceCallback = SurfaceCallback(this)
+    init {
         surfaceTextureListener = surfaceCallback
     }
 
-    override val view: View
-        get() = this
+    override val view = this
 
     override fun shouldWaitForResize(): Boolean {
         return false
     }
 
-    //------------------------
-// layout & measure
-//------------------------
     override fun setVideoSize(videoWidth: Int, videoHeight: Int) {
         if (videoWidth > 0 && videoHeight > 0) {
-            measureHelper!!.setVideoSize(videoWidth, videoHeight)
+            measureHelper.setVideoSize(videoWidth, videoHeight)
             requestLayout()
         }
     }
 
     override fun setVideoSampleAspectRatio(videoSarNum: Int, videoSarDen: Int) {
         if (videoSarNum > 0 && videoSarDen > 0) {
-            measureHelper!!.setVideoSampleAspectRatio(videoSarNum, videoSarDen)
+            measureHelper.setVideoSampleAspectRatio(videoSarNum, videoSarDen)
             requestLayout()
         }
     }
 
     override fun setVideoRotation(degree: Int) {
-        measureHelper!!.setVideoRotation(degree)
+        measureHelper.setVideoRotation(degree)
         rotation = degree.toFloat()
     }
 
     override fun setAspectRatio(aspectRatio: Int) {
-        measureHelper!!.setVideoRotation(aspectRatio)
+        measureHelper.setVideoRotation(aspectRatio)
         requestLayout()
     }
 
     override fun addRenderCallback(callback: IRenderView.IRenderCallback) {
-        surfaceCallback!!.addRenderCallback(callback)
+        surfaceCallback.addRenderCallback(callback)
     }
 
     override fun removeRenderCallback(callback: IRenderView.IRenderCallback) {
-        surfaceCallback!!.removeReanderCallback(callback)
+        surfaceCallback.removeReanderCallback(callback)
     }
 
     // -----------------
     // TextureViewHolder
     // -----------------
     val surfaceHolder: IRenderView.ISurfaceHolder
-        get() = InternalSurfaceHolder(this, surfaceCallback!!.surfaceTexture, surfaceCallback)
-
-    override fun onInitializeAccessibilityEvent(event: AccessibilityEvent) {
-        super.onInitializeAccessibilityEvent(event)
-        event.className = TextureRenderView::class.java.name
-    }
-
-    override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
-        super.onInitializeAccessibilityNodeInfo(info)
-        info.className = TextureRenderView::class.java.name
-    }
+        get() = InternalSurfaceHolder(this, surfaceCallback.surfaceTexture!!, surfaceCallback)
 
     override fun onDetachedFromWindow() {
-        surfaceCallback!!.willDetachFromWindow()
+        surfaceCallback.willDetachFromWindow()
         super.onDetachedFromWindow()
-        surfaceCallback!!.didDetachFromWindow()
+        surfaceCallback.didDetachFromWindow()
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -120,8 +95,8 @@ class TextureRenderView : TextureView, IRenderView {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        measureHelper!!.doMeasure(widthMeasureSpec, heightMeasureSpec)
-        setMeasuredDimension(measureHelper!!.measuredWidth, measureHelper!!.measuredHeight)
+        measureHelper.doMeasure(widthMeasureSpec, heightMeasureSpec)
+        setMeasuredDimension(measureHelper.measuredWidth, measureHelper.measuredHeight)
         // super.onMeasure(480, 720);
     }
 
@@ -129,8 +104,8 @@ class TextureRenderView : TextureView, IRenderView {
 // Accessibility
 //--------------------
     private class InternalSurfaceHolder(private val textureRenderView: TextureRenderView,
-                                        override val surfaceTexture: SurfaceTexture?,
-                                        private val iSurfaceTextureHost: ISurfaceTextureHost?) : IRenderView.ISurfaceHolder {
+                                        override val surfaceTexture: SurfaceTexture,
+                                        private val iSurfaceTextureHost: ISurfaceTextureHost) : IRenderView.ISurfaceHolder {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         // override fun bindToMediaPlayer(mp: MediaPlayer) {
         //     if (mp == null) return
@@ -142,7 +117,7 @@ class TextureRenderView : TextureView, IRenderView {
         //     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
         //             mp is ISurfaceTextureHolder) {
         //         val textureHolder = mp as ISurfaceTextureHolder
-        //         textureRenderView.surfaceCallback!!.setOwnSurfaceTexture(false)
+        //         textureRenderView.surfaceCallback.setOwnSurfaceTexture(false)
         //         val surfaceTexture = textureHolder.surfaceTexture
         //         if (surfaceTexture != null) {
         //             textureRenderView.surfaceTexture = surfaceTexture
@@ -157,7 +132,7 @@ class TextureRenderView : TextureView, IRenderView {
         // }
         //
         // override fun bindToMediaPlayer(mp: ExoPlayer) {
-        //     (mp as SimpleExoPlayer?)!!.setVideoSurface(openSurface())
+        //     (mp as SimpleExoPlayer?).setVideoSurface(openSurface())
         // }
 
 
@@ -219,15 +194,15 @@ class TextureRenderView : TextureView, IRenderView {
             var surfaceHolder: IRenderView.ISurfaceHolder? = null
             if (surfaceTexture != null) {
                 if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakReandView.get()!!, surfaceTexture
-                            , this)
+                    surfaceHolder = InternalSurfaceHolder(weakReandView.get()!!, surfaceTexture!!,
+                            this)
                 }
                 callback.onSurfaceCreated(surfaceHolder, width, height)
             }
             if (isFormatChanged) {
                 if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakReandView.get()!!, surfaceTexture
-                            , this)
+                    surfaceHolder = InternalSurfaceHolder(weakReandView.get()!!, surfaceTexture!!,
+                            this)
                 }
                 callback.onSurfaceChanged(surfaceHolder, 0, width, height)
             }
@@ -275,52 +250,50 @@ class TextureRenderView : TextureView, IRenderView {
         }
 
         override fun onSurfaceTextureUpdated(surfaceTexture: SurfaceTexture) {}
-        //-------------------------
-    // ISurfaceTextureHost
-    //-------------------------
+
         override fun releaseSurfaceTexture(surfaceTexture: SurfaceTexture) {
             if (surfaceTexture == null) {
-                Log.d(TAG, "releaseSurfaceTexture: null")
+                logD("releaseSurfaceTexture: null")
             } else if (didDetachFromWindow) {
                 if (surfaceTexture !== this.surfaceTexture) {
-                    Log.d(TAG, "releaseSurfaceTexture: didDetachFromWindow(): release different SurfaceTexture")
+                    logD( "releaseSurfaceTexture: didDetachFromWindow(): release different SurfaceTexture")
                     surfaceTexture.release()
                 } else if (!ownSurfaceTexture) {
-                    Log.d(TAG, "releaseSurfaceTexture: didDetachFromWindow(): release detached SurfaceTexture")
+                    logD( "releaseSurfaceTexture: didDetachFromWindow(): release detached SurfaceTexture")
                     surfaceTexture.release()
                 } else {
-                    Log.d(TAG, "releaseSurfaceTexture: didDetachFromWindow(): already released by TextureView")
+                    logD( "releaseSurfaceTexture: didDetachFromWindow(): already released by TextureView")
                 }
             } else if (willDetachFromWindow) {
                 if (surfaceTexture !== this.surfaceTexture) {
-                    Log.d(TAG, "releaseSurfaceTexture: willDetachFromWindow(): release different SurfaceTexture")
+                    logD( "releaseSurfaceTexture: willDetachFromWindow(): release different SurfaceTexture")
                     surfaceTexture.release()
                 } else if (!ownSurfaceTexture) {
-                    Log.d(TAG, "releaseSurfaceTexture: willDetachFromWindow(): re-attach SurfaceTexture to TextureView")
+                    logD("releaseSurfaceTexture: willDetachFromWindow(): re-attach SurfaceTexture to TextureView")
                     setOwnSurfaceTexture(true)
                 } else {
-                    Log.d(TAG, "releaseSurfaceTexture: willDetachFromWindow(): will released by TextureView")
+                    logD("releaseSurfaceTexture: willDetachFromWindow(): will released by TextureView")
                 }
             } else {
                 if (surfaceTexture !== this.surfaceTexture) {
-                    Log.d(TAG, "releaseSurfaceTexture: alive: release different SurfaceTexture")
+                    logD("releaseSurfaceTexture: alive: release different SurfaceTexture")
                     surfaceTexture.release()
                 } else if (!ownSurfaceTexture) {
-                    Log.d(TAG, "releaseSurfaceTexture: alive: re-attach SurfaceTexture to TextureView")
+                    logD("releaseSurfaceTexture: alive: re-attach SurfaceTexture to TextureView")
                     setOwnSurfaceTexture(true)
                 } else {
-                    Log.d(TAG, "releaseSurfaceTexture: alive: will released by TextureView")
+                    logD("releaseSurfaceTexture: alive: will released by TextureView")
                 }
             }
         }
 
         fun willDetachFromWindow() {
-            Log.d(TAG, "willDetachFromWindow()")
+            logD("willDetachFromWindow()")
             willDetachFromWindow = true
         }
 
         fun didDetachFromWindow() {
-            Log.d(TAG, "didDetachFromWindow()")
+            logD("didDetachFromWindow()")
             didDetachFromWindow = true
         }
 
@@ -329,7 +302,13 @@ class TextureRenderView : TextureView, IRenderView {
         }
     }
 
-    companion object {
-        private const val TAG = "TextureRenderView"
+    override fun onInitializeAccessibilityEvent(event: AccessibilityEvent) {
+        super.onInitializeAccessibilityEvent(event)
+        event.className = TextureRenderView::class.java.name
+    }
+
+    override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
+        super.onInitializeAccessibilityNodeInfo(info)
+        info.className = TextureRenderView::class.java.name
     }
 }

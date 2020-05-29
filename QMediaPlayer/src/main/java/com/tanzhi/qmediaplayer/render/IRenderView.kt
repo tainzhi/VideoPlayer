@@ -1,9 +1,10 @@
-package com.tanzhi.qmediaplayer
+package com.tanzhi.qmediaplayer.render
 
 import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.View
+import com.tanzhi.qmediaplayer.IMediaInterface
 
 /**
  * Created by muqing on 2019/6/1.
