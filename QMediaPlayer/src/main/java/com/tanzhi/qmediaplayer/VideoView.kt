@@ -148,7 +148,7 @@ class VideoView @JvmOverloads constructor(
             // IMediaPlayer.setDisplay(null)
             // iMediaPlayer.setDisplay(null)
 
-            val renderUIView = mRenderView?.view
+            val renderUIView = mRenderView as View
             mRenderView?.removeRenderCallback(mSHCallback)
             mRenderView = null
             removeView(renderUIView)
@@ -161,7 +161,7 @@ class VideoView @JvmOverloads constructor(
         if (videoSarNum > 0 && videoSarDen > 0)
             renderView.setVideoSampleAspectRatio(videoSarNum, videoSarDen)
 
-        val renderUIView = mRenderView?.view
+        val renderUIView = mRenderView as View
         renderUIView?.layoutParams = LayoutParams(
                LayoutParams.WRAP_CONTENT,
                LayoutParams.WRAP_CONTENT,

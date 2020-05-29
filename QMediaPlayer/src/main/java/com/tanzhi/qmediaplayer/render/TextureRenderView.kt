@@ -40,8 +40,6 @@ class TextureRenderView : TextureView, IRenderView {
         surfaceTextureListener = surfaceCallback
     }
 
-    override val view = this
-
     override fun shouldWaitForResize(): Boolean {
         return false
     }
@@ -75,14 +73,8 @@ class TextureRenderView : TextureView, IRenderView {
     }
 
     override fun removeRenderCallback(callback: IRenderView.IRenderCallback) {
-        surfaceCallback.removeReanderCallback(callback)
+        surfaceCallback.removerenderCallback(callback)
     }
-
-    // -----------------
-    // TextureViewHolder
-    // -----------------
-    val surfaceHolder: IRenderView.ISurfaceHolder
-        get() = InternalSurfaceHolder(this, surfaceCallback.surfaceTexture!!, surfaceCallback)
 
     override fun onDetachedFromWindow() {
         surfaceCallback.willDetachFromWindow()
@@ -90,51 +82,13 @@ class TextureRenderView : TextureView, IRenderView {
         surfaceCallback.didDetachFromWindow()
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         measureHelper.doMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(measureHelper.measuredWidth, measureHelper.measuredHeight)
-        // super.onMeasure(480, 720);
     }
 
-    //--------------------
-// Accessibility
-//--------------------
     private class InternalSurfaceHolder(private val textureRenderView: TextureRenderView,
-                                        override val surfaceTexture: SurfaceTexture,
-                                        private val iSurfaceTextureHost: ISurfaceTextureHost) : IRenderView.ISurfaceHolder {
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        // override fun bindToMediaPlayer(mp: MediaPlayer) {
-        //     if (mp == null) return
-        //     mp.setSurface(openSurface())
-        // }
-        //
-        // override fun bindToMediaPlayer(mp: IMediaPlayer) {
-        //     if (mp == null) return
-        //     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
-        //             mp is ISurfaceTextureHolder) {
-        //         val textureHolder = mp as ISurfaceTextureHolder
-        //         textureRenderView.surfaceCallback.setOwnSurfaceTexture(false)
-        //         val surfaceTexture = textureHolder.surfaceTexture
-        //         if (surfaceTexture != null) {
-        //             textureRenderView.surfaceTexture = surfaceTexture
-        //         } else {
-        //             textureHolder.surfaceTexture = this.surfaceTexture
-        //             textureHolder.setSurfaceTextureHost(textureRenderView.surfaceCallback)
-        //         }
-        //     } else {
-        //         mp.setSurface(openSurface())
-        //     }
-        //
-        // }
-        //
-        // override fun bindToMediaPlayer(mp: ExoPlayer) {
-        //     (mp as SimpleExoPlayer?).setVideoSurface(openSurface())
-        // }
-
+                                        override val surfaceTexture: SurfaceTexture) : IRenderView.ISurfaceHolder {
 
         override fun bindToMediaPlayer(mp: IMediaInterface) {
             when(mp) {
@@ -143,7 +97,7 @@ class TextureRenderView : TextureView, IRenderView {
                 }
                 is IMediaIjk -> {
                     if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (mp is ISurfaceTextureHolder)) {
-                        textureRenderView.surfaceCallback?.setOwnSurfaceTexture(false)
+                        textureRenderView.surfaceCallback.setOwnSurfaceTexture(false)
                         val textureHolder = mp as ISurfaceTextureHolder
                         if (textureHolder != null) {
                             textureRenderView.surfaceTexture = surfaceTexture
@@ -170,12 +124,11 @@ class TextureRenderView : TextureView, IRenderView {
             get() = null
 
         override fun openSurface(): Surface {
-            return surfaceTexture.let { Surface(it) }
+            return Surface(surfaceTexture)
         }
 
     }
-
-    private class SurfaceCallback(reanderView: TextureRenderView) : SurfaceTextureListener, ISurfaceTextureHost {
+private class SurfaceCallback(renderView: TextureRenderView) : SurfaceTextureListener, ISurfaceTextureHost {
         var surfaceTexture: SurfaceTexture? = null
         private var isFormatChanged = false
         private var width = 0
@@ -183,7 +136,7 @@ class TextureRenderView : TextureView, IRenderView {
         private var ownSurfaceTexture = true
         private var willDetachFromWindow = false
         private var didDetachFromWindow = false
-        private val weakReandView: WeakReference<TextureRenderView>
+        private val weakRenderView: WeakReference<TextureRenderView>
         private val renderCallbackMap: MutableMap<IRenderView.IRenderCallback, Any> = ConcurrentHashMap()
         fun setOwnSurfaceTexture(ownSurfaceTexture: Boolean) {
             this.ownSurfaceTexture = ownSurfaceTexture
@@ -194,21 +147,19 @@ class TextureRenderView : TextureView, IRenderView {
             var surfaceHolder: IRenderView.ISurfaceHolder? = null
             if (surfaceTexture != null) {
                 if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakReandView.get()!!, surfaceTexture!!,
-                            this)
+                    surfaceHolder = InternalSurfaceHolder(weakRenderView.get()!!, surfaceTexture!!)
                 }
                 callback.onSurfaceCreated(surfaceHolder, width, height)
             }
             if (isFormatChanged) {
                 if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakReandView.get()!!, surfaceTexture!!,
-                            this)
+                    surfaceHolder = InternalSurfaceHolder(weakRenderView.get()!!, surfaceTexture!!)
                 }
                 callback.onSurfaceChanged(surfaceHolder, 0, width, height)
             }
         }
 
-        fun removeReanderCallback(callback: IRenderView.IRenderCallback?) {
+        fun removerenderCallback(callback: IRenderView.IRenderCallback?) {
             renderCallbackMap.remove(callback)
         }
 
@@ -217,8 +168,7 @@ class TextureRenderView : TextureView, IRenderView {
             isFormatChanged = false
             width = 0
             height = 0
-            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakReandView.get()!!,
-                    surfaceTexture, this)
+            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakRenderView.get()!!, surfaceTexture)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceCreated(surfaceHolder, 0, 0)
             }
@@ -229,8 +179,7 @@ class TextureRenderView : TextureView, IRenderView {
             isFormatChanged = true
             width = i
             height = i1
-            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakReandView.get()!!,
-                    surface, this)
+            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakRenderView.get()!!, surface)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceChanged(surfaceHolder, 0, width, height)
             }
@@ -241,8 +190,7 @@ class TextureRenderView : TextureView, IRenderView {
             isFormatChanged = false
             width = 0
             height = 0
-            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakReandView.get()!!, surface
-                    , this)
+            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakRenderView.get()!!, surface )
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceDestroyed(surfaceHolder)
             }
@@ -298,7 +246,7 @@ class TextureRenderView : TextureView, IRenderView {
         }
 
         init {
-            weakReandView = WeakReference(reanderView)
+            weakRenderView = WeakReference(renderView)
         }
     }
 

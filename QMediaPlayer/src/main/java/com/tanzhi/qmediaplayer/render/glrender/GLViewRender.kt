@@ -1,7 +1,7 @@
 package com.tanzhi.qmediaplayer.render.glrender
 
-import android.graphics.SurfaceTexture
 import android.opengl.GLSurfaceView
+import com.tanzhi.qmediaplayer.render.GLRenderViewListener
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -12,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10
  * @description:
  **/
 
-class GLViewRender : GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableListener {
+class GLViewRender(val glRenderViewListener: GLRenderViewListener) : GLSurfaceView.Renderer {
 
     // 是否需要高清截图
     var highShot = false
@@ -35,10 +35,6 @@ class GLViewRender : GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableList
     }
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
-        TODO("Not yet implemented")
+        glRenderViewListener.onSurfaceAvailable()
     }
 }
