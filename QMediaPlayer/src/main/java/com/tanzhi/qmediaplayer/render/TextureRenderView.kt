@@ -73,7 +73,7 @@ class TextureRenderView : TextureView, IRenderView {
     }
 
     override fun removeRenderCallback(callback: IRenderView.IRenderCallback) {
-        surfaceCallback.removerenderCallback(callback)
+        surfaceCallback.removeRenderCallback(callback)
     }
 
     override fun onDetachedFromWindow() {
@@ -159,7 +159,7 @@ private class SurfaceCallback(renderView: TextureRenderView) : SurfaceTextureLis
             }
         }
 
-        fun removerenderCallback(callback: IRenderView.IRenderCallback?) {
+        fun removeRenderCallback(callback: IRenderView.IRenderCallback?) {
             renderCallbackMap.remove(callback)
         }
 
