@@ -11,6 +11,8 @@ import android.view.TextureView
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.*
+import com.tanzhi.qmediaplayer.render.glrender.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost
 import java.lang.ref.WeakReference
@@ -39,6 +41,12 @@ class TextureRenderView : TextureView, IRenderView {
     init {
         surfaceTextureListener = surfaceCallback
     }
+
+    override var effect: ShaderInterface
+        get() = NoEffect()
+        set(value) {
+            logD("TextureRenderViewcannot set render effect")
+        }
 
     override fun shouldWaitForResize(): Boolean {
         return false

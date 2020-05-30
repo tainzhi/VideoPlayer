@@ -4,12 +4,16 @@ import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.SurfaceHolder
 import com.tanzhi.qmediaplayer.IMediaInterface
+import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 
 /**
  * Created by muqing on 2019/6/1.
  * Email: qfq61@qq.com
  */
 interface IRenderView {
+
+    open var effect: ShaderInterface
+
     fun shouldWaitForResize(): Boolean
     fun setVideoSize(videoWidth: Int, videoHeight: Int)
     fun setVideoSampleAspectRatio(videoSarNum: Int, videoSarDen: Int)
