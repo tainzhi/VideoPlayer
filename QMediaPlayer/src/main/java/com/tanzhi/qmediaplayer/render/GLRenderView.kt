@@ -9,6 +9,9 @@ import android.view.SurfaceHolder
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.IMediaInterface
+import com.tanzhi.qmediaplayer.render.glrender.GLViewBaseRender
+import com.tanzhi.qmediaplayer.render.glrender.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
 
@@ -23,12 +26,20 @@ class GLRenderView : GLSurfaceView, IRenderView, GLRenderViewListener {
 
     private val measureHelper by lazy { MeasureHelper(this) }
     private val surfaceCallback by lazy { SurfaceCallback(this) }
+    private lateinit var mRender : GLViewBaseRender
 
-    constructor(context: Context, renderer: Renderer) : super(context) {
+    constructor(context: Context, renderer: GLViewBaseRender) : super(context) {
+        mRender =renderer
         setRenderer(renderer)
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+
+    override var effect: ShaderInterface = NoEffect()
+        set(value) {
+            field = value
+            mRender.effect = value
+        }
 
     override fun shouldWaitForResize(): Boolean {
         return false
