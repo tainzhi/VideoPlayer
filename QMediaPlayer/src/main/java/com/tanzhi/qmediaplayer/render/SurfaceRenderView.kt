@@ -10,6 +10,8 @@ import android.view.SurfaceView
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.*
+import com.tanzhi.qmediaplayer.render.glrender.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
@@ -34,8 +36,13 @@ class SurfaceRenderView : SurfaceView, IRenderView {
 
     init {
         holder.addCallback(surfaceCallback)
-       // holder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL)
     }
+
+    override var effect: ShaderInterface
+        get() = NoEffect()
+        set(value) {
+            logD("SurfaceView cannot set render effect")
+        }
 
     override fun shouldWaitForResize(): Boolean {
         return true
