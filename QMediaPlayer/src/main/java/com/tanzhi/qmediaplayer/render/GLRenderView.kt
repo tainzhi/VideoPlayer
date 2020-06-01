@@ -32,14 +32,18 @@ class GLRenderView : GLSurfaceView, IRenderView, GLRenderViewListener {
 
     constructor(context: Context) : super(context) {
         mRender = GLViewSimpleRender(this@GLRenderView)
+        setRenderer(mRender)
     }
 
     constructor(context: Context, renderer: GLViewBaseRender) : super(context) {
         mRender =renderer
-        setRenderer(renderer)
+        setRenderer(mRender)
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        mRender = GLViewSimpleRender(this@GLRenderView)
+        setRenderer(mRender)
+    }
 
 
     init {
@@ -96,22 +100,17 @@ class GLRenderView : GLSurfaceView, IRenderView, GLRenderViewListener {
         surfaceCallback.removerenderCallback(callback)
     }
 
-    inner class InternalSurfaceHolder(glRenderView: GLRenderView, surface: Surface) : IRenderView.ISurfaceHolder {
+    inner class InternalSurfaceHolder(glRenderView: GLRenderView, val surface: Surface) : IRenderView.ISurfaceHolder {
         override fun bindToMediaPlayer(mp: IMediaInterface) {
-            TODO("Not yet implemented")
+            mp.setDisplay(surface)
         }
 
-        override val renderView: IRenderView
-            get() = TODO("Not yet implemented")
-        override val surfaceHolder: SurfaceHolder?
-            get() = TODO("Not yet implemented")
+        override val renderView: IRenderView = glRenderView
+        override val surfaceHolder: SurfaceHolder? = null
 
-        override fun openSurface(): Surface? {
-            TODO("Not yet implemented")
-        }
+        override fun openSurface(): Surface?  = null
 
-        override val surfaceTexture: SurfaceTexture?
-            get() = TODO("Not yet implemented")
+        override val surfaceTexture: SurfaceTexture? = null
 
     }
 
