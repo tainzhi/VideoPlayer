@@ -78,7 +78,6 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
         mAdapter.setOnItemLongClickListener(new LocalVideoAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
-                Logger.d("");
                 Toast.makeText(getContext(),
                         "Long Click" + mLists.get(position).getPath(),
                         Toast.LENGTH_LONG);
@@ -88,7 +87,6 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
                 builder.setPositiveButton("确定",
                         (dialog, which) -> {
                             mLists.remove(position);
-                            Logger.d(mLists.get(position).toString());
                             mAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         });
@@ -113,14 +111,12 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
     public void onPause() {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onPause();
-        Logger.d("");
     }
     
     @Override
     public void onResume() {
         super.onResume();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Logger.d("");
     }
     
     @Override

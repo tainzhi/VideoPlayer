@@ -12,7 +12,7 @@ import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
  */
 interface IRenderView {
 
-    open var effect: ShaderInterface
+    open var renderEffect: ShaderInterface
 
     fun shouldWaitForResize(): Boolean
     fun setVideoSize(videoWidth: Int, videoHeight: Int)

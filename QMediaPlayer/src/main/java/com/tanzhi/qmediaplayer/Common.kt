@@ -2,7 +2,6 @@ package com.tanzhi.qmediaplayer
 
 import android.content.res.Resources
 import android.util.TypedValue
-import com.orhanobut.logger.BuildConfig
 import com.orhanobut.logger.Logger
 
 /**
@@ -12,7 +11,7 @@ import com.orhanobut.logger.Logger
  * @description:
  **/
 
-const val DEBUG = BuildConfig.DEBUG
+const val DEBUG = true
 
 inline fun logD(info: String = "") {
     if (DEBUG) {
@@ -20,7 +19,7 @@ inline fun logD(info: String = "") {
     }
 }
 
-inline fun logI(info: String) {
+inline fun logI(info: String = "") {
     if (DEBUG) {
         Logger.i(info)
     }

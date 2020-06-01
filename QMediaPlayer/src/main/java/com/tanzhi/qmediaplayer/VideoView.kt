@@ -17,9 +17,11 @@ import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_IDLE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PAUSE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PLAYING
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PREPARED
+import com.tanzhi.qmediaplayer.render.GLRenderView
 import com.tanzhi.qmediaplayer.render.IRenderView
 import com.tanzhi.qmediaplayer.render.SurfaceRenderView
 import com.tanzhi.qmediaplayer.render.TextureRenderView
+import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 
 /**
  * Created by muqing on 2019/6/1.
@@ -87,10 +89,10 @@ class VideoView @JvmOverloads constructor(
     @Constant.PlayerTypeMode
     var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
 
-    var renderType = Constant.RenderType.SURFACE_VIEW
+    var renderType = Constant.RenderType.GL_SURFACE_VIEW
         set(@Constant.RenderTypeMode value) {
             field = value
-            setRender(value)
+            setRender()
         }
 
     @Constant.ScreenTypeMode
@@ -125,7 +127,8 @@ class VideoView @JvmOverloads constructor(
     /**
      * 初始化渲染器
      */
-    private fun setRender(render: Int = Constant.RenderType.SURFACE_VIEW) {
+    private fun setRender() {
+        logI("$renderType")
         when(renderType) {
             Constant.RenderType.SURFACE_VIEW -> {
                 setRenderView(SurfaceRenderView(context))
@@ -139,6 +142,9 @@ class VideoView @JvmOverloads constructor(
                     // renderView.setAspectRatio(mCurrentAspectRatio);
                 }
                 setRenderView(renderView)
+            }
+            Constant.RenderType.GL_SURFACE_VIEW -> {
+                setRenderView(GLRenderView(context))
             }
         }
     }
@@ -170,6 +176,10 @@ class VideoView @JvmOverloads constructor(
 
         mRenderView?.addRenderCallback(mSHCallback)
         mRenderView?.setVideoRotation(videoRotationDegree)
+    }
+
+    fun setEffect(effect: ShaderInterface) {
+        mRenderView?.renderEffect = effect
     }
 
     /**

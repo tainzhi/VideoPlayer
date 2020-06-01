@@ -20,6 +20,7 @@ object Constant {
     object RenderType {
         const val SURFACE_VIEW = 0
         const val TEXTURE_VIEW = 1
+        const val GL_SURFACE_VIEW = 2
     }
 
     object ScreenType {

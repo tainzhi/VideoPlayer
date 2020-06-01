@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 import com.qfq.tainzhi.videoplayer.util.StringUtil;
@@ -56,7 +55,6 @@ public class LocalVideoAdapter extends RecyclerView.Adapter<LocalVideoAdapter.My
         
         Cursor cursor = mContext.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoColumns, null, null, null);
         int totalCount = cursor.getCount();
-        Logger.d("local has %d videos", totalCount);
         cursor.moveToFirst();
         for (int i = 0; i < totalCount; i++) {
             int id =

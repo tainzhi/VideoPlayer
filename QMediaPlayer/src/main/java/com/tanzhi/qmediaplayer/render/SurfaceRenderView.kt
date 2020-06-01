@@ -10,8 +10,8 @@ import android.view.SurfaceView
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.*
-import com.tanzhi.qmediaplayer.render.glrender.NoEffect
 import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
+import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
@@ -35,10 +35,11 @@ class SurfaceRenderView : SurfaceView, IRenderView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
+        logI()
         holder.addCallback(surfaceCallback)
     }
 
-    override var effect: ShaderInterface
+    override var renderEffect: ShaderInterface
         get() = NoEffect()
         set(value) {
             logD("SurfaceView cannot set render effect")

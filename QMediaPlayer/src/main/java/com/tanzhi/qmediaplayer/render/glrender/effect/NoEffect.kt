@@ -1,4 +1,6 @@
-package com.tanzhi.qmediaplayer.render.glrender
+package com.tanzhi.qmediaplayer.render.glrender.effect
+
+import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 
 /**
  * @author:      tainzhi
@@ -7,7 +9,7 @@ package com.tanzhi.qmediaplayer.render.glrender
  * @description:
  **/
 
-class NoEffect : ShaderInterface{
+class NoEffect : ShaderInterface {
     override var shader = """
         #extension GL_OES_EGL_image_external : require
         precision mediump float;
