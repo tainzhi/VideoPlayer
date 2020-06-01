@@ -7,11 +7,11 @@ import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.orhanobut.logger.Logger
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
 import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.MediaController
 import com.tanzhi.qmediaplayer.VideoView
+import com.tanzhi.qmediaplayer.render.glrender.effect.BlackAndWhiteEffect
 
 class VideoTestActivity : AppCompatActivity() {
     private lateinit var autoFullScreenListener: AutoFullScreenListener
@@ -26,11 +26,12 @@ class VideoTestActivity : AppCompatActivity() {
         val bundle = intent.extras
         var mVideoTitle = bundle!!.getString(VIDEO_NAME)
         val mVideoDuration = bundle.getLong(VIDEO_DURATION, 0)
-        val mVideoProgress = bundle.getInt(VIDEO_PROGRESS, 0)
+        val mVideoProgress = bundle.getLong(VIDEO_PROGRESS, 0)
         videoView.run {
             videoTitle = mVideoTitle!!
-            renderType = Constant.RenderType.SURFACE_VIEW
+            renderType = Constant.RenderType.GL_SURFACE_VIEW
             startFullScreenDirectly(this@VideoTestActivity, mVideoUri!!)
+            setEffect(BlackAndWhiteEffect())
             mediaController = MediaController(this@VideoTestActivity)
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -57,7 +58,6 @@ class VideoTestActivity : AppCompatActivity() {
         fun startPlay(starter: Context, uri: Uri, name: String?, duration: Long, progress: Long) {
             val intent = Intent(starter, VideoTestActivity::class.java)
             intent.data = uri
-            Logger.d(uri.toString())
             intent.putExtra(VIDEO_NAME, name)
             intent.putExtra(VIDEO_DURATION, duration)
             intent.putExtra(VIDEO_PROGRESS, progress)

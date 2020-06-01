@@ -9,9 +9,11 @@ import android.view.SurfaceHolder
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.IMediaInterface
+import com.tanzhi.qmediaplayer.logI
 import com.tanzhi.qmediaplayer.render.glrender.GLViewBaseRender
-import com.tanzhi.qmediaplayer.render.glrender.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.GLViewSimpleRender
 import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
+import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
 
@@ -28,6 +30,10 @@ class GLRenderView : GLSurfaceView, IRenderView, GLRenderViewListener {
     private val surfaceCallback by lazy { SurfaceCallback(this) }
     private lateinit var mRender : GLViewBaseRender
 
+    constructor(context: Context) : super(context) {
+        mRender = GLViewSimpleRender(this@GLRenderView)
+    }
+
     constructor(context: Context, renderer: GLViewBaseRender) : super(context) {
         mRender =renderer
         setRenderer(renderer)
@@ -35,7 +41,12 @@ class GLRenderView : GLSurfaceView, IRenderView, GLRenderViewListener {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    override var effect: ShaderInterface = NoEffect()
+
+    init {
+        logI()
+    }
+
+    override var renderEffect: ShaderInterface = NoEffect()
         set(value) {
             field = value
             mRender.effect = value
