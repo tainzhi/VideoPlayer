@@ -19,7 +19,7 @@ import javax.microedition.khronos.opengles.GL10
  * @description:
  **/
 
-class GLViewSimpleRender(private val glRenderViewListener: GLRenderViewListener? = null) : GLViewBaseRender(glRenderViewListener) {
+class GLViewSimpleRender(private val glRenderViewListener: GLRenderViewListener? = null) : GLViewBaseRender(glRenderViewListener) , SurfaceTexture.OnFrameAvailableListener {
 
     private val triangleVerticesData = floatArrayOf( // X, Y, Z, U, V
             -1.0f, -1.0f,
@@ -121,7 +121,9 @@ class GLViewSimpleRender(private val glRenderViewListener: GLRenderViewListener?
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE)
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE)
 
-        surfaceTexture = SurfaceTexture(textureID[0])
+        surfaceTexture = SurfaceTexture(textureID[0]).apply {
+            setOnFrameAvailableListener(this@GLViewSimpleRender)
+        }
         sendSurfaceForPlayer(Surface(surfaceTexture))
 
     }
@@ -131,10 +133,10 @@ class GLViewSimpleRender(private val glRenderViewListener: GLRenderViewListener?
             program = createProgram(vertexShader, fragmentShader)
             changeProgram = false
         }
-        GLES20.glClearColor(0f, 0f, 0f, 0f)
+        GLES20.glClearColor(0f, 0f, 0f, 1f)
         GLES20.glClear(
                 GLES20.GL_DEPTH_BUFFER_BIT or
-                        GLES20.GL_DEPTH_BUFFER_BIT
+                        GLES20.GL_COLOR_BUFFER_BIT
         )
         GLES20.glUseProgram(program)
     }
@@ -154,10 +156,19 @@ class GLViewSimpleRender(private val glRenderViewListener: GLRenderViewListener?
         GLES20.glVertexAttribPointer(maTextureHandle, 3, GLES20.GL_FLOAT,
                 false, TRIANGLE_VERTICES_DATA_STRIDE_BYTES, triangleVertices)
         GLES20.glEnableVertexAttribArray(maTextureHandle)
+
+        GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, mvpMatrix, 0)
+        GLES20.glUniformMatrix4fv(muSTMatrixHandle, 1, false, stMatrix, 0)
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
     }
 
     protected fun takeBitmap(glUnused: GL10)
     {
         // TODO: 2020/6/1
+    }
+
+    @Synchronized
+    override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
+        updateSurface = true
     }
 }
