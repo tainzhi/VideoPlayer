@@ -9,7 +9,7 @@ import android.view.SurfaceHolder
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.IMediaInterface
-import com.tanzhi.qmediaplayer.logI
+import com.tanzhi.qmediaplayer.logD
 import com.tanzhi.qmediaplayer.render.glrender.GLViewBaseRender
 import com.tanzhi.qmediaplayer.render.glrender.GLViewSimpleRender
 import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
@@ -24,36 +24,31 @@ import java.util.concurrent.ConcurrentHashMap
  * @description: GLSurfaceView渲染
  **/
 
-class GLRenderView : GLSurfaceView, IRenderView, GLRenderViewListener {
+class GLRenderView(context: Context, val render: GLViewBaseRender? = null, attributeSet: AttributeSet? = null):
+        GLSurfaceView(context, attributeSet), IRenderView, GLRenderViewListener {
 
     private val measureHelper by lazy { MeasureHelper(this) }
     private val surfaceCallback by lazy { SurfaceCallback(this) }
-    private lateinit var mRender : GLViewBaseRender
-
-    constructor(context: Context) : super(context) {
-        mRender = GLViewSimpleRender(this@GLRenderView)
-        setRenderer(mRender)
-    }
-
-    constructor(context: Context, renderer: GLViewBaseRender) : super(context) {
-        mRender =renderer
-        setRenderer(mRender)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        mRender = GLViewSimpleRender(this@GLRenderView)
-        setRenderer(mRender)
-    }
-
 
     init {
-        logI()
+        setEGLContextClientVersion(2)
+        setRenderer(render ?: GLViewSimpleRender())
+    }
+
+    override fun onResume() {
+        logD()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        logD()
+        super.onPause()
     }
 
     override var renderEffect: ShaderInterface = NoEffect()
         set(value) {
             field = value
-            mRender.effect = value
+            render?.effect = value
         }
 
     override fun shouldWaitForResize(): Boolean {

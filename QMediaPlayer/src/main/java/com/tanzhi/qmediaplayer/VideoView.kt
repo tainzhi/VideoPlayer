@@ -118,6 +118,25 @@ class VideoView @JvmOverloads constructor(
     private var state = STATE_IDLE
 
 
+    /**
+     * GLSurfaceView onResume
+     */
+    fun onResume() {
+        if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
+            (mRenderView as GLRenderView).onResume()
+        }
+    }
+
+    /**
+     * GLSurfaceView onPause
+     */
+    fun onPause() {
+        if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
+            (mRenderView as GLRenderView).onPause()
+        }
+    }
+
+
     private fun openVideo() {
         setRender()
         setMediaPlayer()
@@ -128,7 +147,6 @@ class VideoView @JvmOverloads constructor(
      * 初始化渲染器
      */
     private fun setRender() {
-        logI("$renderType")
         when(renderType) {
             Constant.RenderType.SURFACE_VIEW -> {
                 setRenderView(SurfaceRenderView(context))

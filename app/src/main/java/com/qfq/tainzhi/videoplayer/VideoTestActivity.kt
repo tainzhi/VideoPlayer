@@ -15,11 +15,12 @@ import com.tanzhi.qmediaplayer.VideoView
 class VideoTestActivity : AppCompatActivity() {
     private lateinit var autoFullScreenListener: AutoFullScreenListener
     private lateinit var sensorManager: SensorManager
+    private lateinit var videoView: VideoView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_test)
-        val videoView = findViewById<VideoView>(R.id.video_view)
+        videoView = findViewById<VideoView>(R.id.video_view)
         val intent = intent
         val mVideoUri = intent.data
         val bundle = intent.extras
@@ -39,13 +40,16 @@ class VideoTestActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        videoView.onResume()
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(autoFullScreenListener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        videoView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(autoFullScreenListener)
+        videoView.onPause()
     }
 
     companion object {
