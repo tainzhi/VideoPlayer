@@ -11,7 +11,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.IMediaInterface
 import com.tanzhi.qmediaplayer.logD
 import com.tanzhi.qmediaplayer.render.glrender.GLViewBaseRender
-import com.tanzhi.qmediaplayer.render.glrender.GLViewSimpleRender
+import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
 import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
 import java.lang.ref.WeakReference
@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @description: GLSurfaceView渲染
  **/
 
-class GLRenderView(context: Context, val render: GLViewBaseRender? = null, attributeSet: AttributeSet? = null):
+class GLRenderView @JvmOverloads constructor(context: Context, val render: GLViewBaseRender? = null, attributeSet: AttributeSet? = null):
         GLSurfaceView(context, attributeSet), IRenderView, GLRenderViewListener {
 
     private val measureHelper by lazy { MeasureHelper(this) }
@@ -32,7 +32,7 @@ class GLRenderView(context: Context, val render: GLViewBaseRender? = null, attri
 
     init {
         setEGLContextClientVersion(2)
-        setRenderer(render ?: GLViewSimpleRender())
+        setRenderer(render ?: GLViewRender(this@GLRenderView))
     }
 
     override fun onResume() {

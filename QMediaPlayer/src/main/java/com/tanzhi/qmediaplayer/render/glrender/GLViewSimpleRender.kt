@@ -22,16 +22,10 @@ import javax.microedition.khronos.opengles.GL10
 class GLViewSimpleRender(private val glRenderViewListener: GLRenderViewListener? = null) : GLViewBaseRender(glRenderViewListener) , SurfaceTexture.OnFrameAvailableListener {
 
     private val triangleVerticesData = floatArrayOf( // X, Y, Z, U, V
-            -1.0f, -1.0f,
-            0.0f, 0.0f,
-            0.0f, 1.0f,
-            -1.0f, 0.0f,
-            1.0f, 0.0f,
-            -1.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f)
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+            1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+            -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 0.0f, 1.0f, 1.0f)
     protected val vertexShader =
             """
                 uniform mat4 uMVPMatrix;
