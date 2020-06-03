@@ -11,8 +11,8 @@ import android.view.TextureView
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.*
-import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
-import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
+import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import tv.danmaku.ijk.media.player.ISurfaceTextureHost
 import java.lang.ref.WeakReference
@@ -25,28 +25,27 @@ import java.util.concurrent.ConcurrentHashMap
  * @description:
  */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-class TextureRenderView : TextureView, IRenderView {
+class TextureRenderView @JvmOverloads constructor(
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : TextureView(context, attrs, defStyleAttr), IRenderView {
+
     private val measureHelper: MeasureHelper by lazy { MeasureHelper(this) }
     private val surfaceCallback: SurfaceCallback by lazy { SurfaceCallback(this) }
 
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-
     init {
-        logI()
         surfaceTextureListener = surfaceCallback
     }
 
-    override var renderEffect: ShaderInterface
-        get() = NoEffect()
+    override var renderEffect: ShaderInterface? = null
         set(value) {
             logD("TextureView cannot set render effect")
+            field = null
+        }
+
+    override var render: GLViewRender? = null
+        set(value) {
+            logD("TextureView cannot set render ")
+            field = null
         }
 
     override fun shouldWaitForResize(): Boolean {

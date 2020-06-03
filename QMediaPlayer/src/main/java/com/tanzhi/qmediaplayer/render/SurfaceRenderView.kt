@@ -10,8 +10,8 @@ import android.view.SurfaceView
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.*
-import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
-import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
+import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
@@ -22,27 +22,26 @@ import java.util.concurrent.ConcurrentHashMap
  * @date: 2019-11-11 15:29
  * @description:
  */
-class SurfaceRenderView : SurfaceView, IRenderView {
+class SurfaceRenderView @JvmOverloads constructor(
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : SurfaceView(context, attrs, defStyleAttr), IRenderView {
     private val measureHelper: MeasureHelper by lazy{ MeasureHelper(this) }
     private val surfaceCallback: SurfaceCallback by lazy {SurfaceCallback(this) }
 
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-
     init {
-        logI()
         holder.addCallback(surfaceCallback)
     }
 
-    override var renderEffect: ShaderInterface
-        get() = NoEffect()
+    override var render: GLViewRender? = null
+        set(value) {
+            logD("SurfaceView cannot set render ")
+            field = null
+        }
+
+    override var renderEffect: ShaderInterface? = null
         set(value) {
             logD("SurfaceView cannot set render effect")
+            field = null
         }
 
     override fun shouldWaitForResize(): Boolean {
