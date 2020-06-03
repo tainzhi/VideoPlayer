@@ -1,5 +1,6 @@
 package com.tanzhi.qmediaplayer.render
 
+import android.graphics.Bitmap
 import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.SurfaceHolder
@@ -22,7 +23,8 @@ interface IRenderView {
     fun removeRenderCallback(callback: IRenderCallback)
 
     // 截屏
-    fun takeShot() {}
+    open fun takeShot(videoShotListener: VideoShotListener, highShot: Boolean = false)
+
     // Rnderer effect
     open var renderEffect: ShaderInterface?
     // Render
@@ -57,5 +59,9 @@ interface IRenderView {
         fun onSurfaceChanged(holder: ISurfaceHolder, format: Int, width: Int, height: Int)
 
         fun onSurfaceDestroyed(holder: ISurfaceHolder)
+    }
+
+    interface VideoShotListener {
+        fun getBitmap(bitmap: Bitmap)
     }
 }

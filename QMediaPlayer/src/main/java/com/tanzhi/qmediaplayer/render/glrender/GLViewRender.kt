@@ -1,20 +1,25 @@
 package com.tanzhi.qmediaplayer.render.glrender
 
+import android.graphics.Bitmap
 import android.graphics.SurfaceTexture
 import android.opengl.GLES20
+import android.opengl.GLException
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
 import android.view.Surface
+import com.tanzhi.qmediaplayer.logI
 import com.tanzhi.qmediaplayer.render.GLRenderView
 import com.tanzhi.qmediaplayer.render.GLRenderViewListener
+import com.tanzhi.qmediaplayer.render.IRenderView
 import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
 import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
+import java.nio.IntBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -77,6 +82,9 @@ class GLViewRender(private val glRenderViewListener: GLRenderViewListener) : GLS
 
     // 是否截屏
     var takeShotPic = false
+    // true, 高清截图; false, 一般截图
+    var highShot = false
+    var videoShotListener: IRenderView.VideoShotListener ? = null
 
     var effect: ShaderInterface = NoEffect()
         set(value) {
@@ -141,6 +149,8 @@ class GLViewRender(private val glRenderViewListener: GLRenderViewListener) : GLS
         GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, mMVPMatrix, 0)
         GLES20.glUniformMatrix4fv(muSTMatrixHandle, 1, false, mSTMatrix, 0)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+
+        takeBitmap(gl!!)
 
         checkGlError("glDrawArrays")
     }
@@ -274,4 +284,56 @@ class GLViewRender(private val glRenderViewListener: GLRenderViewListener) : GLS
             throw RuntimeException("$op: glError $error")
         }
     }
+
+    private fun takeBitmap(gl: GL10) {
+        if (takeShotPic) {
+            takeShotPic = false
+            val bitmap = createBitmapFromGLSurface(0, 0, (glRenderViewListener as GLRenderView).width,
+                    (glRenderViewListener as GLRenderView).height, gl)
+            if (videoShotListener == null) {
+                logI("not implement VideoShotListener")
+            }
+            if (bitmap == null) {
+                logI("cannot take bitmap from GLSurface")
+            }
+            videoShotListener?.getBitmap(bitmap!!)
+        }
+
+
+    }
+
+    /**
+     * 创建bitmap截图
+     */
+    private fun createBitmapFromGLSurface(x: Int, y: Int, w: Int, h: Int, gl: GL10): Bitmap? {
+        val bitmapBuffer = IntArray(w * h)
+        val bitmapSource = IntArray(w * h)
+        val intBuffer = IntBuffer.wrap(bitmapBuffer)
+        intBuffer.position(0)
+        try {
+            gl.glReadPixels(x, y, w, h, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE,
+                    intBuffer)
+            var offset1: Int
+            var offset2: Int
+            for (i in 0 until h) {
+                offset1 = i * w
+                offset2 = (h - i - 1) * w
+                for (j in 0 until w) {
+                    val texturePixel = bitmapBuffer[offset1 + j]
+                    val blue = texturePixel shr 16 and 0xff
+                    val red = texturePixel shl 16 and 0x00ff0000
+                    val pixel = texturePixel and -0xff0100 or red or blue
+                    bitmapSource[offset2 + j] = pixel
+                }
+            }
+        } catch (e: GLException) {
+            return null
+        }
+        return if (highShot) {
+            Bitmap.createBitmap(bitmapSource, w, h, Bitmap.Config.ARGB_8888)
+        } else {
+            Bitmap.createBitmap(bitmapSource, w, h, Bitmap.Config.RGB_565)
+        }
+    }
+
 }

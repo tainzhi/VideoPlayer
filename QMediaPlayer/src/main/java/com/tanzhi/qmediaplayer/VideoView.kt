@@ -114,6 +114,14 @@ class VideoView @JvmOverloads constructor(
             return iMediaPlayer?.isPlaying ?: false
         }
 
+    fun setEffect(effect: ShaderInterface) {
+        mRenderView?.renderEffect = effect
+    }
+
+    fun takeShotPic(videoShotListener: IRenderView.VideoShotListener, highShot: Boolean) {
+        mRenderView?.takeShot(videoShotListener, highShot)
+    }
+
     // 播放器状态
     private var state = STATE_IDLE
 
@@ -194,10 +202,6 @@ class VideoView @JvmOverloads constructor(
 
         mRenderView?.addRenderCallback(mSHCallback)
         mRenderView?.setVideoRotation(videoRotationDegree)
-    }
-
-    fun setEffect(effect: ShaderInterface) {
-        mRenderView?.renderEffect = effect
     }
 
     /**

@@ -7,6 +7,8 @@ import android.opengl.GLSurfaceView;
  * Applies lomo-camera style effect to video.
  *
  * @author sheraz.khilji
+ *
+ * 渐晕效果
  */
 public class VignetteEffect implements ShaderInterface {
     private int mWidth = 0;
