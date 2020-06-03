@@ -44,6 +44,10 @@ class SurfaceRenderView @JvmOverloads constructor(
             field = null
         }
 
+    override fun takeShot(videoShotListener: IRenderView.VideoShotListener, highShot: Boolean) {
+        logI("Surfaceview cannot take shot")
+    }
+
     override fun shouldWaitForResize(): Boolean {
         return true
     }
