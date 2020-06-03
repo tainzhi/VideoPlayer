@@ -10,7 +10,6 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.IMediaInterface
 import com.tanzhi.qmediaplayer.logD
-import com.tanzhi.qmediaplayer.render.glrender.GLViewBaseRender
 import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
 import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
@@ -24,15 +23,17 @@ import java.util.concurrent.ConcurrentHashMap
  * @description: GLSurfaceView渲染
  **/
 
-class GLRenderView @JvmOverloads constructor(context: Context, val render: GLViewBaseRender? = null, attributeSet: AttributeSet? = null):
+class GLRenderView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null):
         GLSurfaceView(context, attributeSet), IRenderView, GLRenderViewListener {
 
     private val measureHelper by lazy { MeasureHelper(this) }
     private val surfaceCallback by lazy { SurfaceCallback(this) }
 
+    override var render = GLViewRender(this@GLRenderView)
+
     init {
         setEGLContextClientVersion(2)
-        setRenderer(render ?: GLViewRender(this@GLRenderView))
+        setRenderer(render)
     }
 
     override fun onResume() {
@@ -48,8 +49,12 @@ class GLRenderView @JvmOverloads constructor(context: Context, val render: GLVie
     override var renderEffect: ShaderInterface = NoEffect()
         set(value) {
             field = value
-            render?.effect = value
+            render.effect = value
         }
+
+    override fun takeShot() {
+        render.takeShotPic = true
+    }
 
     override fun shouldWaitForResize(): Boolean {
         return false

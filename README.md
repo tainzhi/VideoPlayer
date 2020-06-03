@@ -22,6 +22,9 @@
 
 ## 测试驱动开发
 - 先完成功能模块: 读取卫视列表到database, test成功
+- SurfaceView
+- TextureView
+- GLSurfaceView: effect, 截屏
 
 ## 实现的功能
 - PlayVideoViewActivity: VideoView+MediaController简单播放功能

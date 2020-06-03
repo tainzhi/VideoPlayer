@@ -6,7 +6,7 @@ import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/5/30 10:15
- * @description:
+ * @description: 无特效
  **/
 
 class NoEffect : ShaderInterface {
