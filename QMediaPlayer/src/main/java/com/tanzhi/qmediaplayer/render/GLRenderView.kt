@@ -53,8 +53,10 @@ class GLRenderView @JvmOverloads constructor(context: Context, attributeSet: Att
             render?.effect = value
         }
 
-    override fun takeShot() {
+    override fun takeShot(videoShotListener: IRenderView.VideoShotListener, highShot: Boolean) {
         render?.takeShotPic = true
+        render?.highShot = highShot
+        render?.videoShotListener = videoShotListener
     }
 
     override fun shouldWaitForResize(): Boolean {
