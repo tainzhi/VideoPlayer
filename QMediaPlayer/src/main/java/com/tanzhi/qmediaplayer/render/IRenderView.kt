@@ -4,6 +4,7 @@ import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.SurfaceHolder
 import com.tanzhi.qmediaplayer.IMediaInterface
+import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
 import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 
 /**
@@ -12,8 +13,6 @@ import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
  */
 interface IRenderView {
 
-    open var renderEffect: ShaderInterface
-
     fun shouldWaitForResize(): Boolean
     fun setVideoSize(videoWidth: Int, videoHeight: Int)
     fun setVideoSampleAspectRatio(videoSarNum: Int, videoSarDen: Int)
@@ -21,6 +20,15 @@ interface IRenderView {
     fun setAspectRatio(aspectRatio: Int)
     fun addRenderCallback(callback: IRenderCallback)
     fun removeRenderCallback(callback: IRenderCallback)
+
+    // 截屏
+    fun takeShot()
+    // Rnderer effect
+    open var renderEffect: ShaderInterface
+    // Render
+
+    open var render: GLViewRender
+
 
     interface ISurfaceHolder {
         // fun bindToMediaPlayer(mp: MediaPlayer)
