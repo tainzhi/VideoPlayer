@@ -9,6 +9,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.Surface
 import com.tanzhi.qmediaplayer.render.GLRenderViewListener
+import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -43,7 +44,7 @@ class GLViewRender(private val glRenderViewListener: GLRenderViewListener) : GLS
               vTextureCoord = (uSTMatrix * aTextureCoord).xy;
             }
             """
-    private val mFragmentShader = """
+    private var mFragmentShader = """
             #extension GL_OES_EGL_image_external : require
             precision mediump float;
             varying vec2 vTextureCoord;
@@ -71,6 +72,15 @@ class GLViewRender(private val glRenderViewListener: GLRenderViewListener) : GLS
     // private var mRunTime: Long = 0
 
     private val handler = Handler()
+
+    // 是否截屏
+    var takeShotPic = false
+
+    var effect: ShaderInterface = NoEffect()
+        set(value) {
+            mFragmentShader = value.shader
+            field = value
+        }
 
     companion object {
         private const val TAG = "GLViewRender"
