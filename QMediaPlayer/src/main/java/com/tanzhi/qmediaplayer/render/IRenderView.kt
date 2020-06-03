@@ -5,7 +5,7 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import com.tanzhi.qmediaplayer.IMediaInterface
 import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
-import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
+import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 
 /**
  * Created by muqing on 2019/6/1.
@@ -22,12 +22,11 @@ interface IRenderView {
     fun removeRenderCallback(callback: IRenderCallback)
 
     // 截屏
-    fun takeShot()
+    fun takeShot() {}
     // Rnderer effect
-    open var renderEffect: ShaderInterface
+    open var renderEffect: ShaderInterface?
     // Render
-
-    open var render: GLViewRender
+    open var render: GLViewRender?
 
 
     interface ISurfaceHolder {

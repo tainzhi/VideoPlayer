@@ -8,8 +8,10 @@ import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
 import android.view.Surface
+import com.tanzhi.qmediaplayer.render.GLRenderView
 import com.tanzhi.qmediaplayer.render.GLRenderViewListener
 import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -78,7 +80,7 @@ class GLViewRender(private val glRenderViewListener: GLRenderViewListener) : GLS
 
     var effect: ShaderInterface = NoEffect()
         set(value) {
-            mFragmentShader = value.shader
+            mFragmentShader = value.getShader(glRenderViewListener as GLRenderView)
             field = value
         }
 

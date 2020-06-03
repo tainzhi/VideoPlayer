@@ -11,6 +11,7 @@ import com.tanzhi.qmediaplayer.AutoFullScreenListener
 import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.MediaController
 import com.tanzhi.qmediaplayer.VideoView
+import com.tanzhi.qmediaplayer.render.glrender.effect.HueEffect
 
 class VideoTestActivity : AppCompatActivity() {
     private lateinit var autoFullScreenListener: AutoFullScreenListener
@@ -31,7 +32,7 @@ class VideoTestActivity : AppCompatActivity() {
             videoTitle = mVideoTitle!!
             renderType = Constant.RenderType.GL_SURFACE_VIEW
             startFullScreenDirectly(this@VideoTestActivity, mVideoUri!!)
-            // setEffect(BlackAndWhiteEffect())
+            setEffect(HueEffect(100f))
             mediaController = MediaController(this@VideoTestActivity)
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager

@@ -21,7 +21,7 @@ import com.tanzhi.qmediaplayer.render.GLRenderView
 import com.tanzhi.qmediaplayer.render.IRenderView
 import com.tanzhi.qmediaplayer.render.SurfaceRenderView
 import com.tanzhi.qmediaplayer.render.TextureRenderView
-import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
+import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 
 /**
  * Created by muqing on 2019/6/1.

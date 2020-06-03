@@ -11,8 +11,8 @@ import android.view.accessibility.AccessibilityNodeInfo
 import com.tanzhi.qmediaplayer.IMediaInterface
 import com.tanzhi.qmediaplayer.logD
 import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
-import com.tanzhi.qmediaplayer.render.glrender.ShaderInterface
 import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
+import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
 
@@ -29,7 +29,7 @@ class GLRenderView @JvmOverloads constructor(context: Context, attributeSet: Att
     private val measureHelper by lazy { MeasureHelper(this) }
     private val surfaceCallback by lazy { SurfaceCallback(this) }
 
-    override var render = GLViewRender(this@GLRenderView)
+    override var render: GLViewRender? = GLViewRender(this@GLRenderView)
 
     init {
         setEGLContextClientVersion(2)
@@ -46,14 +46,15 @@ class GLRenderView @JvmOverloads constructor(context: Context, attributeSet: Att
         super.onPause()
     }
 
-    override var renderEffect: ShaderInterface = NoEffect()
+    override var renderEffect: ShaderInterface? = NoEffect()
         set(value) {
+            if (value == null) return
             field = value
-            render.effect = value
+            render?.effect = value
         }
 
     override fun takeShot() {
-        render.takeShotPic = true
+        render?.takeShotPic = true
     }
 
     override fun shouldWaitForResize(): Boolean {
