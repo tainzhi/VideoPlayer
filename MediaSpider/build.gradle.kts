@@ -31,4 +31,5 @@ android {
 
 dependencies {
     implementation(Libs.Kotlin.stdlib)
+    implementation("com.android.volley:volley:1.1.1")
 }
