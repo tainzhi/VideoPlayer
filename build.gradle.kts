@@ -1,6 +1,7 @@
 import com.tainzhi.android.buildsrc.Libs
 
 buildscript {
+    val kotlin_version by extra("1.3.72")
     repositories {
         
         google()
@@ -27,5 +28,8 @@ buildscript {
     
     tasks.register("clean", Delete::class) {
         delete(rootProject.buildDir)
+    }
+    dependencies {
+        "classpath"("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
