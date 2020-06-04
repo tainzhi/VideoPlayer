@@ -1,4 +1,5 @@
 /build
+*.hprof
 
 ### macOS
 .DS_store
