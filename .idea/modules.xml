@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidPorjects-VideoPlayer_buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidPorjects-VideoPlayer_buildSrc.iml" group="VideoPlayer/VideoPlayer_buildSrc" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/MediaSpider.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/MediaSpider.iml" group="VideoPlayer/MediaSpider" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/QMediaPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/QMediaPlayer.iml" group="VideoPlayer/QMediaPlayer" />
       <module fileurl="file://$PROJECT_DIR$/VideoPlayer.iml" filepath="$PROJECT_DIR$/VideoPlayer.iml" group="VideoPlayer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer-QMediaPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer-QMediaPlayer.iml" group="VideoPlayer/QMediaPlayer" />
