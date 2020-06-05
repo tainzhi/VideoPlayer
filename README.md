@@ -26,6 +26,15 @@
 - TextureView
 - GLSurfaceView: effect, 截屏
 
+## module模块介绍
+- QMediaPlayer: Surface/TextureView/GLSurface, Android
+  MediaPlayer/IjkPlayer/exoplayer, 特效, 水印, 缓存视频
+
+### QMediaSpider
+- 爬取网络视频资源, 使用到技术有Jsoup, Volley, android test等等.
+- 破解算法参考[real-url](https://github.com/wbt5/real-url)
+- DouyuSpider
+
 ## 实现的功能
 - PlayVideoViewActivity: VideoView+MediaController简单播放功能
 
