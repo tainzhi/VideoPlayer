@@ -3,6 +3,7 @@ package com.tanzhi.mediaspider
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.android.volley.ResponseDelivery
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -24,6 +25,7 @@ class DouyuTest {
     @Before
     fun setUp(){
         context = InstrumentationRegistry.getInstrumentation().targetContext
+        val delivery =  ImmediateResponseDelivery()
         douyu = Douyu(context)
     }
     @Test
