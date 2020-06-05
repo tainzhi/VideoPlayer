@@ -54,6 +54,7 @@ dependencies {
     testImplementation(Libs.AndroidX.archCoreTesting)
     testImplementation(Libs.Google.truth)
     testImplementation(Libs.robolectric)
+    testImplementation(Libs.AndroidX.Test.Ext.junit)
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 android test 依赖

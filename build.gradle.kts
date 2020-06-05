@@ -1,9 +1,8 @@
-import com.tainzhi.android.buildsrc.Libs
-
 buildscript {
     val kotlin_version by extra("1.3.72")
     repositories {
-        
+        maven { setUrl("https://maven.aliyun.com/repository/public/") }
+        maven { setUrl("https://maven.aliyun.com/repository/jcenter/")}
         google()
         jcenter()
         
@@ -18,11 +17,16 @@ buildscript {
     
     allprojects {
         repositories {
+            maven { setUrl("https://maven.aliyun.com/repository/public/") }
+            maven { setUrl("https://maven.aliyun.com/repository/jcenter/")}
             google()
             jcenter()
+            // for BaseRecyclerViewAdapterHelper
             maven {
                 setUrl("https://jitpack.io")
             }
+            // for robolectric
+            maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots") }
         }
     }
     
