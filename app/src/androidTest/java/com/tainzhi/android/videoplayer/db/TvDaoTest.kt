@@ -43,8 +43,9 @@ class TvDaoTest {
 
     @Before
     fun createDb() = runBlocking {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        database = Room.inMemoryDatabaseBuilder(context, AppDataBase::class.java).build()
+        // context = InstrumentationRegistry.getInstrumentation().context
+        val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
+        database = Room.inMemoryDatabaseBuilder(targetContext, AppDataBase::class.java).build()
         tvDao = database.getTvDao()
 
         tvDao.insertAllTv(tvList)
