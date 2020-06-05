@@ -126,6 +126,7 @@ bugly {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":QMediaPlayer"))
+    implementation(project(":MediaSpider"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.appcompat)
@@ -176,6 +177,7 @@ dependencies {
     implementation(Libs.activityOnCrash)
     implementation(Libs.buglyCrashReport)
     implementation(Libs.multiStateView)
+    implementation(Libs.volley)
 
     implementation("androidx.leanback:leanback:1.0.0")
     implementation("com.jakewharton:disklrucache:2.0.2")
@@ -193,7 +195,6 @@ dependencies {
 
     implementation("de.hdodenhof:circleimageview:3.0.0")
 
-    
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖
     ///////////////////////////////////////////////////////////////////////////
