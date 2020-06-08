@@ -2,6 +2,7 @@ package com.tanzhi.mediaspider
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -27,18 +28,18 @@ class Douyu() {
         // t3
         val today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 
-        getPreUrl("485503", timeSeconds.toString(), requestQueue)
+        getPreUrl("431935", timeSeconds.toString(), requestQueue)
     }
 
     fun getPreUrl(rid: String, time: String, requestQueue: RequestQueue): String {
-        // val url = "https://playweb.douyucdn.cn/lapi/live/hlsH5Preview/$rid"
-        val url = "https://www.baidu.com/"
+        val url = "https://playweb.douyucdn.cn/lapi/live/hlsH5Preview/$rid"
         val postData = mapOf(
                 "rid" to rid,
                 "did" to "10000000000000000000000000001501"
         )
         val auth = (rid + time).toMD5()
-        val jsonRequest = object : StringRequest(Method.GET,
+        // val auth = ("431935" + "1591575186690").toMD5()
+        val jsonRequest = object : StringRequest(Request.Method.POST,
                 url,
                 Response.Listener { response ->
                     println(response.toString())
@@ -46,18 +47,17 @@ class Douyu() {
                 Response.ErrorListener { error ->
                     println(error.toString())
                 }) {
-            // override fun getHeaders(): MutableMap<String, String> {
-            //     return mutableMapOf(
-            //             "content-type" to "application/x-www-form-urlencoded",
-            //             "rid" to rid,
-            //             "time" to time,
-            //             "auth" to auth
-            //     )
-            // }
-            //
-            // override fun getBody(): ByteArray {
-            //     return postData.toString().toByteArray(Charsets.UTF_8)
-            // }
+            override fun getHeaders(): MutableMap<String, String> {
+                return mutableMapOf(
+                        "content-type" to "application/x-www-form-urlencoded",
+                        "rid" to rid,
+                        "time" to time,
+                        "auth" to auth
+                )
+            }
+
+            override fun getBody(): ByteArray {
+                return postData.toString().toByteArray(Charsets.UTF_8) }
         }
         requestQueue.add(jsonRequest)
         return ""
