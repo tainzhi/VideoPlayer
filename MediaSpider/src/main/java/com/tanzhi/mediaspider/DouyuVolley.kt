@@ -9,7 +9,6 @@ import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
-import java.security.MessageDigest
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -17,13 +16,15 @@ import java.time.format.DateTimeFormatter
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/6/4 16:01
- * @description: 爬取斗鱼直播间直播源
+ * @description: 用Volley爬取斗鱼直播间直播源. 因为使用了回调,
+ * 非常不方便用于爬虫(比如爬取room id, 需要多个请求和回调, 繁琐)
+ *
  * 通过chrome debug工具获取的地址 https://tc-tct.douyucdn2.cn/dyliveflv1/562483rmTwjem0AN_1200p.flv
  * 其中_1200p 对应清晰度
  *
  **/
 
-class Douyu() {
+class DouyuVolley() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCode(requestQueue: RequestQueue) {
         // t2
@@ -107,14 +108,4 @@ class Douyu() {
             println(room)
         }
     }
-}
-
-
-fun String.toMD5(): String {
-    val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
-    return bytes.toHex()
-}
-
-fun ByteArray.toHex(): String {
-    return joinToString("") { "%02x".format(it) }
 }
