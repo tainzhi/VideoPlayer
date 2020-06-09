@@ -40,6 +40,7 @@ dependencies {
     implementation(Libs.Kotlin.stdlib)
     // FIXME: 2020/6/9 替换成Libs.dependeny
     implementation(Libs.jsoup)
+    implementation(Libs.Google.gson)
     implementation("com.android.volley:volley:1.1.1")
     implementation(Libs.AndroidX.appcompat)
 

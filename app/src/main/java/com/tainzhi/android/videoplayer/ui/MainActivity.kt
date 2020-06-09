@@ -10,7 +10,7 @@ import com.android.volley.toolbox.Volley
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.qfq.tainzhi.videoplayer.R
 import com.tainzhi.android.videoplayer.util.setupWithNavController
-import com.tanzhi.mediaspider.Douyu
+import com.tanzhi.mediaspider.DouyuSpider
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,8 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     fun testDouyu() {
         val vollyQueue = Volley.newRequestQueue(this)
-        val douyu = Douyu()
-        douyu.getCode(vollyQueue)
+        DouyuSpider.getInstance().getRoomLive("9999")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
