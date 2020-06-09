@@ -42,6 +42,7 @@ dependencies {
     implementation(Libs.jsoup)
     implementation(Libs.Google.gson)
     implementation("com.android.volley:volley:1.1.1")
+    implementation("    \n")
     implementation(Libs.AndroidX.appcompat)
 
     implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
