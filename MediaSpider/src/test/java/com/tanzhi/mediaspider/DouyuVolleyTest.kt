@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations.initMocks
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/6/5 14:22
- * @description:
+ * @description: 不知道怎么单元测试回调
  **/
 
 @RunWith(AndroidJUnit4::class)
@@ -33,14 +33,14 @@ class DouyuTest1 {
     @Test
     fun getRoomId() {
         val queue = RequestQueue(NoCache(), mockNetwork, 0, delivery)
-        val douyu = Douyu()
+        val douyu = DouyuVolley()
         douyu.getCode(queue)
 
     }
 
     @Test()
     fun getRooms() {
-        val douyu = Douyu()
+        val douyu = DouyuVolley()
         douyu.getAllRooms()
     }
 }
