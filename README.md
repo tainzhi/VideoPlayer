@@ -103,6 +103,8 @@
 
 
 ## 参考
+- [stackoverflow: How to execute JavaScript on Android](https://stackoverflow.com/questions/8374016/how-to-execute-javascript-on-android)
+
 - [iToutiao相关设计也实现](https://github.com/iMeiji/Toutiao)
 - [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android)
 - [abigfishtv ios 大鱼电视直播 基于ijkplayer的播放器 700多个电视台 包括央视，各地方台，卫视，熊猫直播，社会化分享，登陆，仿微博等 (支持iphonex)](https://github.com/clyhs/ABigFishTV)
