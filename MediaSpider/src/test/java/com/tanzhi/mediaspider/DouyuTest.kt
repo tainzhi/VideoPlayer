@@ -37,4 +37,10 @@ class DouyuTest1 {
         douyu.getCode(queue)
 
     }
+
+    @Test()
+    fun getRooms() {
+        val douyu = Douyu()
+        douyu.getAllRooms()
+    }
 }
