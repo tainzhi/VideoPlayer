@@ -7,6 +7,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
+import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
 import java.security.MessageDigest
 import java.time.LocalDateTime
@@ -96,7 +97,18 @@ class Douyu() {
         }
         requestQueue.add(stringRequest)
     }
+
+    fun getAllRooms(type: String = "DOTA2") {
+        val url = "http://m.douyu.com/list/room?type=$type"
+        val userAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Mobile Safari/537.36"
+        val document = Jsoup.connect(url).userAgent(userAgent).get()
+        val allRooms = document.select("div.NormalRoomItem")
+        for (room in allRooms) {
+            println(room)
+        }
+    }
 }
+
 
 fun String.toMD5(): String {
     val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
