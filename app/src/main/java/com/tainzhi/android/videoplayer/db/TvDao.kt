@@ -25,7 +25,7 @@ abstract class TvDao {
     abstract suspend fun insertAllTvCircuit(tvs: List<TvCircuit>)
 
     @Query("SELECT id,type,name,introduce,image,program_url FROM tv")
-    abstract fun getAllTv(): LiveData<List<Tv>>
+    abstract fun getAllTv(): List<Tv>
 
     // 提供tvId, 查询该频道的所有网络源
     @Query("SELECT circuit FROM tv_circuit WHERE tv_name = :tvName")

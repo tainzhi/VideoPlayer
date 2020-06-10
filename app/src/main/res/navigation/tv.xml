@@ -4,10 +4,9 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/tv"
 	app:startDestination="@id/TVFragment">
-	
 	<fragment
 		android:id="@+id/TVFragment"
-		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment"
-		tools:layout="@layout/fragment_tv"
-		android:label="@string/title_tv" />
+		android:name="com.tainzhi.android.videoplayer.ui.TVFragment"
+		tools:layout="@layout/t_v_fragment"
+		android:label="TVFragment" />
 </navigation>

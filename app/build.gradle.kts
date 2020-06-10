@@ -11,6 +11,7 @@ plugins {
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
     id("bugly")
+    id("kotlin-android")
 }
 
 apply {
@@ -125,6 +126,7 @@ bugly {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(project(":common"))
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
 
@@ -142,6 +144,9 @@ dependencies {
     implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
     kapt(Libs.AndroidX.Room.compiler)
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.Paging.runtimeKtx)
@@ -153,7 +158,9 @@ dependencies {
     
     implementation(Libs.Koin.scope)
     implementation(Libs.Koin.viewmodel)
-    
+    implementation(Libs.Koin.fragment)
+    implementation(Libs.Koin.ext)
+
     implementation(Libs.Retrofit.retrofit)
     implementation(Libs.Retrofit.gsonConverter)
     implementation(Libs.OkHttp.loggingInterceptor)
@@ -267,7 +274,6 @@ fun gitDescribeVersion(): String {
     return gitDescribeMatchRegex.matchEntire(describe)
             ?.destructured
             ?.let { (major, minor, patch) ->
-                println("$major.$minor.$patch")
                 "$major.$minor.$patch"
             }
             ?: throw GradleException("Cannot parse git describe '$describe'")
