@@ -3,7 +3,7 @@ package com.qfq.tainzhi.videoplayer.util;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.qfq.tainzhi.videoplayer.App;
+import com.tainzhi.android.videoplayer.App;
 
 /**
  * Created by muqing on 2019/6/10.
@@ -18,7 +18,7 @@ public class SettingUtil {
     public static String VIDEO_PLAYER_SETTING_FLOAT_WINDOW_POSITION_Y = "float_window_position_y";
     
     private SharedPreferences mSetting =
-            PreferenceManager.getDefaultSharedPreferences(App.AppContext);
+            PreferenceManager.getDefaultSharedPreferences(App.Companion.getCONTEXT());
     
     public static SettingUtil newInstance() {
         return SettingUtilInstance.instance;

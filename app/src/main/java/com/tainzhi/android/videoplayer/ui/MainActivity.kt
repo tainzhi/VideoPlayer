@@ -6,11 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.android.volley.toolbox.Volley
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.qfq.tainzhi.videoplayer.R
 import com.tainzhi.android.videoplayer.util.setupWithNavController
-import com.tanzhi.mediaspider.DouyuSpider
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,13 +20,6 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
-
-        testDouyu()
-    }
-
-    fun testDouyu() {
-        val vollyQueue = Volley.newRequestQueue(this)
-        DouyuSpider.getInstance().getRoomLive("9999")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
