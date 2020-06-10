@@ -1,5 +1,7 @@
 package com.tanzhi.mediaspider
 
+import android.content.Context
+
 /**
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
@@ -9,6 +11,6 @@ package com.tanzhi.mediaspider
 
 class ExecuteJs {
     fun run() {
-        val rhino = Context.
+        // val rhino = Context.star
     }
 }
