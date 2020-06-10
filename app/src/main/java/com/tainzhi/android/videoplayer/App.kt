@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import com.tainzhi.android.videoplayer.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import kotlin.properties.Delegates
 
 /**
@@ -15,6 +19,7 @@ import kotlin.properties.Delegates
 
 class App : Application() {
 
+
     companion object {
         var CONTEXT: Context by Delegates.notNull()
     }
@@ -22,6 +27,12 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         CONTEXT = applicationContext
+
+        startKoin {
+            androidContext(this@App)
+            androidLogger()
+            modules(appModule)
+        }
 
         Logger.addLogAdapter(AndroidLogAdapter())
     }

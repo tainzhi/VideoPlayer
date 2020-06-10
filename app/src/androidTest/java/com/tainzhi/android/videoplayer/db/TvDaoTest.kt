@@ -60,7 +60,7 @@ class TvDaoTest {
 
     @Test
     fun testGetTv() {
-        val tvList = getValue(tvDao.getAllTv())
+        val tvList = tvDao.getAllTv()
         assertThat(tvList.size, equalTo(3))
 
         val tvCircuitList = getValue(tvDao.getTvCircuit("CCTV1"))

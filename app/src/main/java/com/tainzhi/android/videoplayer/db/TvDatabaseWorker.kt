@@ -11,6 +11,7 @@ import com.tainzhi.android.videoplayer.bean.InputTv
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
 import kotlinx.coroutines.coroutineScope
+import org.koin.core.KoinComponent
 
 /**
  * @author:      tainzhi
@@ -22,7 +23,7 @@ import kotlinx.coroutines.coroutineScope
 class TvDatabaseWorker(
         context: Context,
         workerParams: WorkerParameters
-): CoroutineWorker(context, workerParams) {
+): CoroutineWorker(context, workerParams), KoinComponent {
     override suspend fun doWork(): Result  = coroutineScope {
         try {
             applicationContext.assets.open(TV_CIRCUIT_JSON_FILE).use { inputStream ->
