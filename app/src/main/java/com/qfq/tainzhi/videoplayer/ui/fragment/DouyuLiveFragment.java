@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.qfq.tainzhi.videoplayer.R;
 import com.qfq.tainzhi.videoplayer.adapters.DouyuChannelRoomAdapter;
 import com.qfq.tainzhi.videoplayer.bean.DouyuRoomBean;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.DouyuLivePresenter;
