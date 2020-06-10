@@ -24,6 +24,11 @@ class DouyuSpiderTest {
     fun getRoomLive() {
         douyuSpider.getRoomLive("9999")
     }
+
+    @Test
+    fun getAllGame() {
+        douyuSpider.getAllRoom()
+    }
     
     @After
     fun tearDown() {

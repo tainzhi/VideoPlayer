@@ -8,6 +8,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import java.util.zip.GZIPInputStream
 
 /**
  * @author:      tainzhi
@@ -18,7 +19,7 @@ import java.net.URLEncoder
 
 class KRequest {
 
-    var userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.7 Safari/537.36"
+    var userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
 
     var headers: Map<String, String> ?= null
 
@@ -69,10 +70,10 @@ class KRequest {
         return dom(connect)
     }
 
-
     // 获取请求 response
     private fun dom(connect: HttpURLConnection): String {
-        val input = BufferedReader(InputStreamReader(connect.inputStream))
+        // 必须要加压缩, 否则乱码
+        val input = BufferedReader(InputStreamReader(GZIPInputStream(connect.inputStream)))
         var result = ""
         while (true) {
             val line: String? = input.readLine() ?: break

@@ -1,6 +1,7 @@
 package com.tanzhi.mediaspider
 
 import org.json.JSONObject
+import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
 import java.security.MessageDigest
 
@@ -58,6 +59,31 @@ class DouyuSpider() {
             println(e.toString())
         }
         return roomLiveUrl
+    }
+
+    /*
+    <li class="layout-Classify-item"><a class="layout-Classify-card secondCateCard" href="/g_jdqs" target="_blank"><i class="secondCateCard-icon">
+        <div class="LazyLoad is-visible DyImg secondCateCard-img">
+          <img src="https://sta-op.douyucdn.cn/dycatr/08dcd21b98a6b71bb1d37b0c30376734.png?x-oss-process=image/format,webp/quality,q_75" class="DyImg-content is-normal " />
+
+         </div></i><strong>绝地求生</strong>
+
+         fixme
+         获取的图片是默认的, 因为douyu懒加载了图片, 还需要找到图片加载地址
+     */
+    fun getAllRoom() {
+        val response = KRequest().get("https://www.douyu.com/directory")
+        val doc = Jsoup.parse(response)
+        // doc.select("ul.layout-Classify-list").forEach { list ->
+            doc.select("li.layout-Classify-item a.layout-Classify-card").forEach { item ->
+                if (item.attr("href").isNotEmpty()) {
+                   val type = item.attr("href")
+                    val href = item.select("img[src]").attr("src")
+                    val name = item.select("strong").text()
+                }
+            // }
+        }
+
     }
 
     companion object {
