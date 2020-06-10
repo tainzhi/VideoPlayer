@@ -74,11 +74,13 @@
 - [x] todo: Fragment实现本地视频，和电视直播，斗鱼直播等功能
 - [x] 斗鱼更多游戏频道界面点击没有效果, 因为暂时无法解决fragment覆盖及销毁和逻辑的问题
 - [ ] 参考GSYVideoPlayer的GSYVideoGLViewCustomRender实现水印效果
+- [Easy Permissions](https://github.com/googlesamples/easypermissions)
 - [ ] 缩略实现, 参考我的印象笔记相同内容
 - [ ] 竖屏视频播放(通过CotentProvider查询到的orientation方向null, 但是resolution=1080*1920, 添加手动判断横屏或者竖屏)
 - [ ] 本地列表第一个是最近的播放记录, 记录播放位置, 并显示上次播放到的时间点的缩略图
 - [ ] 实现沉浸式状态栏: [参考1](https://www.jianshu.com/p/dc20e98b9a90) [参考2](https://blog.csdn.net/u013647382/article/details/51603141) 
 - [ ] 申请权限管理
+- [ ] 参考[WanAndroid todo](https://github.com/tainzhi/WanAndroid)
 - [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
 - [ ] 电视频道
 > - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
