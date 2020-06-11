@@ -5,8 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.ListenableWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonReader
+import com.tainzhi.android.videoplayer.App
+import com.tainzhi.android.videoplayer.bean.InputTv
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
 
@@ -41,8 +47,36 @@ abstract class AppDataBase : RoomDatabase() {
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            val request = OneTimeWorkRequestBuilder<TvDatabaseWorker>().build()
-                            WorkManager.getInstance(context).enqueue(request)
+                            // FIXME: 2020/6/11 WorkManager为啥不能加载, 待解决后, 不使用Thread 
+                            // val request = OneTimeWorkRequestBuilder<TvDatabaseWorker>().build()
+                            // WorkManager.getInstance(context).enqueue(request)
+                            Thread {
+                                App.CONTEXT.assets.open(TV_CIRCUIT_JSON_FILE).use { inputStream ->
+                                    JsonReader(inputStream.reader()).use { jsonReader ->
+                                        val tvType = object : TypeToken<List<InputTv>>() {}.type
+                                        val tvList = ArrayList<Tv>()
+                                        val tvCircuitList = ArrayList<TvCircuit>()
+                                        val inputTvList: List<InputTv> = Gson().fromJson(jsonReader, tvType)
+                                        inputTvList.forEach { firstClass ->
+                                            firstClass.tvLists.forEach { tv ->
+                                                run {
+                                                    // tvList.add(Tv(tv.id, tv.type, tv.name, tv.image, tv.programUrl))
+                                                    tvList.add(Tv(tv.tvId, firstClass.type, tv.tvName, tv.tvImg, tv.programUrl, tv.introduce))
+                                                    tv.tvCircuit?.forEach { circuit ->
+                                                        tvCircuitList.add(TvCircuit(tv.tvName, circuit))
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        instance!!.getTvDao().run {
+                                            insertAllTv(tvList)
+                                            insertAllTvCircuit(tvCircuitList)
+                                        }
+                                    }
+
+                                }
+                            }.start()
                         }
                     })
                     .build()
