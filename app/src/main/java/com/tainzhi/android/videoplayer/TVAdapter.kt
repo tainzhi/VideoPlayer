@@ -18,6 +18,7 @@ class TVAdapter: BaseQuickAdapter<Tv, BaseDataBindingHolder<ItemTvBinding>>(R.la
     override fun convert(holder: BaseDataBindingHolder<ItemTvBinding>, item: Tv) {
         holder.dataBinding?.apply {
             tv = item
+            executePendingBindings()
         }
     }
 

@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -34,9 +33,6 @@ class App : Application() {
             androidLogger()
             modules(appModule)
         }
-        
-        AppDataBase.getInstance(App.CONTEXT)
-
         Logger.addLogAdapter(AndroidLogAdapter())
     }
 

@@ -4,6 +4,8 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
 	<data>
+		<import
+			alias="appR" type="com.qfq.tainzhi.videoplayer.R"/>
 		<variable
 			name="tv"
 			type="com.tainzhi.android.videoplayer.bean.Tv" />
@@ -20,10 +22,11 @@
 			android:layout_width="0dp"
 			android:layout_height="0dp"
 			app:layout_constraintBottom_toBottomOf="parent"
-			android:src="@drawable/ic_default_tv_channel"
+			app:imageUrl="@{tv.image}"
+			app:imagePlaceholder="@{appR.drawable.ic_default_tv_channel}"
 			android:scaleType="fitXY"
 			app:layout_constraintHeight_percent="0.8"
-			app:layout_constraintDimensionRatio="l,4:3"
+			app:layout_constraintDimensionRatio="l,320:200"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
 		
@@ -35,6 +38,19 @@
 			app:layout_constraintStart_toEndOf="@+id/tv"
 			app:layout_constraintTop_toTopOf="@+id/tv"
 			tools:text="CCTV-1" />
+		
+		<com.airbnb.lottie.LottieAnimationView
+			android:id="@+id/loading"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:lottie_rawRes="@raw/program_loading"
+			app:lottie_speed="2"
+			app:lottie_progress="0.3"
+			app:lottie_scale="0.5"
+			app:lottie_autoPlay="true"
+			app:lottie_loop="true"/>
+			/>
+			
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
