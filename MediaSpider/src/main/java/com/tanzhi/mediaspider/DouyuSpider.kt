@@ -38,11 +38,11 @@ class DouyuSpider() {
                 headers = header
             }.post(url)
 
-            response?.let {it ->
+            response?.let { it ->
                 val jsonObject = JSONObject(it)
                 if (jsonObject.getInt("error") == 0) {
                     val dataObject = jsonObject.getJSONObject("data")
-                    val rtmpLive =dataObject.getString("rtmp_live")
+                    val rtmpLive = dataObject.getString("rtmp_live")
                     if (rtmpLive.contains("mix=1")) {
                         println("PKing")
                     } else {
@@ -73,24 +73,26 @@ class DouyuSpider() {
      */
     fun getAllRoom() {
         val response = KRequest().get("https://www.douyu.com/directory")
+
         val doc = Jsoup.parse(response)
         // doc.select("ul.layout-Classify-list").forEach { list ->
-            doc.select("li.layout-Classify-item a.layout-Classify-card").forEach { item ->
-                if (item.attr("href").isNotEmpty()) {
-                   val type = item.attr("href")
-                    val href = item.select("img[src]").attr("src")
-                    val name = item.select("strong").text()
-                }
+        doc.select("li.layout-Classify-item a.layout-Classify-card").forEach { item ->
+            if (item.attr("href").isNotEmpty()) {
+                val type = item.attr("href")
+                val href = item.select("img[src]").attr("src")
+                val name = item.select("strong").text()
+            }
             // }
         }
 
     }
 
     companion object {
-        @Volatile private var instance: DouyuSpider? = null
+        @Volatile
+        private var instance: DouyuSpider? = null
 
         fun getInstance() = instance ?: synchronized(this) {
-            instance ?: DouyuSpider().also { instance = it}
+            instance ?: DouyuSpider().also { instance = it }
         }
     }
 }

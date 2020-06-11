@@ -3,12 +3,14 @@ package com.tanzhi.mediaspider
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import java.io.*
+import java.math.BigInteger
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 import java.util.zip.GZIPInputStream
+import kotlin.experimental.and
+import kotlin.experimental.or
 
 /**
  * @author:      tainzhi
@@ -21,9 +23,9 @@ class KRequest {
 
     var userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
 
-    var headers: Map<String, String> ?= null
+    var headers: Map<String, String>? = null
 
-    var cookie: String ?= null
+    var cookie: String? = null
 
     private var data: ByteArray? = null
 
@@ -45,7 +47,7 @@ class KRequest {
         val connect = (URL(url).openConnection() as HttpURLConnection).apply {
             useCaches = false
         }
-        cookie?.let { connect.setRequestProperty("cookie", it)}
+        cookie?.let { connect.setRequestProperty("cookie", it) }
         userAgent.let { connect.setRequestProperty("User-Agent", it) }
         headers?.forEach { (key, value) ->
             connect.setRequestProperty(key, value)
@@ -58,7 +60,7 @@ class KRequest {
             useCaches = false
             requestMethod = "POST"
         }
-        cookie?.let { connect.setRequestProperty("cookie", it)}
+        cookie?.let { connect.setRequestProperty("cookie", it) }
         userAgent.let { connect.setRequestProperty("User-Agent", it) }
         headers?.forEach { (key, value) ->
             connect.setRequestProperty(key, value)
@@ -73,7 +75,8 @@ class KRequest {
     // 获取请求 response
     private fun dom(connect: HttpURLConnection): String {
         // 必须要加压缩, 否则乱码
-        val input = BufferedReader(InputStreamReader(GZIPInputStream(connect.inputStream)))
+        // val input = BufferedReader(InputStreamReader(if (isGzip) GZIPInputStream(connect.inputStream) else connect.inputStream))
+        val input = BufferedReader(InputStreamReader(getInputStream(connect)))
         var result = ""
         while (true) {
             val line: String? = input.readLine() ?: break
@@ -82,6 +85,36 @@ class KRequest {
         return result
 
     }
+
+    /**
+     * 对压缩流进行解压, 非压缩流返回
+     */
+    private fun getInputStream(connection: HttpURLConnection): InputStream {
+        var ips: InputStream? = null
+        // 取前两个字节
+        val header = ByteArray(2)
+        try {
+            val bis = BufferedInputStream(connection.inputStream)
+            bis.mark(2)
+            val result = bis.read(header)
+            // reset输入流到开始位置
+            bis.reset()
+            // 判断是否是GZIP格式
+            val zipped = header[0] == GZIPInputStream.GZIP_MAGIC.toByte() && header[1] == (GZIPInputStream.GZIP_MAGIC shr 8).toByte()
+            if (result != -1 && zipped) {
+                //System.out.println("为数据压缩格式...");
+                ips = GZIPInputStream(bis)
+            } else {
+                // 取前两个字节
+                ips = bis
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            connection.inputStream
+        }
+        return ips!!
+    }
+
 }
 
 // 获取Json对象
