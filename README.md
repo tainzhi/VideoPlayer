@@ -50,8 +50,10 @@
 | [弃用]Volley, 使用简单封装的HttpUrlConnection | 网络请求 |
 
 ## 各大卫视网络源和图标
-- [gitee: tv-source](https://gitee.com/forterli/project/tree/master/mini_program/tv_video/data)
-- 从tv-source获取的tv卫视图片资源链接是http的, 而且有些图片不存在
+- [gitee: tv-source](https://gitee.com/forterli/project/tree/master/mini_program/tv_video/data): 从tv-source获取的tv卫视图片资源链接是http的, 而且有些图片不存在
+- 卫视名称,图片,网络原地址从tv-source拷贝json文件, 并做了部分修改放置在assets/tv_circuits.json中,app启动创建数据后加载进数据库
+- 各大卫视当前播放节目从[电视猫](https://www.tvmao.com/program/playing/cctv/)爬虫所得
+- [电视之家:分享高清电视直播源](https://dtvzj.com/274.html)
 
 ## 斗鱼直播源的获取(未实现)
 **Note**: @2019年6月5日17:33:56之前: 手动方式有效，python方式无效，反编译不会
@@ -133,3 +135,8 @@
 ## 遇到的问题
 - [stackoverflow: How to execute JavaScript on Android](https://stackoverflow.com/questions/8374016/how-to-execute-javascript-on-android)
 - [tv的图片和视频源是http, Cleartext HTTP traffic to ... not permitted](https://www.cnblogs.com/kinglandsoft/p/10481500.html)
+
+## 开发经验
+- 专注于目标,而不是技术
+- 不要苛求于和原来的技术实现相同, 只要能解决问题, 哪管它新的实现思路
+- 对于某些实现细节的代码不熟悉不懂, 可以在github上高级搜索, 学习相应的代码段
