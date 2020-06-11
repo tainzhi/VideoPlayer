@@ -19,10 +19,10 @@ import com.tainzhi.android.videoplayer.bean.TvCircuit
 abstract class TvDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertAllTv(tvs: List<Tv>)
+    abstract fun insertAllTv(tvs: List<Tv>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertAllTvCircuit(tvs: List<TvCircuit>)
+    abstract fun insertAllTvCircuit(tvs: List<TvCircuit>)
 
     @Query("SELECT id,type,name,introduce,image,program_url FROM tv")
     abstract fun getAllTv(): List<Tv>
