@@ -3,6 +3,8 @@
 
 * [Info](#info)
 * [测试驱动开发](#测试驱动开发)
+* [module模块介绍](#module模块介绍)
+    - [QMediaSpider](#qmediaspider)
 * [实现的功能](#实现的功能)
 * [依赖框架和技术](#依赖框架和技术)
 * [各大卫视网络源和图标](#各大卫视网络源和图标)
@@ -13,6 +15,8 @@
     - [反编译app获取地址](#反编译app获取地址)
 * [Todo](#todo)
 * [参考](#参考)
+* [遇到的问题](#遇到的问题)
+* [开发经验](#开发经验)
 
 <!-- vim-markdown-toc -->
 ## Info
@@ -43,11 +47,11 @@
 - kotlin分支(当前开发版): kotlin, MVVM(google jetpack), jsoup, ijkplayer,
   mediaplayer, exoplayer...
 
-| 库 | 功能   |
-| ----- | --------- |
-| [lottie](https://github.com/airbnb/lottie-android) | 动画 |
-| [Jsoup](https://jsoup.org/)  | 网页解析(爬虫)     |
-| [弃用]Volley, 使用简单封装的HttpUrlConnection | 网络请求 |
+| 库 | 功能 |
+| :----- | :--------- |
+|[lottie](https://github.com/airbnb/lottie-android) | 动画 |
+| [Jsoup](https://jsoup.org/) | 网页解析(爬虫) |
+| [弃用]Volley,使用简单封装的HttpUrlConnection | 网络请求 |
 
 ## 各大卫视网络源和图标
 - [gitee: tv-source](https://gitee.com/forterli/project/tree/master/mini_program/tv_video/data): 从tv-source获取的tv卫视图片资源链接是http的, 而且有些图片不存在
@@ -85,7 +89,7 @@
 - [x] 斗鱼更多游戏频道界面点击没有效果, 因为暂时无法解决fragment覆盖及销毁和逻辑的问题
 - [ ] 参考GSYVideoPlayer的GSYVideoGLViewCustomRender实现水印效果
 - [Easy Permissions](https://github.com/googlesamples/easypermissions)
-- [ ] 缩略实现, 参考我的印象笔记相同内容
+- [ ] 本地视频列表缩略实现, 参考我的印象笔记相同缩略图笔记内容
 - [ ] 竖屏视频播放(通过CotentProvider查询到的orientation方向null, 但是resolution=1080*1920, 添加手动判断横屏或者竖屏)
 - [ ] 本地列表第一个是最近的播放记录, 记录播放位置, 并显示上次播放到的时间点的缩略图
 - [ ] 实现沉浸式状态栏: [参考1](https://www.jianshu.com/p/dc20e98b9a90) [参考2](https://blog.csdn.net/u013647382/article/details/51603141) 
