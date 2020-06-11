@@ -54,6 +54,7 @@
 - 卫视名称,图片,网络原地址从tv-source拷贝json文件, 并做了部分修改放置在assets/tv_circuits.json中,app启动创建数据后加载进数据库
 - 各大卫视当前播放节目从[电视猫](https://www.tvmao.com/program/playing/cctv/)爬虫所得
 - [电视之家:分享高清电视直播源](https://dtvzj.com/274.html)
+- [电视节目单](http://epg.tv.cn/cctv1): 脚本生成的当前网页, 不太好抓取当前播放内容
 
 ## 斗鱼直播源的获取(未实现)
 **Note**: @2019年6月5日17:33:56之前: 手动方式有效，python方式无效，反编译不会
