@@ -185,6 +185,7 @@ dependencies {
     implementation(Libs.buglyCrashReport)
     implementation(Libs.multiStateView)
     implementation(Libs.volley)
+    implementation(Libs.lottie)
 
     implementation("androidx.leanback:leanback:1.0.0")
     implementation("com.jakewharton:disklrucache:2.0.2")

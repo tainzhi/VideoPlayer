@@ -40,11 +40,18 @@
 
 ## 依赖框架和技术
 - master分支(第一版): MVP, retrofit2, rxjava2等等
-- kotlin分支(当前开发版): kotlin, MVVM(google jetpack), jsoup, ijkplayer, mediaplayer, exoplayer...
+- kotlin分支(当前开发版): kotlin, MVVM(google jetpack), jsoup, ijkplayer,
+  mediaplayer, exoplayer...
 
+| 库 | 功能   |
+| ----- | --------- |
+| [lottie](https://github.com/airbnb/lottie-android) | 动画 |
+| [Jsoup](https://jsoup.org/)  | 网页解析(爬虫)     |
+| [弃用]Volley, 使用简单封装的HttpUrlConnection | 网络请求 |
 
 ## 各大卫视网络源和图标
 - [gitee: tv-source](https://gitee.com/forterli/project/tree/master/mini_program/tv_video/data)
+- 从tv-source获取的tv卫视图片资源链接是http的, 而且有些图片不存在
 
 ## 斗鱼直播源的获取(未实现)
 **Note**: @2019年6月5日17:33:56之前: 手动方式有效，python方式无效，反编译不会
@@ -84,7 +91,7 @@
 - [ ] Douyu界面,无法通过`GridLayoutManager.setPanSize()`设置第一行只有1列显示
 - [ ] 电视频道
 > - [ ] [电视猫](https://www.tvmao.com/program/CCTV-CCTV3-w1.html) , 
-> - [ ] 可以显示当前正在播放的内容(这个需要爬虫爬取结果,
+> - [x] 可以显示当前正在播放的内容(这个需要爬虫爬取结果,
 >       用个热点小图标显示):
 >       [动画效果参考](https://github.com/ybq/Android-SpinKit)
 > - [ ]爬取频道的标志图片, 用圆形图片显示; 三级缓存实现
@@ -103,9 +110,7 @@
 - [ ] 学习竞品: MX播放器, XPlayer, VLC, VideoPlayer等播放列表, 播放界面(全屏透明状态栏)等功能, 实现它们
 - [ ] 学习Douyu新版, 看有什么想实现的功能; 如果能逆向出直播源就更好了
 
-
 ## 参考
-- [stackoverflow: How to execute JavaScript on Android](https://stackoverflow.com/questions/8374016/how-to-execute-javascript-on-android)
 
 - [iToutiao相关设计也实现](https://github.com/iMeiji/Toutiao)
 - [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android)
@@ -125,3 +130,6 @@
   [7](https://github.com/googlesamples/android-VideoPlayer)
 
 
+## 遇到的问题
+- [stackoverflow: How to execute JavaScript on Android](https://stackoverflow.com/questions/8374016/how-to-execute-javascript-on-android)
+- [tv的图片和视频源是http, Cleartext HTTP traffic to ... not permitted](https://www.cnblogs.com/kinglandsoft/p/10481500.html)
