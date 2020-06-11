@@ -1,9 +1,7 @@
 package com.qfq.tainzhi.videoplayer.mvp.presenter;
 
 import com.qfq.tainzhi.videoplayer.bean.TVChannelBean;
-import com.qfq.tainzhi.videoplayer.mvp.model.TVModel;
 import com.qfq.tainzhi.videoplayer.mvp.presenter.impl.ITVPresenter;
-import com.qfq.tainzhi.videoplayer.ui.fragment.TVFragment;
 
 import java.util.ArrayList;
 import java.util.List;
