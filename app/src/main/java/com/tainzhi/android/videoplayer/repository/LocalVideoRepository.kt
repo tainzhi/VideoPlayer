@@ -21,9 +21,9 @@ import com.tainzhi.android.videoplayer.bean.LocalVideo
  * @description:
  **/
 
-class LocalVideoRepository: BaseRepository() {
+class LocalVideoRepository : BaseRepository() {
 
-    fun getLocalVideoList() : List<LocalVideo> {
+    fun getLocalVideoList(): List<LocalVideo> {
         val list = arrayListOf<LocalVideo>()
         val videoColumnsProjection = arrayOf(
                 MediaStore.Video.Media._ID,
@@ -36,53 +36,40 @@ class LocalVideoRepository: BaseRepository() {
                 MediaStore.Video.Media.DATE_TAKEN
         )
         App.CONTEXT.contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                videoColumnsProjection, null, null, null)?.
-                use { cursor ->
-                    // 不要使用 getColumnIndexOrThrow(), 因为某些columen会抛出异常, 导致循环退出, 而不能查询所有的条目
-                    val resolutionColumn = cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION)
-                    val dateTakenColumn = cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)
-                    try {
-                        while (cursor.moveToNext()) {
-                            val id = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media._ID))
-                            val contentUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
-                            // 视频大小是以B为单位的整数数字, 故故需转成10KB, 10MB, 10GB
-                            val _size = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.SIZE))
-                            val size = FormatUtil.formatMediaSize(_size)
-                            val title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
-                            // 视频大小是以秒(s)为单位的整数数字, 故需转成00:00:00
-                            val duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION))
-                            var resolution = ""
-                            if (cursor.getType(resolutionColumn) == FIELD_TYPE_STRING) {
-                                resolution = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION))
-                            }
-                            // TODO: 2020/6/12 通过resolution判断orientation
-                            val orientation = "0"
-                            val dateAdded = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_ADDED))
-                            val dateModified = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED))
-                            var dateTaken = ""
-                            if (cursor.getType(dateTakenColumn) == FIELD_TYPE_STRING) {
-                                dateTaken = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN))
-                            }
-                            var thumbnail: Bitmap? = null
-                            // if (cursor.getType(cursor.getColumnIndex(MediaStore.Video.Media.MINI_THUMB_MAGIC)) == FIELD_TYPE_INTEGER) {
-                                // Load thumbnail of a specific media item.
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                    thumbnail =
-                                            App.CONTEXT.contentResolver.loadThumbnail(
-                                                    contentUri, Size(320, 240), null)
-                                } else {
-                                    thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, id, MICRO_KIND,
-                                            BitmapFactory.Options())
-                                }
-                            // }
-                            list += LocalVideo(contentUri, size, title, duration, resolution, orientation, dateTaken, dateAdded, dateModified, thumbnail)
-                        }
-                    } catch (e: Exception) {
-                        Log.e("LocalVideoRepository", e.toString())
-                    } finally {
-                        return list
+                videoColumnsProjection, null, null, null)?.use { cursor ->
+            // 不要使用 getColumnIndexOrThrow(), 因为某些columen会抛出异常, 导致循环退出, 而不能查询所有的条目
+            val resolutionColumn = cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION)
+            val dateTakenColumn = cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)
+            try {
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media._ID))
+                    val contentUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
+                    // 视频大小是以B为单位的整数数字, 故故需转成10KB, 10MB, 10GB
+                    val _size = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.SIZE))
+                    val size = FormatUtil.formatMediaSize(_size)
+                    val title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
+                    // 视频大小是以秒(s)为单位的整数数字, 故需转成00:00:00
+                    val duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION))
+                    var resolution = ""
+                    if (cursor.getType(resolutionColumn) == FIELD_TYPE_STRING) {
+                        resolution = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION))
                     }
+                    // TODO: 2020/6/12 通过resolution判断orientation
+                    val orientation = "0"
+                    val dateAdded = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_ADDED))
+                    val dateModified = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED))
+                    var dateTaken = ""
+                    if (cursor.getType(dateTakenColumn) == FIELD_TYPE_STRING) {
+                        dateTaken = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN))
+                    }
+                    list += LocalVideo(contentUri, size, title, duration, resolution, orientation, dateTaken, dateAdded, dateModified)
                 }
+            } catch (e: Exception) {
+                Log.e("LocalVideoRepository", e.toString())
+            } finally {
+                return list
+            }
+        }
         return list
     }
 }

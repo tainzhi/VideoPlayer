@@ -19,6 +19,5 @@ data class LocalVideo(
         var orientation: String,
         var dateTaken: String,
         var dateCreated: String,
-        var dateModified: String,
-        var thumbnail: Bitmap?
+        var dateModified: String
 )
