@@ -1,4 +1,4 @@
-package com.tainzhi.android.videoplayer
+package com.tainzhi.android.videoplayer.adapter
 
 import androidx.databinding.ObservableField
 import com.chad.library.adapter.base.BaseQuickAdapter

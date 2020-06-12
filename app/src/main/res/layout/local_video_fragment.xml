@@ -3,8 +3,8 @@
 	xmlns:tools="http://schemas.android.com/tools">
 	
 	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/tvRecyclerView"
+		android:id="@+id/localVideoRecyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:listitem="@layout/item_tv" />
+		tools:listitem="@layout/item_local_video" />
 </layout>
