@@ -38,7 +38,7 @@ dependencies {
     api("tv.danmaku.ijk.media:ijkplayer-java:0.8.8")
     api("tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8")
 
-    api("com.google.android.exoplayer:exoplayer:2.10.7")
+    api("com.google.android.exoplayer:exoplayer:2.11.5")
 
     api("com.orhanobut:logger:2.2.0")
 }
