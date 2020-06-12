@@ -146,7 +146,7 @@
   }, {
     "tvId": "CCTV19",
     "tvType": "cctv",
-    "tvName": "CCTV",
+    "tvName": "CGTV-NEWS",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0331/20140331032438873.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv16.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
@@ -154,7 +154,7 @@
     "tvId": "CCTV17NY",
     "tvType": "cctv",
     "tvName": "CCTV-17农业",
-    "tvImg": "https://forterli.gitee.io/project/mini_program/tv_video/img/xiaomao.jpg",
+    "tvImg": "https://p3.img.cctvpic.com/photoAlbum/templet/special/PAGEHP1pnuSayxqIDjzBAovA190710/ELMTRGz3lC8z8vnzmWK8uLvE190710_1564579644.jpg",
     "tvCircuit": ["http://cctvcnch5c.v.wscdns.com/live/cctv17_2/index.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }]
