@@ -10,7 +10,6 @@ import android.net.Uri
  **/
 
 data class LocalVideo(
-        var id: Long,
         var uri: Uri,
         var size: String,
         var title: String,
