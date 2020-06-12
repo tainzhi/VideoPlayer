@@ -8,7 +8,7 @@ import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 import kotlinx.coroutines.withContext
 
 class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository,
-                          private val coroutineDispatcher: CoroutinesDispatcherProvider
+                          private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel() {
     private val _localVideoList = MutableLiveData<List<LocalVideo>>()
     val localVideoList
@@ -16,9 +16,16 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
 
     fun getLocalVideos() {
         launch {
-            withContext(coroutineDispatcher.default) {
-                _localVideoList.value =  localVideoRepository.getLocalVideoList()
+            withContext(dispatcherProvider.default) {
+                val result = localVideoRepository.getLocalVideoList()
+                emitData(result)
             }
+        }
+    }
+
+    private suspend fun emitData(videos: List<LocalVideo>) {
+        withContext(dispatcherProvider.main) {
+            _localVideoList.value = videos
         }
     }
 }
