@@ -169,9 +169,9 @@ dependencies {
     implementation(Libs.Glide.glide)
     kapt(Libs.Glide.compiler)
     
-    debugImplementation(Libs.leakCanary)
-    // debugImplementation(Libs.DoKit.debugVersion)
-    // releaseImplementation(Libs.DoKit.releaseVersion)
+    debugImplementation(Libs.DoKit.leakcanary)
+    debugImplementation(Libs.DoKit.debugVersion)
+    releaseImplementation(Libs.DoKit.releaseVersion)
     
     implementation(Libs.timber)
     implementation(Libs.baseRecyclerViewAdapterHelper)

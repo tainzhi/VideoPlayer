@@ -130,7 +130,8 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
 
     override fun setSpeed(speed: Float) {
         val parameters = PlaybackParameters(speed, 1.0f)
-        simpleExoPlayer.playbackParameters = parameters
+        // TODO: 2020/6/13 set speed 
+        // simpleExoPlayer.playbackParameters = parameters
     }
 
     override fun onVideoSizeChanged(width: Int, height: Int, unappliedRotationDegrees: Int, pixelWidthHeightRatio: Float) { // handler.post(() -> jzvd.onVideoSizeChanged(width, height));
