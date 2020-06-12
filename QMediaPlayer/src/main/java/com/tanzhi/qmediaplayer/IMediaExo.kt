@@ -130,7 +130,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
 
     override fun setSpeed(speed: Float) {
         val parameters = PlaybackParameters(speed, 1.0f)
-        // TODO: 2020/6/13 set speed 
+        // TODO: 2020/6/13 set speed
         // simpleExoPlayer.playbackParameters = parameters
     }
 
