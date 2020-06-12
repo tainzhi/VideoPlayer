@@ -2,6 +2,7 @@ package com.tainzhi.android.videoplayer
 
 import android.app.Application
 import android.content.Context
+import com.didichuxing.doraemonkit.DoraemonKit
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.tainzhi.android.videoplayer.di.appModule
@@ -33,6 +34,9 @@ class App : Application() {
             androidLogger()
             modules(appModule)
         }
+
+        DoraemonKit.install(this)
+
         Logger.addLogAdapter(AndroidLogAdapter())
     }
 
