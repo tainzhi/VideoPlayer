@@ -6,7 +6,7 @@
 	app:startDestination="@id/TVFragment">
 	<fragment
 		android:id="@+id/TVFragment"
-		android:name="com.tainzhi.android.videoplayer.ui.TVFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.tv.TVFragment"
 		tools:layout="@layout/t_v_fragment"
 		android:label="TVFragment" />
 </navigation>

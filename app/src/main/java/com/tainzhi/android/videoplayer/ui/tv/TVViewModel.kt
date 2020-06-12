@@ -1,4 +1,4 @@
-package com.tainzhi.android.videoplayer.ui
+package com.tainzhi.android.videoplayer.ui.tv
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

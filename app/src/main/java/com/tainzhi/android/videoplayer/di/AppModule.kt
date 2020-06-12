@@ -4,8 +4,10 @@ import android.app.Application
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.db.TvDao
+import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 import com.tainzhi.android.videoplayer.repository.TVRepository
-import com.tainzhi.android.videoplayer.ui.TVViewModel
+import com.tainzhi.android.videoplayer.ui.local.LocalVideoViewModel
+import com.tainzhi.android.videoplayer.ui.tv.TVViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -18,11 +20,13 @@ import org.koin.dsl.module
  **/
  
 val viewModelModule = module {
-    viewModel { TVViewModel(get(), get())}
+    viewModel { TVViewModel(get(), get()) }
+    viewModel { LocalVideoViewModel(get(), get()) }
 }
 
 val repositoryModule = module {
     single { TVRepository(get()) }
+    single { LocalVideoRepository() }
 }
 
 // 单独抽出CoroutineModule, 方便test
