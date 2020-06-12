@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer
 
+import androidx.databinding.ObservableField
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.qfq.tainzhi.videoplayer.R
@@ -18,6 +19,7 @@ class TVAdapter: BaseQuickAdapter<Tv, BaseDataBindingHolder<ItemTvBinding>>(R.la
     override fun convert(holder: BaseDataBindingHolder<ItemTvBinding>, item: Tv) {
         holder.dataBinding?.apply {
             tv = item
+            program = ObservableField("hello")
             executePendingBindings()
         }
     }

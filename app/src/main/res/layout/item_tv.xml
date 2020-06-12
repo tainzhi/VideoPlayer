@@ -9,6 +9,9 @@
 		<variable
 			name="tv"
 			type="com.tainzhi.android.videoplayer.bean.Tv" />
+		<variable
+			name="program"
+			type="androidx.databinding.ObservableField&lt;String>" />
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -49,8 +52,15 @@
 			app:lottie_scale="0.5"
 			app:lottie_autoPlay="true"
 			app:lottie_loop="true"/>
-			/>
+		
+		<TextView
 			
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@{program}"
+			tools:layout_editor_absoluteX="270dp"
+			tools:layout_editor_absoluteY="55dp"
+			tools:text="西游记第一集" />
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
