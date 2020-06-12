@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.bean
 
+import android.graphics.Bitmap
 import android.net.Uri
 
 /**
@@ -18,5 +19,6 @@ data class LocalVideo(
         var orientation: String,
         var dateTaken: String,
         var dateCreated: String,
-        var dateModified: String
+        var dateModified: String,
+        var thumbnail: Bitmap?
 )
