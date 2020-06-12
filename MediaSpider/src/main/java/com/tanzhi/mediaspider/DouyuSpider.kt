@@ -31,14 +31,14 @@ class DouyuSpider() {
         )
 
         var roomLiveUrl = "-1"
-        var response: String? = null
+        lateinit var response: String
         try {
             response = KRequest().apply {
                 mapData = postData
                 headers = header
             }.post(url)
 
-            response?.let { it ->
+            response.let { it ->
                 val jsonObject = JSONObject(it)
                 if (jsonObject.getInt("error") == 0) {
                     val dataObject = jsonObject.getJSONObject("data")
