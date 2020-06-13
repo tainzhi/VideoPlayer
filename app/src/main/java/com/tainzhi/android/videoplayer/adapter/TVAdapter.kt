@@ -14,7 +14,14 @@ import java.util.*
  * @description:
  **/
 
-class TVAdapter: BaseQuickAdapter<Tv, BaseDataBindingHolder<ItemTvBinding>>(R.layout.item_tv) {
+class TVAdapter(private val goToPlay: (tv: Tv) -> Unit ): BaseQuickAdapter<Tv, BaseDataBindingHolder<ItemTvBinding>>(R.layout.item_tv ) {
+
+    init {
+        setOnItemClickListener { _, _, position ->
+            val clickedTv = data[position]
+            goToPlay.invoke(clickedTv)
+        }
+    }
 
     override fun convert(holder: BaseDataBindingHolder<ItemTvBinding>, item: Tv) {
         holder.dataBinding?.apply {

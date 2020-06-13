@@ -21,9 +21,17 @@ class TVViewModel(private val tvRepository: TVRepository,
      */
     fun getTVList() {
         launch {
-            val result = tvRepository.loadTvs()
+            val result = tvRepository.loadTVs()
             emitData(result)
         }
+    }
+
+    /**
+     * 获取tvId卫视的直播源线路中的第一个
+     */
+    fun getTVCircuit(tvId: String) : String {
+        val tvSources =  tvRepository.loadTVSource(tvId)
+        return if (tvSources.isEmpty()) "" else tvSources[0]
     }
 
     /**
@@ -32,7 +40,7 @@ class TVViewModel(private val tvRepository: TVRepository,
     fun getTVProgram() {
         launch {
             withContext(dispatcherProvider.default) {
-                val result = tvRepository.loadTvProgram()
+                val result = tvRepository.loadTVProgram()
             }
         }
     }
@@ -44,8 +52,8 @@ class TVViewModel(private val tvRepository: TVRepository,
     fun getTVListAndProgram() {
         launch {
             withContext(dispatcherProvider.default) {
-                val resultList = async {  tvRepository.loadTvs() }
-                val resultProgram = async { tvRepository.loadTvProgram() }
+                val resultList = async {  tvRepository.loadTVs() }
+                val resultProgram = async { tvRepository.loadTVProgram() }
                 val list = resultList.await()
                 val program = resultProgram.await()
                 list.forEach { it.broadingProgram = program[it.id] ?: ""}

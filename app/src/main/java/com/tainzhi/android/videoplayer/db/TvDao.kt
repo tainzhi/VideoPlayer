@@ -28,8 +28,8 @@ abstract class TvDao {
     abstract fun getAllTv(): List<Tv>
 
     // 提供tvId, 查询该频道的所有网络源
-    @Query("SELECT circuit FROM tv_circuit WHERE tv_name = :tvName")
-    abstract fun getTvCircuit(tvName: String): LiveData<List<String>>
+    @Query("SELECT circuit FROM tv_circuit WHERE tv_id = :tvId")
+    abstract fun getTvCircuit(tvId: String): List<String>
 
     // @Transaction
     // @Query("SELECT * FROM plants WHERE id IN (SELECT DISTINCT(plant_id) FROM garden_plantings)")

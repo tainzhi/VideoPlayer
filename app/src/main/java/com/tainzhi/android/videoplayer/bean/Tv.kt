@@ -12,12 +12,12 @@ import java.io.Serializable
  **/
 @Entity(
         tableName = "tv",
-        indices = [Index("name")]
+        indices = [Index("id")]
 )
 data class Tv(
-        @ColumnInfo(name = "id") @field:SerializedName("tvId") var id: String? = "",
+        @PrimaryKey @ColumnInfo(name = "id") @field:SerializedName("tvId") var id: String = "",
         @ColumnInfo(name = "type") @field:SerializedName("tvType") var type: String?,
-        @PrimaryKey @ColumnInfo(name = "name") @field: SerializedName("tvName") var name: String,
+        @ColumnInfo(name = "name") @field: SerializedName("tvName") var name: String?,
         @ColumnInfo(name = "image") @field: SerializedName("tvImg") var image: String?,
         @ColumnInfo(name = "program_url") @field: SerializedName("programUrl") var programUrl : String? = "",
         @ColumnInfo(name = "introduce") @field: SerializedName("introduce") var introduce: String? = "",
