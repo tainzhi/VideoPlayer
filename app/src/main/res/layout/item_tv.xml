@@ -62,16 +62,20 @@
 			app:lottie_scale="4"/>
 <!--			app:lottie_speed="2"/>-->
 		
-		<TextView
+		<com.tainzhi.android.common.widget.AutoScrollHorizontalTextView
 			style="@style/TextAppearance.AppTheme.Headline6"
-			android:layout_width="wrap_content"
+			android:layout_width="160dp"
 			android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:text="@{tv.broadingProgram}"
-			app:layout_constraintBottom_toBottomOf="@+id/loading"
-			app:layout_constraintStart_toEndOf="@+id/loading"
-			android:scrollHorizontally="true"
 			android:alpha="?alphaEmphasisMedium"
+			android:scrollHorizontally="true"
+			android:singleLine="true"
+			android:text="@{tv.broadingProgram}"
+			android:textSize="18sp"
+			android:ellipsize="marquee"
+			android:layout_marginEnd="@dimen/margin_small"
+			app:layout_constraintBottom_toBottomOf="@+id/loading"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/loading"
 			app:layout_constraintTop_toTopOf="@+id/loading"
 			tools:text="西游记第一集" />
 	
