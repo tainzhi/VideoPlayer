@@ -126,7 +126,7 @@
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "CCTV14",
+    "tvId": "CCTV15",
     "tvType": "cctv",
     "tvName": "CCTV-14少儿",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0331/20140331031008535.jpg",
@@ -161,231 +161,231 @@
 }, {
   "type": "satellite",
   "tvLists": [{
-    "tvId": "BTV-1",
+    "tvId": "BTV1",
     "tvType": "satellite",
     "tvName": "北京卫视",
     "tvImg": "http://www.66zhibo.net/d/file/2018/0613/small3d75528f7e72766bf831012a4e7a0096.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/btv1.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "HNTV-1",
+    "tvId": "HNTV1",
     "tvType": "satellite",
     "tvName": "湖南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105054954388.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hunantv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "JSTV-1",
+    "tvId": "JSTV1",
     "tvType": "satellite",
     "tvName": "江苏卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105061518886.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/jstv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "ZJTV-1",
+    "tvId": "ZJTV1",
     "tvType": "satellite",
     "tvName": "浙江卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105063047305.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/zjtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "AHTV-1",
+    "tvId": "AHTV1",
     "tvType": "satellite",
     "tvName": "安徽卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105063514384.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/ahtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "TJTV-1",
+    "tvId": "TJTV1",
     "tvType": "satellite",
     "tvName": "天津卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105065714879.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/tjtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "LNTV-1",
+    "tvId": "LNTV1",
     "tvType": "satellite",
     "tvName": "辽宁卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105070406131.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/lntv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "JXTV-1",
+    "tvId": "JXTV1",
     "tvType": "satellite",
     "tvName": "江西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105071533165.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/jxtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "HLJTV-1",
+    "tvId": "HLJTV1",
     "tvType": "satellite",
     "tvName": "黑龙江卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105071801983.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hljtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "SDTV-1",
+    "tvId": "SDTV1",
     "tvType": "satellite",
     "tvName": "山东卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127051528413.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sdtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "SMG",
+    "tvId": "DONGFANG1",
     "tvType": "satellite",
     "tvName": "东方卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127053017633.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/dftv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "YNTV-1",
+    "tvId": "YNTV1",
     "tvType": "satellite",
     "tvName": "云南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127054817586.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/yntv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "SCTV-1",
+    "tvId": "SCTV1",
     "tvType": "satellite",
     "tvName": "四川卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127055234325.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sctv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "HENANTV-1",
+    "tvId": "HNTV1",
     "tvType": "satellite",
     "tvName": "河南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127060905552.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hntv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "GDTV-1",
+    "tvId": "GDTV1",
     "tvType": "satellite",
     "tvName": "广东卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127062745655.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gdtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "SHENZHENTV-1",
+    "tvId": "SHENZHENTV1",
     "tvType": "satellite",
     "tvName": "深圳卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127065349318.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sztv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "HBTV-1",
+    "tvId": "HUBEI1",
     "tvType": "satellite",
     "tvName": "湖北卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127070021782.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hbtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "DNWS",
+    "tvId": "FJTV2",
     "tvType": "satellite",
     "tvName": "福建东南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127070834599.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/dntv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "XIAMENTV-1",
+    "tvId": "XIAMENTV5",
     "tvType": "satellite",
     "tvName": "厦门卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127093057112.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/xmtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "CQTV-1",
+    "tvId": "CCQTV1",
     "tvType": "satellite",
     "tvName": "重庆卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127094352591.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cqtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "GZTV-1",
+    "tvId": "GUIZOUTV1",
     "tvType": "satellite",
     "tvName": "贵州卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127094656144.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gstv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "HEBTV-1",
+    "tvId": "HEBEI1",
     "tvType": "satellite",
     "tvName": "河北卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127095100348.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hbtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "JLTV-1",
+    "tvId": "JILIN1",
     "tvType": "satellite",
     "tvName": "吉林卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127100134333.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/jltv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "GXTV--1",
+    "tvId": "GUANXI1",
     "tvType": "satellite",
     "tvName": "广西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127102115885.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gxtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "QHTV-1",
+    "tvId": "QHTV1",
     "tvType": "satellite",
     "tvName": "青海卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127102446619.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/qhtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "SHANXITV-1",
+    "tvId": "SXTV1",
     "tvType": "satellite",
     "tvName": "山西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127103829275.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sxrtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "SXTV-1",
+    "tvId": "SXTV1",
     "tvType": "satellite",
     "tvName": "陕西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127105155385.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sxtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "NMGTV-1",
+    "tvId": "NMGTV1",
     "tvType": "satellite",
     "tvName": "内蒙古卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127110204634.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/nmgtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "NXTV-1",
+    "tvId": "NXTV2",
     "tvType": "satellite",
     "tvName": "宁夏卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127111151358.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/nxtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "XZTV-1",
+    "tvId": "XIZANGTV1",
     "tvType": "satellite",
     "tvName": "西藏卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127111701420.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/xztv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "XJTV-1",
+    "tvId": "XJTV1",
     "tvType": "satellite",
     "tvName": "新疆卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127111944516.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/xjtv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "GSTV-1",
+    "tvId": "GSTV1",
     "tvType": "satellite",
     "tvName": "甘肃卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127113347258.jpg",
     "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gstv.m3u8"],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
   }, {
-    "tvId": "BTZX-1",
+    "tvId": "BINGTUAN",
     "tvType": "satellite",
     "tvName": "兵团卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127112819830.jpg",

@@ -9,16 +9,18 @@
 		<variable
 			name="tv"
 			type="com.tainzhi.android.videoplayer.bean.Tv" />
-		<variable
-			name="program"
-			type="androidx.databinding.ObservableField&lt;String>" />
 	</data>
+	
+	<com.google.android.material.card.MaterialCardView
+		android:layout_width="match_parent"
+		android:layout_marginStart="@dimen/margin_normal"
+		android:layout_marginEnd="@dimen/margin_normal"
+		android:layout_marginTop="@dimen/margin_normal"
+		android:layout_height="100dp">
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:paddingStart="@dimen/margin_normal"
-		android:paddingEnd="@dimen/margin_normal"
-		android:layout_height="100dp">
+		android:layout_height="match_parent">
 		
 		<ImageView
 			android:id="@+id/tvImage"
@@ -28,39 +30,51 @@
 			app:imageUrl="@{tv.image}"
 			app:imagePlaceholder="@{appR.drawable.ic_default_tv_channel}"
 			android:scaleType="fitXY"
+			tools:src="@drawable/thumbnail_default"
 			app:layout_constraintHeight_percent="0.8"
 			app:layout_constraintDimensionRatio="l,320:200"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			tools:ignore="ContentDescription" />
 		
 		<TextView
 			android:id="@+id/tvName"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@{tv.name}"
-			app:layout_constraintStart_toEndOf="@+id/tv"
-			app:layout_constraintTop_toTopOf="@+id/tv"
+			style="@style/TextAppearance.AppTheme.Headline5"
+			android:textSize="24sp"
+			app:layout_constraintStart_toEndOf="@+id/tvImage"
+			android:layout_marginStart="@dimen/margin_small"
+			app:layout_constraintTop_toTopOf="@id/tvImage"
 			tools:text="CCTV-1" />
 		
 		<com.airbnb.lottie.LottieAnimationView
 			android:id="@+id/loading"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			app:lottie_rawRes="@raw/program_loading"
-			app:lottie_speed="2"
-			app:lottie_progress="0.3"
-			app:lottie_scale="0.5"
+			android:layout_width="40dp"
+			android:layout_height="30dp"
+			android:layout_marginBottom="@dimen/margin_small"
+			app:layout_constraintBottom_toBottomOf="@+id/tvImage"
+			app:layout_constraintStart_toStartOf="@+id/tvName"
 			app:lottie_autoPlay="true"
-			app:lottie_loop="true"/>
+			app:lottie_loop="true"
+			app:lottie_rawRes="@raw/program_loading"
+			app:lottie_scale="4"/>
+<!--			app:lottie_speed="2"/>-->
 		
 		<TextView
-			
+			style="@style/TextAppearance.AppTheme.Headline6"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@{program}"
-			tools:layout_editor_absoluteX="270dp"
-			tools:layout_editor_absoluteY="55dp"
+			android:textSize="18sp"
+			android:text="@{tv.broadingProgram}"
+			app:layout_constraintBottom_toBottomOf="@+id/loading"
+			app:layout_constraintStart_toEndOf="@+id/loading"
+			android:scrollHorizontally="true"
+			android:alpha="?alphaEmphasisMedium"
+			app:layout_constraintTop_toTopOf="@+id/loading"
 			tools:text="西游记第一集" />
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>
+	</com.google.android.material.card.MaterialCardView>
 </layout>

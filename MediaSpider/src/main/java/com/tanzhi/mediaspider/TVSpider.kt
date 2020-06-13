@@ -36,7 +36,7 @@ class TVSpider {
         val tvProgramMap = hashMapOf<String, String>()
         doc.select("tr").forEach { item ->
             // 获取 /program/CCTV/CCTV1, 正则表达式捕获组 捕获1组
-            val href = item.select("tr")[0].select("a")[0].attr("href")
+            val href = item.select("tr td a").attr("href")
             val key = (".*/(.*)").toRegex().findAll(href).first().groupValues[1]
             val program = item.select("td.pt15")[0].select("[href]").text()
             tvProgramMap[key] = program
