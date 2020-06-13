@@ -20,7 +20,8 @@ data class Tv(
         @PrimaryKey @ColumnInfo(name = "name") @field: SerializedName("tvName") var name: String,
         @ColumnInfo(name = "image") @field: SerializedName("tvImg") var image: String?,
         @ColumnInfo(name = "program_url") @field: SerializedName("programUrl") var programUrl : String? = "",
-        @ColumnInfo(name = "introduce") @field: SerializedName("introduce") var introduce: String? = ""
+        @ColumnInfo(name = "introduce") @field: SerializedName("introduce") var introduce: String? = "",
+        var broadingProgram: String? = null
 ): Serializable {
     @Ignore @field: SerializedName("tvCircuit") var tvCircuit: List<String>? = null
     // constructor(): this("", "", "", "", "", "", null)

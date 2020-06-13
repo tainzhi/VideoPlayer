@@ -37,13 +37,21 @@ class TVViewModel(private val tvRepository: TVRepository,
         }
     }
 
+    /**
+     * 从本地数据库获取卫视列表的同时, 请求网络电视猫获取改卫视正在播放的节目
+     * todo: 等效于同步实现. 更好的方式是在Adapter中每隔固定时间请求网络, 自动更新该卫视的正在直播节目
+     */
     fun getTVListAndProgram() {
         launch {
             withContext(dispatcherProvider.default) {
-                val list = async { _tvList.value = tvRepository.loadTvs() }
-                val program = async { tvRepository.loadTvProgram() }
+                val resultList = async {  tvRepository.loadTvs() }
+                val resultProgram = async { tvRepository.loadTvProgram() }
+                val list = resultList.await()
+                val program = resultProgram.await()
+                list.forEach { it.broadingProgram = program[it.id] ?: ""}
+                emitData(list)
+                }
             }
-        }
     }
 
 

@@ -24,7 +24,7 @@ class TVFragment : BaseVMFragment<TVViewModel>(useBinding = true) {
     }
 
     override fun initData() {
-        mViewModel.getTVList()
+        mViewModel.getTVListAndProgram()
     }
 
     override fun startObserve() {
