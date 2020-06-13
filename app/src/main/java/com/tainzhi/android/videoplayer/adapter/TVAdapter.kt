@@ -1,11 +1,11 @@
 package com.tainzhi.android.videoplayer.adapter
 
-import androidx.databinding.ObservableField
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.ItemTvBinding
 import com.tainzhi.android.videoplayer.bean.Tv
+import java.util.*
 
 /**
  * @author:      tainzhi
@@ -19,7 +19,7 @@ class TVAdapter: BaseQuickAdapter<Tv, BaseDataBindingHolder<ItemTvBinding>>(R.la
     override fun convert(holder: BaseDataBindingHolder<ItemTvBinding>, item: Tv) {
         holder.dataBinding?.apply {
             tv = item
-            program = ObservableField("hello")
+            loading.progress = Random().nextFloat()
             executePendingBindings()
         }
     }
