@@ -27,7 +27,7 @@
 	<string name="title_douyu">斗鱼</string>
 	<string name="title_like">收藏</string>
 	<string name="title_tv">电视</string>
-	<string name="title_ustv">美剧</string>
+	<string name="title_movie">电影</string>
 	<string name="button_allow">允许</string>
 	<string name="button_deny">不允许</string>
 	<string name="permission_camera_rationale">camera ration</string>

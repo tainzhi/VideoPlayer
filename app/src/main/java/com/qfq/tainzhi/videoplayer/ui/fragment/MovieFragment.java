@@ -14,14 +14,14 @@ import com.qfq.tainzhi.videoplayer.R;
  * Created by muqing on 2019/6/4.
  * Email: qfq61@qq.com
  */
-public class USTVFragment extends BaseFragment {
-    public static final String TAG = "VideoPlayer/FragmentUSTV";
-    public static USTVFragment mInstance = null;
+public class MovieFragment extends BaseFragment {
+    public static final String TAG = "VideoPlayer/Fragmentmovie";
+    public static MovieFragment mInstance = null;
     private View mView;
     
-    public static USTVFragment newInstance() {
+    public static MovieFragment newInstance() {
         if (mInstance == null) {
-            mInstance = new USTVFragment();
+            mInstance = new MovieFragment();
         }
         return mInstance;
     }
@@ -29,7 +29,7 @@ public class USTVFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_us_tv, container, false);
+        mView = inflater.inflate(R.layout.fragment_movie, container, false);
         return mView;
     }
     
