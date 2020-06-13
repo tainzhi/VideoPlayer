@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
+import com.tainzhi.android.videoplayer.bean.InputCategory
 import com.tainzhi.android.videoplayer.bean.InputTv
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
@@ -23,23 +24,21 @@ import org.koin.core.KoinComponent
 class TvDatabaseWorker(
         context: Context,
         workerParams: WorkerParameters
-): CoroutineWorker(context, workerParams), KoinComponent {
-    override suspend fun doWork(): Result  = coroutineScope {
+) : CoroutineWorker(context, workerParams), KoinComponent {
+    override suspend fun doWork(): Result = coroutineScope {
         try {
             applicationContext.assets.open(TV_CIRCUIT_JSON_FILE).use { inputStream ->
                 JsonReader(inputStream.reader()).use { jsonReader ->
-                    val tvType = object: TypeToken<List<InputTv>>() {}.type
+                    val tvCategories = object : TypeToken<List<InputCategory>>() {}.type
                     val tvList = ArrayList<Tv>()
                     val tvCircuitList = ArrayList<TvCircuit>()
-                    val inputTvList: List<InputTv> = Gson().fromJson(jsonReader, tvType)
-                    inputTvList.forEach { firstClass ->
-                        firstClass.tvLists.forEach { tv ->
-                            run {
-                                // tvList.add(Tv(tv.id, tv.type, tv.name, tv.image, tv.programUrl))
-                                tvList.add(Tv(tv.tvId, firstClass.type, tv.tvName, tv.tvImg, tv.programUrl, tv.introduce))
-                                tv.tvCircuit?.forEach { circuit->
-                                    tvCircuitList.add(TvCircuit(tv.tvName, circuit))
-                                }
+                    val inputTvCategories: List<InputCategory> = Gson().fromJson(jsonReader, tvCategories)
+                    inputTvCategories.forEach { category ->
+                        category.tvLists.forEach { inputTv ->
+                            // tvList.add(Tv(tv.id, tv.type, tv.name, tv.image, tv.programUrl))
+                            tvList.add(Tv(inputTv.tvId, category.type, inputTv.tvName, inputTv.tvImg, inputTv.programUrl, inputTv.introduce))
+                            inputTv.tvCircuit?.forEach { circuit ->
+                                tvCircuitList.add(TvCircuit(inputTv.tvId, circuit))
                             }
                         }
                     }
@@ -50,9 +49,9 @@ class TvDatabaseWorker(
                         insertAllTvCircuit(tvCircuitList)
                     }
 
-                        Result.success()
-                    }
+                    Result.success()
                 }
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Error sending database", e)
             Result.failure()

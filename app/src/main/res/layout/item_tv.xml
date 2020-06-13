@@ -15,7 +15,7 @@
 		android:layout_width="match_parent"
 		android:layout_marginStart="@dimen/margin_normal"
 		android:layout_marginEnd="@dimen/margin_normal"
-		android:layout_marginTop="@dimen/margin_normal"
+		android:layout_marginBottom="@dimen/margin_normal"
 		android:layout_height="100dp">
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -60,9 +60,8 @@
 			app:lottie_loop="true"
 			app:lottie_rawRes="@raw/program_loading"
 			app:lottie_scale="4"/>
-<!--			app:lottie_speed="2"/>-->
 		
-		<com.tainzhi.android.common.widget.AutoScrollHorizontalTextView
+		<com.tainzhi.android.common.widget.AutoScrollHorizontalView
 			style="@style/TextAppearance.AppTheme.Headline6"
 			android:layout_width="160dp"
 			android:layout_height="wrap_content"

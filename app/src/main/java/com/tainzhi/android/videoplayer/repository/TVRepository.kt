@@ -14,11 +14,20 @@ import com.tanzhi.mediaspider.TVSpider
 
 class TVRepository(private val tvDao: TvDao): BaseRepository() {
 
-    fun loadTvs(): List<Tv> {
+    fun loadTVs(): List<Tv> {
         return tvDao.getAllTv()
     }
 
-    fun loadTvProgram(): Map<String, String> {
+    /**
+     * 查询卫视tvId的所有直播源
+     *
+     * @program tvId 卫视tvId
+     */
+    fun loadTVSource(tvId: String): List<String> {
+        return tvDao.getTvCircuit(tvId)
+    }
+
+    fun loadTVProgram(): Map<String, String> {
         return TVSpider.getInstance().getTvProgram("cctv") +
                 TVSpider.getInstance().getTvProgram("satellite")
     }

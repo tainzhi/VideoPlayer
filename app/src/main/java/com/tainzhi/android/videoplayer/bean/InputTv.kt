@@ -10,15 +10,15 @@ import java.io.Serializable
  **/
  
 
-data class InputTv(
+data class InputCategory(
     val type: String?,
-    val tvLists: List<TvLists>
+    val tvLists: List<InputTv>
 ): Serializable
 
-data class TvLists(
-    val tvId: String?,
+data class InputTv(
+    val tvId: String,
     val tvType: String?,
-    val tvName: String,
+    val tvName: String?,
     val tvImg: String?,
     val tvCircuit: List<String>?,
     val programUrl: String?,
