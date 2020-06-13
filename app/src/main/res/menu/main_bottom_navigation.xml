@@ -17,10 +17,10 @@
         android:contentDescription="@string/title_tv"
         android:title="@string/title_tv"/>
     <item
-        android:id="@+id/us_tv"
-        android:icon="@drawable/ic_ustv"
-        android:contentDescription="@string/title_ustv"
-        android:title="@string/title_ustv"/>
+        android:id="@+id/movie"
+        android:icon="@drawable/ic_movie"
+        android:contentDescription="@string/title_movie"
+        android:title="@string/title_movie"/>
     <item
         android:id="@+id/like"
         android:icon="@drawable/ic_like"
