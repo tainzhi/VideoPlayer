@@ -163,12 +163,12 @@ class BottomNavigationTest {
                 .check(matches(isDisplayed()))
     }
     private fun openFourthScreen() {
-        onView(allOf(withContentDescription(R.string.title_ustv), isDisplayed()))
+        onView(allOf(withContentDescription(R.string.title_movie), isDisplayed()))
                 .perform(click())
     }
 
     private fun assertFourthScreen() {
-        onView(withText(R.string.title_ustv))
+        onView(withText(R.string.title_movie))
                 .check(matches(isDisplayed()))
     }
     private fun openFifthScreen() {
