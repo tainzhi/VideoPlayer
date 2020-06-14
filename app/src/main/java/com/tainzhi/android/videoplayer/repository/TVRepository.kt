@@ -15,7 +15,11 @@ import com.tanzhi.mediaspider.TVSpider
 class TVRepository(private val tvDao: TvDao): BaseRepository() {
 
     fun loadTVs(): List<Tv> {
-        return tvDao.getAllTv()
+        val tvs = tvDao.getAllTv()
+        tvs.forEach { tv ->
+            tv.tvCircuit = loadTVSource(tv.id)
+        }
+        return tvs
     }
 
     /**
