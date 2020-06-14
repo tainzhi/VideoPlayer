@@ -38,7 +38,7 @@ class TVSpider {
             // 获取 /program/CCTV/CCTV1, 正则表达式捕获组 捕获1组
             val href = item.select("tr td a").attr("href")
             val key = (".*/(.*)").toRegex().findAll(href).first().groupValues[1]
-            val program = item.select("td.pt15")[0].select("[href]").text()
+            val program = item.select("tr td.pt15")[0].text().split(" ")[0]
             tvProgramMap[key] = program
         }
         return tvProgramMap
