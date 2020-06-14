@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 	
 	<data>
+		
 		<import
-			alias="appR" type="com.qfq.tainzhi.videoplayer.R"/>
+			alias="appR"
+			type="com.qfq.tainzhi.videoplayer.R" />
+		
 		<variable
 			name="tv"
 			type="com.tainzhi.android.videoplayer.bean.Tv" />
@@ -13,71 +16,72 @@
 	
 	<com.google.android.material.card.MaterialCardView
 		android:layout_width="match_parent"
+		android:layout_height="100dp"
 		android:layout_marginStart="@dimen/margin_normal"
 		android:layout_marginEnd="@dimen/margin_normal"
-		android:layout_marginBottom="@dimen/margin_normal"
-		android:layout_height="100dp">
-	
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_marginBottom="@dimen/margin_normal">
 		
-		<ImageView
-			android:id="@+id/tvImage"
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:imageUrl="@{tv.image}"
-			app:imagePlaceholder="@{appR.drawable.ic_default_tv_channel}"
-			android:scaleType="fitXY"
-			tools:src="@drawable/thumbnail_default"
-			app:layout_constraintHeight_percent="0.8"
-			app:layout_constraintDimensionRatio="l,320:200"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:ignore="ContentDescription" />
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			
+			<ImageView
+				android:id="@+id/tvImage"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:scaleType="fitXY"
+				app:imagePlaceholder="@{appR.drawable.ic_default_tv_channel}"
+				app:imageUrl="@{tv.image}"
+				app:roundCornerRadiusImage="@{5}"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintDimensionRatio="l,320:200"
+				app:layout_constraintHeight_percent="0.8"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:ignore="ContentDescription"
+				tools:src="@drawable/thumbnail_default" />
+			
+			<TextView
+				android:id="@+id/tvName"
+				style="@style/TextAppearance.AppTheme.Headline5"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/margin_small"
+				android:text="@{tv.name}"
+				android:textSize="24sp"
+				app:layout_constraintStart_toEndOf="@+id/tvImage"
+				app:layout_constraintTop_toTopOf="@id/tvImage"
+				tools:text="CCTV-1" />
+			
+			<com.airbnb.lottie.LottieAnimationView
+				android:id="@+id/loading"
+				android:layout_width="40dp"
+				android:layout_height="30dp"
+				android:layout_marginBottom="@dimen/margin_small"
+				app:layout_constraintBottom_toBottomOf="@+id/tvImage"
+				app:layout_constraintStart_toStartOf="@+id/tvName"
+				app:lottie_autoPlay="true"
+				app:lottie_loop="true"
+				app:lottie_rawRes="@raw/program_loading"
+				app:lottie_scale="4" />
+			
+			<com.tainzhi.android.common.widget.AutoScrollHorizontalView
+				style="@style/TextAppearance.AppTheme.Headline6"
+				android:layout_width="160dp"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="@dimen/margin_small"
+				android:alpha="?alphaEmphasisMedium"
+				android:ellipsize="marquee"
+				android:scrollHorizontally="true"
+				android:singleLine="true"
+				android:text="@{tv.broadingProgram}"
+				android:textSize="18sp"
+				app:layout_constraintBottom_toBottomOf="@+id/loading"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@+id/loading"
+				app:layout_constraintTop_toTopOf="@+id/loading"
+				tools:text="西游记第一集" />
 		
-		<TextView
-			android:id="@+id/tvName"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@{tv.name}"
-			style="@style/TextAppearance.AppTheme.Headline5"
-			android:textSize="24sp"
-			app:layout_constraintStart_toEndOf="@+id/tvImage"
-			android:layout_marginStart="@dimen/margin_small"
-			app:layout_constraintTop_toTopOf="@id/tvImage"
-			tools:text="CCTV-1" />
-		
-		<com.airbnb.lottie.LottieAnimationView
-			android:id="@+id/loading"
-			android:layout_width="40dp"
-			android:layout_height="30dp"
-			android:layout_marginBottom="@dimen/margin_small"
-			app:layout_constraintBottom_toBottomOf="@+id/tvImage"
-			app:layout_constraintStart_toStartOf="@+id/tvName"
-			app:lottie_autoPlay="true"
-			app:lottie_loop="true"
-			app:lottie_rawRes="@raw/program_loading"
-			app:lottie_scale="4"/>
-		
-		<com.tainzhi.android.common.widget.AutoScrollHorizontalView
-			style="@style/TextAppearance.AppTheme.Headline6"
-			android:layout_width="160dp"
-			android:layout_height="wrap_content"
-			android:alpha="?alphaEmphasisMedium"
-			android:scrollHorizontally="true"
-			android:singleLine="true"
-			android:text="@{tv.broadingProgram}"
-			android:textSize="18sp"
-			android:ellipsize="marquee"
-			android:layout_marginEnd="@dimen/margin_small"
-			app:layout_constraintBottom_toBottomOf="@+id/loading"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@+id/loading"
-			app:layout_constraintTop_toTopOf="@+id/loading"
-			tools:text="西游记第一集" />
-	
-	</androidx.constraintlayout.widget.ConstraintLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
 	</com.google.android.material.card.MaterialCardView>
 </layout>

@@ -28,6 +28,11 @@
         <item name="itemBackground">?attr/selectableItemBackgroundBorderless</item>
         <item name="elevation">@dimen/design_bottom_navigation_elevation</item>
     </style>
+	
+	<style name="VideoDetailsTag">
+		<item name="android:background">@drawable/bg_grey_tag</item>
+		<item name="android:textSize">12sp</item>
+	</style>
 
 <!--    <style name="TranslucentTheme" parent="AppTheme.NoActionBar">-->
 <!--        <item name="android:windowTranslucentStatus">true</item>-->

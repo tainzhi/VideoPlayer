@@ -4,85 +4,108 @@
 	xmlns:tools="http://schemas.android.com/tools">
 	
 	<data>
+		
 		<variable
 			name="video"
-			type="com.tainzhi.android.videoplayer.bean.LocalVideo"/>
+			type="com.tainzhi.android.videoplayer.bean.LocalVideo" />
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/relativeLayout2"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="100dp"
 		android:orientation="horizontal">
 		
-		<com.qfq.tainzhi.videoplayer.widget.RoundCornerImageView
-			android:id="@+id/item_staggredview_thumbnail"
-			android:layout_width="160dp"
-			android:layout_height="120dp"
-			android:layout_marginStart="5dp"
-			android:layout_marginTop="5dp"
-			android:layout_marginEnd="5dp"
-			android:layout_marginBottom="5dp"
-			android:adjustViewBounds="true"
-			android:scaleType="centerCrop"
-			app:videoUri="@{video.uri}"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
-		
-		<TextView
-			android:id="@+id/item_video_title"
+		<ImageView
+			android:id="@+id/videoThumbnailImageView"
 			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="5dp"
-			android:layout_marginEnd="8dp"
-			android:maxLines="2"
-			android:textSize="20dp"
-			android:textStyle="bold"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@+id/item_staggredview_thumbnail"
+			android:layout_height="match_parent"
+			android:layout_marginStart="@dimen/margin_normal"
+			android:layout_marginTop="@dimen/margin_small"
+			android:scaleType="fitXY"
+			app:layout_constraintDimensionRatio="w, 35:21"
+			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			android:text="@{video.title}"
-			tools:text="这是一个视频名称, 测试text多行显示, 想多长, 就多长, 就是这么强壮" />
+			app:videoUri="@{video.uri}"
+			tools:ignore="ContentDescription"
+			tools:src="@drawable/thumbnail_default" />
 		
 		<TextView
-			android:id="@+id/item_video_size"
+			android:id="@+id/videoDurationTv"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginBottom="3dp"
-			app:layout_constraintStart_toEndOf="@id/item_staggredview_thumbnail"
-			app:layout_constraintTop_toBottomOf="@id/item_video_title"
-			app:layout_constraintVertical_bias="1.0"
-			android:text="@{video.size}"
-			tools:text="100.5G" />
-		
-		<TextView
-			android:id="@+id/item_video_duration"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="3dp"
-			app:layout_constraintStart_toEndOf="@id/item_staggredview_thumbnail"
-			app:layout_constraintTop_toBottomOf="@id/item_video_size"
+			android:layout_marginEnd="@dimen/spacing_micro"
+			android:layout_marginBottom="@dimen/spacing_micro"
+			android:background="@drawable/bg_black_tag"
+			android:text="@{video.duration}"
+			android:textColor="@color/lb_tv_white"
+			app:layout_constraintBottom_toBottomOf="@id/videoThumbnailImageView"
+			app:layout_constraintEnd_toEndOf="@+id/videoThumbnailImageView"
 			tools:text="1:59:99" />
 		
 		<TextView
-			android:id="@+id/item_video_date_added"
+			android:id="@+id/item_video_title"
+			style="@style/TextAppearance.AppTheme.Headline6"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/margin_small"
+			android:layout_marginEnd="@dimen/margin_normal"
+			android:maxLines="2"
+			android:text="@{video.title}"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/videoThumbnailImageView"
+			app:layout_constraintTop_toTopOf="@+id/videoThumbnailImageView"
+			tools:text="这是一个视频名称, 测试text多行显示, 想多长, 就多长, 就是这么强壮" />
+		
+		
+		<TextView
+			android:id="@+id/videoResolutionTv"
+			style="@style/VideoDetailsTag"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginTop="3dp"
-			app:layout_constraintStart_toEndOf="@id/item_staggredview_thumbnail"
-			app:layout_constraintTop_toBottomOf="@id/item_video_duration"
-			tools:text="00:25:25" />
+			android:layout_marginStart="@dimen/margin_small"
+			android:layout_marginBottom="@dimen/spacing_micro"
+			android:layout_marginTop="@dimen/spacing_micro"
+			android:text="1080p@24"
+			app:layout_constraintBottom_toBottomOf="@+id/videoThumbnailImageView"
+			app:layout_constraintStart_toEndOf="@+id/videoThumbnailImageView"/>
 		
-		<View
-			android:id="@+id/divider"
-			android:layout_width="match_parent"
-			android:layout_height="1px"
-			android:layout_below="@+id/item_content"
-			android:background="@color/line_divider" />
+		
+		<TextView
+			android:id="@+id/item_video_size"
+			style="@style/VideoDetailsTag"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@{video.size}"
+			app:layout_constraintBottom_toBottomOf="@+id/videoResolutionTv"
+			app:layout_constraintStart_toStartOf="@+id/guideline2"
+			app:layout_constraintTop_toTopOf="@+id/videoResolutionTv"
+			tools:text="1011.5G" />
+		
+		<TextView
+			android:id="@+id/item_video_date_added"
+			style="@style/VideoDetailsTag"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@{video.dateModified}"
+			app:layout_constraintBottom_toBottomOf="@+id/videoResolutionTv"
+			app:layout_constraintStart_toStartOf="@+id/guideline3"
+			app:layout_constraintTop_toTopOf="@+id/videoResolutionTv"
+			tools:text="06/01/2020" />
+		
+		<androidx.constraintlayout.widget.Guideline
+			android:id="@+id/guideline2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintGuide_begin="250dp" />
+		
+		<androidx.constraintlayout.widget.Guideline
+			android:id="@+id/guideline3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintGuide_begin="309dp" />
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
