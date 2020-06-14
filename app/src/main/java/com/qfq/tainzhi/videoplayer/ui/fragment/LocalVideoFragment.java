@@ -21,7 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhanobut.logger.Logger;
 import com.qfq.tainzhi.videoplayer.R;
-import com.qfq.tainzhi.videoplayer.VideoTestActivity;
+import com.tainzhi.android.videoplayer.ui.PlayActivity;
 import com.qfq.tainzhi.videoplayer.adapters.LocalVideoAdapter;
 import com.qfq.tainzhi.videoplayer.bean.LocalVideoBean;
 
@@ -141,7 +141,7 @@ public class LocalVideoFragment extends BaseFragment implements SwipeRefreshLayo
     
         // IjkPlayerActivity.startPlay(requireActivity(), videoUri, name, duration, 0);
         // PlayVideoViewActivity.startPlay(requireActivity(), videoUri, name, duration, 0);
-        VideoTestActivity.startPlay(requireActivity(), videoUri, name, duration, 0);
+        PlayActivity.startPlay(requireActivity(), videoUri, name, duration, 0);
     }
     
 }
