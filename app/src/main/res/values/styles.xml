@@ -31,7 +31,7 @@
 	
 	<style name="VideoDetailsTag">
 		<item name="android:background">@drawable/bg_grey_tag</item>
-		<item name="android:textSize">12sp</item>
+		<item name="android:textSize">10sp</item>
 	</style>
 
 <!--    <style name="TranslucentTheme" parent="AppTheme.NoActionBar">-->

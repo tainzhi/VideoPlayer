@@ -10,6 +10,8 @@ import android.util.Size
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.tainzhi.android.videoplayer.App
 
 /**
@@ -22,6 +24,7 @@ import com.tainzhi.android.videoplayer.App
 
 @BindingAdapter(
         "videoUri",
+        "cornerRadius",
         "thumbnailWidth",
         "thumbnailHeight",
         requireAll = false
@@ -29,6 +32,7 @@ import com.tainzhi.android.videoplayer.App
 fun bindVideoThumbnail(
         imageView: ImageView,
         videoUri: Uri,
+        cornerRadius: Int? = null,
         width: Int? = null,
         height: Int? = null
 ) {
@@ -41,6 +45,9 @@ fun bindVideoThumbnail(
         thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
                 BitmapFactory.Options())
     }
+    val options = RequestOptions()
+    cornerRadius?.let { options.transform(RoundedCorners(it)) }
     Glide.with(imageView.context).load(thumbnail)
+            .apply(options)
             .into(imageView)
 }
