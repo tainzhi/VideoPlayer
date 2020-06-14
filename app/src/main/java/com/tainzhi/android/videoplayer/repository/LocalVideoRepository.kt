@@ -32,8 +32,10 @@ class LocalVideoRepository : BaseRepository() {
                 MediaStore.Video.Media.DATE_MODIFIED,
                 MediaStore.Video.Media.DATE_TAKEN
         )
+        // 以添加时间倒序查询
+        val queryOrder = MediaStore.Video.Media.DATE_ADDED + " DESC"
         App.CONTEXT.contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                videoColumnsProjection, null, null, null)?.use { cursor ->
+                videoColumnsProjection, null, null, queryOrder)?.use { cursor ->
             // 不要使用 getColumnIndexOrThrow(), 因为某些columen会抛出异常, 导致循环退出, 而不能查询所有的条目
             val resolutionColumn = cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION)
             val dateTakenColumn = cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)
