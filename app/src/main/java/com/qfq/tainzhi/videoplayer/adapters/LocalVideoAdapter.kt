@@ -158,10 +158,10 @@ class LocalVideoAdapter(private val mContext: Context, private val mLists: Mutab
         var date_added: TextView
 
         init {
-            thumb = itemView.findViewById(R.id.item_staggredview_thumbnail)
+            thumb = itemView.findViewById(R.id.videoThumbnailImageView)
             title = itemView.findViewById(R.id.item_video_title)
             size = itemView.findViewById(R.id.item_video_size)
-            duration = itemView.findViewById(R.id.item_video_duration)
+            duration = itemView.findViewById(R.id.videoDurationTv)
             date_added = itemView.findViewById(R.id.item_video_date_added)
         }
     }

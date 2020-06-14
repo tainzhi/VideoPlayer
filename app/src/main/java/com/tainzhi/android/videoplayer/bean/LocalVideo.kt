@@ -14,10 +14,10 @@ data class LocalVideo(
         var uri: Uri,
         var size: String,
         var title: String,
-        var duration: Long,
+        var duration: String,
         var resolution: String,
         var orientation: String,
-        var dateTaken: String,
-        var dateCreated: String,
-        var dateModified: String
+        var dateAdded: String,
+        var dateModified: String,
+        var dateTaken: String
 )

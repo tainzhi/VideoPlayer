@@ -20,10 +20,10 @@ data class Tv(
         @ColumnInfo(name = "name") @field: SerializedName("tvName") var name: String?,
         @ColumnInfo(name = "image") @field: SerializedName("tvImg") var image: String?,
         @ColumnInfo(name = "program_url") @field: SerializedName("programUrl") var programUrl : String? = "",
-        @ColumnInfo(name = "introduce") @field: SerializedName("introduce") var introduce: String? = "",
-        var broadingProgram: String? = null
+        @ColumnInfo(name = "introduce") @field: SerializedName("introduce") var introduce: String? = ""
 ): Serializable {
     @Ignore @field: SerializedName("tvCircuit") var tvCircuit: List<String>? = null
+    @Ignore var broadingProgram: String? = null
     // constructor(): this("", "", "", "", "", "", null)
     // constructor(id: String, type: String, name: String, image: String, programUrl: String, introduce: String): this(id, type, name, image, programUrl, introduce, null)
 

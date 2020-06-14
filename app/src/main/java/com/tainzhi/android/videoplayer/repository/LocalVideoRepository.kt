@@ -2,15 +2,12 @@ package com.tainzhi.android.videoplayer.repository
 
 import android.content.ContentUris
 import android.database.Cursor.FIELD_TYPE_STRING
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.Build
 import android.provider.MediaStore
-import android.provider.MediaStore.Images.Thumbnails.MICRO_KIND
 import android.util.Log
-import android.util.Size
 import com.tainzhi.android.common.base.BaseRepository
-import com.tainzhi.android.common.util.FormatUtil
+import com.tainzhi.android.common.util.FormatUtil.formatMediaDate
+import com.tainzhi.android.common.util.FormatUtil.formatMediaDuration
+import com.tainzhi.android.common.util.FormatUtil.formatMediaSize
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.LocalVideo
 
@@ -45,24 +42,25 @@ class LocalVideoRepository : BaseRepository() {
                     val id = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media._ID))
                     val contentUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
                     // 视频大小是以B为单位的整数数字, 故故需转成10KB, 10MB, 10GB
-                    val _size = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.SIZE))
-                    val size = FormatUtil.formatMediaSize(_size)
+                    val size = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.SIZE)).formatMediaSize()
                     val title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
                     // 视频大小是以秒(s)为单位的整数数字, 故需转成00:00:00
-                    val duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION))
+                    val duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION)).formatMediaDuration()
                     var resolution = ""
                     if (cursor.getType(resolutionColumn) == FIELD_TYPE_STRING) {
                         resolution = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION))
                     }
                     // TODO: 2020/6/12 通过resolution判断orientation
                     val orientation = "0"
-                    val dateAdded = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_ADDED))
-                    val dateModified = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED))
+                    // *1000, 因为DATE_ADDED and DATE_MODIFIED 为seconds
+                    // DATE_TAKEN 为millis
+                    val dateAdded = (cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DATE_ADDED)) * 1000).formatMediaDate()
+                    val dateModified = (cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED)) * 1000).formatMediaDate()
                     var dateTaken = ""
                     if (cursor.getType(dateTakenColumn) == FIELD_TYPE_STRING) {
-                        dateTaken = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN))
+                        dateTaken = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)).formatMediaDate()
                     }
-                    list += LocalVideo(contentUri, size, title, duration, resolution, orientation, dateTaken, dateAdded, dateModified)
+                    list += LocalVideo(contentUri, size, title, duration, resolution, orientation, dateAdded, dateModified, dateTaken)
                 }
             } catch (e: Exception) {
                 Log.e("LocalVideoRepository", e.toString())
