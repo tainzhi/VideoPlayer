@@ -27,14 +27,6 @@ class TVViewModel(private val tvRepository: TVRepository,
     }
 
     /**
-     * 获取tvId卫视的直播源线路中的第一个
-     */
-    fun getTVCircuit(tvId: String) : String {
-        val tvSources =  tvRepository.loadTVSource(tvId)
-        return if (tvSources.isEmpty()) "" else tvSources[0]
-    }
-
-    /**
      * 获取每个卫视当前的直播节目
      */
     fun getTVProgram() {

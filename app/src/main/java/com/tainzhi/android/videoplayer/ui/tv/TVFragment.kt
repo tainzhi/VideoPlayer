@@ -1,6 +1,7 @@
 package com.tainzhi.android.videoplayer.ui.tv
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.qfq.tainzhi.videoplayer.R
@@ -14,11 +15,16 @@ class TVFragment : BaseVMFragment<TVViewModel>(useBinding = true) {
 
     private val tvAdapter by lazy(LazyThreadSafetyMode.NONE) {
         TVAdapter() { tv ->
-        PlayActivity.startPlay(requireActivity(),
-                    Uri.parse(mViewModel.getTVCircuit(tv.id)),
-                tv.name ?: ""
-        )
-    } }
+            if (tv.tvCircuit != null) {
+                PlayActivity.startPlay(requireActivity(),
+                        Uri.parse(tv.tvCircuit!![0]),
+                        tv.name?.let { it } ?: "")
+
+            } else {
+                Log.e("TVFragment.TVAdapter", "no valid circuit, ${tv.name} 不能观看")
+            }
+        }
+    }
 
     override fun getLayoutResId() = R.layout.t_v_fragment
 
@@ -37,7 +43,7 @@ class TVFragment : BaseVMFragment<TVViewModel>(useBinding = true) {
 
     override fun startObserve() {
         mViewModel.apply {
-            tvList.observe(viewLifecycleOwner, Observer {it ->
+            tvList.observe(viewLifecycleOwner, Observer { it ->
                 tvAdapter.setList(it)
             })
         }
