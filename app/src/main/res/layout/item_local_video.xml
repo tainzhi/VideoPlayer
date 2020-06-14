@@ -13,7 +13,7 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/relativeLayout2"
 		android:layout_width="match_parent"
-		android:layout_height="100dp"
+		android:layout_height="84dp"
 		android:orientation="horizontal">
 		
 		<ImageView
@@ -21,12 +21,13 @@
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
 			android:layout_marginStart="@dimen/margin_normal"
-			android:layout_marginTop="@dimen/margin_small"
+			android:layout_marginTop="12dp"
 			android:scaleType="fitXY"
 			app:layout_constraintDimensionRatio="w, 35:21"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
 			app:videoUri="@{video.uri}"
+			app:cornerRadius="@{5}"
 			tools:ignore="ContentDescription"
 			tools:src="@drawable/thumbnail_default" />
 		
@@ -52,10 +53,12 @@
 			android:layout_marginEnd="@dimen/margin_normal"
 			android:maxLines="2"
 			android:text="@{video.title}"
+			android:textSize="16sp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@+id/videoThumbnailImageView"
 			app:layout_constraintTop_toTopOf="@+id/videoThumbnailImageView"
-			tools:text="这是一个视频名称, 测试text多行显示, 想多长, 就多长, 就是这么强壮" />
+			app:layout_constraintBottom_toTopOf="@id/videoResolutionTv"
+			tools:text="王者荣耀" />
 		
 		
 		<TextView
@@ -64,11 +67,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/margin_small"
-			android:layout_marginBottom="@dimen/spacing_micro"
-			android:layout_marginTop="@dimen/spacing_micro"
 			android:text="1080p@24"
 			app:layout_constraintBottom_toBottomOf="@+id/videoThumbnailImageView"
-			app:layout_constraintStart_toEndOf="@+id/videoThumbnailImageView"/>
+			app:layout_constraintStart_toEndOf="@+id/videoThumbnailImageView"
+			app:layout_constraintTop_toBottomOf="@+id/item_video_title" />
 		
 		
 		<TextView
@@ -98,14 +100,14 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			app:layout_constraintGuide_begin="250dp" />
+			app:layout_constraintGuide_begin="205dp" />
 		
 		<androidx.constraintlayout.widget.Guideline
 			android:id="@+id/guideline3"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			app:layout_constraintGuide_begin="309dp" />
+			app:layout_constraintGuide_begin="255dp" />
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
