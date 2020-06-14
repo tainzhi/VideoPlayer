@@ -5,6 +5,8 @@
 	
 	<data>
 		
+		<import type="com.qfq.tainzhi.videoplayer.R" />
+		
 		<variable
 			name="video"
 			type="com.tainzhi.android.videoplayer.bean.LocalVideo" />
@@ -26,6 +28,7 @@
 			app:layout_constraintDimensionRatio="w, 35:21"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
+			app:thumbPlaceHolder="@{R.drawable.thumbnail_default}"
 			app:videoUri="@{video.uri}"
 			app:cornerRadius="@{5}"
 			tools:ignore="ContentDescription"
@@ -54,10 +57,10 @@
 			android:maxLines="2"
 			android:text="@{video.title}"
 			android:textSize="16sp"
+			app:layout_constraintBottom_toTopOf="@id/videoResolutionTv"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@+id/videoThumbnailImageView"
 			app:layout_constraintTop_toTopOf="@+id/videoThumbnailImageView"
-			app:layout_constraintBottom_toTopOf="@id/videoResolutionTv"
 			tools:text="王者荣耀" />
 		
 		
