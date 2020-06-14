@@ -123,10 +123,10 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.Vert
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
             mAdapter = adapter;
-            videoThumbnail = (ImageView)v.findViewById(R.id.item_staggredview_thumbnail);
+            videoThumbnail = (ImageView)v.findViewById(R.id.videoThumbnailImageView);
             videoTitle = (TextView)v.findViewById(R.id.item_video_title);
             videoSize = (TextView) v.findViewById(R.id.item_video_size);
-            videoDuration = (TextView) v.findViewById(R.id.item_video_duration);
+            videoDuration = (TextView) v.findViewById(R.id.videoDurationTv);
             videoProgress = (TextView)v.findViewById(R.id.item_video_date_added);
 
         }

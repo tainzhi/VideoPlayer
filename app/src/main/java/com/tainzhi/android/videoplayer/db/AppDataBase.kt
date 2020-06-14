@@ -60,8 +60,9 @@ abstract class AppDataBase : RoomDatabase() {
                                         val inputTvCategories: List<InputCategory> = Gson().fromJson(jsonReader, tvCategories)
                                         inputTvCategories.forEach { category ->
                                             category.tvLists.forEach { inputTv ->
-                                                    // tvList.add(Tv(tv.id, tv.type, tv.name, tv.image, tv.programUrl))
-                                                    tvList.add(Tv(inputTv.tvId, category.type, inputTv.tvName, inputTv.tvImg, inputTv.programUrl, inputTv.introduce))
+                                                    // TODO: 2020/6/13
+                                                    // 对于非卫视类的轮播类资源, 只有tvId, 没有tvName, 需要抽取出来
+                                                    tvList.add(Tv(inputTv.tvId, category.type, inputTv.tvName , inputTv.tvImg, inputTv.programUrl, inputTv.introduce))
                                                     inputTv.tvCircuit?.forEach { circuit ->
                                                         tvCircuitList.add(TvCircuit(inputTv.tvId, circuit))
                                                 }
