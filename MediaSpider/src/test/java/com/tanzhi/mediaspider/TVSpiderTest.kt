@@ -8,7 +8,7 @@ import org.junit.Test
  * @author: tainzhi
  * @mail: qfq61@qq.com
  * @date: 2020/6/9 14:00
- * @description:
+ * @description: 测试TVSpider
  */
 
 class TVSpiderTest {
@@ -22,7 +22,7 @@ class TVSpiderTest {
 
     @Test
     fun getTvProgram() {
-        // tvSpider.getTvProgram("cctv")
+        tvSpider.getTvProgram("cctv")
         tvSpider.getTvProgram("satellite")
     }
     
