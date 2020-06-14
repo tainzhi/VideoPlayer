@@ -24,6 +24,7 @@ import com.tainzhi.android.videoplayer.App
 
 @BindingAdapter(
         "videoUri",
+        "thumbPlaceHolder",
         "cornerRadius",
         "thumbnailWidth",
         "thumbnailHeight",
@@ -32,6 +33,7 @@ import com.tainzhi.android.videoplayer.App
 fun bindVideoThumbnail(
         imageView: ImageView,
         videoUri: Uri,
+        placeHolder: Int? = null,
         cornerRadius: Int? = null,
         width: Int? = null,
         height: Int? = null
@@ -46,6 +48,7 @@ fun bindVideoThumbnail(
                 BitmapFactory.Options())
     }
     val options = RequestOptions()
+    placeHolder?.let {options.placeholder(placeHolder)}
     cornerRadius?.let { options.transform(RoundedCorners(it)) }
     Glide.with(imageView.context).load(thumbnail)
             .apply(options)
