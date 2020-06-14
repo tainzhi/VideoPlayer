@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.ItemLocalVideoBinding
 import com.tainzhi.android.videoplayer.bean.LocalVideo
+import com.tainzhi.android.videoplayer.bean.Tv
 
 /**
  * @author:      tainzhi
@@ -13,8 +14,14 @@ import com.tainzhi.android.videoplayer.bean.LocalVideo
  * @description:
  **/
 
-class LocalVideoAdatper : BaseQuickAdapter<LocalVideo, BaseDataBindingHolder<ItemLocalVideoBinding>>(R.layout.item_local_video) {
+class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) : BaseQuickAdapter<LocalVideo, BaseDataBindingHolder<ItemLocalVideoBinding>>(R.layout.item_local_video) {
 
+    init {
+        setOnItemClickListener { _, _, position ->
+            val clickedTv = data[position]
+            goToPlay.invoke(clickedTv)
+        }
+    }
     override fun convert(holder: BaseDataBindingHolder<ItemLocalVideoBinding>, item: LocalVideo) {
         holder.dataBinding?.apply {
             video = item

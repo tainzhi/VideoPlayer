@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.LocalVideoFragmentBinding
 import com.tainzhi.android.common.base.ui.BaseVMFragment
-import com.tainzhi.android.videoplayer.adapter.LocalVideoAdatper
+import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
+import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -13,7 +14,15 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  */
 class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true) {
 
-    private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE){ LocalVideoAdatper() }
+    private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE){
+        LocalVideoAdapter() { video ->
+
+            PlayActivity.startPlay(requireActivity(),
+                    video.uri,
+                    video.duration
+            )
+        }
+    }
 
     override fun getLayoutResId() = R.layout.local_video_fragment
 

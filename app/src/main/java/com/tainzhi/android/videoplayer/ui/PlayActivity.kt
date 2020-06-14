@@ -1,4 +1,4 @@
-package com.qfq.tainzhi.videoplayer
+package com.tainzhi.android.videoplayer.ui
 
 import android.content.Context
 import android.content.Intent
@@ -7,13 +7,14 @@ import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.qfq.tainzhi.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
 import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.MediaController
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.render.glrender.effect.HueEffect
 
-class VideoTestActivity : AppCompatActivity() {
+class PlayActivity : AppCompatActivity() {
     private lateinit var autoFullScreenListener: AutoFullScreenListener
     private lateinit var sensorManager: SensorManager
     private lateinit var videoView: VideoView
@@ -31,9 +32,9 @@ class VideoTestActivity : AppCompatActivity() {
         videoView.run {
             videoTitle = mVideoTitle!!
             renderType = Constant.RenderType.GL_SURFACE_VIEW
-            startFullScreenDirectly(this@VideoTestActivity, mVideoUri!!)
+            startFullScreenDirectly(this@PlayActivity, mVideoUri!!)
             setEffect(HueEffect(100f))
-            mediaController = MediaController(this@VideoTestActivity)
+            mediaController = MediaController(this@PlayActivity)
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         autoFullScreenListener = AutoFullScreenListener(videoView)
@@ -59,8 +60,8 @@ class VideoTestActivity : AppCompatActivity() {
         private const val VIDEO_DURATION = "duration"
         private const val VIDEO_PROGRESS = "progress"
         @JvmStatic
-        fun startPlay(starter: Context, uri: Uri, name: String?, duration: Long, progress: Long) {
-            val intent = Intent(starter, VideoTestActivity::class.java)
+        fun startPlay(starter: Context, uri: Uri, name: String, duration: Long = 100, progress: Long = 100) {
+            val intent = Intent(starter, PlayActivity::class.java)
             intent.data = uri
             intent.putExtra(VIDEO_NAME, name)
             intent.putExtra(VIDEO_DURATION, duration)

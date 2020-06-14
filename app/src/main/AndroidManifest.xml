@@ -31,7 +31,7 @@
 			android:name=".ui.activity.IjkPlayerActivity" android:keepScreenOn="true" android:screenOrientation="fullSensor" />
 		<activity
 			android:name=".DoubleVideoPlayerActivity" android:screenOrientation="fullSensor" />
-		<activity android:name=".VideoTestActivity" />
+		<activity android:name="com.tainzhi.android.videoplayer.ui.PlayActivity" />
 	</application>
 
 </manifest>
