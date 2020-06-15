@@ -16,7 +16,7 @@ import retrofit2.http.Path
 interface VideoService {
 
     companion object {
-        const val DOUYU_BASE_URL = "http://open.douyucdn.cn/api/RoomApi"
+        const val DOUYU_BASE_URL = "http://open.douyucdn.cn/api/RoomApi/"
     }
 
     /**
@@ -30,8 +30,8 @@ interface VideoService {
      * 获取游戏分类game_id下的直播房间
      * http://open.douyucdn.cn/api/RoomApi/live/3?limit=20&offset=20
      */
-    @GET("/live/{game_id}?limit=20%offset=20")
-    suspend fun getGameRooms(@Path("game_id") gameId: Int): Response<List<DouyuRoom>>
+    @GET("/live/{game_id}?limit=20&offset=20")
+    suspend fun getGameRooms(@Path("game_id") gameId: String): Response<List<DouyuRoom>>
 
 
     /**
