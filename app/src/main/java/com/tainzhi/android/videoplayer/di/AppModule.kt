@@ -4,6 +4,8 @@ import android.app.Application
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.db.TvDao
+import com.tainzhi.android.videoplayer.network.VideoClient
+import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.ui.local.LocalVideoViewModel
@@ -25,6 +27,7 @@ val viewModelModule = module {
 }
 
 val repositoryModule = module {
+    single { VideoClient.getService(VideoService::class.java, VideoService.DOUYU_BASE_URL)}
     single { TVRepository(get()) }
     single { LocalVideoRepository() }
 }

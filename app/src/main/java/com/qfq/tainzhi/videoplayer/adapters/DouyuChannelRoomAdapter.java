@@ -1,7 +1,6 @@
 package com.qfq.tainzhi.videoplayer.adapters;
 
 import android.content.Context;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,7 +20,7 @@ public class DouyuChannelRoomAdapter extends BaseQuickAdapter<DouyuRoomBean,
     private Context mContext;
     
     public DouyuChannelRoomAdapter(Context context, List<DouyuRoomBean> rooms) {
-        super(R.layout.item_douyu_room, rooms);
+        super(R.layout.item_douyu_room_, rooms);
         mContext = context;
     }
     
