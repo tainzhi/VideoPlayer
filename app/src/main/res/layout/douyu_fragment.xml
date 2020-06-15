@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		
+		<com.google.android.material.tabs.TabLayout
+			android:id="@+id/douyuTabLayout"
+			android:layout_width="0dp"
+			android:layout_height="?actionBarSize"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.0"
+			app:layout_constraintStart_toStartOf="parent"
+			android:background="@color/colorAccent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:tabIndicatorColor="?attr/colorPrimary"
+			app:tabMode="scrollable"
+			app:tabTextAppearance="@style/TextAppearance.Design.Tab" />
+		
+		<androidx.viewpager2.widget.ViewPager2
+			android:id="@+id/douyuViewPager"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior"
+			app:layout_constraintTop_toBottomOf="@+id/douyuTabLayout" />
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
