@@ -16,10 +16,8 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
 
     fun getLocalVideos() {
         launch {
-            withContext(dispatcherProvider.default) {
-                val result = localVideoRepository.getLocalVideoList()
-                emitData(result)
-            }
+            val result = localVideoRepository.getLocalVideoList()
+            emitData(result)
         }
     }
 
