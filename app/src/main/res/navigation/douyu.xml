@@ -7,7 +7,7 @@
 	
 	<fragment
 		android:id="@+id/douyuFragment"
-		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.DouyuFragment"
-		tools:layout="@layout/fragment_douyu"
+		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuFragment"
+		tools:layout="@layout/douyu_fragment"
 		android:label="@string/title_douyu" />
 </navigation>
