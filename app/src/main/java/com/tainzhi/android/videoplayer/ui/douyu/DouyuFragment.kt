@@ -6,7 +6,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.DouyuFragmentBinding
-import com.qfq.tainzhi.videoplayer.ui.fragment.DouyuLiveFragment
 import com.tainzhi.android.common.base.ui.BaseFragment
 
 /**
@@ -42,7 +41,7 @@ class DouyuFragment : BaseFragment(useBinding = true) {
             offscreenPageLimit = 4
             adapter = object : FragmentStateAdapter(this@DouyuFragment) {
                 override fun createFragment(position: Int): Fragment {
-                    return DouyuLiveFragment(defaultChannels[position].id, defaultChannels[position].name)
+                    return DouyuGameFragment(defaultChannels[position].id, defaultChannels[position].name)
                 }
 
                 override fun getItemCount() = defaultChannels.size
