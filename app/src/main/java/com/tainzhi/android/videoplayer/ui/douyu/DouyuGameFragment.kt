@@ -2,6 +2,7 @@ package com.tainzhi.android.videoplayer.ui.douyu
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.DouyuGameFragmentBinding
@@ -20,6 +21,8 @@ class DouyuGameFragment(
 
     private val gameId by lazy(LazyThreadSafetyMode.NONE) { arguments?.getString(GAME_ID)}
     private val gameName by lazy(LazyThreadSafetyMode.NONE) {arguments?.getString(GAME_NAME)}
+
+    private val args: DouyuGameFragmentArgs by navArgs()
 
     companion object {
         private const val GAME_ID = "game_id"
@@ -57,7 +60,10 @@ class DouyuGameFragment(
     }
 
     override fun initData() {
-        mViewModel.getGameRooms(gameId.toString())
+        // gameId 不为 null, DouyuFragment()从首页创建
+        // gameId 为 null, DouyuFragment()从游戏分类创建
+        val id = gameId ?: args.gameId
+        mViewModel.getGameRooms(id)
     }
 
     override fun startObserve() {
