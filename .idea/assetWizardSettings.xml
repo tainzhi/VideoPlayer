@@ -321,7 +321,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/volume_off/baseline_volume_off_24.xml" />
+                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/play_arrow/baseline_play_arrow_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -331,10 +331,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
                             <entry key="autoMirrored" value="true" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_more" />
+                            <entry key="outputName" value="ic_play_arrow" />
                             <entry key="sourceFile" value="$USER_HOME$/Downloads/more.svg" />
                           </map>
                         </option>

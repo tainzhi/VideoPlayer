@@ -90,7 +90,7 @@
 - [ ] 参考GSYVideoPlayer的GSYVideoGLViewCustomRender实现水印效果
 - [Easy Permissions](https://github.com/googlesamples/easypermissions)
 - [] [使用composing build, 而不是buildSrc](https://juejin.im/post/5ed3ef906fb9a047bf7070b6#heading-6)
-- [] Fab播放按钮, 播放最近观看记录; 使用Snackbar替换Toast,[参考1](https://stackoverflow.com/questions/36332487/move-snackbar-above-the-bottom-bar), [2](https://stackoverflow.com/questions/56040954/how-to-display-snackbar-above-bottomnavigationview-move-fab)
+- [x] Fab播放按钮, 播放最近观看记录; 使用Snackbar替换Toast,[参考1](https://stackoverflow.com/questions/36332487/move-snackbar-above-the-bottom-bar), [2](https://stackoverflow.com/questions/56040954/how-to-display-snackbar-above-bottomnavigationview-move-fab)
 - [ ] 本地视频列表缩略实现, 参考我的印象笔记相同缩略图笔记内容
 - [ ] 竖屏视频播放(通过CotentProvider查询到的orientation方向null, 但是resolution=1080*1920, 添加手动判断横屏或者竖屏)]
 - [ ] 本地列表第一个是最近的播放记录, 记录播放位置, 并显示上次播放到的时间点的缩略图
