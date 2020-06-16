@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.local
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.common.base.ui.BaseViewModel
@@ -18,6 +19,12 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
         launch {
             val result = localVideoRepository.getLocalVideoList()
             emitData(result)
+        }
+    }
+
+    fun deleteVideo(uri: Uri) {
+        launch {
+            localVideoRepository.deleteVideo(uri)
         }
     }
 
