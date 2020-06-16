@@ -42,8 +42,8 @@ class DouyuCategoryFragment : BaseVMFragment<DouyuCategoryViewModel>( useBinding
         })
     }
 
-    private fun navigateToCategoryGames(roomId: String) {
-        val action = DouyuCategoryFragmentDirections.actionDouyuCategoryFragmentToDouyuGameFragment()
+    private fun navigateToCategoryGames(gameId: String) {
+        val action = DouyuCategoryFragmentDirections.actionDouyuCategoryFragmentToDouyuGameFragment(gameId)
         findNavController().navigate(action)
     }
 

@@ -2,7 +2,6 @@ package com.tainzhi.android.videoplayer.ui.douyu
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -43,7 +42,7 @@ class DouyuFragment : BaseFragment(useBinding = true) {
             offscreenPageLimit = 4
             adapter = object : FragmentStateAdapter(this@DouyuFragment) {
                 override fun createFragment(position: Int): Fragment {
-                    return DouyuGameFragment(defaultChannels[position].id, defaultChannels[position].name)
+                    return DouyuGameFragment.newInstance(defaultChannels[position].id.toString(), defaultChannels[position].name)
                 }
 
                 override fun getItemCount() = defaultChannels.size

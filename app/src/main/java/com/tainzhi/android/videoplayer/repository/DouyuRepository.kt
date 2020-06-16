@@ -20,7 +20,14 @@ class DouyuRepository : BaseRepository(){
     }
 
     private suspend fun requestRooms(gameId: String): Result<List<DouyuRoom>> =
-        executeResponse(VideoClient.service.getGameRooms(gameId))
+        executeResponse(
+                // 推荐房间列表
+                if (gameId == "-1")
+                    VideoClient.service.getRecommendRooms()
+                // 特定game房间列表
+                else
+                    VideoClient.service.getGameRooms(gameId)
+        )
 
     suspend fun getAllGames(): Result<List<DouyuGame>> {
         return safeApiCall(call = { requestAllGames()})
