@@ -10,14 +10,26 @@
 			android:id="@+id/douyuTabLayout"
 			android:layout_width="0dp"
 			android:layout_height="?actionBarSize"
-			app:layout_constraintEnd_toEndOf="parent"
+			android:background="?colorSecondary"
+			app:layout_constraintEnd_toStartOf="@+id/douyuMore"
 			app:layout_constraintHorizontal_bias="0.0"
 			app:layout_constraintStart_toStartOf="parent"
-			android:background="@color/colorAccent"
 			app:layout_constraintTop_toTopOf="parent"
 			app:tabIndicatorColor="?attr/colorPrimary"
 			app:tabMode="scrollable"
 			app:tabTextAppearance="@style/TextAppearance.Design.Tab" />
+		
+		<ImageView
+			android:id="@+id/douyuMore"
+			android:layout_width="0dp"
+			app:layout_constraintDimensionRatio="w, 1:1"
+			android:layout_height="0dp"
+			android:background="?colorSecondary"
+			android:src="@drawable/ic_more"
+			android:padding="4dp"
+			app:layout_constraintBottom_toBottomOf="@+id/douyuTabLayout"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
 		
 		<androidx.viewpager2.widget.ViewPager2
 			android:id="@+id/douyuViewPager"
