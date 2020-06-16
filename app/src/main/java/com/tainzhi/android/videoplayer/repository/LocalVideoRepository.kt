@@ -38,6 +38,7 @@ class LocalVideoRepository : BaseRepository() {
         App.CONTEXT.contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                 videoColumnsProjection, null, null, queryOrder)?.use { cursor ->
             // 不要使用 getColumnIndexOrThrow(), 因为某些columen会抛出异常, 导致循环退出, 而不能查询所有的条目
+            val dataColumn = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
             val resolutionColumn = cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION)
             val dateTakenColumn = cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)
             try {
@@ -46,6 +47,10 @@ class LocalVideoRepository : BaseRepository() {
                     val contentUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
                     // 视频大小是以B为单位的整数数字, 故故需转成10KB, 10MB, 10GB
                     val size = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.SIZE)).formatMediaSize()
+                    // 在android 9 (28) miui 11上, data为 ""
+                    var data = if (cursor.getType(dataColumn) == FIELD_TYPE_STRING) {
+                                            cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA))
+                                        } else ""
                     val title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
                     // 视频大小是以秒(s)为单位的整数数字, 故需转成00:00:00
                     val duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION)).formatMediaDuration()
@@ -63,7 +68,7 @@ class LocalVideoRepository : BaseRepository() {
                     if (cursor.getType(dateTakenColumn) == FIELD_TYPE_STRING) {
                         dateTaken = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)).formatMediaDate()
                     }
-                    list += LocalVideo(contentUri, size, title, duration, resolution, orientation, dateAdded, dateModified, dateTaken)
+                    list += LocalVideo(contentUri, size, data, title, duration, resolution, orientation, dateAdded, dateModified, dateTaken)
                 }
             } catch (e: Exception) {
                 Log.e("LocalVideoRepository", e.toString())
@@ -75,6 +80,8 @@ class LocalVideoRepository : BaseRepository() {
     }
 
     fun deleteVideo(uri: Uri) {
-
+        // TODO: 2020/6/16  
+        Log.d("LocalVideoRepository", "do delete a file on android10")
+        // App.CONTEXT.contentResolver.delete(uri, null, null)
     }
 }

@@ -75,7 +75,7 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
             object : RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
                     if (viewHolder is LocalVideoViewHolder<*>) {
-                        mViewModel.deleteBrowseHistory(viewHolder.video)
+                        // mViewModel.deleteBrowseHistory(viewHolder.video)
 
 
                         // todo 弹出框, 是否确认删除
