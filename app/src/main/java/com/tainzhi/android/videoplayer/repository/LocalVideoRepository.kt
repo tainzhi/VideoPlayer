@@ -2,6 +2,7 @@ package com.tainzhi.android.videoplayer.repository
 
 import android.content.ContentUris
 import android.database.Cursor.FIELD_TYPE_STRING
+import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import com.tainzhi.android.common.base.BaseRepository
@@ -71,5 +72,9 @@ class LocalVideoRepository : BaseRepository() {
             }
         }
         return list
+    }
+
+    fun deleteVideo(uri: Uri) {
+
     }
 }
