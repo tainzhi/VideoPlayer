@@ -9,6 +9,7 @@ import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 import com.tainzhi.android.videoplayer.repository.TVRepository
+import com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuGameViewModel
 import com.tainzhi.android.videoplayer.ui.local.LocalVideoViewModel
 import com.tainzhi.android.videoplayer.ui.tv.TVViewModel
@@ -27,6 +28,7 @@ val viewModelModule = module {
     viewModel { TVViewModel(get(), get()) }
     viewModel { LocalVideoViewModel(get(), get()) }
     viewModel { DouyuGameViewModel(get(), get())}
+    viewModel { DouyuCategoryViewModel(get(), get() )}
 }
 
 val repositoryModule = module {
