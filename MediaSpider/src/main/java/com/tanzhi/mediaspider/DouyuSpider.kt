@@ -1,5 +1,6 @@
 package com.tanzhi.mediaspider
 
+import android.util.Log
 import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
@@ -44,19 +45,21 @@ class DouyuSpider() {
                     val dataObject = jsonObject.getJSONObject("data")
                     val rtmpLive = dataObject.getString("rtmp_live")
                     if (rtmpLive.contains("mix=1")) {
-                        println("PKing")
+                        Log.e("DouyuSpider", "circuit not found; PKing")
                     } else {
                         val regex = Regex(pattern = "[0-9a-zA-Z]*_")
                         val found = regex.find(rtmpLive)
                         if (found != null) {
                             roomLiveUrl = found.value
+                        } else {
+                            Log.e("DouyuSpider", "circuit not found")
                         }
                     }
                 }
 
             }
         } catch (e: Exception) {
-            println(e.toString())
+            Log.e("DouyuSpider", e.toString())
         }
         return roomLiveUrl
     }
@@ -75,14 +78,12 @@ class DouyuSpider() {
         val response = KRequest().get("https://www.douyu.com/directory")
 
         val doc = Jsoup.parse(response)
-        // doc.select("ul.layout-Classify-list").forEach { list ->
         doc.select("li.layout-Classify-item a.layout-Classify-card").forEach { item ->
             if (item.attr("href").isNotEmpty()) {
                 val type = item.attr("href")
                 val href = item.select("img[src]").attr("src")
                 val name = item.select("strong").text()
             }
-            // }
         }
 
     }
