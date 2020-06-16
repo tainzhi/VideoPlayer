@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.qfq.tainzhi.videoplayer.R
@@ -14,9 +15,26 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * @date:        2020/6/15 09:32
  * @description: 斗鱼频道页面, 该页面展示当前游戏分类的所有房间列表
  **/
-class DouyuGameFragment(private val gameId: Int,
-                        private val gameName: String
+class DouyuGameFragment(
 ) : BaseVMFragment<DouyuGameViewModel>(useBinding = true) {
+
+    private val gameId by lazy(LazyThreadSafetyMode.NONE) { arguments?.getString(GAME_ID)}
+    private val gameName by lazy(LazyThreadSafetyMode.NONE) {arguments?.getString(GAME_NAME)}
+
+    companion object {
+        private const val GAME_ID = "game_id"
+        private const val GAME_NAME = "game_name"
+        fun newInstance(gameId: String,
+                        gameName: String): DouyuGameFragment {
+            return DouyuGameFragment().apply {
+                arguments = Bundle().apply {
+                    putString(GAME_ID, gameId)
+                    putString(GAME_NAME, gameName)
+                }
+            }
+
+        }
+    }
 
     private val douyuRoomAdapter by lazy(LazyThreadSafetyMode.NONE){
         DouyuRoomAdapter() { room ->

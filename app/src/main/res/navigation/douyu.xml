@@ -22,12 +22,13 @@
 		<action
 			android:id="@+id/action_douyuCategoryFragment_to_douyuGameFragment"
 			app:destination="@id/douyuGameFragment" />
-		<argument
-			android:name="gameId"
-			app:argType="string" />
 	</fragment>
 	<fragment
 		android:id="@+id/douyuGameFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuGameFragment"
-		android:label="DouyuGameFragment" />
+		android:label="DouyuGameFragment" >
+		<argument
+			android:name="gameId"
+			app:argType="string" />
+	</fragment>
 </navigation>

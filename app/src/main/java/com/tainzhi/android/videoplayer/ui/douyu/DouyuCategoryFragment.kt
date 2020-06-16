@@ -27,7 +27,7 @@ class DouyuCategoryFragment : BaseVMFragment<DouyuCategoryViewModel>( useBinding
     }
 
     private fun navigateToCategoryRooms(roomId: String) {
-        val action = DouyuCategoryFragmentDirections.actionDouyuCategoryFragmentToDouyuGameFragment(roomId)
+        val action = DouyuGameFragmentD
         findNavController().navigate(action)
     }
 
