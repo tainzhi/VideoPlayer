@@ -1,6 +1,5 @@
 package com.tainzhi.android.videoplayer.bean
 
-import android.graphics.Bitmap
 import android.net.Uri
 
 /**
@@ -13,6 +12,7 @@ import android.net.Uri
 data class LocalVideo(
         var uri: Uri,
         var size: String,
+        var data: String,
         var title: String,
         var duration: String,
         var resolution: String,

@@ -46,6 +46,7 @@
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/localVideoItemForeground"
+		android:background="@android:color/background_light"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 		
