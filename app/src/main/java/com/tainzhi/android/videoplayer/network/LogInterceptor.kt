@@ -16,7 +16,7 @@ import java.util.*
 
 class LogInterceptor : Interceptor {
     companion object {
-        const val TAG = "XDroid_Net"
+        const val TAG = "LogInterceptor"
 
         /**
          * 白名单

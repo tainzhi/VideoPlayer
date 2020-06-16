@@ -23,14 +23,14 @@ interface VideoService {
      * 推荐的游戏房间
      * http://open.douyucdn.cn/api/RoomApi/live?limit=20&offset=20
      */
-    @GET("/live?limit=20&offset=20")
+    @GET("live?limit=20&offset=20")
     suspend fun getRecommendRooms(): Response<List<DouyuRoom>>
 
     /**
      * 获取游戏分类game_id下的直播房间
      * http://open.douyucdn.cn/api/RoomApi/live/3?limit=20&offset=20
      */
-    @GET("/live/{game_id}?limit=20&offset=20")
+    @GET("live/{game_id}?limit=20&offset=20")
     suspend fun getGameRooms(@Path("game_id") gameId: String): Response<List<DouyuRoom>>
 
 
@@ -38,7 +38,7 @@ interface VideoService {
      * 获取所有的游戏分类
      * http://open.douyucdn.cn/api/RoomApi/game
      */
-    @GET("/game")
+    @GET("game")
     suspend fun getAllGames(): Response<List<DouyuGame>>
 
 

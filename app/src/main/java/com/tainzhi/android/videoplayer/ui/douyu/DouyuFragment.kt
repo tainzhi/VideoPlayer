@@ -1,6 +1,8 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -51,6 +53,9 @@ class DouyuFragment : BaseFragment(useBinding = true) {
             tab.text = defaultChannels[position].name
         }.attach()
 
+        binding.douyuMore.setOnClickListener { view ->
+            view.findNavController().navigate(R.id.action_douyuFragment_to_douyuCategoryFragment)
+        }
     }
 
     override fun initData() {

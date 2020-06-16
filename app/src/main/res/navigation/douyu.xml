@@ -9,5 +9,25 @@
 		android:id="@+id/douyuFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuFragment"
 		tools:layout="@layout/douyu_fragment"
-		android:label="@string/title_douyu" />
+		android:label="@string/title_douyu" >
+		<action
+			android:id="@+id/action_douyuFragment_to_douyuCategoryFragment"
+			app:destination="@id/douyuCategoryFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/douyuCategoryFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryFragment"
+		android:label="douyu_category_fragment"
+		tools:layout="@layout/douyu_category_fragment" >
+		<action
+			android:id="@+id/action_douyuCategoryFragment_to_douyuGameFragment"
+			app:destination="@id/douyuGameFragment" />
+		<argument
+			android:name="gameId"
+			app:argType="string" />
+	</fragment>
+	<fragment
+		android:id="@+id/douyuGameFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuGameFragment"
+		android:label="DouyuGameFragment" />
 </navigation>
