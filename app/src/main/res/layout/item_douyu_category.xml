@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+	
+	<data>
+		
+		<variable
+			name="game"
+			type="com.tainzhi.android.videoplayer.bean.DouyuGame" />
+	</data>
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		
+		android:layout_height="120dp"
+		android:layout_width="120dp">
+		
+		<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			app:imageUrl="@{game.game_icon}"
+			app:circleCropImage="@{true}"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintDimensionRatio="h, 1:1"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:src="@drawable/ic_video" />
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
