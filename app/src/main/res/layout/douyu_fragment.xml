@@ -26,7 +26,7 @@
 			android:layout_height="0dp"
 			android:background="?colorSecondary"
 			android:src="@drawable/ic_more"
-			android:padding="4dp"
+			android:padding="10dp"
 			app:layout_constraintBottom_toBottomOf="@+id/douyuTabLayout"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
