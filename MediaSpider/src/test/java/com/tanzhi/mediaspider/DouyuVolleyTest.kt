@@ -33,14 +33,14 @@ class DouyuTest1 {
     @Test
     fun getRoomId() {
         val queue = RequestQueue(NoCache(), mockNetwork, 0, delivery)
-        val douyu = DouyuVolley()
+        val douyu = DouyuVolleySpider()
         douyu.getCode(queue)
 
     }
 
     @Test()
     fun getRooms() {
-        val douyu = DouyuVolley()
+        val douyu = DouyuVolleySpider()
         douyu.getAllRooms()
     }
 }

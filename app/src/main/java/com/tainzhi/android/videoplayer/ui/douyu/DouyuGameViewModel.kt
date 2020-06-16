@@ -7,6 +7,7 @@ import com.tainzhi.android.common.base.Result
 import com.tainzhi.android.common.base.ui.BaseViewModel
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
+import com.tanzhi.mediaspider.DouyuSpider
 import kotlinx.coroutines.withContext
 
 class DouyuGameViewModel(private val douyuRepository: DouyuRepository,
@@ -25,6 +26,13 @@ class DouyuGameViewModel(private val douyuRepository: DouyuRepository,
                 emitData(result.data)
             }
         }
+    }
+
+    /**
+     * 获取直播间roomId的播放线路
+     */
+    fun getRoomCircuit(roomId: String): String {
+        return DouyuSpider.getInstance().getRoomLive(roomId)
     }
 
     private suspend fun emitData(data: List<DouyuRoom>) {
