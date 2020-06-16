@@ -16,15 +16,17 @@ import java.time.format.DateTimeFormatter
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/6/4 16:01
- * @description: 用Volley爬取斗鱼直播间直播源. 因为使用了回调,
+ * @description:
+ * 用Volley爬取斗鱼直播间直播源. 因为使用了回调,
  * 非常不方便用于爬虫(比如爬取room id, 需要多个请求和回调, 繁琐)
+ * 建议使用 [DouyuSpider]
  *
  * 通过chrome debug工具获取的地址 https://tc-tct.douyucdn2.cn/dyliveflv1/562483rmTwjem0AN_1200p.flv
  * 其中_1200p 对应清晰度
  *
  **/
 
-class DouyuVolley() {
+class DouyuVolleySpider() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCode(requestQueue: RequestQueue) {
         // t2

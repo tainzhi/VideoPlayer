@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
@@ -8,6 +9,7 @@ import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.DouyuGameFragmentBinding
 import com.tainzhi.android.common.base.ui.BaseVMFragment
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomAdapter
+import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -41,10 +43,11 @@ class DouyuGameFragment(
 
     private val douyuRoomAdapter by lazy(LazyThreadSafetyMode.NONE){
         DouyuRoomAdapter() { room ->
-        //
-        //     PlayActivity.startPlay(requireActivity(),
-        //             // Uri.parse(room.)
-        //     )
+            val roomCircuit = mViewModel.getRoomCircuit(room.room_id.toString())
+            PlayActivity.startPlay(requireActivity(),
+                    Uri.parse(roomCircuit),
+                    room.room_name
+            )
         }
     }
     private val binding : DouyuGameFragmentBinding by lazy { mBinding as DouyuGameFragmentBinding}

@@ -71,8 +71,6 @@ class KRequest {
 
     // 获取请求 response
     private fun dom(connect: HttpURLConnection): String {
-        // 必须要加压缩, 否则乱码
-        // val input = BufferedReader(InputStreamReader(if (isGzip) GZIPInputStream(connect.inputStream) else connect.inputStream))
         val input = BufferedReader(InputStreamReader(getInputStream(connect)))
         var result = ""
         while (true) {
@@ -84,6 +82,7 @@ class KRequest {
     }
 
     /**
+     * 必须要加压缩, 否则乱码
      * 对压缩流进行解压, 非压缩流返回
      */
     private fun getInputStream(connection: HttpURLConnection): InputStream {
