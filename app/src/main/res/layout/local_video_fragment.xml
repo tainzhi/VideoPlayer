@@ -6,45 +6,26 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/localVideoRecyclerView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:listitem="@layout/item_local_video" />
 		
-		<com.wuhenzhizao.titlebar.widget.CommonTitleBar
-			android:id="@+id/commonTitleBar"
-			android:layout_width="match_parent"
+		<com.google.android.material.floatingactionbutton.FloatingActionButton
+			android:id="@+id/localVideoFab"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			tools:layout_height="?actionBarSize"
-			app:statusBarMode="light"
-			app:statusBarColor="?colorPrimaryDark"
-			app:titleBarColor="?colorPrimary"
-			app:centerType="textView"
-			app:centerText="@string/title_local_video"
-			app:centerTextColor="?colorOnPrimary"
-			app:rightImageResource="@drawable/ic_search"
-			app:rightType="imageButton"
-			app:showBottomLine="false"
-			app:layout_constraintBottom_toTopOf="@id/localVideoRecyclerView"
-			app:layout_constraintTop_toTopOf="parent" />
-		
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/localVideoRecyclerView"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			app:layout_constraintTop_toBottomOf="@+id/commonTitleBar"
-			tools:listitem="@layout/item_local_video" />
-			
-			<com.google.android.material.floatingactionbutton.FloatingActionButton
-				android:id="@+id/localVideoFab"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginEnd="36dp"
-				android:layout_marginBottom="64dp"
-				android:src="@drawable/ic_play_arrow"
-				app:elevation="8dp"
-				app:fabCustomSize="56dp"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:maxImageSize="48dp"
-				app:pressedTranslationZ="10dp"
-				app:rippleColor="?colorAccent"
-				app:tint="@android:color/white" />
+			android:src="@drawable/ic_play_arrow"
+			app:fabCustomSize="56dp"
+			app:maxImageSize="48dp"
+			app:elevation="8dp"
+			app:tint="@android:color/white"
+			app:pressedTranslationZ="10dp"
+			app:rippleColor="?colorAccent"
+			android:layout_marginEnd="36dp"
+			android:layout_marginBottom="64dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

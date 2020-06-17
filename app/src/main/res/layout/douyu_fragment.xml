@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
-		<com.wuhenzhizao.titlebar.widget.CommonTitleBar
-			android:id="@+id/commonTitleBar"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			tools:layout_height="?actionBarSize"
-			app:statusBarMode="light"
-			app:statusBarColor="?colorPrimaryDark"
-			app:titleBarColor="?colorPrimary"
-			app:centerType="textView"
-			app:centerText="@string/title_douyu"
-			app:centerTextColor="?colorOnPrimary"
-			app:rightImageResource="@drawable/ic_search"
-			app:rightType="imageButton"
-			app:showBottomLine="false"
-			app:layout_constraintTop_toTopOf="parent" />
 		
 		<com.google.android.material.tabs.TabLayout
 			android:id="@+id/douyuTabLayout"
@@ -30,7 +14,7 @@
 			app:layout_constraintEnd_toStartOf="@+id/douyuMore"
 			app:layout_constraintHorizontal_bias="0.0"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/commonTitleBar"
+			app:layout_constraintTop_toTopOf="parent"
 			app:tabIndicatorColor="?attr/colorPrimary"
 			app:tabMode="scrollable"
 			app:tabTextAppearance="@style/TextAppearance.Design.Tab" />
