@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
+		<com.wuhenzhizao.titlebar.widget.CommonTitleBar
+			android:id="@+id/commonTitleBar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			tools:layout_height="?actionBarSize"
+			app:statusBarMode="light"
+			app:statusBarColor="?colorPrimaryDark"
+			app:titleBarColor="?colorPrimary"
+			app:centerType="textView"
+			app:centerText="@string/title_douyu"
+			app:centerTextColor="?colorOnPrimary"
+			app:rightImageResource="@drawable/ic_search"
+			app:rightType="imageButton"
+			app:showBottomLine="false"
+			app:layout_constraintTop_toTopOf="parent" />
 		
 		<com.google.android.material.tabs.TabLayout
 			android:id="@+id/douyuTabLayout"
 			android:layout_width="0dp"
-			android:layout_height="?actionBarSize"
+			android:layout_height="wrap_content"
 			android:background="?colorSecondary"
 			app:layout_constraintEnd_toStartOf="@+id/douyuMore"
 			app:layout_constraintHorizontal_bias="0.0"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/commonTitleBar"
 			app:tabIndicatorColor="?attr/colorPrimary"
 			app:tabMode="scrollable"
 			app:tabTextAppearance="@style/TextAppearance.Design.Tab" />
@@ -22,14 +38,14 @@
 		<ImageView
 			android:id="@+id/douyuMore"
 			android:layout_width="0dp"
-			app:layout_constraintDimensionRatio="w, 1:1"
 			android:layout_height="0dp"
 			android:background="?colorSecondary"
+			android:padding="12dp"
 			android:src="@drawable/ic_more"
-			android:padding="10dp"
 			app:layout_constraintBottom_toBottomOf="@+id/douyuTabLayout"
+			app:layout_constraintDimensionRatio="w, 1:1"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="@+id/douyuTabLayout" />
 		
 		<androidx.viewpager2.widget.ViewPager2
 			android:id="@+id/douyuViewPager"
