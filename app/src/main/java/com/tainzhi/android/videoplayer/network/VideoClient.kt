@@ -16,6 +16,6 @@ object VideoClient: BaseRetrofitClient() {
 
     override fun handleBuilder(builder: OkHttpClient.Builder) {
         // FIXME: 2020/6/16 去除自定义 LogInterceptor
-        builder.addInterceptor(LogInterceptor())
+        // builder.addInterceptor(LogInterceptor())
     }
 }

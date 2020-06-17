@@ -50,16 +50,18 @@ class DouyuGameFragment(
             )
         }
     }
-    private val binding : DouyuGameFragmentBinding by lazy { mBinding as DouyuGameFragmentBinding}
+
     override fun getLayoutResId() = R.layout.douyu_game_fragment
 
     override fun initVM(): DouyuGameViewModel = getViewModel()
 
     override fun initView() {
-        binding.douyuGameRecyclerView.run {
+        (mBinding as DouyuGameFragmentBinding).douyuGameRecyclerView.run {
             adapter = douyuRoomAdapter
             layoutManager = GridLayoutManager(requireActivity(), 2)
         }
+
+        (requireActivity()).actionBar?.title = gameName
     }
 
     override fun initData() {
