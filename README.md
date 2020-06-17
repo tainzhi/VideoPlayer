@@ -150,6 +150,7 @@
 ## 遇到的问题
 - [stackoverflow: How to execute JavaScript on Android](https://stackoverflow.com/questions/8374016/how-to-execute-javascript-on-android)
 - [tv的图片和视频源是http, Cleartext HTTP traffic to ... not permitted](https://www.cnblogs.com/kinglandsoft/p/10481500.html)
+- 懒加载导致的Fragment没有显示: 在DouyuGameFragment中使用懒加载初始化mBinding会导致第二次进入, 不显示画面
 
 ## 开发经验
 - 专注于目标,而不是技术

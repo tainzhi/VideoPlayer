@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 		
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/douyuGameRecyclerView"
-			app:spanCount="2"
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+			android:id="@+id/douyuGameSwipeRefreshLayout"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
+			android:layout_height="match_parent">
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/douyuGameRecyclerView"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				app:spanCount="2" />
 		
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
