@@ -74,7 +74,7 @@
 			android:layout_marginBottom="@dimen/spacing_micro"
 			android:background="@drawable/bg_black_tag"
 			android:text="@{video.duration}"
-			android:textColor="@color/lb_tv_white"
+			android:textColor="?colorOnPrimary"
 			app:layout_constraintBottom_toBottomOf="@id/videoThumbnailImageView"
 			app:layout_constraintEnd_toEndOf="@+id/videoThumbnailImageView"
 			tools:text="1:59:99" />
