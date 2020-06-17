@@ -151,6 +151,7 @@
 - [stackoverflow: How to execute JavaScript on Android](https://stackoverflow.com/questions/8374016/how-to-execute-javascript-on-android)
 - [tv的图片和视频源是http, Cleartext HTTP traffic to ... not permitted](https://www.cnblogs.com/kinglandsoft/p/10481500.html)
 - 懒加载导致的Fragment没有显示: 在DouyuGameFragment中使用懒加载初始化mBinding会导致第二次进入, 不显示画面
+- 单activity,多Fragment的多个actionbar处理, 非常麻烦, 要么使用NoActionBar主题, 每个fragment自定义toolbar, 要么[通过MainActivity的ViewModel更新toolbar](https://stackoverflow.com/questions/15560904/setting-custom-actionbar-title-from-fragment#:~:text=To%20set%20the%20title%20for,the%20title%20for%20that%20Activity%20)
 
 ## 开发经验
 - 专注于目标,而不是技术
