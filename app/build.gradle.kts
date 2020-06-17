@@ -186,7 +186,6 @@ dependencies {
     implementation(Libs.multiStateView)
     implementation(Libs.volley)
     implementation(Libs.lottie)
-    implementation(Libs.titlebar)
 
     implementation("androidx.leanback:leanback:1.0.0")
     implementation("com.jakewharton:disklrucache:2.0.2")
