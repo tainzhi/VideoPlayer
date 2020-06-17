@@ -273,7 +273,8 @@ class VideoView @JvmOverloads constructor(
     private fun fullScreenHideAll(context: Context) {
         Util.hideStatusBar(context)
         Util.hideActionBar(context)
-        Util.setRequestedOrientation(context, Constant.FULL_SCREEN_ORIENTATION)
+        // TODO: 2020/6/16 orientation
+        // Util.setRequestedOrientation(context, Constant.FULL_SCREEN_ORIENTATION)
         Util.hideSystemUI(context)
     }
 

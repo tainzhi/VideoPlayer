@@ -65,7 +65,11 @@ class MediaController(val context: Context) {
     }
 
     private fun initControllView(view: View) {
-        view.findViewById<TextView>(R.id.videoTitleTv).text = videoView.videoTitle
+        view.findViewById<TextView>(R.id.videoTitleTv).run {
+            text = videoView.videoTitle
+            requestFocus()
+            isSelected = true
+        }
         playPauseBtn = view.findViewById<ImageButton>(R.id.playPauseBtn)
         playPauseBtn.setOnClickListener {
             doPlayPause()
