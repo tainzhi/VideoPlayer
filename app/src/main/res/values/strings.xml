@@ -25,6 +25,7 @@
 	
 	<string name="title_local_video">本地视频</string>
 	<string name="title_douyu">斗鱼</string>
+	<string name="title_douyu_category">斗鱼分类</string>
 	<string name="title_like">收藏</string>
 	<string name="title_tv">电视</string>
 	<string name="title_movie">电影</string>

@@ -10,13 +10,17 @@
 		<com.wuhenzhizao.titlebar.widget.CommonTitleBar
 			android:id="@+id/commonTitleBar"
 			android:layout_width="match_parent"
-			android:layout_height="?actionBarSize"
-			app:fillStatusBar="true"
+			android:layout_height="wrap_content"
+			tools:layout_height="?actionBarSize"
 			app:statusBarMode="light"
-			app:showBottomLine="false"
-			app:rightImageResource="@drawable/ic_search"
+			app:statusBarColor="?colorPrimaryDark"
 			app:titleBarColor="?colorPrimary"
+			app:centerType="textView"
 			app:centerText="@string/title_local_video"
+			app:centerTextColor="?colorOnPrimary"
+			app:rightImageResource="@drawable/ic_search"
+			app:rightType="imageButton"
+			app:showBottomLine="false"
 			app:layout_constraintBottom_toTopOf="@id/localVideoRecyclerView"
 			app:layout_constraintTop_toTopOf="parent" />
 		

@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools">
 	
-<FrameLayout
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context="com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryFragment">
-	
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/douyuCategoryRecyclerView"
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
-
-</FrameLayout>
+		android:layout_height="match_parent"
+		tools:context="com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryFragment">
+		
+		<com.wuhenzhizao.titlebar.widget.CommonTitleBar
+			android:id="@+id/commonTitleBar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:centerText="@string/title_douyu_category"
+			app:centerTextColor="?colorOnPrimary"
+			app:centerType="textView"
+			app:layout_constraintTop_toTopOf="parent"
+			app:rightImageResource="@drawable/ic_search"
+			app:rightType="imageButton"
+			app:showBottomLine="false"
+			app:statusBarColor="?colorPrimaryDark"
+			app:statusBarMode="light"
+			app:titleBarColor="?colorPrimary"
+			tools:layout_height="?actionBarSize" />
+		
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/douyuCategoryRecyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			tools:listitem="@layout/item_douyu_category"
+			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+			app:spanCount="3"
+			app:layout_constraintTop_toBottomOf="@+id/commonTitleBar" />
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
