@@ -59,6 +59,14 @@
 - 各大卫视当前播放节目从[电视猫](https://www.tvmao.com/program/playing/cctv/)爬虫所得
 - [电视之家:分享高清电视直播源](https://dtvzj.com/274.html)
 - [电视节目单](http://epg.tv.cn/cctv1): 脚本生成的当前网页, 不太好抓取当前播放内容
+- [北邮: 卫视高清资源](http://ivi.bupt.edu.cn/)
+- [多条卫视线路, 其他电影线路多已失效](http://www.dszbdq.cn/)
+
+## 斗鱼api
+- [获取游戏分类](http://m.douyu.com/api/cate/list), [获取游戏分类2](http://open.douyucdn.cn/api/RoomApi/game)
+- [获取某个游戏的直播间: http://open.douyucdn.cn/api/RoomApi/live/3?limit=20&offset=20](http://open.douyucdn.cn/api/RoomApi/live/3?limit=20&offset=20), 3为游戏id, limit每次返回房间数, offset为偏移量
+- [推荐的游戏:http://open.douyucdn.cn/api/RoomApi/live?limit=20&offset=20](http://open.douyucdn.cn/api/RoomApi/live?limit=20&offset=20)
+- [http://m.douyu.com/api/home/mix](http://m.douyu.com/api/home/mix)
 
 ## 斗鱼直播源的获取(未实现)
 **Note**: @2019年6月5日17:33:56之前: 手动方式有效，python方式无效，反编译不会
@@ -147,3 +155,6 @@
 - 专注于目标,而不是技术
 - 不要苛求于和原来的技术实现相同, 只要能解决问题, 哪管它新的实现思路
 - 对于某些实现细节的代码不熟悉不懂, 可以在github上高级搜索, 学习相应的代码段
+
+[斗鱼api]: #斗鱼api
+

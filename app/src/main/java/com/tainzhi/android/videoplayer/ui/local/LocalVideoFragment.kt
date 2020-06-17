@@ -25,7 +25,7 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
 
             PlayActivity.startPlay(requireActivity(),
                     video.uri,
-                    video.duration
+                    video.title
             )
         }
     }

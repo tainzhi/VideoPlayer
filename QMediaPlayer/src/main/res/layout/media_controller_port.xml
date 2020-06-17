@@ -30,12 +30,16 @@
 	
 	<TextView
 		android:id="@+id/videoTitleTv"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
+		app:layout_constraintWidth_percent="0.6"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="16dp"
 		tools:text="This is a video title"
 		android:textColor="@android:color/white"
 		android:textSize="20sp"
+		android:ellipsize="marquee"
+		android:scrollHorizontally="true"
+		android:singleLine="true"
 		app:layout_constraintBottom_toBottomOf="@+id/backIv"
 		app:layout_constraintStart_toEndOf="@+id/backIv"
 		app:layout_constraintTop_toTopOf="@+id/backIv" />
