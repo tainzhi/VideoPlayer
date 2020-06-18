@@ -15,7 +15,9 @@
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_scrollFlags="scroll|snap|enterAlways"
 			android:background="?colorPrimary"
+			android:foregroundTint="@android:color/white"
 			app:titleTextColor="?colorOnPrimary"
+			app:navigationIcon="@drawable/ic_search"
 			app:title="@string/title_local_video" />
 		
 		<androidx.recyclerview.widget.RecyclerView

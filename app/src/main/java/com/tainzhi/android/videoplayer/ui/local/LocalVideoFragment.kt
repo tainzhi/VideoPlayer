@@ -2,6 +2,10 @@ package com.tainzhi.android.videoplayer.ui.local
 
 import android.app.SearchManager
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
+import android.view.View
+import android.widget.ImageView
 import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -63,6 +67,7 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
             searchView.run {
                 // setSearchableInfo(searchManager.getSearchableInfo(gameName))
                 maxWidth = Integer.MAX_VALUE
+                queryHint = "hello"
                 setOnQueryTextListener(object: SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         localVideoAdapter.filter.filter(query)
@@ -74,13 +79,27 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
                         return false
                     }
                 })
+                this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
+                    setTextColor(Color.WHITE)
+                    setHintTextColor(Color.WHITE)
+                    setHint("请输入视频名称")
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        // null 使得光标与字体同色
+                        textCursorDrawable = null
+                    }
+                }
+                this.findViewById<ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
+                this.findViewById<ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
+                // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
+                // 去掉下划线
+                this.findViewById<View>(R.id.search_plate).setBackgroundColor(Color.TRANSPARENT)
             }
         }
 
+        // 关闭搜索
         requireActivity().onBackPressedDispatcher.addCallback {
-            if (!searchView.isIconified) {
-                searchView.isIconified = true
-            }
+            ((mBinding as LocalVideoFragmentBinding).toolbar as Toolbar)
+                    .collapseActionView()
         }
     }
 

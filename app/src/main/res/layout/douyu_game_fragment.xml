@@ -5,6 +5,18 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?actionBarSize"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_scrollFlags="scroll|snap|enterAlways"
+			android:background="?colorPrimary"
+			android:foregroundTint="@android:color/white"
+			app:titleTextColor="?colorOnPrimary"
+			app:navigationIcon="@drawable/ic_arrow_back"
+			app:title="斗鱼分类" />
 		
 		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 			android:id="@+id/douyuGameSwipeRefreshLayout"
