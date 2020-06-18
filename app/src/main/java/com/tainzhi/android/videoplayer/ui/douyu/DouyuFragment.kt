@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -36,6 +37,8 @@ class DouyuFragment : BaseFragment(useBinding = true) {
 
     override fun getLayoutResId() = R.layout.douyu_fragment
 
+    override fun getToolBar(): Toolbar? = null
+
     override fun initView() {
         val binding = mBinding as DouyuFragmentBinding
         binding.douyuViewPager.run {
@@ -55,6 +58,8 @@ class DouyuFragment : BaseFragment(useBinding = true) {
         binding.douyuMore.setOnClickListener { view ->
             view.findNavController().navigate(R.id.action_douyuFragment_to_douyuCategoryFragment)
         }
+
+
     }
 
     override fun initData() {

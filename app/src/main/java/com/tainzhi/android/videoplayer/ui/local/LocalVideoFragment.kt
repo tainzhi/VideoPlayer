@@ -1,5 +1,10 @@
 package com.tainzhi.android.videoplayer.ui.local
 
+import android.app.SearchManager
+import android.content.Context
+import androidx.activity.addCallback
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,9 +37,12 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
 
     override fun getLayoutResId() = R.layout.local_video_fragment
 
+    override fun getToolBar(): Toolbar? = (mBinding as LocalVideoFragmentBinding).toolbar
+
     override fun initVM() = getViewModel<LocalVideoViewModel>()
 
     override fun initView() {
+
         val binding = mBinding as LocalVideoFragmentBinding
         binding.localVideoRecyclerView.run {
             layoutManager = LinearLayoutManager(requireActivity())
@@ -44,6 +52,35 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
 
         binding.localVideoFab.setOnClickListener {
             showShackBarMessage("to implement: 播放最近一次观看的视频")
+        }
+
+        lateinit var searchView: SearchView
+        binding.toolbar.run {
+            inflateMenu(R.menu.search)
+            menu.findItem(R.id.search).isVisible = true
+            val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            searchView = (menu.findItem(R.id.search).actionView) as SearchView
+            searchView.run {
+                // setSearchableInfo(searchManager.getSearchableInfo(gameName))
+                maxWidth = Integer.MAX_VALUE
+                setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        localVideoAdapter.filter.filter(query)
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        localVideoAdapter.filter.filter(newText)
+                        return false
+                    }
+                })
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            if (!searchView.isIconified) {
+                searchView.isIconified = true
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.ItemLocalVideoBinding
 import com.tainzhi.android.videoplayer.bean.LocalVideo
+import java.util.*
 
 /**
  * @author:      tainzhi
@@ -25,6 +26,8 @@ class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) :
         BaseQuickAdapter<LocalVideo, LocalVideoViewHolder<ItemLocalVideoBinding>>(R.layout.item_local_video),
         Filterable
 {
+
+    var originalData =  ArrayList<LocalVideo>()
 
     init {
         setOnItemClickListener { _, _, position ->
@@ -52,9 +55,35 @@ class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) :
         }
     }
 
-    override fun getFilter(): Filter {
-        TODO("Not yet implemented")
+    override fun setList(list: Collection<LocalVideo>?) {
+        super.setList(list)
+        originalData = data as ArrayList<LocalVideo>
     }
+
+    override fun getFilter() = object : Filter() {
+        override fun performFiltering(constraint: CharSequence): FilterResults {
+            val constraintString = constraint.toString()
+            var filteredList: MutableList<LocalVideo> = ArrayList()
+            if (constraintString.isEmpty()) {
+                filteredList = originalData
+            } else {
+                for (v in originalData) {
+                    if (v.title.contains(constraintString)) {
+                        filteredList.add(v)
+                    }
+                }
+            }
+            val filterResults = FilterResults()
+            filterResults.values = filteredList
+            return filterResults
+        }
+
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            data = results.values as MutableList<LocalVideo>
+            notifyDataSetChanged()
+        }
+    }
+
 
 }
 
