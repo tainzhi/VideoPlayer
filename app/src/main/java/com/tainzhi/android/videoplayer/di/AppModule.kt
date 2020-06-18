@@ -30,7 +30,7 @@ val viewModelModule = module {
     viewModel { LocalVideoViewModel(get(), get()) }
     viewModel { DouyuGameViewModel(get(), get())}
     viewModel { DouyuCategoryViewModel(get(), get() )}
-    viewModel { MainViewModel() }
+     viewModel { MainViewModel() }
 }
 
 val repositoryModule = module {
