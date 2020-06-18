@@ -6,12 +6,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.TVFragmentBinding
-import com.tainzhi.android.common.base.ui.BaseVMFragment
+import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class TVFragment : BaseVMFragment<TVViewModel>(useBinding = true) {
+class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
 
     private val tvAdapter by lazy(LazyThreadSafetyMode.NONE) {
         TVAdapter() { tv ->
@@ -31,7 +31,7 @@ class TVFragment : BaseVMFragment<TVViewModel>(useBinding = true) {
     override fun initVM(): TVViewModel = getViewModel()
 
     override fun initView() {
-        (mBinding as TVFragmentBinding).tvRecyclerView.run {
+        mBinding.tvRecyclerView.run {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = tvAdapter
         }

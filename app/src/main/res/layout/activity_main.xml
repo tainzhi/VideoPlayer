@@ -30,6 +30,8 @@
 					android:layout_height="wrap_content"
 					android:layout_gravity="center"
 					tools:text="VideoPlayer"
+					android:textSize="16sp"
+					tools:visibility="visible"
 					android:visibility="gone"
 					android:textColor="?colorOnPrimary" />
 			</androidx.appcompat.widget.Toolbar>

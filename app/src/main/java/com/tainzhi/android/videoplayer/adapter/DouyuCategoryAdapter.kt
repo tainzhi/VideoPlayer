@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.ItemDouyuCategoryBinding
 import com.tainzhi.android.videoplayer.bean.DouyuGame
+import com.tainzhi.android.videoplayer.bean.DouyuRoom
 
 /**
  * @author:      tainzhi
@@ -13,11 +14,10 @@ import com.tainzhi.android.videoplayer.bean.DouyuGame
  * @description:
  **/
 
-class DouyuCategoryAdapter(private val call: (roomId: String) -> Unit) : BaseQuickAdapter<DouyuGame, BaseDataBindingHolder<ItemDouyuCategoryBinding>>(R.layout.item_douyu_category){
+class DouyuCategoryAdapter(private val call: (game: DouyuGame) -> Unit) : BaseQuickAdapter<DouyuGame, BaseDataBindingHolder<ItemDouyuCategoryBinding>>(R.layout.item_douyu_category){
     init {
         setOnItemClickListener { _, _, position ->
-            val room = data[position]
-            call.invoke(room.cate_id.toString())
+            call.invoke(data[position])
         }
     }
     override fun convert(holder: BaseDataBindingHolder<ItemDouyuCategoryBinding>, item: DouyuGame) {

@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -7,7 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.DouyuFragmentBinding
-import com.tainzhi.android.common.base.ui.BaseFragment
+import com.tainzhi.android.common.base.ui.BaseBindingFragment
 
 /**
  * @author:      tainzhi
@@ -16,7 +17,7 @@ import com.tainzhi.android.common.base.ui.BaseFragment
  * @description: 斗鱼首页
  **/
 
-class DouyuFragment : BaseFragment(useBinding = true) {
+class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>() {
     private val defaultChannels = arrayListOf(
             ChannelIdRoom(-1, "推荐"),
             ChannelIdRoom(3, "DOTA2"),
@@ -37,22 +38,21 @@ class DouyuFragment : BaseFragment(useBinding = true) {
     override fun getLayoutResId() = R.layout.douyu_fragment
 
     override fun initView() {
-        val binding = mBinding as DouyuFragmentBinding
-        binding.douyuViewPager.run {
+        mBinding.douyuViewPager.run {
             offscreenPageLimit = 4
             adapter = object : FragmentStateAdapter(this@DouyuFragment) {
                 override fun createFragment(position: Int): Fragment {
-                    return DouyuGameFragment.newInstance(defaultChannels[position].id.toString(), defaultChannels[position].name)
+                    return DouyuGameFragment.newInstance(defaultChannels[position].id.toString())
                 }
 
                 override fun getItemCount() = defaultChannels.size
             }
         }
-        TabLayoutMediator(binding.douyuTabLayout, binding.douyuViewPager) { tab, position ->
+        TabLayoutMediator(mBinding.douyuTabLayout, mBinding.douyuViewPager) { tab, position ->
             tab.text = defaultChannels[position].name
         }.attach()
 
-        binding.douyuMore.setOnClickListener { view ->
+        mBinding.douyuMore.setOnClickListener { view ->
             view.findNavController().navigate(R.id.action_douyuFragment_to_douyuCategoryFragment)
         }
     }

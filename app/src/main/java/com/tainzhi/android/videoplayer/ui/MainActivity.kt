@@ -10,11 +10,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.ActivityMainBinding
-import com.tainzhi.android.common.base.ui.BaseVMActivity
+import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.util.setupWithNavController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainActivity : BaseVMActivity<MainViewModel>(useBinding = true) {
+class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>() {
 
     private var currentNavController: LiveData<NavController>? = null
 
@@ -23,6 +23,7 @@ class MainActivity : BaseVMActivity<MainViewModel>(useBinding = true) {
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
+
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -72,14 +73,15 @@ class MainActivity : BaseVMActivity<MainViewModel>(useBinding = true) {
     }
 
     override fun startObserve() {
-        val toolbar = (mBinding as ActivityMainBinding).toolbar
+        val toolbar = mBinding.toolbar
         mViewModel.run {
             title.observe(this@MainActivity, Observer { title ->
-                toolbar.title = title
-                (mBinding as ActivityMainBinding).toolbarCenterTitle.run {
+                mBinding.toolbarCenterTitle.run {
                     text = title
-                    visibility = View.VISIBLE
                 }
+            })
+            showCenterTitle.observe(this@MainActivity, Observer { show ->
+                mBinding.toolbarCenterTitle.visibility = if (show) View.VISIBLE else View.GONE
             })
         }
 
