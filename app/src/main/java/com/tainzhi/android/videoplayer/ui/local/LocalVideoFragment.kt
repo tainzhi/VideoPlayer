@@ -24,6 +24,7 @@ import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
 import com.tainzhi.android.videoplayer.adapter.RecyclerItemTouchHelper
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
+import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -59,55 +60,56 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
         }
 
         lateinit var searchView: SearchView
-        binding.toolbar.run {
-            inflateMenu(R.menu.search)
-            menu.findItem(R.id.search).isVisible = true
-            val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            searchView = (menu.findItem(R.id.search).actionView) as SearchView
-            searchView.run {
-                // setSearchableInfo(searchManager.getSearchableInfo(gameName))
-                maxWidth = Integer.MAX_VALUE
-                queryHint = "hello"
-                setOnQueryTextListener(object: SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        localVideoAdapter.filter.filter(query)
-                        return true
-                    }
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        localVideoAdapter.filter.filter(newText)
-                        return false
-                    }
-                })
-                this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
-                    setTextColor(Color.WHITE)
-                    setHintTextColor(Color.WHITE)
-                    setHint("请输入视频名称")
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        // null 使得光标与字体同色
-                        textCursorDrawable = null
-                    }
-                }
-                this.findViewById<ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
-                this.findViewById<ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
-                // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
-                // 去掉下划线
-                this.findViewById<View>(R.id.search_plate).setBackgroundColor(Color.TRANSPARENT)
-            }
-        }
-
-        // 关闭搜索
-        requireActivity().onBackPressedDispatcher.addCallback {
-            ((mBinding as LocalVideoFragmentBinding).toolbar as Toolbar)
-                    .collapseActionView()
-        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        getViewModel<MainViewModel>().run {
-
+        // 使用MainActivity的ViewModel
+        getSharedViewModel<MainViewModel>().run {
+            updateToolbarTitle("LocalVideo")
         }
+        // binding.toolbar.run {
+        //     inflateMenu(R.menu.search)
+        //     menu.findItem(R.id.search).isVisible = true
+        //     val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        //     searchView = (menu.findItem(R.id.search).actionView) as SearchView
+        //     searchView.run {
+        //         // setSearchableInfo(searchManager.getSearchableInfo(gameName))
+        //         maxWidth = Integer.MAX_VALUE
+        //         queryHint = "hello"
+        //         setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        //             override fun onQueryTextSubmit(query: String?): Boolean {
+        //                 localVideoAdapter.filter.filter(query)
+        //                 return true
+        //             }
+        //
+        //             override fun onQueryTextChange(newText: String?): Boolean {
+        //                 localVideoAdapter.filter.filter(newText)
+        //                 return false
+        //             }
+        //         })
+        //         this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
+        //             setTextColor(Color.WHITE)
+        //             setHintTextColor(Color.WHITE)
+        //             setHint("请输入视频名称")
+        //             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        //                 // null 使得光标与字体同色
+        //                 textCursorDrawable = null
+        //             }
+        //         }
+        //         this.findViewById<ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
+        //         this.findViewById<ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
+        //         // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
+        //         // 去掉下划线
+        //         this.findViewById<View>(R.id.search_plate).setBackgroundColor(Color.TRANSPARENT)
+        //     }
+        // }
+        //
+        // // 关闭搜索
+        // requireActivity().onBackPressedDispatcher.addCallback {
+        //     ((mBinding as LocalVideoFragmentBinding).toolbar as Toolbar)
+        //             .collapseActionView()
+        // }
     }
 
     override fun initData() {

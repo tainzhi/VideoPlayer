@@ -1,21 +1,20 @@
 package com.tainzhi.android.videoplayer.ui
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import android.view.Menu
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.qfq.tainzhi.videoplayer.R
+import com.qfq.tainzhi.videoplayer.databinding.ActivityMainBinding
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.util.setupWithNavController
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainActivity : BaseVMActivity<MainViewModel>() {
+class MainActivity : BaseVMActivity<MainViewModel>(useBinding = true) {
 
     private var currentNavController: LiveData<NavController>? = null
 
@@ -52,6 +51,7 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
 
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
+            val toolbar = (mBinding as ActivityMainBinding).toolbar
             toolbar.setupWithNavController(navController)
         })
         currentNavController = controller
@@ -72,5 +72,20 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
     }
 
     override fun startObserve() {
+        val toolbar = (mBinding as ActivityMainBinding).toolbar
+        mViewModel.run {
+            title.observe(this@MainActivity, Observer { title ->
+                toolbar.title = title
+                (mBinding as ActivityMainBinding).toolbarCenterTitle.run {
+                    text = title
+                    visibility = View.VISIBLE
+                }
+            })
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
     }
 }
