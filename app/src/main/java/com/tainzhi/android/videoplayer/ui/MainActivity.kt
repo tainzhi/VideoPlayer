@@ -6,19 +6,21 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.qfq.tainzhi.videoplayer.R
-import com.tainzhi.android.common.base.ui.NavigationHost
+import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.util.setupWithNavController
+import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainActivity : AppCompatActivity() , NavigationHost {
+class MainActivity : BaseVMActivity<MainViewModel>() {
 
     private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() , NavigationHost {
 
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
-            // setupActionBarWithNavController(navController)
+            toolbar.setupWithNavController(navController)
         })
         currentNavController = controller
     }
@@ -59,16 +61,16 @@ class MainActivity : AppCompatActivity() , NavigationHost {
         return currentNavController?.value?.navigateUp() ?: false
     }
 
-    private val TOP_LEVEL_DESTINATIONS = setOf(
-            R.id.localVideoFragment,
-            R.id.douyuFragment,
-            R.id.TVFragment,
-            R.id.movieFragment,
-            R.id.likeFragment
-    )
+    override fun initVM(): MainViewModel = getViewModel()
 
-    override fun registerToolbarWithNavigation(toolbar: Toolbar) {
-        // val appBarConfiguration = AppBarConfiguration(TOP_LEVEL_DESTINATIONS)
-        currentNavController?.value?.let { toolbar.setupWithNavController(it) }
+    override fun getLayoutResId() = R.layout.activity_main
+
+    override fun initView() {
+    }
+
+    override fun initData() {
+    }
+
+    override fun startObserve() {
     }
 }

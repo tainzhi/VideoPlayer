@@ -1,24 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	tools:context="com.tainzhi.android.videoplayer.ui.MainActivity">
+<layout>
 	
-	<androidx.fragment.app.FragmentContainerView
-		android:id="@+id/nav_host_container"
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1" />
-	
-	<com.google.android.material.bottomnavigation.BottomNavigationView
-		android:id="@+id/bottom_nav"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="?colorPrimary"
-		app:itemIconTint="@drawable/main_bottom_nav_menu_select"
-		app:itemTextColor="@drawable/main_bottom_nav_menu_select"
-		app:menu="@menu/main_bottom_navigation"/>
-</LinearLayout>
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		tools:context="com.tainzhi.android.videoplayer.ui.MainActivity">
+		
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/appBarLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				android:layout_gravity="top"
+				android:background="?attr/colorPrimary"
+				app:layout_scrollFlags="scroll|enterAlways"
+				app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+				
+				<TextView
+					android:id="@+id/toolbarCenterTitle"
+					style="@style/TextAppearance.AppTheme.Headline6"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					tools:text="VideoPlayer"
+					android:visibility="gone"
+					android:textColor="?colorOnPrimary" />
+			</androidx.appcompat.widget.Toolbar>
+		</com.google.android.material.appbar.AppBarLayout>
+		
+		<androidx.fragment.app.FragmentContainerView
+			android:id="@+id/nav_host_container"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1" />
+		
+		<com.google.android.material.bottomnavigation.BottomNavigationView
+			android:id="@+id/bottom_nav"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?colorPrimary"
+			app:itemIconTint="@drawable/main_bottom_nav_menu_select"
+			app:itemTextColor="@drawable/main_bottom_nav_menu_select"
+			app:menu="@menu/main_bottom_navigation" />
+	</LinearLayout>
+</layout>

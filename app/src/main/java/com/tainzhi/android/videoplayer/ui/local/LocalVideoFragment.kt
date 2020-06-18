@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.addCallback
@@ -21,6 +22,7 @@ import com.tainzhi.android.common.base.ui.BaseVMFragment
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
 import com.tainzhi.android.videoplayer.adapter.RecyclerItemTouchHelper
+import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -40,8 +42,6 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
     }
 
     override fun getLayoutResId() = R.layout.local_video_fragment
-
-    override fun getToolBar(): Toolbar? = (mBinding as LocalVideoFragmentBinding).toolbar
 
     override fun initVM() = getViewModel<LocalVideoViewModel>()
 
@@ -100,6 +100,13 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
         requireActivity().onBackPressedDispatcher.addCallback {
             ((mBinding as LocalVideoFragmentBinding).toolbar as Toolbar)
                     .collapseActionView()
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        getViewModel<MainViewModel>().run {
+
         }
     }
 

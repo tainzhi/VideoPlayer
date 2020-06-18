@@ -49,6 +49,4 @@ class TVFragment : BaseVMFragment<TVViewModel>(useBinding = true) {
         }
     }
 
-    override fun getToolBar(): androidx.appcompat.widget.Toolbar? = null
-
 }
