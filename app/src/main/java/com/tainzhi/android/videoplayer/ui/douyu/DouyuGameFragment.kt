@@ -2,7 +2,6 @@ package com.tainzhi.android.videoplayer.ui.douyu
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -54,9 +53,6 @@ class DouyuGameFragment(
 
     override fun getLayoutResId() = R.layout.douyu_game_fragment
 
-    override fun getToolBar(): Toolbar? {
-        return null
-    }
     override fun initVM(): DouyuGameViewModel = getViewModel()
 
     override fun initView() {
