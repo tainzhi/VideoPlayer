@@ -1,15 +1,5 @@
 package com.tainzhi.android.videoplayer.ui.local
 
-import android.app.SearchManager
-import android.content.Context
-import android.graphics.Color
-import android.os.Build
-import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
-import androidx.activity.addCallback
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +8,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.LocalVideoFragmentBinding
-import com.tainzhi.android.common.base.ui.BaseVMFragment
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
@@ -58,58 +47,19 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
         mBinding.localVideoFab.setOnClickListener {
             showShackBarMessage("to implement: 播放最近一次观看的视频")
         }
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // 使用MainActivity的ViewModel
+
         getSharedViewModel<MainViewModel>().run {
-            // updateToolbarTitle("LocalVideo")
+            updateToolbarSearchView(true)
         }
 
-        // lateinit var searchView: SearchView
-        // binding.toolbar.run {
-        //     inflateMenu(R.menu.search)
-        //     menu.findItem(R.id.search).isVisible = true
-        //     val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        //     searchView = (menu.findItem(R.id.search).actionView) as SearchView
-        //     searchView.run {
-        //         // setSearchableInfo(searchManager.getSearchableInfo(gameName))
-        //         maxWidth = Integer.MAX_VALUE
-        //         queryHint = "hello"
-        //         setOnQueryTextListener(object: SearchView.OnQueryTextListener {
-        //             override fun onQueryTextSubmit(query: String?): Boolean {
-        //                 localVideoAdapter.filter.filter(query)
-        //                 return true
-        //             }
-        //
-        //             override fun onQueryTextChange(newText: String?): Boolean {
-        //                 localVideoAdapter.filter.filter(newText)
-        //                 return false
-        //             }
-        //         })
-        //         this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
-        //             setTextColor(Color.WHITE)
-        //             setHintTextColor(Color.WHITE)
-        //             setHint("请输入视频名称")
-        //             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        //                 // null 使得光标与字体同色
-        //                 textCursorDrawable = null
-        //             }
-        //         }
-        //         this.findViewById<ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
-        //         this.findViewById<ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
-        //         // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
-        //         // 去掉下划线
-        //         this.findViewById<View>(R.id.search_plate).setBackgroundColor(Color.TRANSPARENT)
-        //     }
-        // }
-        //
-        // // 关闭搜索
-        // requireActivity().onBackPressedDispatcher.addCallback {
-        //     ((mBinding as LocalVideoFragmentBinding).toolbar as Toolbar)
-        //             .collapseActionView()
-        // }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        getSharedViewModel<MainViewModel>().run {
+            updateToolbarSearchView(false)
+        }
     }
 
     override fun initData() {
@@ -122,6 +72,10 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                 localVideoAdapter.setList(it)
             })
         }
+
+        getSharedViewModel<MainViewModel>().searchString.observe(requireActivity(), Observer { search ->
+            localVideoAdapter.filter.filter(search)
+        })
     }
 
     /**
