@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,6 +23,10 @@ class DouyuCategoryFragment : BaseVMFragment<DouyuCategoryViewModel>( useBinding
         }
     }
     override fun getLayoutResId() = R.layout.douyu_category_fragment
+
+    override fun getToolBar(): Toolbar? {
+        return null
+    }
 
     override fun initVM(): DouyuCategoryViewModel = getViewModel()
 
