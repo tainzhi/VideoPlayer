@@ -45,9 +45,9 @@ public class GrainEffect implements ShaderInterface {
     public String getShader(GLSurfaceView mGlSurfaceView) {
         initValues(mGlSurfaceView);
 
-        float seed[] = {mRandom.nextFloat(), mRandom.nextFloat()};
+        float[] seed = {mRandom.nextFloat(), mRandom.nextFloat()};
         String scaleString = "scale = " + strength + ";\n";
-        String seedString[] = new String[2];
+        String[] seedString = new String[2];
         seedString[0] = "seed[0] = " + seed[0] + ";\n";
         seedString[1] = "seed[1] = " + seed[1] + ";\n";
         String stepX = "stepX = " + 0.5f / mWidth + ";\n";

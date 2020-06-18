@@ -7,7 +7,7 @@
 	
 	<fragment
 		android:id="@+id/movieFragment"
-		android:name="com.qfq.tainzhi.videoplayer.ui.fragment.MovieFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.MovieFragment"
 		tools:layout="@layout/fragment_movie"
 		android:label="@string/title_movie" />
 </navigation>

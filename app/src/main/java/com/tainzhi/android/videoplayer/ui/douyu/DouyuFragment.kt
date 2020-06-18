@@ -6,9 +6,9 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.qfq.tainzhi.videoplayer.R
-import com.qfq.tainzhi.videoplayer.databinding.DouyuFragmentBinding
+import com.tainzhi.tainzhi.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseBindingFragment
+import com.tainzhi.tainzhi.videoplayer.databinding.DouyuFragmentBinding
 
 /**
  * @author:      tainzhi
@@ -61,21 +61,6 @@ class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        // viewPager.registerOnPageChangeCallback(onPageChangeCallback)
-        // TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-        //     tab.text = defaultChannels[position].name
-        // }.attach()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        // viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
-        // TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-        //     tab.text = defaultChannels[position].name
-        // }.detach()
-    }
 }
 
 data class ChannelIdRoom(val id: Int, val name: String)

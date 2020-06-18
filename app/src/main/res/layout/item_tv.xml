@@ -7,7 +7,7 @@
 		
 		<import
 			alias="appR"
-			type="com.qfq.tainzhi.videoplayer.R" />
+			type="com.tainzhi.tainzhi.videoplayer.R" />
 		
 		<variable
 			name="tv"

@@ -5,13 +5,12 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.qfq.tainzhi.videoplayer.R
-import com.qfq.tainzhi.videoplayer.databinding.DouyuGameFragmentBinding
+import com.tainzhi.tainzhi.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomAdapter
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
-import com.tencent.bugly.proguard.u
+import com.tainzhi.tainzhi.videoplayer.databinding.DouyuGameFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -21,8 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * @date:        2020/6/15 09:32
  * @description: 斗鱼频道页面, 该页面展示当前游戏分类的所有房间列表
  **/
-class DouyuGameFragment(
-) : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFragmentBinding>() {
+class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFragmentBinding>() {
 
     // 通过 newInstance(gameId) 创建传参
     private val gameId by lazy(LazyThreadSafetyMode.NONE) { arguments?.getString(GAME_ID)}
@@ -43,7 +41,7 @@ class DouyuGameFragment(
     }
 
     private val douyuRoomAdapter by lazy(LazyThreadSafetyMode.NONE){
-        DouyuRoomAdapter() { room ->
+        DouyuRoomAdapter { room ->
             val roomCircuit = mViewModel.getRoomCircuit(room.room_id.toString())
             PlayActivity.startPlay(requireActivity(),
                     Uri.parse(roomCircuit),

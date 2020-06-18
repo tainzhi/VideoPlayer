@@ -25,11 +25,11 @@ public class SaturationEffect implements ShaderInterface {
     @Override
     public String getShader(GLSurfaceView mGlSurfaceView) {
         float shift = 1.0f / 255.0f;
-        float weights[] = {2f / 8f, 5f / 8f, 1f / 8f};
-        float exponents[] = new float[3];
+        float[] weights = {2f / 8f, 5f / 8f, 1f / 8f};
+        float[] exponents = new float[3];
 
-        String weightsString[] = new String[3];
-        String exponentsString[] = new String[3];
+        String[] weightsString = new String[3];
+        String[] exponentsString = new String[3];
         exponentsString[0] = "";
         exponentsString[1] = "";
         exponentsString[2] = "";

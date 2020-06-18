@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import com.qfq.tainzhi.videoplayer.R
-import com.qfq.tainzhi.videoplayer.databinding.ItemLocalVideoBinding
 import com.tainzhi.android.videoplayer.bean.LocalVideo
+import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.tainzhi.videoplayer.databinding.ItemLocalVideoBinding
 import java.util.*
 
 /**
@@ -96,9 +96,6 @@ class LocalVideoViewHolder<BD : ViewDataBinding>(view: View): BaseDataBindingHol
 class RecyclerItemTouchHelper(
         dragDirs: Int, swipDirs: Int,
         private val mListener: RecyclerItemTouchHelperListener) : ItemTouchHelper.SimpleCallback(dragDirs, swipDirs) {
-    override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {
-        return super.convertToAbsoluteDirection(flags, layoutDirection)
-    }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
         return true

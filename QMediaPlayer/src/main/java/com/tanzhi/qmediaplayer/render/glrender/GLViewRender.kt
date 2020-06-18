@@ -289,7 +289,7 @@ class GLViewRender(private val glRenderViewListener: GLRenderViewListener) : GLS
         if (takeShotPic) {
             takeShotPic = false
             val bitmap = createBitmapFromGLSurface(0, 0, (glRenderViewListener as GLRenderView).width,
-                    (glRenderViewListener as GLRenderView).height, gl)
+                    glRenderViewListener.height, gl)
             if (videoShotListener == null) {
                 logI("not implement VideoShotListener")
             }

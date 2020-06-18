@@ -43,7 +43,7 @@ public class VignetteEffect implements ShaderInterface {
     @Override
     public String getShader(GLSurfaceView mGlSurfaceView) {
         initValues(mGlSurfaceView);
-        float scale[] = new float[2];
+        float[] scale = new float[2];
         if (mWidth > mHeight) {
             scale[0] = 1f;
             scale[1] = ((float) mHeight) / mWidth;
@@ -54,7 +54,7 @@ public class VignetteEffect implements ShaderInterface {
         float max_dist = ((float) Math.sqrt(scale[0] * scale[0] + scale[1]
                 * scale[1])) * 0.5f;
 
-        String scaleString[] = new String[2];
+        String[] scaleString = new String[2];
 
         scaleString[0] = "scale[0] = " + scale[0] + ";\n";
         scaleString[1] = "scale[1] = " + scale[1] + ";\n";

@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter
  *
  **/
 
-class DouyuVolleySpider() {
+class DouyuVolleySpider {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCode(requestQueue: RequestQueue) {
         // t2

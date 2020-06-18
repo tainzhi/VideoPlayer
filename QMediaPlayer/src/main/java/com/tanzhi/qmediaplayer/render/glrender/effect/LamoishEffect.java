@@ -36,7 +36,7 @@ public class LamoishEffect implements ShaderInterface {
     @Override
     public String getShader(GLSurfaceView mGlSurfaceView) {
         initValues(mGlSurfaceView);
-        float scale[] = new float[2];
+        float[] scale = new float[2];
         if (mWidth > mHeight) {
             scale[0] = 1f;
             scale[1] = ((float) mHeight) / mWidth;
@@ -47,10 +47,10 @@ public class LamoishEffect implements ShaderInterface {
         float max_dist = ((float) Math.sqrt(scale[0] * scale[0] + scale[1]
                 * scale[1])) * 0.5f;
 
-        float seed[] = {mRandom.nextFloat(), mRandom.nextFloat()};
+        float[] seed = {mRandom.nextFloat(), mRandom.nextFloat()};
 
-        String scaleString[] = new String[2];
-        String seedString[] = new String[2];
+        String[] scaleString = new String[2];
+        String[] seedString = new String[2];
 
         scaleString[0] = "scale[0] = " + scale[0] + ";\n";
         scaleString[1] = "scale[1] = " + scale[1] + ";\n";
@@ -150,9 +150,8 @@ public class LamoishEffect implements ShaderInterface {
                 + "  float dist = length(coord * scale);\n"
                 + "  float lumen = 0.85 / (1.0 + exp((dist * inv_max_dist - 0.73) * 20.0)) + 0.15;\n"
                 + "  gl_FragColor = vec4(bw_color * lumen, color.a);\n" + "}\n";
-        ;
-
-        return shader;
+	
+	    return shader;
 
     }
 }

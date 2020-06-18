@@ -4,7 +4,7 @@
 	
 	<data>
 		
-		<import type="com.qfq.tainzhi.videoplayer.R" />
+		<import type="com.tainzhi.tainzhi.videoplayer.R" />
 		
 		<variable
 			name="room"

@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.qfq.tainzhi.videoplayer.R
-import com.qfq.tainzhi.videoplayer.databinding.LocalVideoFragmentBinding
+import com.tainzhi.tainzhi.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
 import com.tainzhi.android.videoplayer.adapter.RecyclerItemTouchHelper
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
+import com.tainzhi.tainzhi.videoplayer.databinding.LocalVideoFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -23,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>() {
 
     private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE){
-        LocalVideoAdapter() { video ->
+        LocalVideoAdapter { video ->
 
             PlayActivity.startPlay(requireActivity(),
                     video.uri,

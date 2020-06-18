@@ -2,6 +2,7 @@ package com.tainzhi.android.videoplayer.network
 
 import com.orhanobut.logger.Logger
 import okhttp3.*
+import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -94,7 +95,7 @@ class LogInterceptor : Interceptor {
                     if (isText(mediaType)) {
                         val resp = body.string()
                         Logger.json(resp)
-                        body = ResponseBody.create(mediaType, resp)
+                        body = resp.toResponseBody(mediaType)
                         return response.newBuilder().body(body).build()
                     } else {
                         Logger.d(TAG, "data : " + " maybe [file part] , too large too print , ignored!")

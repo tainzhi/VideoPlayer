@@ -77,9 +77,9 @@ object Util {
     fun getAppCompActivity(context: Context?): AppCompatActivity? {
         if (context == null) return null
         if (context is AppCompatActivity) {
-            return context as AppCompatActivity?
+            return context
         } else if (context is ContextThemeWrapper) {
-            return getAppCompActivity((context as ContextThemeWrapper).getBaseContext())
+            return getAppCompActivity(context.baseContext)
         }
         return null
     }
@@ -94,7 +94,7 @@ object Util {
 
     fun getWindow(context: Context?): Window {
         return if (getAppCompActivity(context) != null) {
-            getAppCompActivity(context)!!.getWindow()
+            getAppCompActivity(context)!!.window
         } else {
             scanForActivity(context)!!.window
         }

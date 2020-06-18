@@ -13,7 +13,7 @@ import java.security.MessageDigest
  * @description: 使用[KRequest] 爬取斗鱼信息
  **/
 
-class DouyuSpider() {
+class DouyuSpider {
 
     fun getRoomLive(rid: String): String {
         val timeSeconds = currentTimeMillis() / 1000

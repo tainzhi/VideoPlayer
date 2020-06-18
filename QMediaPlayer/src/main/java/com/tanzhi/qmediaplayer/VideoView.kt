@@ -194,7 +194,7 @@ class VideoView @JvmOverloads constructor(
             renderView.setVideoSampleAspectRatio(videoSarNum, videoSarDen)
 
         val renderUIView = mRenderView as View
-        renderUIView?.layoutParams = LayoutParams(
+        renderUIView.layoutParams = LayoutParams(
                LayoutParams.WRAP_CONTENT,
                LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER)
