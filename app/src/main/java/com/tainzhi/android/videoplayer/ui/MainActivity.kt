@@ -2,15 +2,17 @@ package com.tainzhi.android.videoplayer.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.qfq.tainzhi.videoplayer.R
+import com.tainzhi.android.common.base.ui.NavigationHost
 import com.tainzhi.android.videoplayer.util.setupWithNavController
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , NavigationHost {
 
     private var currentNavController: LiveData<NavController>? = null
 
@@ -48,12 +50,25 @@ class MainActivity : AppCompatActivity() {
 
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
-            setupActionBarWithNavController(navController)
+            // setupActionBarWithNavController(navController)
         })
         currentNavController = controller
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false
+    }
+
+    private val TOP_LEVEL_DESTINATIONS = setOf(
+            R.id.localVideoFragment,
+            R.id.douyuFragment,
+            R.id.TVFragment,
+            R.id.movieFragment,
+            R.id.likeFragment
+    )
+
+    override fun registerToolbarWithNavigation(toolbar: Toolbar) {
+        // val appBarConfiguration = AppBarConfiguration(TOP_LEVEL_DESTINATIONS)
+        currentNavController?.value?.let { toolbar.setupWithNavController(it) }
     }
 }
