@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.qfq.tainzhi.videoplayer.R
 import com.qfq.tainzhi.videoplayer.databinding.LocalVideoFragmentBinding
 import com.tainzhi.android.common.base.ui.BaseVMFragment
+import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
 import com.tainzhi.android.videoplayer.adapter.RecyclerItemTouchHelper
@@ -30,7 +31,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 /**
  * 本地视频
  */
-class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true) {
+class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>() {
 
     private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE){
         LocalVideoAdapter() { video ->
@@ -48,26 +49,25 @@ class LocalVideoFragment : BaseVMFragment<LocalVideoViewModel>(useBinding = true
 
     override fun initView() {
 
-        val binding = mBinding as LocalVideoFragmentBinding
-        binding.localVideoRecyclerView.run {
+        mBinding.localVideoRecyclerView.run {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = localVideoAdapter
             ItemTouchHelper(recyclerItemTouchHelper).attachToRecyclerView(this)
         }
 
-        binding.localVideoFab.setOnClickListener {
+        mBinding.localVideoFab.setOnClickListener {
             showShackBarMessage("to implement: 播放最近一次观看的视频")
         }
-
-        lateinit var searchView: SearchView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         // 使用MainActivity的ViewModel
         getSharedViewModel<MainViewModel>().run {
-            updateToolbarTitle("LocalVideo")
+            // updateToolbarTitle("LocalVideo")
         }
+
+        // lateinit var searchView: SearchView
         // binding.toolbar.run {
         //     inflateMenu(R.menu.search)
         //     menu.findItem(R.id.search).isVisible = true

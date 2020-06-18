@@ -17,7 +17,7 @@
 	<fragment
 		android:id="@+id/douyuCategoryFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryFragment"
-		android:label="douyu_category_fragment"
+		android:label="@string/title_douyu_category"
 		tools:layout="@layout/douyu_category_fragment" >
 		<action
 			android:id="@+id/action_douyuCategoryFragment_to_douyuGameFragment"
@@ -25,14 +25,21 @@
 			<argument
 				android:name="gameId"
 				app:argType="string" />
+			<argument
+				android:name="gameName"
+				app:argType="string" />
 		</action>
 	</fragment>
 	<fragment
 		android:id="@+id/douyuGameFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuGameFragment"
-		android:label="DouyuGameFragment" >
+		tools:layout="@layout/douyu_game_fragment"
+		android:label="斗鱼" >
 		<argument
 			android:name="gameId"
+			app:argType="string" />
+		<argument
+			android:name="gameName"
 			app:argType="string" />
 	</fragment>
 </navigation>
