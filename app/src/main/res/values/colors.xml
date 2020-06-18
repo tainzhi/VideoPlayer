@@ -50,8 +50,8 @@
     <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
     <!--on which they appear.-->
     <color name="color_on_primary">#ffffff</color>
-    <color name="color_on_secondary">#000000</color>
-    <color name="color_on_background">#000000</color>
-    <color name="color_on_surface">#000000</color>
+    <color name="color_on_secondary">#ffffff</color>
+    <color name="color_on_background">#ffffff</color>
+    <color name="color_on_surface">#ffffff</color>
     <color name="color_on_error">#ffffff</color>
 </resources>
