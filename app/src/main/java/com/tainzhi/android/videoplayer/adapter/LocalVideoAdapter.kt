@@ -84,7 +84,6 @@ class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) :
         }
     }
 
-
 }
 
 
