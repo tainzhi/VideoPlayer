@@ -10,10 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.qfq.tainzhi.videoplayer.R
-import com.qfq.tainzhi.videoplayer.databinding.ActivityMainBinding
+import com.tainzhi.tainzhi.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.util.setupWithNavController
+import com.tainzhi.tainzhi.videoplayer.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
@@ -119,7 +119,7 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
             this.findViewById<androidx.appcompat.widget.SearchView.SearchAutoComplete>(R.id.search_src_text).run {
                 setTextColor(android.graphics.Color.WHITE)
                 setHintTextColor(android.graphics.Color.WHITE)
-                setHint("请输入视频名称")
+                hint = "请输入视频名称"
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
                     // null 使得光标与字体同色
                     textCursorDrawable = null

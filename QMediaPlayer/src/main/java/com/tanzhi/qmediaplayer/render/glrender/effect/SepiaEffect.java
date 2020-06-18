@@ -16,11 +16,11 @@ public class SepiaEffect implements ShaderInterface {
 
     @Override
     public String getShader(GLSurfaceView mGlSurfaceView) {
-        float weights[] = {805.0f / 2048.0f, 715.0f / 2048.0f,
+        float[] weights = {805.0f / 2048.0f, 715.0f / 2048.0f,
                 557.0f / 2048.0f, 1575.0f / 2048.0f, 1405.0f / 2048.0f,
                 1097.0f / 2048.0f, 387.0f / 2048.0f, 344.0f / 2048.0f,
                 268.0f / 2048.0f};
-        String matrixString[] = new String[9];
+        String[] matrixString = new String[9];
 
         matrixString[0] = "  matrix[0][0]=" + weights[0] + ";\n";
         matrixString[1] = "  matrix[0][1]=" + weights[1] + ";\n";

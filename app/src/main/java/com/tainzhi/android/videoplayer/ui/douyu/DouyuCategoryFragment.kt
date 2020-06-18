@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.qfq.tainzhi.videoplayer.R
-import com.qfq.tainzhi.videoplayer.databinding.DouyuCategoryFragmentBinding
+import com.tainzhi.tainzhi.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.DouyuCategoryAdapter
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.ui.MainViewModel
+import com.tainzhi.tainzhi.videoplayer.databinding.DouyuCategoryFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -21,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  **/
 class DouyuCategoryFragment : BaseVmBindingFragment<DouyuCategoryViewModel, DouyuCategoryFragmentBinding>() {
     private val douyuCategoryAdapter by lazy(LazyThreadSafetyMode.NONE){
-        DouyuCategoryAdapter() { game ->
+        DouyuCategoryAdapter { game ->
             navigateToCategoryGames(game)
         }
     }
@@ -34,10 +34,6 @@ class DouyuCategoryFragment : BaseVmBindingFragment<DouyuCategoryViewModel, Douy
             adapter = douyuCategoryAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     override fun initData() {

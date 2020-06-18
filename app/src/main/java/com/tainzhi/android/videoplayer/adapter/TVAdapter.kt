@@ -2,9 +2,9 @@ package com.tainzhi.android.videoplayer.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import com.qfq.tainzhi.videoplayer.R
-import com.qfq.tainzhi.videoplayer.databinding.ItemTvBinding
+import com.tainzhi.tainzhi.videoplayer.R
 import com.tainzhi.android.videoplayer.bean.Tv
+import com.tainzhi.tainzhi.videoplayer.databinding.ItemTvBinding
 import java.util.*
 
 /**
