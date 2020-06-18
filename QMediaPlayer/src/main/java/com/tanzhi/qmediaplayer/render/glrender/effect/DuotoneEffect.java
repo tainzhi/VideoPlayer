@@ -29,14 +29,14 @@ public class DuotoneEffect implements ShaderInterface {
 
     @Override
     public String getShader(GLSurfaceView mGlSurfaceView) {
-        float first[] = {Color.red(mFirstColor) / 255f,
+        float[] first = {Color.red(mFirstColor) / 255f,
                 Color.green(mFirstColor) / 255f, Color.blue(mFirstColor) / 255f};
-        float second[] = {Color.red(mSecondColor) / 255f,
+        float[] second = {Color.red(mSecondColor) / 255f,
                 Color.green(mSecondColor) / 255f,
                 Color.blue(mSecondColor) / 255f};
 
-        String firstColorString[] = new String[3];
-        String secondColorString[] = new String[3];
+        String[] firstColorString = new String[3];
+        String[] secondColorString = new String[3];
 
         firstColorString[0] = "first[0] = " + first[0] + ";\n";
         firstColorString[1] = "first[1] = " + first[1] + ";\n";

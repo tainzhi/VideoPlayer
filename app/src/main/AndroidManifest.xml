@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.qfq.tainzhi.videoplayer">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.tainzhi.tainzhi.videoplayer">
 	
 	<uses-feature
 		android:name="android.software.leanback" android:required="false" />
@@ -25,12 +26,6 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity
-			android:name=".ui.activity.DefaultPlayActivity" android:keepScreenOn="true" android:screenOrientation="fullSensor" />
-		<activity
-			android:name=".ui.activity.IjkPlayerActivity" android:keepScreenOn="true" android:screenOrientation="fullSensor" />
-		<activity
-			android:name=".DoubleVideoPlayerActivity" android:screenOrientation="fullSensor" />
 		<activity android:name="com.tainzhi.android.videoplayer.ui.PlayActivity" />
 	</application>
 
