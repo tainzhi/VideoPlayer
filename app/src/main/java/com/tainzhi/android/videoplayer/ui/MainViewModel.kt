@@ -16,7 +16,15 @@ class MainViewModel: BaseViewModel() {
     val title: LiveData<String>
         get() = _title
 
-    fun updateToolbarTitle(title: String) {
+    private val _showCenterTitle = MutableLiveData<Boolean>()
+    val showCenterTitle: LiveData<Boolean>
+        get() = _showCenterTitle
+
+    fun updateToolbarCenterTitle(title: String) {
         _title.postValue(title)
+    }
+
+    fun updateToolbarCenterTitleVisibility(visible: Boolean) {
+        _showCenterTitle.postValue(visible)
     }
 }

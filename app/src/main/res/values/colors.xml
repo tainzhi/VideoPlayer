@@ -35,8 +35,8 @@
     <color name="color_primary">#de3346</color>
     <color name="color_primary_dark">#b32d3c</color>
     <color name="color_primary_variant">#6d151f</color>
-    <color name="color_secondary">#ffc107</color>
-    <color name="color_secondary_variant">#d54b00</color>
+    <color name="color_secondary">#FB8C00</color>
+    <color name="color_secondary_variant">#953D0D</color>
     <color name="color_accent">#6d151f</color>
     
     <!--colorBackground appears behind scrollable content and is used for the default window-->
@@ -50,7 +50,7 @@
     <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
     <!--on which they appear.-->
     <color name="color_on_primary">#ffffff</color>
-    <color name="color_on_secondary">#ffffff</color>
+    <color name="color_on_secondary">#000000</color>
     <color name="color_on_background">#ffffff</color>
     <color name="color_on_surface">#ffffff</color>
     <color name="color_on_error">#ffffff</color>
