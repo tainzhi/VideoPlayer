@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 	
 	<data>
+		<import type="com.tainzhi.android.videoplayer.R" />
 		<variable
 			name="room"
 			type="com.tainzhi.android.videoplayer.bean.DouyuRoom" />
@@ -12,14 +13,62 @@
 			android:layout_height="wrap_content">
 			
 			<ImageView
+				android:id="@+id/imageView"
+				imageUrl="@{room.room_src}"
+				imagePlaceholder="@{R.drawable.default_dota2}"
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				app:layout_constraintDimensionRatio="h, 5:3"
 				android:scaleType="fitXY"
-				imageUrl="@{room.room_src}"
+				app:layout_constraintDimensionRatio="h, 16:9"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintHeight_percent="0.9"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
+				app:layout_constraintTop_toTopOf="parent"
+				tools:src="@drawable/default_dota2" />
+			
+			<TextView
+				android:id="@+id/textView"
+				style="@style/TextAppearance.AppTheme.Headline6"
+				android:layout_width="0dp"
+				android:gravity="center"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="@dimen/margin_small"
+				android:textColor="@android:color/white"
+				android:text="@{room.room_name}"
+				android:textSize="16sp"
+				app:layout_constraintBottom_toBottomOf="@+id/imageView"
+				app:layout_constraintEnd_toEndOf="parent"
+				android:singleLine="true"
+				app:layout_constraintWidth_percent="0.8"
+				app:layout_constraintStart_toStartOf="@+id/imageView"
+				tools:text="这游戏真好玩" />
+			
+			<TextView
+				android:id="@+id/textView2"
+				style="@style/TextAppearance.AppTheme.Headline6"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@{room.nickname}"
+				android:textSize="14sp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/imageView"
+				app:layout_constraintBottom_toBottomOf="parent"
+				android:layout_marginTop="@dimen/spacing_micro"
+				android:layout_marginBottom="@dimen/margin_small"
+				android:layout_marginStart="@dimen/spacing_micro"
+				android:singleLine="true"
+				tools:text="钻石王者的恰饭房间" />
+			
+			<TextView
+				style="@style/TextAppearance.AppCompat.Body1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/margin_small"
+				android:layout_marginEnd="@dimen/margin_small"
+				android:textColor="@android:color/white"
+				android:text='@{room.online + "观众"}'
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="10万+观众" />
 		</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

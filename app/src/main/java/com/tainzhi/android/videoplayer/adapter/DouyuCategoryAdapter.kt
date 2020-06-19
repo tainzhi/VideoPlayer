@@ -2,10 +2,10 @@ package com.tainzhi.android.videoplayer.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
-import com.tainzhi.tainzhi.videoplayer.databinding.ItemDouyuCategoryBinding
+import com.tainzhi.android.videoplayer.databinding.ItemDouyuCategoryBinding
 
 /**
  * @author:      tainzhi

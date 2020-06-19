@@ -14,7 +14,7 @@ data class DouyuRoom(
     val room_src: String,
     val room_name: String,
     val owner_uid: String,
-    val online: Int,
+    val online: String,
     val hn: Int,
     val nickname: String,
     val url: String

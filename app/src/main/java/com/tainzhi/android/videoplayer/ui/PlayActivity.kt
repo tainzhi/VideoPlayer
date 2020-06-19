@@ -7,7 +7,7 @@ import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
 import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.MediaController
