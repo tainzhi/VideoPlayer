@@ -38,13 +38,20 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
     }
 
     override fun initData() {
-        mViewModel.getTVListAndProgram()
+        mViewModel.getTVList()
+        mViewModel.getTVProgram()
     }
 
     override fun startObserve() {
         mViewModel.apply {
             tvList.observe(viewLifecycleOwner, Observer { it ->
                 tvAdapter.setList(it)
+            })
+            tvPrograms.observe(viewLifecycleOwner, Observer { it ->
+                tvAdapter.data.forEach { tv ->
+                    tv.broadingProgram = it[tv.id] ?: "没有查询到"
+                }
+                tvAdapter.notifyDataSetChanged()
             })
         }
     }
