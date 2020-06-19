@@ -20,7 +20,7 @@
 			android:layout_height="wrap_content"
 			android:src="@drawable/ic_play_arrow"
 			app:fabCustomSize="56dp"
-			app:maxImageSize="48dp"
+			app:maxImageSize="40dp"
 			app:elevation="8dp"
 			app:tint="@android:color/white"
 			app:pressedTranslationZ="10dp"
