@@ -144,9 +144,6 @@ dependencies {
     implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
     kapt(Libs.AndroidX.Room.compiler)
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.Paging.runtimeKtx)
@@ -169,9 +166,9 @@ dependencies {
     implementation(Libs.Glide.glide)
     kapt(Libs.Glide.compiler)
     
-    debugImplementation(Libs.DoKit.leakcanary)
+    // debugImplementation(Libs.DoKit.leakcanary)
     debugImplementation(Libs.DoKit.debugVersion)
-    releaseImplementation(Libs.DoKit.releaseVersion)
+    // releaseImplementation(Libs.DoKit.releaseVersion)
     
     implementation(Libs.timber)
     implementation(Libs.baseRecyclerViewAdapterHelper)
@@ -186,22 +183,6 @@ dependencies {
     implementation(Libs.multiStateView)
     implementation(Libs.volley)
     implementation(Libs.lottie)
-
-    implementation("androidx.leanback:leanback:1.0.0")
-    implementation("com.jakewharton:disklrucache:2.0.2")
-    implementation("com.jakewharton:butterknife:10.1.0")
-    kapt("com.jakewharton:butterknife-compiler:10.1.0")
-    implementation("com.google.android.material:material:1.0.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.6.0")
-
-    implementation("androidx.multidex:multidex:2.0.1")
-    implementation("com.orhanobut:logger:2.2.0")
-
-    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
-    implementation("io.reactivex.rxjava2:rxjava:2.2.9")
-
-    implementation("de.hdodenhof:circleimageview:3.0.0")
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖

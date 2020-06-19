@@ -3,21 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 	
 	<data>
-		
-		<import type="com.tainzhi.tainzhi.videoplayer.R" />
-		
 		<variable
 			name="room"
 			type="com.tainzhi.android.videoplayer.bean.DouyuRoom" />
 	</data>
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			tools:layout_width="180dp"
-			android:layout_height="100dp">
+			android:layout_height="wrap_content">
 			
 			<ImageView
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
+				app:layout_constraintDimensionRatio="h, 5:3"
 				android:scaleType="fitXY"
 				imageUrl="@{room.room_src}"
 				app:layout_constraintEnd_toEndOf="parent"
