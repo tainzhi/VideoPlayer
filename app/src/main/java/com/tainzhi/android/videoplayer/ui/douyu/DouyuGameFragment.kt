@@ -5,12 +5,13 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomAdapter
+import com.tainzhi.android.videoplayer.adapter.DouyuRoomItemDecoration
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
-import com.tainzhi.tainzhi.videoplayer.databinding.DouyuGameFragmentBinding
+import com.tainzhi.android.videoplayer.databinding.DouyuGameFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -56,8 +57,16 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
 
     override fun initView() {
         mBinding.douyuGameRecyclerView.run {
-            adapter = douyuRoomAdapter
-            layoutManager = GridLayoutManager(requireActivity(), 2)
+            adapter = douyuRoomAdapter.apply {
+                addItemDecoration(DouyuRoomItemDecoration())
+            }
+            layoutManager = GridLayoutManager(requireActivity(), 2).apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return if (position == 0) return 2 else 1
+                    }
+                }
+            }
         }
 
         // gameId 只从DouyuFragment传递, 而从DouyuCategoryFragment不传

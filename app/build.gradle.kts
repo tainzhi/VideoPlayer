@@ -58,7 +58,7 @@ android {
     buildToolsVersion(Libs.Version.buildToolsVersion)
     
     defaultConfig {
-        applicationId = "com.tainzhi.tainzhi.videoplayer"
+        applicationId = "com.tainzhi.android.videoplayer"
         minSdkVersion(Libs.Version.minSdkVersion)
         targetSdkVersion(Libs.Version.targetSdkVersion)
         versionCode = verCode

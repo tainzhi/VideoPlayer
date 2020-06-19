@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.MediaController
 import androidx.appcompat.app.AppCompatActivity
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import kotlinx.android.synthetic.main.activity_videoview_mediacontroller.*
 
 /**
