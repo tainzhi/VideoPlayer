@@ -15,7 +15,7 @@
 	
 	<com.google.android.material.card.MaterialCardView
 		android:layout_width="match_parent"
-		android:layout_height="100dp"
+		android:layout_height="70dp"
 		android:layout_marginStart="@dimen/margin_normal"
 		android:layout_marginEnd="@dimen/margin_normal"
 		android:layout_marginBottom="@dimen/margin_normal">
@@ -42,20 +42,20 @@
 			
 			<TextView
 				android:id="@+id/tvName"
-				style="@style/TextAppearance.AppTheme.Headline5"
+				style="@style/TextAppearance.AppTheme.Headline6"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/margin_small"
 				android:text="@{tv.name}"
-				android:textSize="24sp"
+				android:textSize="18sp"
 				app:layout_constraintStart_toEndOf="@+id/tvImage"
 				app:layout_constraintTop_toTopOf="@id/tvImage"
 				tools:text="CCTV-1" />
 			
 			<com.airbnb.lottie.LottieAnimationView
 				android:id="@+id/loading"
-				android:layout_width="40dp"
-				android:layout_height="30dp"
+				android:layout_width="70dp"
+				android:layout_height="20dp"
 				android:layout_marginBottom="@dimen/margin_small"
 				app:layout_constraintBottom_toBottomOf="@+id/tvImage"
 				app:layout_constraintStart_toStartOf="@+id/tvName"
@@ -73,11 +73,10 @@
 				android:ellipsize="marquee"
 				android:scrollHorizontally="true"
 				android:singleLine="true"
-				android:text="@{tv.broadingProgram}"
-				android:textSize="18sp"
+				android:text='@{tv.broadingProgram}'
+				android:textSize="14sp"
 				app:layout_constraintBottom_toBottomOf="@+id/loading"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toEndOf="@+id/loading"
+				app:layout_constraintStart_toEndOf="@id/loading"
 				app:layout_constraintTop_toTopOf="@+id/loading"
 				tools:text="西游记第一集" />
 		
