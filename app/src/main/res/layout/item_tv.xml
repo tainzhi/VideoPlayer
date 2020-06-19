@@ -6,7 +6,6 @@
 	<data>
 		
 		<import
-			alias="appR"
 			type="com.tainzhi.tainzhi.videoplayer.R" />
 		
 		<variable
@@ -30,7 +29,7 @@
 				android:layout_width="0dp"
 				android:layout_height="0dp"
 				android:scaleType="fitXY"
-				app:imagePlaceholder="@{appR.drawable.ic_default_tv_channel}"
+				app:imagePlaceholder="@{R.drawable.ic_default_tv_channel}"
 				app:imageUrl="@{tv.image}"
 				app:roundCornerRadiusImage="@{5}"
 				app:layout_constraintBottom_toBottomOf="parent"
