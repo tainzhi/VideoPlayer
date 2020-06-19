@@ -24,7 +24,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.ui.MainActivity
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.Assert.fail

@@ -6,9 +6,9 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseBindingFragment
-import com.tainzhi.tainzhi.videoplayer.databinding.DouyuFragmentBinding
+import com.tainzhi.android.videoplayer.databinding.DouyuFragmentBinding
 
 /**
  * @author:      tainzhi

@@ -4,11 +4,11 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.ui.PlayActivity
-import com.tainzhi.tainzhi.videoplayer.databinding.TVFragmentBinding
+import com.tainzhi.android.videoplayer.databinding.TVFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {

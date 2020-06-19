@@ -10,10 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tainzhi.tainzhi.videoplayer.R
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.util.setupWithNavController
-import com.tainzhi.tainzhi.videoplayer.databinding.ActivityMainBinding
+import com.tainzhi.android.videoplayer.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 

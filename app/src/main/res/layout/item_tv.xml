@@ -6,7 +6,7 @@
 	<data>
 		
 		<import
-			type="com.tainzhi.tainzhi.videoplayer.R" />
+			type="com.tainzhi.android.videoplayer.R" />
 		
 		<variable
 			name="tv"
