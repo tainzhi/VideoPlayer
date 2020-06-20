@@ -1,6 +1,8 @@
 package com.tainzhi.android.videoplayer.ui.local
 
+import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +26,11 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * 本地视频
  */
 class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>() {
+
+    companion object {
+
+        private const val DELETE_PERMISSION_REQUEST = 0x1033
+    }
 
     private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE) {
         LocalVideoAdapter { video ->
@@ -74,12 +81,37 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             localVideoList.observe(viewLifecycleOwner, Observer { it ->
                 localVideoAdapter.setList(it)
             })
+            permissionNeededForDelete.observe(viewLifecycleOwner, Observer { intentSender ->
+                intentSender?.let {
+                    // On Android 10+, if the app doesn't have permission to modify
+                    // or delete an item, it returns an `IntentSender` that we can
+                    // use here to prompt the user to grant permission to delete (or modify)
+                    // the image.
+                    startIntentSenderForResult(
+                            intentSender,
+                            DELETE_PERMISSION_REQUEST,
+                            null,
+                            0,
+                            0,
+                            0,
+                            null
+                    )
+                }
+            })
         }
 
         getSharedViewModel<MainViewModel>().searchString.observe(requireActivity(), Observer { search ->
             localVideoAdapter.filter.filter(search)
         })
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == DELETE_PERMISSION_REQUEST) {
+            mViewModel.deletePendingVideo()
+        }
+    }
+
 
     private val recyclerItemTouchHelper = RecyclerItemTouchHelper(
             0,
