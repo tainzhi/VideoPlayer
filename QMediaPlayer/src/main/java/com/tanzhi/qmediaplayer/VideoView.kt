@@ -89,7 +89,7 @@ class VideoView @JvmOverloads constructor(
     @Constant.PlayerTypeMode
     var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
 
-    var renderType = Constant.RenderType.GL_SURFACE_VIEW
+    var renderType = Constant.RenderType.SURFACE_VIEW
         set(@Constant.RenderTypeMode value) {
             field = value
             setRender()
@@ -133,6 +133,7 @@ class VideoView @JvmOverloads constructor(
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onResume()
         }
+        // start()
     }
 
     /**
@@ -142,6 +143,11 @@ class VideoView @JvmOverloads constructor(
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onPause()
         }
+        // pause()
+    }
+
+    fun onStop() {
+        iMediaPlayer?.release()
     }
 
 
