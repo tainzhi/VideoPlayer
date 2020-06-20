@@ -1,7 +1,6 @@
 package com.tanzhi.mediaspider
 
-import android.util.Log
-import org.json.JSONObject
+import com.google.gson.JsonObject
 import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
 import java.security.MessageDigest
@@ -15,7 +14,7 @@ import java.security.MessageDigest
 
 class DouyuSpider {
 
-    fun getRoomLive(rid: String): String {
+    fun getRoomCircuitId(rid: String): String {
         val timeSeconds = currentTimeMillis() / 1000
         val url = "https://playweb.douyucdn.cn/lapi/live/hlsH5Preview/$rid"
         val auth = (rid + timeSeconds).toMD5()
@@ -32,34 +31,35 @@ class DouyuSpider {
         )
 
         var roomLiveUrl = "-1"
-        lateinit var response: String
+        lateinit var response: JsonObject
         try {
             response = KRequest().apply {
                 mapData = postData
                 headers = header
             }.post(url)
+                    .json()
 
             response.let { it ->
-                val jsonObject = JSONObject(it)
-                if (jsonObject.getInt("error") == 0) {
-                    val dataObject = jsonObject.getJSONObject("data")
-                    val rtmpLive = dataObject.getString("rtmp_live")
+                if (it.get("error").asInt == 0) {
+                    val dataObject = it.getAsJsonObject("data")
+                    val rtmpLive = dataObject.get("rtmp_live").asString
                     if (rtmpLive.contains("mix=1")) {
-                        Log.e("DouyuSpider", "circuit not found; PKing")
+                        throw NotFoundException("circuit not found; PKing")
                     } else {
-                        val regex = Regex(pattern = "[0-9a-zA-Z]*_")
+                        // val regex = Regex(pattern = "[0-9a-zA-Z]*_")
+                        val regex = Regex(pattern = "[0-9a-zA-Z]*")
                         val found = regex.find(rtmpLive)
                         if (found != null) {
                             roomLiveUrl = found.value
                         } else {
-                            Log.e("DouyuSpider", "circuit not found")
+                            throw NotFoundException("not found circuit id")
                         }
                     }
                 }
 
             }
         } catch (e: Exception) {
-            Log.e("DouyuSpider", e.toString())
+            throw NotFoundException("not found circuit id", e.cause)
         }
         return roomLiveUrl
     }

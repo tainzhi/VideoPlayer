@@ -91,6 +91,11 @@
 - 直播源地址格式固定为`http://hlsa.douyucdn.cn/live/*_550/playlist/*`. 
 - 替换hlsa为tx2play1, _550为普通清晰度，去除改为默认最高清晰度
 - 最终结果`http://tx2play1.douyucdn.cn/live/431935rYIJ0kKhQ4.flv`
+        /hdls1a.douyucdn.cn/live/9999rhwySJw8y5P6_1200p.flv
+        // val roomCircuitId = mViewModel.getRoomCircuit(room.room_id.toString())
+        // val circuit = "http://tx2play1.douyucdn.cn/live/${roomCircuitId}_550.flv"
+https和http的区别
+- tx2play1和hlds1a的区别
 
 #### python破解方式参考(失效)
 - [youtube-dl](https://github.com/ytdl-org/youtube-dl/blob/c3bcd206eb031de30179c88ac7acd806a477ceae/youtube_dl/extractor/douyutv.py)

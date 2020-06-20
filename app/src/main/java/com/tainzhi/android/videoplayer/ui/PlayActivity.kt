@@ -31,7 +31,7 @@ class PlayActivity : AppCompatActivity() {
         val mVideoProgress = bundle.getLong(VIDEO_PROGRESS, 0)
         videoView.run {
             videoTitle = mVideoTitle!!
-            renderType = Constant.RenderType.GL_SURFACE_VIEW
+            renderType = Constant.RenderType.SURFACE_VIEW
             startFullScreenDirectly(this@PlayActivity, mVideoUri!!)
             setEffect(NoEffect())
             mediaController = MediaController(this@PlayActivity)

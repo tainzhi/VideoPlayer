@@ -22,7 +22,7 @@ class DouyuSpiderTest {
 
     @Test
     fun getRoomLive() {
-        douyuSpider.getRoomLive("9999")
+        douyuSpider.getRoomCircuitId("9999")
     }
 
     @Test
