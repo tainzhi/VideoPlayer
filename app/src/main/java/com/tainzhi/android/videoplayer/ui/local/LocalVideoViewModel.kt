@@ -24,7 +24,9 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
 
     fun deleteVideo(uri: Uri) {
         launch {
-            localVideoRepository.deleteVideo(uri)
+            withContext(dispatcherProvider.io) {
+                localVideoRepository.deleteVideo(uri)
+            }
         }
     }
 
