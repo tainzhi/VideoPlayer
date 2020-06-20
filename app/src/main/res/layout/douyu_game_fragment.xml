@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+<layout>
 	
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/douyuGameRefreshLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 		
-		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-			android:id="@+id/douyuGameSwipeRefreshLayout"
+		<com.kennyc.view.MultiStateView
+			
+			android:id="@+id/douyuGameMultiStateView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
+			<!--			app:msv_emptyView="@layout/view_empty"-->
+			<!--			app:msv_errorView="@layout/view_network_error">-->
 			
-			<androidx.recyclerview.widget.RecyclerView
-				android:id="@+id/douyuGameRecyclerView"
+			<androidx.constraintlayout.widget.ConstraintLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				tools:listitem="@layout/item_douyu_room"
-				app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-				app:spanCount="2" />
-		
-		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-	</androidx.constraintlayout.widget.ConstraintLayout>
-
+				android:layout_height="match_parent">
+				
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/douyuGameRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					tools:listitem="@layout/item_douyu_room"
+					app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+					app:spanCount="2" />
+			
+			</androidx.constraintlayout.widget.ConstraintLayout>
+		</com.kennyc.view.MultiStateView>
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

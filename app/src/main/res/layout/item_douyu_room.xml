@@ -30,17 +30,16 @@
 				android:id="@+id/textView"
 				style="@style/TextAppearance.AppTheme.Headline6"
 				android:layout_width="0dp"
-				android:gravity="center"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="@dimen/margin_small"
-				android:textColor="@android:color/white"
+				android:layout_marginStart="@dimen/spacing_micro"
 				android:text="@{room.room_name}"
 				android:textSize="16sp"
-				app:layout_constraintBottom_toBottomOf="@+id/imageView"
-				app:layout_constraintEnd_toEndOf="parent"
+				android:layout_marginBottom="8dp"
+				app:layout_constraintBottom_toBottomOf="parent"
 				android:singleLine="true"
-				app:layout_constraintWidth_percent="0.8"
 				app:layout_constraintStart_toStartOf="@+id/imageView"
+				app:layout_constraintTop_toBottomOf="@id/imageView"
+				app:layout_constraintWidth_percent="0.8"
 				tools:text="这游戏真好玩" />
 			
 			<TextView
@@ -48,15 +47,14 @@
 				style="@style/TextAppearance.AppTheme.Headline6"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginBottom="@dimen/spacing_micro"
 				android:text="@{room.nickname}"
-				android:textSize="14sp"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/imageView"
-				app:layout_constraintBottom_toBottomOf="parent"
-				android:layout_marginTop="@dimen/spacing_micro"
-				android:layout_marginBottom="@dimen/margin_small"
-				android:layout_marginStart="@dimen/spacing_micro"
 				android:singleLine="true"
+				android:textSize="12sp"
+				android:textColor="@android:color/white"
+				app:layout_constraintBottom_toBottomOf="@id/imageView"
+				app:layout_constraintStart_toStartOf="parent"
+				android:layout_marginStart="@dimen/spacing_micro"
 				tools:text="钻石王者的恰饭房间" />
 			
 			<TextView
@@ -66,9 +64,12 @@
 				android:layout_marginTop="@dimen/margin_small"
 				android:layout_marginEnd="@dimen/margin_small"
 				android:textColor="@android:color/white"
-				android:text='@{room.online + "观众"}'
+				android:text='@{room.hn > 10000 ? ("热度:" + (room.hn / 10000) +  "万") :  ("热度:" + room.hn)}'
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
+				android:textSize="12sp"
+				android:layout_marginBottom="@dimen/spacing_micro"
+				app:layout_constraintBottom_toBottomOf="@id/imageView"
+				app:layout_goneMarginEnd="@dimen/spacing_micro"
 				tools:text="10万+观众" />
 		</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

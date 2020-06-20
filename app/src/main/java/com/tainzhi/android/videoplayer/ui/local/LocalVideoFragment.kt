@@ -120,6 +120,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
                     if (viewHolder is LocalVideoViewHolder<*>) {
                         val video = localVideoAdapter.data[position]
+                        localVideoAdapter.notifyItemRemoved(position)
                         deleteVideo(video, position)
                     }
                 }
@@ -138,7 +139,6 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                 .setMessage(getString(R.string.delete_dialog_message, video.title))
                 .setPositiveButton(R.string.delete_dialog_positive) { _: DialogInterface, _: Int ->
                     mViewModel.deleteVideo(video.uri)
-                    localVideoAdapter.notifyItemRemoved(position)
                     showShackBarMessage("已经删除${video.title}")
                 }
                 .setNegativeButton(R.string.delete_dialog_negative) { dialog: DialogInterface, _: Int ->
