@@ -90,10 +90,13 @@
 - 假设原直播源地址为`http://hlsa.douyucdn.cn/live/431935rYIJ0kKhQ4_550/playlist.m3u8?wsSecret=924a83c6700d9d802a7717f1068811f6&wsTime=1558565155&token=h5-douyu-0-431935-373ef2a3e162f552b55145ccdd4571a3&did=h5_did`
 - 直播源地址格式固定为`http://hlsa.douyucdn.cn/live/*_550/playlist/*`. 
 - 替换hlsa为tx2play1, _550为普通清晰度，去除改为默认最高清晰度
-- 最终结果`http://tx2play1.douyucdn.cn/live/431935rYIJ0kKhQ4.flv`
-        /hdls1a.douyucdn.cn/live/9999rhwySJw8y5P6_1200p.flv
-        // val roomCircuitId = mViewModel.getRoomCircuit(room.room_id.toString())
-        // val circuit = "http://tx2play1.douyucdn.cn/live/${roomCircuitId}_550.flv"
+  - 最终结果`http://tx2play1.douyucdn.cn/live/431935rYIJ0kKhQ4.flv`
+          主线路: http://hdls1a.douyucdn.cn/live/9999rhwySJw8y5P6_1200p.flv
+          线路5: http://tc-tct.douyucdn2.cn/dyliveflv1a/431935rgDRxvP0IV.flv
+          // val roomCircuitId = mViewModel.getRoomCircuit(room.room_id.toString())
+          // val circuit = "http://tx2play1.douyucdn.cn/live/${roomCircuitId}_550.flv"
+- https://tc-tct.douyucdn2.cn/dyliveflv1a/431935rgDRxvP0IV.flv
+- http://hdls1a.douyucdn.cn/live/431935rgDRxvP0IV_550.flv
 https和http的区别
 - tx2play1和hlds1a的区别
 

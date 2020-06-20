@@ -158,6 +158,7 @@ class GLRenderView @JvmOverloads constructor(context: Context, attributeSet: Att
     override fun onSurfaceAvailable(surface: Surface) {
         surfaceCallback.postSurface(surface)
     }
+    // TODO: 2020/6/21    添加onSurfaceDestory()
 
     //--------------------
     // Accessibility
