@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
@@ -17,7 +18,10 @@ import com.tanzhi.qmediaplayer.dp
  * @description:
  **/
 
-class DouyuRoomAdapter(private val goToPlay: (room : DouyuRoom) -> Unit) :BaseQuickAdapter<DouyuRoom, BaseDataBindingHolder<ItemDouyuRoomBinding>>(R.layout.item_douyu_room) {
+class DouyuRoomAdapter(private val goToPlay: (room : DouyuRoom) -> Unit) :
+        BaseQuickAdapter<DouyuRoom, BaseDataBindingHolder<ItemDouyuRoomBinding>>(R.layout.item_douyu_room) ,
+        LoadMoreModule
+{
 
     init {
         setOnItemClickListener { _, _, position ->
