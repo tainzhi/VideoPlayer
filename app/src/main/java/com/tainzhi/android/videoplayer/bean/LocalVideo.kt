@@ -19,5 +19,6 @@ data class LocalVideo(
         var orientation: String,
         var dateAdded: String,
         var dateModified: String,
-        var dateTaken: String
+        var dateTaken: String,
+        var bucketName: String
 )

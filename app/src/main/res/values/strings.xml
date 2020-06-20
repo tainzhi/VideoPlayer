@@ -30,5 +30,10 @@
 	<string name="permission_camera_never_ask_again">not again</string>
 	<!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
+	
+	<string name="delete_dialog_title">Delete</string>
+	<string name="delete_dialog_message">Delete %1$s?</string>
+	<string name="delete_dialog_positive">Delete</string>
+	<string name="delete_dialog_negative">Cancel</string>
 
 </resources>

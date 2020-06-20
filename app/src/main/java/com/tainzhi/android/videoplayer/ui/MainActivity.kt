@@ -10,10 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
-import com.tainzhi.android.videoplayer.util.setupWithNavController
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.ActivityMainBinding
+import com.tainzhi.android.videoplayer.util.setupWithNavController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
@@ -31,7 +31,9 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null) {
+            super.onRestoreInstanceState(savedInstanceState)
+        }
         // Now that BottomNavigationBar has restored its instance state
         // and its selectedItemId, we can proceed with setting up the
         // BottomNavigationBar with Navigation

@@ -1,19 +1,22 @@
 package com.tainzhi.android.videoplayer.ui.local
 
+import android.content.DialogInterface
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
 import com.tainzhi.android.videoplayer.adapter.RecyclerItemTouchHelper
+import com.tainzhi.android.videoplayer.bean.LocalVideo
+import com.tainzhi.android.videoplayer.databinding.LocalVideoFragmentBinding
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
-import com.tainzhi.android.videoplayer.databinding.LocalVideoFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -22,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  */
 class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>() {
 
-    private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE){
+    private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE) {
         LocalVideoAdapter { video ->
 
             PlayActivity.startPlay(requireActivity(),
@@ -78,35 +81,52 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
         })
     }
 
-    /**
-     * 在宿主activity的BottomNavigationView上显示SnackBar
-     */
-    private fun showShackBarMessage(message: String) {
-        val bottomNavView: BottomNavigationView = activity?.findViewById(R.id.bottom_nav)!!
-        Snackbar.make(bottomNavView, message, Snackbar.LENGTH_SHORT).apply {
-            anchorView = bottomNavView
-        }.show()
-    }
-
     private val recyclerItemTouchHelper = RecyclerItemTouchHelper(
             0,
             ItemTouchHelper.LEFT,
             object : RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
                     if (viewHolder is LocalVideoViewHolder<*>) {
-                        // mViewModel.deleteBrowseHistory(viewHolder.video)
-
-
-                        // todo 弹出框, 是否确认删除
-                        // val snackbar: Snackbar = Snackbar.make(mBinding.root, R.string.remove_item_msg,
-                        //         Snackbar.LENGTH_LONG)
-                        // snackbar.setAction(R.string.undo) { _ ->
-                        //     mViewModel.insertBrowseHistory(viewHolder.browseHistory!!)
-                        // }
-                        // snackbar.setActionTextColor(Color.YELLOW)
-                        // snackbar.show()
+                        val video = localVideoAdapter.data[position]
+                        deleteVideo(video, position)
                     }
                 }
             }
     )
+
+    /**
+     * 删除所在position的video
+     *
+     * @param video 要删除的视频
+     * @param position 该要删除的视频所在adapter中的位置
+     */
+    private fun deleteVideo(video: LocalVideo, position: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.delete_dialog_title)
+                .setMessage(getString(R.string.delete_dialog_message, video.title))
+                .setPositiveButton(R.string.delete_dialog_positive) { _: DialogInterface, _: Int ->
+                    mViewModel.deleteVideo(video.uri)
+                    localVideoAdapter.notifyItemRemoved(position)
+                    showShackBarMessage("已经删除${video.title}")
+                }
+                .setNegativeButton(R.string.delete_dialog_negative) { dialog: DialogInterface, _: Int ->
+                    localVideoAdapter.notifyItemInserted(position)
+                    dialog.dismiss()
+                }
+                .show()
+    }
+
+    /**
+     * 在宿主activity的BottomNavigationView上显示SnackBar
+     */
+    private fun showShackBarMessage(message: String) {
+        val bottomNavView: BottomNavigationView = activity?.findViewById(R.id.bottom_nav)!!
+        Snackbar.make(bottomNavView, message, Snackbar.LENGTH_SHORT)
+                // .setAction("Undo") {
+                //
+                // }
+                .apply {
+                    anchorView = bottomNavView
+                }.show()
+    }
 }
