@@ -88,6 +88,10 @@ class LocalVideoRepository : BaseRepository() {
     }
 
     fun deleteVideo(uri: Uri) {
-        val deleteId = App.CONTEXT.contentResolver.delete(uri, null, null)
+        try {
+            val deleteId = App.CONTEXT.contentResolver.delete(uri, null, null)
+        } catch (e: Exception) {
+            throw(e)
+        }
     }
 }
