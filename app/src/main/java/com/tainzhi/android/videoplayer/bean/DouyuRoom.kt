@@ -10,7 +10,7 @@ import java.io.Serializable
  **/
  
 data class DouyuRoom(
-    val room_id: Int,
+    val room_id: String,
     val room_src: String,
     val room_name: String,
     val owner_uid: String,
