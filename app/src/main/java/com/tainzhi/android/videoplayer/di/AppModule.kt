@@ -13,6 +13,7 @@ import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuGameViewModel
 import com.tainzhi.android.videoplayer.ui.local.LocalVideoViewModel
+import com.tainzhi.android.videoplayer.ui.play.PlayDouyuViewModel
 import com.tainzhi.android.videoplayer.ui.tv.TVViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,17 +25,18 @@ import org.koin.dsl.module
  * @date:        2020/6/10 14:16
  * @description: koin所需的module
  **/
- 
+
 val viewModelModule = module {
     viewModel { TVViewModel(get(), get()) }
     viewModel { LocalVideoViewModel(get(), get()) }
-    viewModel { DouyuGameViewModel(get(), get())}
-    viewModel { DouyuCategoryViewModel(get(), get() )}
-     viewModel { MainViewModel() }
+    viewModel { DouyuGameViewModel(get(), get()) }
+    viewModel { DouyuCategoryViewModel(get(), get()) }
+    viewModel { MainViewModel() }
+    viewModel { PlayDouyuViewModel(get(), get())}
 }
 
 val repositoryModule = module {
-    single { VideoClient.getService(VideoService::class.java, VideoService.DOUYU_BASE_URL)}
+    single { VideoClient.getService(VideoService::class.java, VideoService.DOUYU_BASE_URL) }
     single { TVRepository(get()) }
     single { LocalVideoRepository() }
     single { DouyuRepository() }
@@ -54,8 +56,8 @@ val databaseModule = module {
         return database.getTvDao()
     }
 
-    single { provideDatabase(androidApplication())}
-    single { provideTVDao( get() )}
+    single { provideDatabase(androidApplication()) }
+    single { provideTVDao(get()) }
 }
 
 val appModule = listOf(viewModelModule, repositoryModule, databaseModule, coroutineModule)

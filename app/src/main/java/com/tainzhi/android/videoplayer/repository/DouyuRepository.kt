@@ -5,6 +5,7 @@ import com.tainzhi.android.common.base.Result
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.network.VideoClient
+import com.tanzhi.mediaspider.DouyuSpider
 
 /**
  * @author:      tainzhi
@@ -39,4 +40,8 @@ class DouyuRepository : BaseRepository(){
 
     private suspend fun requestAllGames(): Result<List<DouyuGame>> =
             executeResponse(VideoClient.service.getAllGames())
+
+    fun getRoomCircuitId(roomId: String): String {
+        return  DouyuSpider.getInstance().getRoomCircuitId(roomId)
+    }
 }

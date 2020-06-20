@@ -274,7 +274,7 @@ class VideoView @JvmOverloads constructor(
         Util.hideStatusBar(context)
         Util.hideActionBar(context)
         // TODO: 2020/6/16 orientation
-        // Util.setRequestedOrientation(context, Constant.FULL_SCREEN_ORIENTATION)
+        Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         Util.hideSystemUI(context)
     }
 
