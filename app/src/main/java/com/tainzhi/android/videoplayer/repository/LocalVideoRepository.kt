@@ -25,29 +25,37 @@ class LocalVideoRepository : BaseRepository() {
         val list = arrayListOf<LocalVideo>()
         val videoColumnsProjection = arrayOf(
                 MediaStore.Video.Media._ID,
-                MediaStore.Video.Media.SIZE,
+                MediaStore.Video.Media.DATA,
+                MediaStore.Video.Media.DISPLAY_NAME,
                 MediaStore.Video.Media.TITLE,
-                MediaStore.Video.Media.DURATION,
-                MediaStore.Video.Media.RESOLUTION,
                 MediaStore.Video.Media.DATE_ADDED,
                 MediaStore.Video.Media.DATE_MODIFIED,
-                MediaStore.Video.Media.DATE_TAKEN
+                MediaStore.Video.Media.DATE_TAKEN,
+                MediaStore.Video.Media.MIME_TYPE,
+                MediaStore.Video.Media.WIDTH,
+                MediaStore.Video.Media.HEIGHT,
+                MediaStore.Video.Media.BUCKET_DISPLAY_NAME,
+                MediaStore.Video.Media.SIZE,
+                MediaStore.Video.Media.DURATION,
+                MediaStore.Video.Media.RESOLUTION
         )
         // 以添加时间倒序查询
         val queryOrder = MediaStore.Video.Media.DATE_ADDED + " DESC"
-        App.CONTEXT.contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                videoColumnsProjection, null, null, queryOrder)?.use { cursor ->
+        App.CONTEXT.contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoColumnsProjection, null, null, queryOrder)?.use { cursor ->
             // 不要使用 getColumnIndexOrThrow(), 因为某些columen会抛出异常, 导致循环退出, 而不能查询所有的条目
             val dataColumn = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
             val resolutionColumn = cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION)
             val dateTakenColumn = cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)
             try {
                 while (cursor.moveToNext()) {
+                    // TODO: 2020/6/12  通过bucketName添加一一个列表选项, 先展示视频目录, 再展示目录下的视频
+                    // 在android 9 (28) miui 11上, data为 绝对路径
+                    // bucketName 为video所在而目录
+                    // val dumpCursorString = DatabaseUtils.dumpCurrentRowToString(cursor)
                     val id = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media._ID))
                     val contentUri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
                     // 视频大小是以B为单位的整数数字, 故故需转成10KB, 10MB, 10GB
                     val size = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.SIZE)).formatMediaSize()
-                    // 在android 9 (28) miui 11上, data为 ""
                     var data = if (cursor.getType(dataColumn) == FIELD_TYPE_STRING) {
                                             cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA))
                                         } else ""
@@ -58,7 +66,6 @@ class LocalVideoRepository : BaseRepository() {
                     if (cursor.getType(resolutionColumn) == FIELD_TYPE_STRING) {
                         resolution = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION))
                     }
-                    // TODO: 2020/6/12 通过resolution判断orientation
                     val orientation = "0"
                     // *1000, 因为DATE_ADDED and DATE_MODIFIED 为seconds
                     // DATE_TAKEN 为millis
@@ -68,7 +75,8 @@ class LocalVideoRepository : BaseRepository() {
                     if (cursor.getType(dateTakenColumn) == FIELD_TYPE_STRING) {
                         dateTaken = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN)).formatMediaDate()
                     }
-                    list += LocalVideo(contentUri, size, data, title, duration, resolution, orientation, dateAdded, dateModified, dateTaken)
+                    val bucketName = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.BUCKET_DISPLAY_NAME))
+                    list += LocalVideo(contentUri, size, data, title, duration, resolution, orientation, dateAdded, dateModified, dateTaken, bucketName)
                 }
             } catch (e: Exception) {
                 Log.e("LocalVideoRepository", e.toString())
@@ -80,8 +88,6 @@ class LocalVideoRepository : BaseRepository() {
     }
 
     fun deleteVideo(uri: Uri) {
-        // TODO: 2020/6/16  
-        Log.d("LocalVideoRepository", "do delete a file on android10")
-        // App.CONTEXT.contentResolver.delete(uri, null, null)
+        val deleteId = App.CONTEXT.contentResolver.delete(uri, null, null)
     }
 }
