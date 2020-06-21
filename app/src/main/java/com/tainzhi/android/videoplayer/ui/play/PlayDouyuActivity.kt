@@ -6,10 +6,12 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
+import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.MediaController
 import com.tanzhi.qmediaplayer.VideoView
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -38,7 +40,6 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         videoView.onResume()
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(autoFullScreenListener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
-        videoView.onResume()
     }
 
     override fun onPause() {
@@ -69,7 +70,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         videoView.run {
             videoTitle = mVideoTitle!!
             // System MediaPlayer也可以播放视频
-            // mediaPlayerType = Constant.PlayerType.IJK_PLAYER
+            mediaPlayerType = Constant.PlayerType.IJK_PLAYER
             // setEffect(NoEffect())
         }
 
@@ -85,6 +86,16 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
             videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
             // 如果先加载MediaController, 将不会显示
             videoView.mediaController = MediaController(this@PlayDouyuActivity)
+        })
+        mViewModel.error.observe(this@PlayDouyuActivity, Observer {
+            Snackbar.make(videoView, it, Snackbar.LENGTH_SHORT)
+                    .setAction("退出播放界面") {
+                        finish()
+                    }
+                    .apply {
+                        // anchorView = bottomNavView
+                    }.show()
+
         })
     }
 }

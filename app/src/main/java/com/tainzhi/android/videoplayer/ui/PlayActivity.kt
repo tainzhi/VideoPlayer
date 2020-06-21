@@ -26,9 +26,13 @@ class PlayActivity : AppCompatActivity() {
         val intent = intent
         val mVideoUri = intent.data
         val bundle = intent.extras
-        var mVideoTitle = bundle!!.getString(VIDEO_NAME)
+        val mVideoTitle = bundle!!.getString(VIDEO_NAME)
         val mVideoDuration = bundle.getLong(VIDEO_DURATION, 0)
         val mVideoProgress = bundle.getLong(VIDEO_PROGRESS, 0)
+        val resolution = bundle.getString(VIDEO_RESOLUTION)
+        if (!resolution.isNullOrEmpty()) {
+            val widthHeight = resolution.split("x")
+        }
         videoView.run {
             videoTitle = mVideoTitle!!
             renderType = Constant.RenderType.SURFACE_VIEW
@@ -59,13 +63,15 @@ class PlayActivity : AppCompatActivity() {
         private const val VIDEO_NAME = "name"
         private const val VIDEO_DURATION = "duration"
         private const val VIDEO_PROGRESS = "progress"
+        private const val VIDEO_RESOLUTION = "resolution"
         @JvmStatic
-        fun startPlay(starter: Context, uri: Uri, name: String, duration: Long = 100, progress: Long = 100) {
+        fun startPlay(starter: Context, uri: Uri, name: String, duration: Long = 100, progress: Long = 100, resolution: String = "") {
             val intent = Intent(starter, PlayActivity::class.java)
             intent.data = uri
             intent.putExtra(VIDEO_NAME, name)
             intent.putExtra(VIDEO_DURATION, duration)
             intent.putExtra(VIDEO_PROGRESS, progress)
+            intent.putExtra(VIDEO_RESOLUTION, resolution)
             starter.startActivity(intent)
         }
     }

@@ -31,7 +31,6 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun prepare() {
-        logD()
         release()
         mMediaHandlerThread = HandlerThread("QVideoPlayer")
         mMediaHandlerThread!!.start()
