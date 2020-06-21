@@ -89,6 +89,7 @@ class VideoView @JvmOverloads constructor(
     @Constant.PlayerTypeMode
     var mediaPlayerType = Constant.PlayerType.SYSTEM_PLAYER
 
+    // TODO: 2020/6/21 GL_SURFACE_VIEW 没有实现onSurfaceDestoryed
     var renderType = Constant.RenderType.SURFACE_VIEW
         set(@Constant.RenderTypeMode value) {
             field = value

@@ -30,7 +30,7 @@ class DouyuSpider {
                 "did" to "10000000000000000000000000001501"
         )
 
-        var roomLiveUrl = "-1"
+        lateinit var roomLiveUrl: String
         lateinit var response: JsonObject
         try {
             response = KRequest().apply {

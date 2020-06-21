@@ -94,6 +94,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
             sIRenderView = null
             mMediaHandler!!.post {
                 tmpMediaPlayer!!.setSurface(null)
+                tmpMediaPlayer.reset()
                 tmpMediaPlayer.release()
                 tmpHandlerThread.quit()
             }

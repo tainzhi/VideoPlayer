@@ -30,7 +30,9 @@ class PlayVideoViewActivity : AppCompatActivity() {
             setOnPreparedListener { _->
                 start()
             }
+            videoView.surfaceControl
         }
+
     }
 
     companion object {

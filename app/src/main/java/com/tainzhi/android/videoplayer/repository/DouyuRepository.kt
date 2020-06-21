@@ -1,11 +1,13 @@
 package com.tainzhi.android.videoplayer.repository
 
+import android.util.Log
 import com.tainzhi.android.common.base.BaseRepository
 import com.tainzhi.android.common.base.Result
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.network.VideoClient
 import com.tanzhi.mediaspider.DouyuSpider
+import com.tanzhi.mediaspider.NotFoundException
 
 /**
  * @author:      tainzhi
@@ -42,6 +44,11 @@ class DouyuRepository : BaseRepository(){
             executeResponse(VideoClient.service.getAllGames())
 
     fun getRoomCircuitId(roomId: String): String {
-        return  DouyuSpider.getInstance().getRoomCircuitId(roomId)
+        try {
+            return DouyuSpider.getInstance().getRoomCircuitId(roomId)
+        } catch (e: NotFoundException) {
+            Log.d("DouyuRepository", e.toString())
+        }
+        return ""
     }
 }
