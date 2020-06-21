@@ -14,7 +14,7 @@ data class LocalVideo(
         var size: String,
         var data: String,
         var title: String,
-        var duration: String,
+        var duration: Long,
         var resolution: String,
         var orientation: String,
         var dateAdded: String,

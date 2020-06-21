@@ -18,8 +18,8 @@ class PlayVideoViewActivity : AppCompatActivity() {
 
         val videoUri = intent.data
         val videoName = intent.getStringExtra(VIDEO_NAME)
-        val videoDuration = intent.getStringExtra(VIDEO_DURATION)
-        val videoProcess = intent.getStringExtra(VIDEO_PROGRESS)
+        val videoDuration = intent.getLongExtra(VIDEO_DURATION, 0)
+        val videoProcess = intent.getLongExtra(VIDEO_PROGRESS, 0)
 
         setContentView(R.layout.activity_videoview_mediacontroller)
 
@@ -30,7 +30,6 @@ class PlayVideoViewActivity : AppCompatActivity() {
             setOnPreparedListener { _->
                 start()
             }
-            videoView.surfaceControl
         }
 
     }

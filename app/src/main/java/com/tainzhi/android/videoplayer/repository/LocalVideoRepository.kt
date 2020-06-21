@@ -7,7 +7,6 @@ import android.provider.MediaStore
 import android.util.Log
 import com.tainzhi.android.common.base.BaseRepository
 import com.tainzhi.android.common.util.FormatUtil.formatMediaDate
-import com.tainzhi.android.common.util.FormatUtil.formatMediaDuration
 import com.tainzhi.android.common.util.FormatUtil.formatMediaSize
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.LocalVideo
@@ -61,7 +60,7 @@ class LocalVideoRepository : BaseRepository() {
                                         } else ""
                     val title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
                     // 视频大小是以秒(s)为单位的整数数字, 故需转成00:00:00
-                    val duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION)).formatMediaDuration()
+                    val duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION))
                     var resolution = ""
                     if (cursor.getType(resolutionColumn) == FIELD_TYPE_STRING) {
                         resolution = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.RESOLUTION))

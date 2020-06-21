@@ -8,10 +8,12 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Size
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.tainzhi.android.common.util.FormatUtil.formatMediaDuration
 import com.tainzhi.android.videoplayer.App
 
 /**
@@ -53,4 +55,11 @@ fun bindVideoThumbnail(
     Glide.with(imageView.context).load(thumbnail)
             .apply(options)
             .into(imageView)
+}
+
+@BindingAdapter(
+    "duration"
+)
+fun bindDuration(textView: TextView, duration: Long) {
+    textView.text = duration.formatMediaDuration()
 }

@@ -55,6 +55,9 @@ class DouyuSpider {
                             throw NotFoundException("not found circuit id")
                         }
                     }
+                } else {
+                    val msg = it.get("msg").asString
+                    throw  NotFoundException("not found circuit id", cause = Throwable(msg))
                 }
 
             }
