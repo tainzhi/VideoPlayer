@@ -93,6 +93,7 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
             // JZMediaInterface.saved_surface = null;
             mMediaHandler!!.post {
                 tmpMediaPlayer.setSurface(null)
+                tmpMediaPlayer.reset()
                 tmpMediaPlayer.release()
                 tmpHandlThread.quit()
             }

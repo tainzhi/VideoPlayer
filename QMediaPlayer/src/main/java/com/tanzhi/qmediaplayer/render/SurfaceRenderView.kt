@@ -81,7 +81,7 @@ class SurfaceRenderView @JvmOverloads constructor(
         setMeasuredDimension(measureHelper.measuredWidth, measureHelper.measuredHeight)
     }
 
-    private class InternalSurfaceHolder(private val surfaceRenderView: SurfaceRenderView,
+    inner class InternalSurfaceHolder(private val surfaceRenderView: SurfaceRenderView,
                                         override val surfaceHolder: SurfaceHolder) : IRenderView.ISurfaceHolder {
 
         override fun bindToMediaPlayer(mp: IMediaInterface) {

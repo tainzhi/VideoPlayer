@@ -19,6 +19,7 @@ import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.databinding.LocalVideoFragmentBinding
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
+import com.tainzhi.android.videoplayer.ui.PlayVideoViewActivity
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -35,7 +36,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
     private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE) {
         LocalVideoAdapter { video ->
 
-            PlayActivity.startPlay(requireActivity(),
+            PlayVideoViewActivity.startPlay(requireActivity(),
                     video.uri,
                     video.title
             )

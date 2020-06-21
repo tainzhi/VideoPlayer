@@ -10,7 +10,6 @@ import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
-import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.MediaController
 import com.tanzhi.qmediaplayer.VideoView
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -69,7 +68,6 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
 
         videoView.run {
             videoTitle = mVideoTitle!!
-            renderType = Constant.RenderType.GL_SURFACE_VIEW
             // System MediaPlayer也可以播放视频
             // mediaPlayerType = Constant.PlayerType.IJK_PLAYER
             // setEffect(NoEffect())
