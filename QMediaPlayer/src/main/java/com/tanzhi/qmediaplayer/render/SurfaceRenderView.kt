@@ -13,7 +13,6 @@ import com.tanzhi.qmediaplayer.*
 import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
 import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 import tv.danmaku.ijk.media.player.ISurfaceTextureHolder
-import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -121,27 +120,28 @@ class SurfaceRenderView @JvmOverloads constructor(
         surfaceCallback.removeRenderCallback(callback)
     }
 
-    inner class SurfaceCallback(surfaceView: SurfaceRenderView) : SurfaceHolder.Callback {
-        private var mSurfaceHolder: SurfaceHolder? = null
+    inner class SurfaceCallback(val surfaceView: SurfaceRenderView) : SurfaceHolder.Callback {
+        lateinit var mSurfaceHolder: SurfaceHolder
         private var isFormatChanged = false
         private var format = 0
         private var width = 0
         private var height = 0
-        private val weakSurfaceView: WeakReference<SurfaceRenderView> = WeakReference(surfaceView)
+
+        // TODO: 2020/6/21 防止内存泄漏, 使用WeakReference<surfacView> 
         private val renderCallbackMap: MutableMap<IRenderView.IRenderCallback, Any> = ConcurrentHashMap()
         fun addRenderCallback(callback: IRenderView.IRenderCallback) {
             renderCallbackMap[callback] = callback
             var surfaceHolder: IRenderView.ISurfaceHolder? = null
-            if (mSurfaceHolder != null) {
+            if (this::mSurfaceHolder.isInitialized) {
                 if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                            mSurfaceHolder!!)
+                    surfaceHolder = InternalSurfaceHolder(surfaceView,
+                            mSurfaceHolder)
                 }
                 callback.onSurfaceCreated(surfaceHolder, width, height)
             }
             if (isFormatChanged) {
                 if (surfaceHolder == null) {
-                    surfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!, mSurfaceHolder!!)
+                    surfaceHolder = InternalSurfaceHolder(surfaceView, mSurfaceHolder)
                 }
                 callback.onSurfaceChanged(surfaceHolder, format, width, height)
             }
@@ -157,8 +157,8 @@ class SurfaceRenderView @JvmOverloads constructor(
             format = 0
             width = 0
             height = 0
-            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder!!)
+            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(surfaceView,
+                    mSurfaceHolder)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceCreated(surfaceHolder, 0, 0)
             }
@@ -170,21 +170,21 @@ class SurfaceRenderView @JvmOverloads constructor(
             format = i
             width = i1
             height = i2
-            val surfaceHolder1: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder!!)
+            val surfaceHolder1: IRenderView.ISurfaceHolder = InternalSurfaceHolder(surfaceView,
+                    mSurfaceHolder)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceChanged(surfaceHolder1, i, i1, i2)
             }
         }
 
         override fun surfaceDestroyed(holder: SurfaceHolder) {
-            mSurfaceHolder = null
+            mSurfaceHolder.removeCallback(this@SurfaceCallback)
             isFormatChanged = false
             format = 0
             width = 0
             height = 0
-            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(weakSurfaceView.get()!!,
-                    mSurfaceHolder!!)
+            val surfaceHolder: IRenderView.ISurfaceHolder = InternalSurfaceHolder(surfaceView,
+                    mSurfaceHolder)
             for (callback in renderCallbackMap.keys) {
                 callback.onSurfaceDestroyed(surfaceHolder)
             }
