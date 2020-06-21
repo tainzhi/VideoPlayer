@@ -73,7 +73,7 @@
 			android:layout_marginEnd="@dimen/spacing_micro"
 			android:layout_marginBottom="@dimen/spacing_micro"
 			android:background="@drawable/bg_black_tag"
-			android:text="@{video.duration}"
+			duration="@{video.duration}"
 			android:textColor="?colorOnPrimary"
 			app:layout_constraintBottom_toBottomOf="@id/videoThumbnailImageView"
 			app:layout_constraintEnd_toEndOf="@+id/videoThumbnailImageView"
