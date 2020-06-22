@@ -78,7 +78,7 @@ class VideoView @JvmOverloads constructor(
 
     var videoRotationDegree = 0
 
-    private var screenOrientation = 0
+    var screenOrientation = 0
 
     var videoUri: Uri? = null
         set(value) {
@@ -222,11 +222,11 @@ class VideoView @JvmOverloads constructor(
             }
             Constant.PlayerType.IJK_PLAYER -> {
                 // mediaPlayerClass = IMediaIjk::class.java
-                IMediaSystem(this)
+                IMediaIjk(this)
             }
             Constant.PlayerType.EXO_PLAYER -> {
                 // mediaPlayerClass = IMediaExo::class.java
-                IMediaSystem(this)
+                IMediaExo(this)
             }
             else -> null
         }
@@ -280,8 +280,11 @@ class VideoView @JvmOverloads constructor(
     private fun fullScreenHideAll(context: Context) {
         Util.hideStatusBar(context)
         Util.hideActionBar(context)
-        // TODO: 2020/6/16 orientation
-        Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        if (screenOrientation == 0) {
+            Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        }  else {
+            Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        }
         Util.hideSystemUI(context)
     }
 
@@ -343,7 +346,7 @@ class VideoView @JvmOverloads constructor(
 
     fun onVideoSizeChanged(width: Int, height: Int) {
         // FIXME: 2020/5/27  
-        // setScreenOrientation(width, height)
+        setScreenOrientation(width, height)
         videoWidth = width
         videoHeight = height
         if (width != 0 && height != 0) {
@@ -372,10 +375,14 @@ class VideoView @JvmOverloads constructor(
      * 如果width < height, 则该视频是竖屏视频, 需要竖屏全屏播放
      */
     private fun setScreenOrientation(width: Int, height: Int) {
-        if (width > 0 && height > 0) {
+        if (width > 0 && height > 0 && width < height) {
             screenOrientation = 90
             Util.setRequestedOrientation(Util.scanForActivity(context)!!
                     , ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        } else {
+            screenOrientation = 0
+            Util.setRequestedOrientation(Util.scanForActivity(context)!!
+                    , ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         }
     }
 

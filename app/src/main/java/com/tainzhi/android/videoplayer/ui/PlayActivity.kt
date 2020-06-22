@@ -30,12 +30,19 @@ class PlayActivity : AppCompatActivity() {
         val mVideoDuration = bundle.getLong(VIDEO_DURATION, 0)
         val mVideoProgress = bundle.getLong(VIDEO_PROGRESS, 0)
         val resolution = bundle.getString(VIDEO_RESOLUTION)
+        var orientation = 0
         if (!resolution.isNullOrEmpty()) {
-            val widthHeight = resolution.split("x")
+            val heightAndwidth = resolution.split("x")
+            val height = heightAndwidth[0]
+            val width = heightAndwidth[1]
+            if (height > width) {
+                orientation = 90
+            }
         }
         videoView.run {
             videoTitle = mVideoTitle!!
             renderType = Constant.RenderType.SURFACE_VIEW
+            screenOrientation = orientation
             startFullScreenDirectly(this@PlayActivity, mVideoUri!!)
             setEffect(NoEffect())
             mediaController = MediaController(this@PlayActivity)

@@ -24,13 +24,18 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         MediaPlayer.OnErrorListener,
         MediaPlayer.OnInfoListener,
         MediaPlayer.OnVideoSizeChangedListener {
+    companion object {
+        private const val TAG = "IMediaSystem"
+    }
+
     private var mMediaPlayer: MediaPlayer? = null
     override fun start() {
-        logD()
+        logI(TAG, "start()")
         mMediaHandler!!.post { mMediaPlayer!!.start() }
     }
 
     override fun prepare() {
+        logI(TAG, "prepare()")
         release()
         mMediaHandlerThread = HandlerThread("QVideoPlayer")
         mMediaHandlerThread!!.start()
@@ -55,6 +60,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
                 mVideoView.mSurfaceHolder!!.bindToMediaPlayer(this)
                 mMediaPlayer!!.prepareAsync()
             } catch (e: Exception) {
+                mVideoView.onError(-1, -1)
                 e.printStackTrace()
             }
         }
@@ -71,6 +77,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun pause() {
+        logI(TAG, "pause()")
         mMediaHandler!!.post { mMediaPlayer!!.pause() }
     }
 
@@ -87,12 +94,16 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun release() {
-        if (mMediaHandler != null && mMediaHandlerThread != null && mMediaHandler != null) {
+        if (mMediaPlayer == null) {
+            logI(TAG, "MediaPlayer not initialized")
+            return
+        }
+        logI(TAG, "release()")
+        if (mMediaHandler != null && mMediaHandlerThread != null) {
             val tmpHandlerThread = mMediaHandlerThread!!
-            val tmpMediaPlayer = mMediaPlayer
-            sIRenderView = null
+            val tmpMediaPlayer = mMediaPlayer!!
             mMediaHandler!!.post {
-                tmpMediaPlayer!!.setSurface(null)
+                tmpMediaPlayer.setSurface(null)
                 tmpMediaPlayer.reset()
                 tmpMediaPlayer.release()
                 tmpHandlerThread.quit()
@@ -122,29 +133,29 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onBufferingUpdate(mediaPlayer: MediaPlayer, percent: Int) {
-        logD("percent=$percent")
+        logI(TAG, "onBufferingUpdate(), percent=$percent")
         mHandler!!.post { mVideoView.setBufferProgress(percent) }
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
-        logD()
+        logI(TAG, "onCompletion()")
         mHandler!!.post { mVideoView.onAutoCompletion() }
     }
 
     override fun onError(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
-        logD("what:$what, extra:$extra")
+        logI(TAG, "onError(), what:$what, extra:$extra")
         mHandler!!.post { mVideoView.onError(what, extra) }
         return true
     }
 
     override fun onInfo(mediaPlayer: MediaPlayer, what: Int, extra: Int): Boolean {
-        logD("what:$what, extra:$extra")
+        logI(TAG, "onInfo(), what:$what, extra:$extra")
         mHandler!!.post { mVideoView.onInfo(what, extra) }
         return false
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
-        logD()
+        logI(TAG, "onPrepared()")
         mHandler!!.post { mVideoView.onPrepared() }
     }
 
@@ -154,7 +165,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun onVideoSizeChanged(mediaPlayer: MediaPlayer, width: Int, height: Int) {
-        logD("width=$width, height=$height")
+        logI(TAG, "onVideoSizeChanged(), width=$width, height=$height")
         mHandler!!.post { mVideoView.onVideoSizeChanged(width, height) }
     }
 }
