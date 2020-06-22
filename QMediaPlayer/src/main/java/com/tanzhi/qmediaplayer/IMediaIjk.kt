@@ -19,8 +19,9 @@ import java.lang.reflect.InvocationTargetException
  * @description:
  */
 class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
-    private lateinit var mIjkMediaPlayer: IjkMediaPlayer
+    lateinit var mIjkMediaPlayer: IjkMediaPlayer
     override fun start() {
+        logI(TAG, "start()")
         if (mIjkMediaPlayer != null) mIjkMediaPlayer.start()
     }
 
@@ -33,6 +34,7 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
     }
 
     override fun prepare() {
+        logI(TAG, "prepare()")
         release()
         mMediaHandlerThread = HandlerThread("VideoView")
         mMediaHandlerThread!!.start()
@@ -76,6 +78,7 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
     }
 
     override fun pause() {
+        logI(TAG, "pause()")
         mIjkMediaPlayer.pause()
     }
 
@@ -87,6 +90,7 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
     }
 
     override fun release() {
+        logI(TAG, "release()")
         if (mMediaHandler != null && mMediaHandlerThread != null && mIjkMediaPlayer != null) {
             val tmpHandlThread = mMediaHandlerThread!!
             val tmpMediaPlayer: IjkMediaPlayer = mIjkMediaPlayer

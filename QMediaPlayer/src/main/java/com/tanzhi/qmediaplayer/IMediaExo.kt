@@ -24,8 +24,13 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     private lateinit var simpleExoPlayer: SimpleExoPlayer
     private var callback: Runnable? = null
     private var previousSeek: Long = 0
-    private val tag = this.javaClass.simpleName
+
+    companion object {
+        private const val TAG = "IMediaExo"
+    }
+
     override fun start() {
+        logI(TAG, "start()")
         simpleExoPlayer.playWhenReady = true
     }
 
@@ -38,7 +43,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun prepare() {
-        logD()
+        logI(TAG, "prepare()")
         val context = mVideoView.context
         release()
         mMediaHandlerThread = HandlerThread("VideoPlayer")
@@ -87,6 +92,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun pause() {
+        logI(TAG, "pause()")
         simpleExoPlayer.playWhenReady = false
     }
 
@@ -102,6 +108,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun release() {
+        logI(TAG, "release()")
         if (mMediaHandler != null && mMediaHandlerThread != null && simpleExoPlayer != null) {
             val tmpHandlerThread = mMediaHandlerThread!!
             val tmpMediaPlayer: SimpleExoPlayer? = simpleExoPlayer
@@ -138,11 +145,11 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun onRenderedFirstFrame() {
-        logD()
+        logI(TAG, "onRenderedFirstFrame()")
     }
 
     override fun onTimelineChanged(timeline: Timeline, manifest: Any?, reason: Int) {
-        logD()
+        logI(TAG, "onTimelineChanged()")
     }
 
     override fun onTracksChanged(trackGroupArray: TrackGroupArray,
@@ -150,11 +157,11 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     }
 
     override fun onLoadingChanged(isLoading: Boolean) {
-        logD()
+        logI(TAG, "onLoadingChanged")
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        logD()
+        logI(TAG, "onPlayerStateChanged()")
         mHandler!!.post {
             when (playbackState) {
                 Player.STATE_IDLE -> {
