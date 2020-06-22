@@ -1,8 +1,8 @@
 package com.tanzhi.qmediaplayer
 
 import android.content.res.Resources
+import android.util.Log
 import android.util.TypedValue
-import com.orhanobut.logger.Logger
 
 /**
  * @author:      tainzhi
@@ -12,22 +12,23 @@ import com.orhanobut.logger.Logger
  **/
 
 const val DEBUG = true
+const val TAG = "QMediaPlayer"
 
-inline fun logD(info: String = "") {
+fun logD(tag:String = TAG, info: String = "") {
     if (DEBUG) {
-        Logger.d(info)
+        Log.d(tag, info)
     }
 }
 
-inline fun logI(info: String = "") {
+fun logI(tag: String = TAG, info: String = "") {
     if (DEBUG) {
-        Logger.i(info)
+        Log.i(tag, info)
     }
 }
 
-inline fun logE(info: String) {
+fun logE(tag: String = TAG, info: String) {
     if (DEBUG) {
-        Logger.e(info)
+        Log.e(tag, info)
     }
 }
 
