@@ -7,7 +7,6 @@ import android.hardware.SensorManager
 import android.net.Uri
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
-import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
@@ -70,7 +69,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         videoView.run {
             videoTitle = mVideoTitle!!
             // System MediaPlayer也可以播放视频
-            mediaPlayerType = Constant.PlayerType.IJK_PLAYER
+            mediaPlayerType = Constant.PlayerType.EXO_PLAYER
             // setEffect(NoEffect())
         }
 
@@ -82,7 +81,6 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
     override fun startObserve() {
         mViewModel.roomCircuitId.observe(this@PlayDouyuActivity, Observer {
             val uri = Uri.parse(it)
-            Logger.d("play douyu: ${uri.toString()}")
             videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
             // 如果先加载MediaController, 将不会显示
             videoView.mediaController = MediaController(this@PlayDouyuActivity)
