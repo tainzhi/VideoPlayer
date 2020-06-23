@@ -19,18 +19,18 @@ import java.lang.reflect.InvocationTargetException
  * @description:
  */
 class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
-    lateinit var mIjkMediaPlayer: IjkMediaPlayer
+    private var mIjkMediaPlayer: IjkMediaPlayer? = null
     override fun start() {
         logI(TAG, "start()")
-        if (mIjkMediaPlayer != null) mIjkMediaPlayer.start()
+        mIjkMediaPlayer?.start()
     }
 
     override fun setDisplay(surfaceHolder: SurfaceHolder) {
-        mIjkMediaPlayer.setDisplay(surfaceHolder)
+        mIjkMediaPlayer?.setDisplay(surfaceHolder)
     }
 
     override fun setDisplay(surface: Surface) {
-        mIjkMediaPlayer.setSurface(surface)
+        mIjkMediaPlayer?.setSurface(surface)
     }
 
     override fun prepare() {
@@ -41,32 +41,33 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
         mMediaHandler = Handler(mMediaHandlerThread!!.looper)
         mHandler = Handler()
         mMediaHandler!!.post {
-            mIjkMediaPlayer = IjkMediaPlayer()
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 0)
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 0)
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32.toLong())
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 1)
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0)
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0)
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48)
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024.toLong())
-            mIjkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1)
-            mIjkMediaPlayer.setOnPreparedListener(this@IMediaIjk)
-            mIjkMediaPlayer.setOnVideoSizeChangedListener(this@IMediaIjk)
-            mIjkMediaPlayer.setOnCompletionListener(this@IMediaIjk)
-            mIjkMediaPlayer.setOnErrorListener(this@IMediaIjk)
-            mIjkMediaPlayer.setOnInfoListener(this@IMediaIjk)
-            mIjkMediaPlayer.setOnBufferingUpdateListener(this@IMediaIjk)
-            mIjkMediaPlayer.setOnSeekCompleteListener(this@IMediaIjk)
-            mIjkMediaPlayer.setOnTimedTextListener(this@IMediaIjk)
+            mIjkMediaPlayer = IjkMediaPlayer().apply {
+                setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 0)
+                setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 0)
+                setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32.toLong())
+                setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 1)
+                setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0)
+                setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0)
+                setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48)
+                setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024.toLong())
+                setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1)
+                setOnPreparedListener(this@IMediaIjk)
+                setOnVideoSizeChangedListener(this@IMediaIjk)
+                setOnCompletionListener(this@IMediaIjk)
+                setOnErrorListener(this@IMediaIjk)
+                setOnInfoListener(this@IMediaIjk)
+                setOnBufferingUpdateListener(this@IMediaIjk)
+                setOnSeekCompleteListener(this@IMediaIjk)
+                setOnTimedTextListener(this@IMediaIjk)
+                setAudioStreamType(AudioManager.STREAM_MUSIC)
+                setScreenOnWhilePlaying(true)
+            }
             try {
-                mIjkMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                mIjkMediaPlayer.setScreenOnWhilePlaying(true)
                 val clazz = IjkMediaPlayer::class.java
                 val method = clazz.getDeclaredMethod("setDataSource", Context::class.java, Uri::class.java)
                 method.invoke(mIjkMediaPlayer, mVideoView.context, mVideoView.videoUri)
                 mVideoView.mSurfaceHolder?.bindToMediaPlayer(this)
-                mIjkMediaPlayer.prepareAsync()
+                mIjkMediaPlayer?.prepareAsync()
             } catch (e: NoSuchMethodException) {
                 e.printStackTrace()
             } catch (e: IllegalAccessException) {
@@ -79,43 +80,42 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
 
     override fun pause() {
         logI(TAG, "pause()")
-        mIjkMediaPlayer.pause()
+        mIjkMediaPlayer?.pause()
     }
 
     override val isPlaying: Boolean
-        get() = mIjkMediaPlayer.isPlaying
+        get() = mIjkMediaPlayer?.isPlaying ?: false
 
     override fun seekTo(time: Long) {
-        mIjkMediaPlayer.seekTo(time)
+        mIjkMediaPlayer?.seekTo(time)
     }
 
     override fun release() {
         logI(TAG, "release()")
         if (mMediaHandler != null && mMediaHandlerThread != null && mIjkMediaPlayer != null) {
-            val tmpHandlThread = mMediaHandlerThread!!
-            val tmpMediaPlayer: IjkMediaPlayer = mIjkMediaPlayer
-            // JZMediaInterface.saved_surface = null;
             mMediaHandler!!.post {
-                tmpMediaPlayer.setSurface(null)
-                tmpMediaPlayer.reset()
-                tmpMediaPlayer.release()
-                tmpHandlThread.quit()
+                mMediaHandlerThread?.quit()
+                mIjkMediaPlayer?.run {
+                    setSurface(null)
+                    reset()
+                    release()
+                }
             }
         }
     }
 
     override val currentPosition: Long
-        get() = mIjkMediaPlayer.currentPosition
+        get() = mIjkMediaPlayer?.currentPosition ?: 0
 
     override val duration: Long
-        get() = mIjkMediaPlayer.duration
+        get() = mIjkMediaPlayer?.duration ?: 0
 
     override fun setVolume(leftVoluem: Float, rightVolume: Float) {
-        mIjkMediaPlayer.setVolume(leftVoluem, rightVolume)
+        mIjkMediaPlayer?.setVolume(leftVoluem, rightVolume)
     }
 
     override fun setSpeed(speed: Float) {
-        mIjkMediaPlayer.setSpeed(speed)
+        mIjkMediaPlayer?.setSpeed(speed)
     }
 
     override fun onBufferingUpdate(iMediaPlayer: IMediaPlayer, percent: Int) {
