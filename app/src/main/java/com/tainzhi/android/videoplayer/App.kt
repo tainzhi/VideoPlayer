@@ -3,8 +3,6 @@ package com.tainzhi.android.videoplayer
 import android.app.Application
 import android.content.Context
 import com.didichuxing.doraemonkit.DoraemonKit
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 import com.tainzhi.android.videoplayer.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -36,8 +34,6 @@ class App : Application() {
         }
 
         DoraemonKit.install(this)
-
-        Logger.addLogAdapter(AndroidLogAdapter())
     }
 
 }

@@ -21,7 +21,7 @@ import com.google.android.exoplayer2.video.VideoListener
  * @description:
  */
 class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.EventListener, VideoListener {
-    private lateinit var simpleExoPlayer: SimpleExoPlayer
+    private var simpleExoPlayer: SimpleExoPlayer? = null
     private var callback: Runnable? = null
     private var previousSeek: Long = 0
 
@@ -31,15 +31,15 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
 
     override fun start() {
         logI(TAG, "start()")
-        simpleExoPlayer.playWhenReady = true
+        simpleExoPlayer?.playWhenReady = true
     }
 
     override fun setDisplay(surfaceHolder: SurfaceHolder) {
-        simpleExoPlayer.setVideoSurfaceHolder(surfaceHolder)
+        simpleExoPlayer?.setVideoSurfaceHolder(surfaceHolder)
     }
 
     override fun setDisplay(surface: Surface) {
-        simpleExoPlayer.setVideoSurface(surface)
+        simpleExoPlayer?.setVideoSurface(surface)
     }
 
     override fun prepare() {
@@ -76,7 +76,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
             // }
             videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(mVideoView.videoUri)
-            simpleExoPlayer.addVideoListener(this)
+            simpleExoPlayer?.addVideoListener(this)
             // TODO: 2020/5/19
             // val isLoop = mVideoView.loop
             // if (isLoop) {
@@ -84,8 +84,8 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
             // } else {
             //     simpleExoPlayer.repeatMode = Player.REPEAT_MODE_OFF
             // }
-            simpleExoPlayer.prepare(videoSource)
-            simpleExoPlayer.playWhenReady = true
+            simpleExoPlayer?.prepare(videoSource)
+            simpleExoPlayer?.playWhenReady = true
             callback = OnBufferUpdate()
             mVideoView.mSurfaceHolder!!.bindToMediaPlayer(this)
         }
@@ -93,15 +93,15 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
 
     override fun pause() {
         logI(TAG, "pause()")
-        simpleExoPlayer.playWhenReady = false
+        simpleExoPlayer?.playWhenReady = false
     }
 
     override val isPlaying: Boolean
-        get() = simpleExoPlayer.playWhenReady
+        get() = simpleExoPlayer?.playWhenReady ?: false
 
     override fun seekTo(time: Long) {
         if (time != previousSeek) {
-            simpleExoPlayer.seekTo(time)
+            simpleExoPlayer?.seekTo(time)
             previousSeek = time
             // mVideoView.seekInAdvance = time;
         }
@@ -110,29 +110,23 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     override fun release() {
         logI(TAG, "release()")
         if (mMediaHandler != null && mMediaHandlerThread != null && simpleExoPlayer != null) {
-            val tmpHandlerThread = mMediaHandlerThread!!
-            val tmpMediaPlayer: SimpleExoPlayer? = simpleExoPlayer
-            // VideoView.SAVED_SURFACE = null;
             mMediaHandler!!.post {
-                tmpMediaPlayer?.release()
-                tmpHandlerThread.quit()
+                mMediaHandlerThread?.quit()
+                simpleExoPlayer?.run {
+                    release()
+                }
             }
-            simpleExoPlayer.release()
         }
     }
 
-    override val currentPosition = simpleExoPlayer.contentPosition
+    override val currentPosition = simpleExoPlayer?.contentPosition ?: 0
 
-    override val duration: Long
-        get() = if (simpleExoPlayer != null) {
-            simpleExoPlayer.duration
-        } else {
-            0
-        }
+    override val duration: Long = simpleExoPlayer?.duration ?: 0
+
 
     override fun setVolume(leftVoluem: Float, rightVolume: Float) {
-        simpleExoPlayer.volume = leftVoluem
-        simpleExoPlayer.volume = rightVolume
+        simpleExoPlayer?.volume = leftVoluem
+        simpleExoPlayer?.volume = rightVolume
     }
 
     override fun setSpeed(speed: Float) {
@@ -193,7 +187,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     private inner class OnBufferUpdate : Runnable {
         override fun run() {
             if (simpleExoPlayer != null) {
-                val percent = simpleExoPlayer.bufferedPercentage
+                val percent = simpleExoPlayer?.bufferedPercentage ?: 0
                 mHandler!!.post { mVideoView.setBufferProgress(percent) }
                 if (percent < 100) {
                     mHandler!!.postDelayed(callback, 300)
