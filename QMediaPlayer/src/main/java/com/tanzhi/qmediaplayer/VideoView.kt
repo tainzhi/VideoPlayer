@@ -238,12 +238,7 @@ class VideoView @JvmOverloads constructor(
      */
     private fun attachMediaController() {
         if (iMediaPlayer != null && mediaController != null) {
-            mediaController?.run {
-                videoView = this@VideoView
-                // setParentView(this@VideoView.parent as ConstraintLayout)
-                setParentView(this@VideoView.parent as ViewGroup)
-            }
-
+            mediaController?.bindVideoView(this@VideoView)
         }
     }
 
@@ -415,9 +410,6 @@ class VideoView @JvmOverloads constructor(
                 mediaController != null
         ) {
             toggleMediaControllerVisibility()
-        }
-        if (mediaController?.isShowing == true) {
-            mediaController?.dispathTouchEvent(event)
         }
         return false
     }
