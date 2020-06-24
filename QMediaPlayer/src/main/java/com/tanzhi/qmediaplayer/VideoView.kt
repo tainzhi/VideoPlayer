@@ -134,7 +134,7 @@ class VideoView @JvmOverloads constructor(
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onResume()
         }
-        // start()
+        start()
     }
 
     /**
@@ -144,7 +144,7 @@ class VideoView @JvmOverloads constructor(
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onPause()
         }
-        // pause()
+        pause()
     }
 
     fun onStop() {
@@ -318,11 +318,15 @@ class VideoView @JvmOverloads constructor(
     }
 
     fun start() {
-        iMediaPlayer?.start()
+        if (state == STATE_PREPARED) {
+            iMediaPlayer?.start()
+        }
     }
 
     fun pause() {
-        iMediaPlayer?.pause()
+        if (state == STATE_PLAYING) {
+            iMediaPlayer?.pause()
+        }
     }
 
     fun seekTo(progress: Long) {
