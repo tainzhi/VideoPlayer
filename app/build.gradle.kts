@@ -129,6 +129,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
+    implementation(project(":ffmpeg"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.appcompat)
