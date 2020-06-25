@@ -16,6 +16,15 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner ="androidx.test.runner.AndroidJUnitRunner"
+
+        // externalNativeBuild {
+        //     cmake {
+        //         cppFlags("")
+        //     }
+        // }
+        // ndk {
+        //     abiFilters("armeabi-v7a")  // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
+        // }
     }
 
     buildTypes {
@@ -28,15 +37,16 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    //
-    // testOptions {
-    //     unitTests {
-    //         includeAndroidResources = true
-    //     }
-    // }
+    externalNativeBuild {
+        cmake {
+            // path  = file("src/main/jni/CMakeLists.txt")
+            path  = file("CMakeLists.txt")
+        }
+    }
 }
 
 dependencies {
     implementation(Libs.Kotlin.stdlib)
+    testImplementation(Libs.junit)
 
 }
