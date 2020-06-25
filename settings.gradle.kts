@@ -1,3 +1,4 @@
+include(":ffmpeg")
 include(":app")
 include(":common")
 include(":QMediaPlayer")
