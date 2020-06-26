@@ -107,7 +107,6 @@
 #include "libavutil/avassert.h"
 
 #include "android_log.h"
-#include "ffmpeg-invoker.h"
 
 const char program_name[] = "ffmpeg";
 const int program_birth_year = 2000;
