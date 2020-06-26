@@ -1,5 +1,7 @@
 package com.tainzhi.android.ffmpeg
 
+import android.util.Log
+
 /**
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
@@ -25,6 +27,7 @@ class FFmpegCmd {
     }
 
     fun execute(cmd: Array<String>) {
+        Log.d(TAG, "${cmd.toString()}")
         runCmd(cmd.size, cmd)
     }
 
