@@ -6,11 +6,11 @@ import android.util.Log
 object FFmpegInvoker {
     private var sCallback: Callback? = null
     external fun exec(argc: Int, argv: Array<String>): Int
-    // external fun exit()
-    // external fun getConfigInfo(): String
-    // external fun getAVCodecInfo(): String
-    // external fun getAVFormatInfo(): String
-    // external fun getAVFilterInfo(): String
+    external fun exit()
+    external fun getConfigInfo(): String
+    external fun getAVCodecInfo(): String
+    external fun getAVFormatInfo(): String
+    external fun getAVFilterInfo(): String
 
     fun exec(cmd: String, listener: Callback) {
         sCallback = listener

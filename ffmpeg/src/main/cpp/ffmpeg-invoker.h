@@ -1,34 +1,28 @@
 #include <jni.h>
-
-#ifndef FFmpeg_Invoker
-#define FFmpeg_Invoker
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+extern "C"
 JNIEXPORT jint JNICALL
-Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *, jobject , jint, jobjectArray);
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *, jobject, jint, jobjectArray);
 
+extern "C"
 JNIEXPORT void JNICALL
-Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exit(JNIEnv *, jobject );
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exit(JNIEnv *, jobject);
 
 
+extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getConfigInfo(JNIEnv *, jobject);
 
+extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVCodecInfo(JNIEnv *env, jobject );
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVCodecInfo(JNIEnv *env, jobject);
 
+extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVFormatInfo(JNIEnv *, jobject);
 
+extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVFilterInfo(JNIEnv *, jobject);
-
-#ifdef __cplusplus
-}
-#endif
-#endif
 
 void ffmpeg_progress(float percent);
 
