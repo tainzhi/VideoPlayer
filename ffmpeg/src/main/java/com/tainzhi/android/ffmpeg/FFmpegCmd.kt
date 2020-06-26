@@ -1,35 +1,32 @@
 package com.tainzhi.android.ffmpeg
 
-import android.util.Log
-
 /**
- * @author:      tainzhi
- * @mail:        qfq61@qq.com
- * @date:        2020/6/25 15:16
- * @description:
- **/
-
-class FFmpegCmd {
-    companion object {
-        const val TAG = "FFmpegCmd"
-        init {
-            System.loadLibrary("avdevice")
-            System.loadLibrary("avutil")
-            System.loadLibrary("avcodec")
-            System.loadLibrary("swresample")
-            System.loadLibrary("avformat")
-            System.loadLibrary("swscale")
-            System.loadLibrary("avfilter")
-            System.loadLibrary("postproc")
-            System.loadLibrary("ffmpeg-invoke")
-        }
-
-    }
-
-    fun execute(cmd: Array<String>) {
-        Log.d(TAG, "${cmd.toString()}")
-        runCmd(cmd.size, cmd)
-    }
-
-    private external fun runCmd(cmdLen: Int, cmd: Array<String>): Int
-}
+ * Created by XuCanHui on 2020/4/1.
+ */
+// class FFmpegCmd {
+//     private val sb: StringBuilder
+//     fun append(param: String?): FFmpegCmd1 {
+//         sb.append(" ").append(param)
+//         return this
+//     }
+//
+//     fun append(param: Long): FFmpegCmd1 {
+//         sb.append(" ").append(param)
+//         return this
+//     }
+//
+//     fun append(param: Float): FFmpegCmd1 {
+//         sb.append(" ").append(param)
+//         return this
+//     }
+//
+//     fun build(): String {
+//         return sb.toString()
+//     }
+//
+//     init {
+//         sb = StringBuilder()
+//         sb.append("ffmpeg")
+//         append("-y")
+//     }
+// }

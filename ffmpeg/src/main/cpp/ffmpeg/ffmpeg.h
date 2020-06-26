@@ -61,6 +61,7 @@ enum HWAccelID {
     HWACCEL_GENERIC,
     HWACCEL_VIDEOTOOLBOX,
     HWACCEL_QSV,
+    HWACCEL_CUVID,
 };
 
 typedef struct HWAccel {
@@ -348,7 +349,6 @@ typedef struct InputStream {
         AVFifoBuffer *sub_queue;    ///< queue of AVSubtitle* before filter init
         AVFrame *frame;
         int w, h;
-        unsigned int initialize; ///< marks if sub2video_update should force an initialization
     } sub2video;
 
     int dr1;
@@ -430,8 +430,7 @@ enum forced_keyframes_const {
     FKF_NB
 };
 
-#define ABORT_ON_FLAG_EMPTY_OUTPUT        (1 <<  0)
-#define ABORT_ON_FLAG_EMPTY_OUTPUT_STREAM (1 <<  1)
+#define ABORT_ON_FLAG_EMPTY_OUTPUT (1 <<  0)
 
 extern const char *const forced_keyframes_const_names[];
 
@@ -460,7 +459,8 @@ typedef struct OutputStream {
     AVRational mux_timebase;
     AVRational enc_timebase;
 
-    AVBSFContext            *bsf_ctx;
+    int                    nb_bitstream_filters;
+    AVBSFContext            **bsf_ctx;
 
     AVCodecContext *enc_ctx;
     AVCodecParameters *ref_par; /* associated input codec parameters with encoders options applied */
@@ -611,10 +611,13 @@ extern int filter_nbthreads;
 extern int filter_complex_nbthreads;
 extern int vstats_version;
 
+extern int64_t duration;
+
 extern const AVIOInterruptCB int_cb;
 
 extern const OptionDef options[];
 extern const HWAccel hwaccels[];
+extern AVBufferRef *hw_device_ctx;
 #if CONFIG_QSV
 extern char *qsv_device;
 #endif
@@ -645,7 +648,7 @@ int filtergraph_is_simple(FilterGraph *fg);
 int init_simple_filtergraph(InputStream *ist, OutputStream *ost);
 int init_complex_filtergraph(FilterGraph *fg);
 
-void sub2video_update(InputStream *ist, int64_t heartbeat_pts, AVSubtitle *sub);
+void sub2video_update(InputStream *ist, AVSubtitle *sub);
 
 int ifilter_parameters_from_frame(InputFilter *ifilter, const AVFrame *frame);
 
@@ -653,6 +656,7 @@ int ffmpeg_parse_options(int argc, char **argv);
 
 int videotoolbox_init(AVCodecContext *s);
 int qsv_init(AVCodecContext *s);
+int cuvid_init(AVCodecContext *s);
 
 HWDevice *hw_device_get_by_name(const char *name);
 int hw_device_init_from_string(const char *arg, HWDevice **dev);
@@ -660,10 +664,11 @@ void hw_device_free_all(void);
 
 int hw_device_setup_for_decode(InputStream *ist);
 int hw_device_setup_for_encode(OutputStream *ost);
-int hw_device_setup_for_filter(FilterGraph *fg);
 
 int hwaccel_decode_init(AVCodecContext *avctx);
 
-int run(int argc, char **argv);
+int ffmpeg_exec(int argc, char **argv);
+
+void ffmpeg_cancel();
 
 #endif /* FFTOOLS_FFMPEG_H */
