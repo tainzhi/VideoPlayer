@@ -22,9 +22,10 @@ android {
         //         cppFlags("")
         //     }
         // }
-        // ndk {
-        //     abiFilters("armeabi-v7a")  // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
-        // }
+        ndk {
+            // abiFilters("armeabi-v7a")  // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
+            abiFilters("arm64-v8a")  // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
+        }
     }
 
     buildTypes {

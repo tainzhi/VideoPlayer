@@ -3,6 +3,7 @@ package com.tainzhi.android.videoplayer.ui.local
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.ffmpeg.FFmpegCmd
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
@@ -21,6 +23,7 @@ import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import kotlin.concurrent.thread
 
 /**
  * 本地视频
@@ -58,6 +61,11 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
 
         mBinding.localVideoFab.setOnClickListener {
             showShackBarMessage("to implement: 播放最近一次观看的视频")
+            thread {
+                val ffmpeg = FFmpegCmd()
+                Log.d("LikeFragment", "result=${ffmpeg.execute("ffmpeg -version".split(" ").toTypedArray())}")
+            }.start()
+
         }
 
 

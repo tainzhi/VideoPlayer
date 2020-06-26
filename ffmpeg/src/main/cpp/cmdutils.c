@@ -1135,7 +1135,7 @@ static void print_all_libs_info(int flags, int level)
     PRINT_LIB_INFO(avformat,   AVFORMAT,   flags, level);
     PRINT_LIB_INFO(avdevice,   AVDEVICE,   flags, level);
     PRINT_LIB_INFO(avfilter,   AVFILTER,   flags, level);
-    PRINT_LIB_INFO(avresample, AVRESAMPLE, flags, level);
+//    PRINT_LIB_INFO(avresample, AVRESAMPLE, flags, level);
     PRINT_LIB_INFO(swscale,    SWSCALE,    flags, level);
     PRINT_LIB_INFO(swresample, SWRESAMPLE, flags, level);
     PRINT_LIB_INFO(postproc,   POSTPROC,   flags, level);
@@ -1877,13 +1877,13 @@ static void show_help_protocol(const char *name)
         return;
     }
 
-    proto_class = avio_protocol_get_class(name);
-    if (!proto_class) {
-        av_log(NULL, AV_LOG_ERROR, "Unknown protocol '%s'.\n", name);
-        return;
-    }
-
-    show_help_children(proto_class, AV_OPT_FLAG_DECODING_PARAM | AV_OPT_FLAG_ENCODING_PARAM);
+//    proto_class = avio_protocol_get_class(name);
+//    if (!proto_class) {
+//        av_log(NULL, AV_LOG_ERROR, "Unknown protocol '%s'.\n", name);
+//        return;
+//    }
+//
+//    show_help_children(proto_class, AV_OPT_FLAG_DECODING_PARAM | AV_OPT_FLAG_ENCODING_PARAM);
 }
 
 static void show_help_muxer(const char *name)
