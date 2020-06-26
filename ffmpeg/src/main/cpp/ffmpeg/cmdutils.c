@@ -55,9 +55,14 @@
 #include "libavutil/ffversion.h"
 #include "libavutil/version.h"
 #include "cmdutils.h"
+#if CONFIG_NETWORK
+#include "libavformat/network.h"
+#endif
 #if HAVE_SYS_RESOURCE_H
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <ffmpeg_thread.h>
+
 #endif
 #ifdef _WIN32
 #include <windows.h>
@@ -116,7 +121,7 @@ static void log_callback_report(void *ptr, int level, const char *fmt, va_list v
 
 void init_dynload(void)
 {
-#if HAVE_SETDLLDIRECTORY && defined(_WIN32)
+#ifdef _WIN32
     /* Calling SetDllDirectory with the empty string (but not NULL) removes the
      * current working directory from the DLL search path as a security pre-caution. */
     SetDllDirectory("");
@@ -135,7 +140,11 @@ void exit_program(int ret)
     if (program_exit)
         program_exit(ret);
 
-    exit(ret);
+    // 退出线程(该函数后面定义)
+    ffmpeg_thread_exit(ret);
+
+    // 删掉下面这行代码，不然执行结束，应用会crash
+    //exit(ret);
 }
 
 double parse_number_or_die(const char *context, const char *numstr, int type,
@@ -179,7 +188,7 @@ void show_help_options(const OptionDef *options, const char *msg, int req_flags,
 
     first = 1;
     for (po = options; po->name; po++) {
-        char buf[128];
+        char buf[64];
 
         if (((po->flags & req_flags) != req_flags) ||
             (alt_flags && !(po->flags & alt_flags)) ||
@@ -547,7 +556,7 @@ int opt_default(void *optctx, const char *opt, const char *arg)
     const char *p;
     const AVClass *cc = avcodec_get_class(), *fc = avformat_get_class();
 #if CONFIG_AVRESAMPLE
-    const AVClass *rc = avresample_get_class();
+//    const AVClass *rc = avresample_get_class();
 #endif
 #if CONFIG_SWSCALE
     const AVClass *sc = sws_get_class();
@@ -619,11 +628,11 @@ int opt_default(void *optctx, const char *opt, const char *arg)
     }
 #endif
 #if CONFIG_AVRESAMPLE
-    if ((o=opt_find(&rc, opt, NULL, 0,
-                       AV_OPT_SEARCH_CHILDREN | AV_OPT_SEARCH_FAKE_OBJ))) {
-        av_dict_set(&resample_opts, opt, arg, FLAGS);
-        consumed = 1;
-    }
+//    if ((o=opt_find(&rc, opt, NULL, 0,
+//                       AV_OPT_SEARCH_CHILDREN | AV_OPT_SEARCH_FAKE_OBJ))) {
+//        av_dict_set(&resample_opts, opt, arg, FLAGS);
+//        consumed = 1;
+//    }
 #endif
 
     if (consumed)
@@ -845,8 +854,8 @@ do {                                                                           \
     }
 
     if (octx->cur_group.nb_opts || codec_opts || format_opts || resample_opts)
-        av_log(NULL, AV_LOG_WARNING, "Trailing option(s) found in the "
-               "command: may be ignored.\n");
+        av_log(NULL, AV_LOG_WARNING, "Trailing options were found on the "
+               "commandline.\n");
 
     av_log(NULL, AV_LOG_DEBUG, "Finished splitting the commandline.\n");
 
@@ -977,7 +986,6 @@ static int init_report(const char *env)
     char *filename_template = NULL;
     char *key, *val;
     int ret, count = 0;
-    int prog_loglevel, envlevel = 0;
     time_t now;
     struct tm *tm;
     AVBPrint filename;
@@ -1009,7 +1017,6 @@ static int init_report(const char *env)
                 av_log(NULL, AV_LOG_FATAL, "Invalid report file level\n");
                 exit_program(1);
             }
-            envlevel = 1;
         } else {
             av_log(NULL, AV_LOG_ERROR, "Unknown key '%s' in FFREPORT\n", key);
         }
@@ -1026,10 +1033,6 @@ static int init_report(const char *env)
         return AVERROR(ENOMEM);
     }
 
-    prog_loglevel = av_log_get_level();
-    if (!envlevel)
-        report_file_level = FFMAX(report_file_level, prog_loglevel);
-
     report_file = fopen(filename.str, "w");
     if (!report_file) {
         int ret = AVERROR(errno);
@@ -1040,17 +1043,16 @@ static int init_report(const char *env)
     av_log_set_callback(log_callback_report);
     av_log(NULL, AV_LOG_INFO,
            "%s started on %04d-%02d-%02d at %02d:%02d:%02d\n"
-           "Report written to \"%s\"\n"
-           "Log level: %d\n",
+           "Report written to \"%s\"\n",
            program_name,
            tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
            tm->tm_hour, tm->tm_min, tm->tm_sec,
-           filename.str, report_file_level);
+           filename.str);
     av_bprint_finalize(&filename, NULL);
     return 0;
 }
 
-int opt_report(void *optctx, const char *opt, const char *arg)
+int opt_report(const char *opt)
 {
     return init_report(NULL);
 }
@@ -1420,6 +1422,10 @@ static void print_codec(const AVCodec *c)
         printf("threads ");
     if (c->capabilities & AV_CODEC_CAP_AVOID_PROBING)
         printf("avoidprobe ");
+    if (c->capabilities & AV_CODEC_CAP_INTRA_ONLY)
+        printf("intraonly ");
+    if (c->capabilities & AV_CODEC_CAP_LOSSLESS)
+        printf("lossless ");
     if (c->capabilities & AV_CODEC_CAP_HARDWARE)
         printf("hardware ");
     if (c->capabilities & AV_CODEC_CAP_HYBRID)
@@ -1493,14 +1499,13 @@ static char get_media_type_char(enum AVMediaType type)
     }
 }
 
-static const AVCodec *next_codec_for_id(enum AVCodecID id, void **iter,
+static const AVCodec *next_codec_for_id(enum AVCodecID id, const AVCodec *prev,
                                         int encoder)
 {
-    const AVCodec *c;
-    while ((c = av_codec_iterate(iter))) {
-        if (c->id == id &&
-            (encoder ? av_codec_is_encoder(c) : av_codec_is_decoder(c)))
-            return c;
+    while ((prev = av_codec_next(prev))) {
+        if (prev->id == id &&
+            (encoder ? av_codec_is_encoder(prev) : av_codec_is_decoder(prev)))
+            return prev;
     }
     return NULL;
 }
@@ -1537,12 +1542,11 @@ static unsigned get_codecs_sorted(const AVCodecDescriptor ***rcodecs)
 
 static void print_codecs_for_id(enum AVCodecID id, int encoder)
 {
-    void *iter = NULL;
-    const AVCodec *codec;
+    const AVCodec *codec = NULL;
 
     printf(" (%s: ", encoder ? "encoders" : "decoders");
 
-    while ((codec = next_codec_for_id(id, &iter, encoder)))
+    while ((codec = next_codec_for_id(id, codec, encoder)))
         printf("%s ", codec->name);
 
     printf(")");
@@ -1565,8 +1569,7 @@ int show_codecs(void *optctx, const char *opt, const char *arg)
            " -------\n");
     for (i = 0; i < nb_codecs; i++) {
         const AVCodecDescriptor *desc = codecs[i];
-        const AVCodec *codec;
-        void *iter = NULL;
+        const AVCodec *codec = NULL;
 
         if (strstr(desc->name, "_deprecated"))
             continue;
@@ -1584,14 +1587,14 @@ int show_codecs(void *optctx, const char *opt, const char *arg)
 
         /* print decoders/encoders when there's more than one or their
          * names are different from codec name */
-        while ((codec = next_codec_for_id(desc->id, &iter, 0))) {
+        while ((codec = next_codec_for_id(desc->id, codec, 0))) {
             if (strcmp(codec->name, desc->name)) {
                 print_codecs_for_id(desc->id, 0);
                 break;
             }
         }
-        iter = NULL;
-        while ((codec = next_codec_for_id(desc->id, &iter, 1))) {
+        codec = NULL;
+        while ((codec = next_codec_for_id(desc->id, codec, 1))) {
             if (strcmp(codec->name, desc->name)) {
                 print_codecs_for_id(desc->id, 1);
                 break;
@@ -1622,10 +1625,9 @@ static void print_codecs(int encoder)
            encoder ? "Encoders" : "Decoders");
     for (i = 0; i < nb_codecs; i++) {
         const AVCodecDescriptor *desc = codecs[i];
-        const AVCodec *codec;
-        void *iter = NULL;
+        const AVCodec *codec = NULL;
 
-        while ((codec = next_codec_for_id(desc->id, &iter, encoder))) {
+        while ((codec = next_codec_for_id(desc->id, codec, encoder))) {
             printf(" %c", get_media_type_char(desc->type));
             printf((codec->capabilities & AV_CODEC_CAP_FRAME_THREADS) ? "F" : ".");
             printf((codec->capabilities & AV_CODEC_CAP_SLICE_THREADS) ? "S" : ".");
@@ -1830,10 +1832,9 @@ static void show_help_codec(const char *name, int encoder)
     if (codec)
         print_codec(codec);
     else if ((desc = avcodec_descriptor_get_by_name(name))) {
-        void *iter = NULL;
         int printed = 0;
 
-        while ((codec = next_codec_for_id(desc->id, &iter, encoder))) {
+        while ((codec = next_codec_for_id(desc->id, codec, encoder))) {
             printed = 1;
             print_codec(codec);
         }
@@ -1866,24 +1867,6 @@ static void show_help_demuxer(const char *name)
 
     if (fmt->priv_class)
         show_help_children(fmt->priv_class, AV_OPT_FLAG_DECODING_PARAM);
-}
-
-static void show_help_protocol(const char *name)
-{
-    const AVClass *proto_class;
-
-    if (!name) {
-        av_log(NULL, AV_LOG_ERROR, "No protocol name specified.\n");
-        return;
-    }
-
-//    proto_class = avio_protocol_get_class(name);
-//    if (!proto_class) {
-//        av_log(NULL, AV_LOG_ERROR, "Unknown protocol '%s'.\n", name);
-//        return;
-//    }
-//
-//    show_help_children(proto_class, AV_OPT_FLAG_DECODING_PARAM | AV_OPT_FLAG_ENCODING_PARAM);
 }
 
 static void show_help_muxer(const char *name)
@@ -2016,8 +1999,6 @@ int show_help(void *optctx, const char *opt, const char *arg)
         show_help_demuxer(par);
     } else if (!strcmp(topic, "muxer")) {
         show_help_muxer(par);
-    } else if (!strcmp(topic, "protocol")) {
-        show_help_protocol(par);
 #if CONFIG_AVFILTER
     } else if (!strcmp(topic, "filter")) {
         show_help_filter(par);
@@ -2057,7 +2038,7 @@ FILE *get_preset_file(char *filename, size_t filename_size,
         av_strlcpy(filename, preset_name, filename_size);
         f = fopen(filename, "r");
     } else {
-#if HAVE_GETMODULEHANDLE && defined(_WIN32)
+#ifdef _WIN32
         char datadir[MAX_PATH], *ls;
         base[2] = NULL;
 
@@ -2210,7 +2191,7 @@ double get_rotation(AVStream *st)
     if (fabs(theta - 90*round(theta/90)) > 2)
         av_log(NULL, AV_LOG_WARNING, "Odd rotation angle.\n"
                "If you want to help, upload a sample "
-               "of this file to https://streams.videolan.org/upload/ "
+               "of this file to ftp://upload.ffmpeg.org/incoming/ "
                "and contact the ffmpeg-devel mailing list. (ffmpeg-devel@ffmpeg.org)");
 
     return theta;
