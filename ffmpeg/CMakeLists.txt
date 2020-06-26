@@ -14,7 +14,7 @@ add_library(
 
         # Provides a relative path to your source file(s).
         ${native_srcs}
-        src/main/cpp/ffmpeg-invoke.cpp
+        src/main/jniLibs/ffmpeg-invoke.cpp
 #        ffmpeg-invoke.cpp
 #        cmdutils.c
 #        ffmpeg.c
