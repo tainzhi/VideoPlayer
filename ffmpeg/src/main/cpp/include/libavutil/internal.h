@@ -37,7 +37,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <assert.h>
-#include "../../config.h"
+#include "config.h"
 #include "attributes.h"
 #include "timer.h"
 #include "cpu.h"

@@ -1,10 +1,26 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -UNDEBUG")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -UNDEBUG")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+
+# 添加头文件
+include_directories(
+        src/main/cpp
+        src/main/cpp/ffmpeg
+        src/main/cpp/include
+)
+
+# 定义源码所在目录
+aux_source_directory(src/main/cpp SRC)
+aux_source_directory(src/main/cpp/ffmpeg SRC_FFMPEG)
+
+# 将 SRC_FFMPEG 添加到 SRC 中
+list(APPEND SRC ${SRC_FFMPEG})
 
 # 必须先添加源文件, 再添加.so文件, 否则报错  Cannot specify link libraries for target which is not built by the project
 # 加载多个 c 源文件
-file(GLOB native_srcs "src/main/cpp/*.c")
+# file(GLOB native_srcs "src/main/cpp/*.c")
+# 使用 ${native_srcs}
 add_library(
         # Specifies the name of the library.
         ffmpeg-invoke
@@ -12,69 +28,54 @@ add_library(
         # STATIC 静态库, 比如 livavcodec.a
         SHARED
 
-        # Provides a relative path to your source file(s).
-        ${native_srcs}
-        src/main/cpp/ffmpeg-invoke.cpp
-#        ffmpeg-invoke.cpp
-#        cmdutils.c
-#        ffmpeg.c
-#        ffmpeg_filter.c
-#        ffmpeg_hw.c
-#        ffmpeg_opt.c
-#        ffmpeg_qsv.c
-#        ffmpeg_videotoolbox.c
-#        ffplay.c
-#        ffprobe.c
+        ${SRC}
 )
 
-# 添加头文件
-include_directories(src/main/cpp/include)
-
-# set(distribution_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
-set(so_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
+# 设置ffmpeg库所在路径的目录
+set(distribution_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
 
 add_library( libavcodec SHARED IMPORTED )
 set_target_properties( libavcodec
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libavcodec.so)
+        ${distribution_DIR}/libavcodec.so)
 
 add_library( libavdevice SHARED IMPORTED )
 set_target_properties( libavdevice
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libavdevice.so )
+        ${distribution_DIR}/libavdevice.so )
 
 add_library( libavfilter SHARED IMPORTED )
 set_target_properties( libavfilter
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libavfilter.so )
+        ${distribution_DIR}/libavfilter.so )
 
 add_library( libavformat SHARED IMPORTED )
 set_target_properties( libavformat
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libavformat.so )
+        ${distribution_DIR}/libavformat.so )
 
 add_library( libavutil SHARED IMPORTED )
 set_target_properties( libavutil
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libavutil.so )
+        ${distribution_DIR}/libavutil.so )
 
 add_library( libpostproc SHARED IMPORTED )
 set_target_properties( libpostproc
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libpostproc.so )
+        ${distribution_DIR}/libpostproc.so )
 
 add_library( libswresample SHARED IMPORTED )
 set_target_properties(
         libswresample
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libswresample.so
+        ${distribution_DIR}/libswresample.so
 )
 
 
 add_library( libswscale SHARED IMPORTED )
 set_target_properties( libswscale
         PROPERTIES IMPORTED_LOCATION
-        ${so_DIR}/libswscale.so
+        ${distribution_DIR}/libswscale.so
 )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -113,6 +114,7 @@ target_link_libraries(
         libswscale
 
 
+#        native window
         -landroid
 
         # Links the target library to the log library

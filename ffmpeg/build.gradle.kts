@@ -17,14 +17,11 @@ android {
         versionName = "1.0"
         testInstrumentationRunner ="androidx.test.runner.AndroidJUnitRunner"
 
-        // externalNativeBuild {
-        //     cmake {
-        //         cppFlags("")
-        //     }
-        // }
-        ndk {
-            // abiFilters("armeabi-v7a")  // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
-            abiFilters("arm64-v8a")  // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+                abiFilters("arm64-v8a", "armeabi-v7a", "x86")
+            }
         }
     }
 
@@ -44,6 +41,12 @@ android {
             path  = file("CMakeLists.txt")
         }
     }
+
+    // dkVersion = "20.1.5948944"
+    //
+    // sourceSets.main {
+    //     jniLibs.srcDir 'libs'
+    // }
 }
 
 dependencies {
