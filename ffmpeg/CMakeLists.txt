@@ -4,7 +4,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -UNDEBUG")
 
 # 必须先添加源文件, 再添加.so文件, 否则报错  Cannot specify link libraries for target which is not built by the project
 # 加载多个 c 源文件
-file(GLOB native_srcs "src/main/jniLibs/*.c")
+file(GLOB native_srcs "src/main/cpp/*.c")
 add_library(
         # Specifies the name of the library.
         ffmpeg-invoke
@@ -28,11 +28,10 @@ add_library(
 )
 
 # 添加头文件
-include_directories(src/main/cpp)
-include_directories(src/main/jniLibs/include)
+include_directories(src/main/cpp/include)
 
 # set(distribution_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
-set(so_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs)
+set(so_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
 
 add_library( libavcodec SHARED IMPORTED )
 set_target_properties( libavcodec
