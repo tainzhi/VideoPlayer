@@ -667,7 +667,15 @@ int hw_device_setup_for_encode(OutputStream *ost);
 
 int hwaccel_decode_init(AVCodecContext *avctx);
 
+#ifdef _cplusplus
+extern "C" {
+#endif
+
 int ffmpeg_exec(int argc, char **argv);
+
+#ifdef _cplusplus
+}
+#endif
 
 void ffmpeg_cancel();
 

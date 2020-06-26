@@ -20,7 +20,8 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags("")
-                abiFilters("arm64-v8a", "armeabi-v7a", "x86")
+                // abiFilters("arm64-v8a", "armeabi-v7a", "x86")
+                abiFilters("arm64-v8a")
             }
         }
     }
@@ -42,8 +43,8 @@ android {
         }
     }
 
-    // dkVersion = "20.1.5948944"
-    //
+    // ndkVersion = "20.1.5948944"
+
     // sourceSets.main {
     //     jniLibs.srcDir 'libs'
     // }
