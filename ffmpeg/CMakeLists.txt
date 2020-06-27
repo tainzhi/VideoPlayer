@@ -9,6 +9,7 @@ include_directories(
         src/main/cpp
         src/main/cpp/ffmpeg
         src/main/cpp/include
+        src/main/jniLibs/include
 )
 
 # 定义源码所在目录

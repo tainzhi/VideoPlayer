@@ -12,7 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
-import com.tainzhi.android.ffmpeg.FFmpegInvoker
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
@@ -60,19 +59,6 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
 
         mBinding.localVideoFab.setOnClickListener {
             showShackBarMessage("to implement: 播放最近一次观看的视频")
-            val callback = object: FFmpegInvoker.Callback {
-                override fun onSuccess() {
-
-                }
-
-                override fun onFailure() {
-                }
-
-                override fun onProgress(percent: Float) {
-                }
-            }
-            Log.d("LikeFragment", "result=${FFmpegInvoker.getConfigInfo()}")
-
         }
 
 
