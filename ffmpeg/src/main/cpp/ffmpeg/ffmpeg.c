@@ -103,6 +103,7 @@
 
 #include "ffmpeg.h"
 #include "cmdutils.h"
+#include "ffmpeg-invoker.h"
 
 #include "libavutil/avassert.h"
 
