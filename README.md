@@ -32,13 +32,19 @@
 - GLSurfaceView: effect, 截屏
 
 ## module模块介绍
-- QMediaPlayer: Surface/TextureView/GLSurface, Android
-  MediaPlayer/IjkPlayer/exoplayer, 特效, 水印, 缓存视频
+### QMediaPlayer
+- Surface/TextureView/GLSurface
+- Android MediaPlayer/IjkPlayer/exoplayer, 特效, 水印, 缓存视频
 
 ### QMediaSpider
 - 爬取网络视频资源, 使用到技术有Jsoup, Volley, android test等等.
 - 破解算法参考[real-url](https://github.com/wbt5/real-url)
 - DouyuSpider
+
+### ffmpeg
+- 此module封装了[ffmpeg-4.3](http://ffmpeg.org/download.html#release_4.3), 用ndk20b编译
+- 该module可以执行ffmpeg命令, 在cpp线程中执行, 提供了回调,命令执行进度,命令停止功能
+- 编译过程和使用参考[ffmpeg/README.md](./ffmpeg/README.md)
 
 ## 实现的功能
 - PlayVideoViewActivity: VideoView+MediaController简单播放功能
@@ -163,4 +169,6 @@ https和http的区别
 - 专注于目标,而不是技术
 - 不要苛求于和原来的技术实现相同, 只要能解决问题, 哪管它新的实现思路
 - 对于某些实现细节的代码不熟悉不懂, 可以在github上高级搜索, 学习相应的代码段
+
+[ffmpeg]: #ffmpeg
 
