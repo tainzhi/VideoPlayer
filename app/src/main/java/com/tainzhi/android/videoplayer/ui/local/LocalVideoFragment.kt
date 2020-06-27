@@ -71,7 +71,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                 override fun onProgress(percent: Float) {
                 }
             }
-            Log.d("LikeFragment", "result=${FFmpegInvoker.exec("ffmpeg -version", callback)}")
+            Log.d("LikeFragment", "result=${FFmpegInvoker.getConfigInfo()}")
 
         }
 

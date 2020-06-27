@@ -1,98 +1,81 @@
 #include <jni.h>
 #include <string.h>
-#include "ffmpeg_thread.h"
-#include "android_log.h"
-#include "cmdutils.h"
+#include <android/log.h>
 
-//extern "C"
-//JNIEXPORT jint JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *env, jobject thiz, jint cmdnum,
-//                                                   jobjectArray cmdline) {
-//    //set java vm
-//    JavaVM *jvm = NULL;
-//    jclass  m_clazz = NULL;
-//    env->GetJavaVM(&jvm);
-//
-//    //---------------------------------C语言 反射Java 相关----------------------------------------
-//    //---------------------------------java 数组转C语言数组----------------------------------------
-//    int i = 0;//满足NDK所需的C99标准
-//    char **argv = NULL;//命令集 二维指针
-//    jstring *strr = NULL;
-//
-//    if (cmdline != NULL) {
-//        argv = (char **) malloc(sizeof(char *) * cmdnum);
-//        strr = (jstring *) malloc(sizeof(jstring) * cmdnum);
-//
-//        for (i = 0; i < cmdnum; ++i) {//转换
-//            strr[i] = (jstring)env->GetObjectArrayElement(cmdline, i);
-//            argv[i] = (char *) env->GetStringUTFChars(strr[i], 0);
-//        }
-//
-//    }
-//    //---------------------------------java 数组转C语言数组----------------------------------------
-//    //---------------------------------执行FFmpeg命令相关----------------------------------------
-//    //新建线程 执行ffmpeg 命令
-//    ffmpeg_thread_run_cmd(cmdnum, argv);
-//    //注册ffmpeg命令执行完毕时的回调
-////    ffmpeg_thread_callback(ffmpeg_callback);
-//
-//    free(strr);
-//    return 0;
-//}
 
+extern "C" {
+    #include "ffmpeg.h"
+    #include "ffmpeg_thread.h"
+//    #include "android_log.h"
+    #include "cmdutils.h"
+    #include "ffmpeg-invoker.h"
+}
+
+#define TAG "ffmpeg-invoker"
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
+
+static JavaVM * jvm = nullptr; //java虚拟机
+static jobject object = nullptr;
 
 /**
  * 回调执行Java方法
  * 参看 Jni反射+Java反射
  */
-//void callJavaMethod(JNIEnv *env, jclass clazz,int ret) {
-//    if (clazz == NULL) {
-//        LOGE("---------------clazz isNULL---------------");
-//        return;
-//    }
-//    //获取方法ID (I)V指的是方法签名 通过javap -s -public FFmpegCmd 命令生成
-//    jmethodID methodID = (*env)->GetStaticMethodID(env, clazz, "onExecuted", "(I)V");
-//    if (methodID == NULL) {
-//        LOGE("---------------methodID isNULL---------------");
-//        return;
-//    }
-//    //调用该java方法
-//    (*env)->CallStaticVoidMethod(env, clazz, methodID,ret);
-//}
-//void callJavaMethodProgress(JNIEnv *env, jclass clazz,float ret) {
-//    if (clazz == NULL) {
-//        LOGE("---------------clazz isNULL---------------");
-//        return;
-//    }
-//    //获取方法ID (I)V指的是方法签名 通过javap -s -public FFmpegCmd 命令生成
-//    jmethodID methodID = (*env)->GetStaticMethodID(env, clazz, "onProgress", "(F)V");
-//    if (methodID == NULL) {
-//        LOGE("---------------methodID isNULL---------------");
-//        return;
-//    }
-//    //调用该java方法
-//    (*env)->CallStaticVoidMethod(env, clazz, methodID,ret);
-//}
+void callJavaMethod(JNIEnv *env, jclass clazz,int ret) {
+    if (clazz == nullptr) {
+        LOGE("---------------clazz isnullptr---------------");
+        return;
+    }
+    //todo remove log
+    LOGD("callJavaMethod()");
+    if (clazz == nullptr) {
+        LOGE("class is null");
+    }
+    //获取方法ID (I)V指的是方法签名 通过javap -s -public FFmpegCmd 命令生成
+    jmethodID methodID = env->GetStaticMethodID(clazz, "onExecuted", "(I)V");
+    if (methodID == nullptr) {
+        LOGE("---------------methodID isnullptr---------------");
+        return;
+    }
+    //调用该java方法
+    env->CallStaticVoidMethod(clazz, methodID,ret);
+}
+
+void callJavaMethodProgress(JNIEnv *env, jclass clazz,float ret) {
+    if (clazz == nullptr) {
+        LOGE("---------------clazz isnullptr---------------");
+        return;
+    }
+    //获取方法ID (I)V指的是方法签名 通过javap -s -public FFmpegCmd 命令生成
+    jmethodID methodID = env->GetStaticMethodID(clazz, "onProgress", "(F)V");
+    if (methodID == nullptr) {
+        LOGE("---------------methodID isnullptr---------------");
+        return;
+    }
+    //调用该java方法
+    env->CallStaticVoidMethod( clazz, methodID,ret);
+}
 
 /**
  * c语言-线程回调
  */
-//static void ffmpeg_callback(int ret) {
-//    JNIEnv *env;
-//    //附加到当前线程从JVM中取出JNIEnv, C/C++从子线程中直接回到Java里的方法时  必须经过这个步骤
-//    (*jvm)->AttachCurrentThread(jvm, (void **) &env, NULL);
-//    callJavaMethod(env, m_clazz,ret);
-//
-//    //完毕-脱离当前线程
-//    (*jvm)->DetachCurrentThread(jvm);
-//}
-
-static JavaVM * jvm = NULL;
-
-extern "C" void ffmpeg_progress(float percent) {
+static void ffmpeg_callback(int ret) {
     JNIEnv *env;
-    jvm->AttachCurrentThread(reinterpret_cast<JNIEnv **>((void **) &env), NULL);
-//    callJavaMethodProgress(env, m_clazz,percent);
+    //附加到当前线程从JVM中取出JNIEnv, C/C++从子线程中直接回到Java里的方法时  必须经过这个步骤
+    jvm->AttachCurrentThread(&env, nullptr);
+    jclass clazz = env->GetObjectClass(object);
+    callJavaMethod(env, clazz,ret);
+
+    //完毕-脱离当前线程
+    jvm->DetachCurrentThread();
+}
+
+void ffmpeg_progress(float percent) {
+    JNIEnv *env;
+    jvm->AttachCurrentThread(&env, nullptr);
+    jclass clazz = env->GetObjectClass(object);
+    callJavaMethodProgress(env, clazz,percent);
     jvm->DetachCurrentThread();
 }
 
@@ -101,17 +84,16 @@ JNIEXPORT jint JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *env, jobject thiz, jint cmdnum,
                                                    jobjectArray cmdline) {
     //set java vm
-    JavaVM *jvm = NULL;
-    jclass  m_clazz = NULL;
     env->GetJavaVM(&jvm);
+    object = env->NewGlobalRef(thiz);
 
     //---------------------------------C语言 反射Java 相关----------------------------------------
     //---------------------------------java 数组转C语言数组----------------------------------------
     int i = 0;//满足NDK所需的C99标准
-    char **argv = NULL;//命令集 二维指针
-    jstring *strr = NULL;
+    char **argv = nullptr;//命令集 二维指针
+    jstring *strr = nullptr;
 
-    if (cmdline != NULL) {
+    if (cmdline != nullptr) {
         argv = (char **) malloc(sizeof(char *) * cmdnum);
         strr = (jstring *) malloc(sizeof(jstring) * cmdnum);
 
@@ -124,125 +106,96 @@ Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *env, jobject thiz, ji
     //---------------------------------java 数组转C语言数组----------------------------------------
     //---------------------------------执行FFmpeg命令相关----------------------------------------
     //新建线程 执行ffmpeg 命令
-//    ffmpeg_thread_run_cmd(cmdnum, argv);
-    ffmpeg_exec(cmdnum, argv);
+    ffmpeg_thread_run_cmd(cmdnum, argv);
     //注册ffmpeg命令执行完毕时的回调
-//    ffmpeg_thread_callback(ffmpeg_callback);
+    ffmpeg_thread_callback(ffmpeg_callback);
 
     free(strr);
     return 0;
 }
 
-//JNIEXPORT jint JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *env, jclass clazz, jint cmdnum,
-//                                                   jobjectArray cmdline) {
-//
-//JNIEXPORT jint JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *env, jclass clazz, jint cmdnum,
-//        jobjectArray cmdline) {
-//    (*env)->GetJavaVM(env, &jvm);
-//    m_clazz = (*env)->NewGlobalRef(env, clazz);
-//    //---------------------------------C语言 反射Java 相关----------------------------------------
-//    //---------------------------------java 数组转C语言数组----------------------------------------
-//    int i = 0;//满足NDK所需的C99标准
-//    char **argv = NULL;//命令集 二维指针
-//    jstring *strr = NULL;
-//
-//    if (cmdline != NULL) {
-//        argv = (char **) malloc(sizeof(char *) * cmdnum);
-//        strr = (jstring *) malloc(sizeof(jstring) * cmdnum);
-//
-//        for (i = 0; i < cmdnum; ++i) {//转换
-//            strr[i] = (jstring)(*env)->GetObjectArrayElement(env, cmdline, i);
-//            argv[i] = (char *) (*env)->GetStringUTFChars(env, strr[i], 0);
-//        }
-//
-//    }
-//    //---------------------------------java 数组转C语言数组----------------------------------------
-//    //---------------------------------执行FFmpeg命令相关----------------------------------------
-//    //新建线程 执行ffmpeg 命令
-//    ffmpeg_thread_run_cmd(cmdnum, argv);
-//    //注册ffmpeg命令执行完毕时的回调
-//    ffmpeg_thread_callback(ffmpeg_callback);
-//
-//    free(strr);
-//    return 0;
-//}
 
-//JNIEXPORT void JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exit(JNIEnv *env, jclass type) {
-//    (*env)->GetJavaVM(env, &jvm);
-//    m_clazz = (*env)->NewGlobalRef(env, type);
-//    ffmpeg_thread_cancel();
-//}
-//
-//JNIEXPORT jstring JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getConfigInfo(JNIEnv *env, jclass clazz) {
-//    char info[10000] = {0};
-//    sprintf(info, "%s\n", avcodec_configuration());
-//    return (*env)->NewStringUTF(env, info);
-//}
-//
-//JNIEXPORT jstring JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVCodecInfo(JNIEnv *env, jclass clazz) {
-//    char info[40000] = { 0 };
-//
-//    AVCodec *c_temp = av_codec_next(NULL);
-//    while (c_temp != NULL) {
-//        if (c_temp->decode != NULL) {
-//            sprintf(info, "%s[Dec]", info);
-//        }
-//        else {
-//            sprintf(info, "%s[Enc]", info);
-//        }
-//        switch (c_temp->type) {
-//            case AVMEDIA_TYPE_VIDEO:
-//                sprintf(info, "%s[Video]", info);
-//                break;
-//            case AVMEDIA_TYPE_AUDIO:
-//                sprintf(info, "%s[Audio]", info);
-//                break;
-//            default:
-//                sprintf(info, "%s[Other]", info);
-//                break;
-//        }
-//        sprintf(info, "%s[%10s]\n", info, c_temp->name);
-//
-//
-//        c_temp=c_temp->next;
-//    }
-//
-//    return (*env)->NewStringUTF(env, info);
-//}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exit(JNIEnv *env, jobject thiz) {
+    env->GetJavaVM(&jvm);
+//    object = env->NewGlobalRef(thiz);
+    ffmpeg_thread_cancel();
+    env->DeleteGlobalRef(thiz);
+}
 
-//JNIEXPORT jstring JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVFormatInfo(JNIEnv *env, jclass clazz) {
-//    char info[40000] = { 0 };
-//
-//    AVInputFormat *if_temp = av_iformat_next(NULL);
-//    AVOutputFormat *of_temp = av_oformat_next(NULL);
-//    //Input
-//    while (if_temp != NULL) {
-//        sprintf(info, "%s[In ][%10s]\n", info, if_temp->name);
-//        if_temp = if_temp->next;
-//    }
-//    //Output
-//    while (of_temp != NULL) {
-//        sprintf(info, "%s[Out][%10s]\n", info, of_temp->name);
-//        of_temp = of_temp->next;
-//    }
-//
-//    return (*env)->NewStringUTF(env, info);
-//}
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getConfigInfo(JNIEnv *env, jobject thiz) {
+    char info[10000] = {0};
+    sprintf(info, "%s\n", avcodec_configuration());
+    return env->NewStringUTF(info);
+}
 
-//JNIEXPORT jstring JNICALL
-//Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVFilterInfo(JNIEnv *env, jclass clazz) {
-//    char info[40000] = { 0 };
-//    AVFilter *f_temp = (AVFilter *)avfilter_next(NULL);
-//    while (f_temp != NULL) {
-//        sprintf(info, "%s[%10s]\n", info, f_temp->name);
-//        f_temp = f_temp->next;
-//    }
-//
-//    return (*env)->NewStringUTF(env, info);
-//}
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVFormatInfo(JNIEnv *env, jobject thiz) {
+    char info[40000] = {0};
+
+    AVCodec *c_temp = av_codec_next(nullptr);
+    while (c_temp != nullptr) {
+        if (c_temp->decode != nullptr) {
+            sprintf(info, "%s[dec]", info);
+        }
+        else {
+            sprintf(info, "%s[enc]", info);
+        }
+        switch (c_temp->type) {
+            case AVMEDIA_TYPE_VIDEO:
+                sprintf(info, "%s[Video]", info);
+                break;
+            case AVMEDIA_TYPE_AUDIO:
+                sprintf(info, "%s[Audio]", info);
+                break;
+            default:
+                sprintf(info, "%s[Other]", info);
+                break;
+        }
+        sprintf(info, "%s[%10s]\n", info, c_temp->name);
+
+
+        c_temp = c_temp->next;
+    }
+
+    return env->NewStringUTF(info);
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVFilterInfo(JNIEnv *env, jobject thiz) {
+    char info[40000] = { 0 };
+
+    AVInputFormat *if_temp = av_iformat_next(nullptr);
+    AVOutputFormat *of_temp = av_oformat_next(nullptr);
+    //Input
+    while (if_temp != nullptr) {
+        sprintf(info, "%s[In ][%10s]\n", info, if_temp->name);
+        if_temp = if_temp->next;
+    }
+    //Output
+    while (of_temp != nullptr) {
+        sprintf(info, "%s[Out][%10s]\n", info, of_temp->name);
+        of_temp = of_temp->next;
+    }
+
+    return env->NewStringUTF(info);
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_getAVCodecInfo(JNIEnv *env, jobject thiz) {
+    char info[40000] = { 0 };
+    AVFilter *f_temp = (AVFilter *)avfilter_next(nullptr);
+    while (f_temp != nullptr) {
+        sprintf(info, "%s[%10s]\n", info, f_temp->name);
+        f_temp = f_temp->next;
+    }
+
+    return env->NewStringUTF(info);
+}

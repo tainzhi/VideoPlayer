@@ -6,11 +6,11 @@ import android.util.Log
 object FFmpegInvoker {
     private var sCallback: Callback? = null
     external fun exec(argc: Int, argv: Array<String>): Int
-    // external fun exit()
-    // external fun getConfigInfo(): String
-    // external fun getAVCodecInfo(): String
-    // external fun getAVFormatInfo(): String
-    // external fun getAVFilterInfo(): String
+    external fun exit()
+    external fun getConfigInfo(): String
+    external fun getAVCodecInfo(): String
+    external fun getAVFormatInfo(): String
+    external fun getAVFilterInfo(): String
 
     fun exec(cmd: String, listener: Callback) {
         sCallback = listener
@@ -22,13 +22,14 @@ object FFmpegInvoker {
     /**
      * FFmpeg执行结束回调，由C代码中调用
      */
+    @JvmStatic
     fun onExecuted(ret: Int) {
         if (sCallback != null) {
             if (ret == 0) {
-                sCallback!!.onProgress(1f)
-                sCallback!!.onSuccess()
+                sCallback?.onProgress(1f)
+                sCallback?.onSuccess()
             } else {
-                sCallback!!.onFailure()
+                sCallback?.onFailure()
             }
         }
     }
@@ -36,9 +37,10 @@ object FFmpegInvoker {
     /**
      * FFmpeg执行进度回调，由C代码调用
      */
+    @JvmStatic
     fun onProgress(percent: Float) {
         if (sCallback != null) {
-            sCallback!!.onProgress(percent)
+            sCallback?.onProgress(percent)
         }
     }
 
