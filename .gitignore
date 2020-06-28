@@ -103,7 +103,6 @@ lint/tmp/
 *.pch
 
 # Compiled Dynamic libraries
-*.so
 *.dylib
 *.dll
 
@@ -283,7 +282,6 @@ hs_err_pid*
 
 # Shared objects (inc. Windows DLLs)
 *.dll
-*.so
 *.so.*
 *.dylib
 

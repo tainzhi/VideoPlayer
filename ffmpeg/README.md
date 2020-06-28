@@ -6,7 +6,6 @@
 # 使用方法
 
 ```kotlin
-```kotlin
 import com.tainzhi.android.ffmpeg.FFmpegInvokerimport 
 
 // 获取编译ffmpeg的配置信息
