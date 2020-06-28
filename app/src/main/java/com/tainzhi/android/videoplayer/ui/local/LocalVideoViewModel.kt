@@ -31,6 +31,10 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
         }
     }
 
+    /**
+     * 删除视频uri, 如果删除失败, 捕获了权限相同通知, 提示用户重新获取删除权限(android10+上)
+     * @param uri 要删除的视频uri
+     */
     fun deleteVideo(uri: Uri) {
         launch {
             withContext(dispatcherProvider.io) {
