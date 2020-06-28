@@ -68,7 +68,7 @@ class SplashActivity : AppCompatActivity() {
             var granted = true
             var _showRationale = false
 
-            for (i in 0 until grantResults.size) {
+            for (i in grantResults.indices) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                     granted = false
                     _showRationale = _showRationale || shouldShowRequestPermissionRationale(permissions[i])
