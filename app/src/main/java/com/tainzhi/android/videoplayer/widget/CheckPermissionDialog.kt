@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentManager
  
 
 class CheckPermissionDialog: DialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?) =
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog =
             AlertDialog.Builder(activity)
                     .setTitle("权限设置")
                     .setMessage("缺少读取本机视频的权限和访问网络权限, 请到Settings设置")
@@ -36,11 +36,11 @@ class CheckPermissionDialog: DialogFragment() {
                     .create()
 }
 
-fun Activity.showCheckPermissionDialog(fragmentMamager: FragmentManager) {
+fun Activity.showCheckPermissionDialog(fragmentManager: FragmentManager) {
     CheckPermissionDialog().apply  {
         // arguments = Bundle().apply {
         //     putString("title", "title")
         // }
-    }.show(fragmentMamager, "Check Permission")
+    }.show(fragmentManager, "Check Permission")
 }
 

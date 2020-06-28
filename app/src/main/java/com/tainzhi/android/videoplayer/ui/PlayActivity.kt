@@ -31,6 +31,8 @@ class PlayActivity : AppCompatActivity() {
         val mVideoProgress = bundle.getLong(VIDEO_PROGRESS, 0)
         val resolution = bundle.getString(VIDEO_RESOLUTION)
         var orientation = 0
+        // 根据视频的高宽,判断是竖屏还是横屏播放
+        // resolution 1920x1080, 1920为height, 1080为width
         if (!resolution.isNullOrEmpty()) {
             val heightAndwidth = resolution.split("x")
             val height = heightAndwidth[0]

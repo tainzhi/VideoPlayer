@@ -29,7 +29,6 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>() {
 
     companion object {
-
         private const val DELETE_PERMISSION_REQUEST = 0x1033
     }
 
@@ -84,6 +83,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             localVideoList.observe(viewLifecycleOwner, Observer { it ->
                 localVideoAdapter.setList(it)
             })
+            // 在Android10+上,获取删除权限
             permissionNeededForDelete.observe(viewLifecycleOwner, Observer { intentSender ->
                 intentSender?.let {
                     // On Android 10+, if the app doesn't have permission to modify
