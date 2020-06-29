@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer-MediaSpider.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer-MediaSpider.iml" group="VideoPlayer/MediaSpider" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer-QMediaPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer-QMediaPlayer.iml" group="VideoPlayer/QMediaPlayer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer-common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer-common.iml" group="VideoPlayer/common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer-ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer-ffmpeg.iml" group="VideoPlayer/ffmpeg" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="VideoPlayer/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/common.iml" group="VideoPlayer/common" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/ffmpeg.iml" group="VideoPlayer/ffmpeg" />
