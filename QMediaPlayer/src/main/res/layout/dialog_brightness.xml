@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="155dp"
+	android:layout_height="120dp"
+	android:background="@drawable/bg_dialog">
+	
+	<ImageView
+		android:id="@+id/dialogBrightnessIv"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_marginTop="8dp"
+		android:src="@drawable/ic_brightness"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<TextView
+		android:id="@+id/dialogBrightnessTv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@android:color/white"
+		android:textSize="18sp"
+		app:layout_constraintEnd_toEndOf="@+id/dialogBrightnessIv"
+		app:layout_constraintStart_toStartOf="@+id/dialogBrightnessIv"
+		app:layout_constraintTop_toBottomOf="@+id/dialogBrightnessIv"
+		tools:text="30%" />
+	
+	<ProgressBar
+		android:id="@+id/dialogBrightnessProgressBar"
+		style="@style/PlayProgress"
+		android:layout_width="100dp"
+		android:layout_height="3dp"
+		android:layout_marginStart="20dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginEnd="20dp"
+		android:layout_marginBottom="10dp"
+		android:max="100"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="@+id/dialogBrightnessTv"
+		app:layout_constraintStart_toStartOf="@+id/dialogBrightnessTv"
+		app:layout_constraintTop_toBottomOf="@id/dialogBrightnessTv"
+		tools:progress="30" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

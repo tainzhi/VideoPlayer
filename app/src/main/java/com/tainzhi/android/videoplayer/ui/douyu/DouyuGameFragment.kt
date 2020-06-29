@@ -75,7 +75,6 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
                 addItemDecoration(DouyuRoomItemDecoration())
             }
             layoutManager = GridLayoutManager(requireActivity(), 2).apply {
-                val originSpanSizeLookup = spanSizeLookup
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         if (position == 0) return 2
