@@ -26,7 +26,7 @@ abstract class IMediaInterface(var mVideoView: VideoView) {
     abstract fun release()
     abstract val currentPosition: Long
     abstract val duration: Long
-    abstract fun setVolume(leftVoluem: Float, rightVolume: Float)
+    abstract fun setVolume(leftVolume: Float, rightVolume: Float)
     abstract fun setSpeed(speed: Float)
     abstract fun setDisplay(surfaceHolder: SurfaceHolder)
     abstract fun setDisplay(surface: Surface)
