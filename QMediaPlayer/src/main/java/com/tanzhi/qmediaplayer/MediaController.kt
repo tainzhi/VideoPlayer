@@ -22,8 +22,6 @@ class MediaController(val context: Context) {
     private lateinit var contentView: View
     private val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-    var parentWidth = 0
-    var parentHeight = 0
     // 当前MediaController是否显示
     var isShowing = true
 
@@ -53,8 +51,6 @@ class MediaController(val context: Context) {
     fun bindVideoView(videoView: VideoView) {
         this@MediaController.videoView = videoView
         parent = videoView.parent as ViewGroup
-        parentWidth = parent.width
-        parentHeight = parent.height
         contentView = makeControllerView().apply {
             setOnTouchListener(onTouchListener)
             post(showProgress)
@@ -113,14 +109,14 @@ class MediaController(val context: Context) {
         }
     }
 
-    var downX = 0f
-    var downY = 0f
-    var changeVolume = false
-    var changePosition = false
-    var changeBrightness = false
-    var gestureDownPosition = 0L // 触摸屏幕时的视频播放进度
-    var gestureDownBrightness = 0f // 触摸屏幕时的视频亮度
-    var gestureDownVolume = 0 // 触摸屏幕时的声音大小
+    private var downX = 0f
+    private var downY = 0f
+    private var changeVolume = false
+    private var changePosition = false
+    private var changeBrightness = false
+    private var gestureDownPosition = 0L // 触摸屏幕时的视频播放进度
+    private var gestureDownBrightness = 0f // 触摸屏幕时的视频亮度
+    private var gestureDownVolume = 0 // 触摸屏幕时的声音大小
     private val onTouchListener = object : View.OnTouchListener {
         override fun onTouch(v: View, event: MotionEvent): Boolean {
             val x = event.x
@@ -134,6 +130,8 @@ class MediaController(val context: Context) {
                     changeBrightness = false
                 }
                 MotionEvent.ACTION_MOVE -> {
+                    val parentWidth = contentView.width
+                    val parentHeight = contentView.height
                     val deltaX = event.x - downX
                     var deltaY = event.y - downY
                     val absDeltaX = abs(deltaX)
@@ -166,7 +164,12 @@ class MediaController(val context: Context) {
                         }
                     }
                     if (changePosition) {
-                        // TODO: 2020/5/27
+                        val duration = videoView.videoDuration
+                        var seekTimePosition = (gestureDownPosition + deltaX * duration / parentWidth).toLong()
+                        if (seekTimePosition > duration) {
+                            seekTimePosition = duration
+                        }
+                        showProgressDialog( deltaX.toInt(), seekTimePosition, duration )
                     }
                     if (changeBrightness) {
                         deltaY = -deltaY
@@ -182,6 +185,7 @@ class MediaController(val context: Context) {
                         Util.getWindow(context).attributes = params
                         val brightnessPercent = (gestureDownBrightness * 100 / 255 + deltaY * 3 * 100 /parentHeight)
                         showBrightnessDialog(brightnessPercent.toInt())
+                        downY = y
                     }
                     if (changeVolume) {
                         deltaY = -deltaY
@@ -197,6 +201,9 @@ class MediaController(val context: Context) {
                     dismissProgressDialog()
                     dismissBrightnessDialog()
                     dismissVolumeDialog()
+                    if (changePosition) {
+                        // todo seek position
+                    }
                 }
             }
             return true
@@ -237,13 +244,19 @@ class MediaController(val context: Context) {
     }
 
     private var brightnessDialog: Dialog? = null
+    private lateinit var dialogBrightnessIv: ImageView
+    private lateinit var dialogBrightnessTv: TextView
+    private lateinit var dialogBrightnessProgressBar: ProgressBar
     private fun showBrightnessDialog(brightnessPercent: Int) {
         if (brightnessDialog == null) {
-            val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
-            // FIXME: 2020/5/28
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_brightness, null)
+            dialogBrightnessIv = view.findViewById<ImageView>(R.id.dialogBrightnessIv)
+            dialogBrightnessTv = view.findViewById<TextView>(R.id.dialogBrightnessTv)
+            dialogBrightnessProgressBar = view.findViewById(R.id.dialogBrightnessProgressBar)
+            brightnessDialog = createDialogWithView(view)
         }
-        if (!brightnessDialog!!.isShowing) {
-            brightnessDialog!!.show()
+        if (brightnessDialog?.isShowing != true) {
+            brightnessDialog?.show()
         }
         var brightness = 0
         if (brightnessPercent > 100) {
@@ -251,6 +264,8 @@ class MediaController(val context: Context) {
         } else if (brightnessPercent < 0) {
             brightness = 0
         }
+        dialogBrightnessTv.text = "${brightness}%"
+        dialogBrightnessProgressBar.progress = brightness
 
     }
 
@@ -258,16 +273,31 @@ class MediaController(val context: Context) {
         brightnessDialog?.dismiss()
     }
 
-    var progressDialog: Dialog? = null
-    private fun showProgressDialog(deltaX: Int, seekTime: String, seekTimePosition: Long, totalTime: String, totalTimeDuration: Long) {
+    private var progressDialog: Dialog? = null
+    private lateinit var progressDialogProgressIv: ImageView
+    private lateinit var progressDialogSeekTimeTv: TextView
+    private lateinit var progressDialogDurationTv: TextView
+    private lateinit var progressDialogProgressBar: ProgressBar
+    private fun showProgressDialog(deltaX: Int, seekTimePosition: Long, totalTimeDuration: Long) {
         if (progressDialog == null) {
-            val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
-            // FIXME: 2020/5/28
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_progress, null)
+            progressDialogProgressIv = view.findViewById(R.id.dialogProgressIv)
+            progressDialogDurationTv = view.findViewById(R.id.dialogProgressDurationTv)
+            progressDialogSeekTimeTv = view.findViewById(R.id.dialogProgressSeekTimeTv)
+            progressDialogProgressBar = view.findViewById(R.id.dialogProgressProgressBar)
+            progressDialog = createDialogWithView(view)
         }
-        if (!progressDialog!!.isShowing) {
-            progressDialog!!.show()
+        if (progressDialog?.isShowing != true) {
+            progressDialog?.show()
         }
-        // TODO: 2020/5/28  
+        progressDialogSeekTimeTv.text = Util.stringForTime(seekTimePosition)
+        progressDialogDurationTv.text = "/" + Util.stringForTime(totalTimeDuration)
+        progressSeekbar.progress = if (totalTimeDuration <= 0) 0 else (seekTimePosition * 100 / totalTimeDuration).toInt()
+        if (deltaX > 0) {
+            progressDialogProgressIv.setBackgroundResource(R.drawable.ic_fast_forward)
+        } else {
+            progressDialogProgressIv.setBackgroundResource(R.drawable.ic_fast_rewind)
+        }
     }
 
     private fun dismissProgressDialog() {
