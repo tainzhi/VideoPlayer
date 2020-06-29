@@ -77,13 +77,12 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
             videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(mVideoView.videoUri)
             simpleExoPlayer?.addVideoListener(this)
-            // TODO: 2020/5/19
-            // val isLoop = mVideoView.loop
-            // if (isLoop) {
-            //     simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
-            // } else {
-            //     simpleExoPlayer.repeatMode = Player.REPEAT_MODE_OFF
-            // }
+            val isLoop = mVideoView.loop
+            if (isLoop) {
+                simpleExoPlayer?.repeatMode = Player.REPEAT_MODE_ONE
+            } else {
+                simpleExoPlayer?.repeatMode = Player.REPEAT_MODE_OFF
+            }
             simpleExoPlayer?.prepare(videoSource)
             simpleExoPlayer?.playWhenReady = true
             callback = OnBufferUpdate()
@@ -119,9 +118,11 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
         }
     }
 
-    override val currentPosition = simpleExoPlayer?.contentPosition ?: 0
+    override val currentPosition: Long
+        get() = simpleExoPlayer?.contentPosition ?: 0
 
-    override val duration: Long = simpleExoPlayer?.duration ?: 0
+    override val duration: Long
+        get() = simpleExoPlayer?.duration ?: 0
 
 
     override fun setVolume(leftVoluem: Float, rightVolume: Float) {

@@ -44,8 +44,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         mMediaHandler!!.post {
             try {
                 mMediaPlayer = MediaPlayer()
-                // TODO: 2020/5/19
-                // mMediaPlayer!!.isLooping = mVideoView.loop
+                mMediaPlayer!!.isLooping = mVideoView.loop
                 mMediaPlayer!!.setScreenOnWhilePlaying(true)
                 mMediaPlayer!!.setOnPreparedListener(this@IMediaSystem)
                 mMediaPlayer!!.setOnCompletionListener(this@IMediaSystem)
@@ -81,7 +80,8 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         mMediaHandler!!.post { mMediaPlayer!!.pause() }
     }
 
-    override val isPlaying = mMediaPlayer?.isPlaying ?: false
+    override val isPlaying
+            get() = mMediaPlayer?.isPlaying ?: false
 
     override fun seekTo(time: Long) {
         mMediaHandler!!.post {
@@ -112,15 +112,17 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
         }
     }
 
-    override val currentPosition = mMediaPlayer?.currentPosition?.toLong() ?: 0
+    override val currentPosition
+        get() = mMediaPlayer?.currentPosition?.toLong() ?: 0
 
-    override val duration = mMediaPlayer?.duration?.toLong() ?: 0
+    override val duration
+        get() = mMediaPlayer?.duration?.toLong() ?: 0
 
-    override fun setVolume(leftVoluem: Float, rightVolume: Float) {
+    override fun setVolume(leftVolume: Float, rightVolume: Float) {
         if (mMediaHandler == null) return
         mMediaHandler!!.post {
             if (mMediaPlayer != null) {
-                mMediaPlayer!!.setVolume(leftVoluem, rightVolume)
+                mMediaPlayer!!.setVolume(leftVolume, rightVolume)
             }
         }
     }

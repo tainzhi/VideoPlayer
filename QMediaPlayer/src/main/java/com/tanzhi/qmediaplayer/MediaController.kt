@@ -80,7 +80,9 @@ class MediaController(val context: Context) {
         playPauseBtn.setOnClickListener {
             doPlayPause()
         }
-        view.findViewById<SeekBar>(R.id.progressBar).setOnSeekBarChangeListener(seekBarChangeListener)
+        progressSeekbar = view.findViewById<SeekBar>(R.id.progressBar).apply {
+            setOnSeekBarChangeListener(seekBarChangeListener)
+        }
         currentTimeTv = view.findViewById(R.id.currentTimeTv)
         endTimeTv = view.findViewById(R.id.endTimeTv)
     }
@@ -321,6 +323,7 @@ class MediaController(val context: Context) {
     private fun setProgress() : Int{
         val position = videoView.videoCurrentPosition
         val duration = videoView.videoDuration
+        // TODO: 2020/6/29 fixme 
         if (duration > 0) {
             progressSeekbar.progress = 1000 * position.toInt() / duration.toInt()
         }

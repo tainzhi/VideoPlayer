@@ -100,13 +100,14 @@
 		app:layout_constraintDimensionRatio="h, 635:10"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintWidth_percent="0.65" />
+		app:layout_constraintWidth_percent="0.70" />
 	
 	<TextView
 		android:id="@+id/endTimeTv"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		tools:text="1:60:59"
+		android:textColor="@android:color/white"
 		app:layout_constraintBottom_toBottomOf="@+id/progressBar"
 		app:layout_constraintStart_toEndOf="@+id/progressBar"
 		app:layout_constraintTop_toTopOf="@+id/progressBar" />
@@ -115,7 +116,8 @@
 		android:id="@+id/currentTimeTv"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		tools:text="00:38"
+		android:textColor="@android:color/white"
+		tools:text="01:53:38"
 		app:layout_constraintBottom_toBottomOf="@+id/progressBar"
 		app:layout_constraintEnd_toStartOf="@+id/progressBar"
 		app:layout_constraintTop_toTopOf="@+id/progressBar" />
