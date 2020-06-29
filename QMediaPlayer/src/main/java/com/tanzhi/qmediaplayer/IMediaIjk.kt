@@ -51,6 +51,7 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
                 setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48)
                 setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024.toLong())
                 setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1)
+                isLooping = mVideoView.loop
                 setOnPreparedListener(this@IMediaIjk)
                 setOnVideoSizeChangedListener(this@IMediaIjk)
                 setOnCompletionListener(this@IMediaIjk)

@@ -60,8 +60,6 @@ class VideoView @JvmOverloads constructor(
 
     var mSurfaceHolder: IRenderView.ISurfaceHolder? = null
     private var mRenderView: IRenderView? = null
-    var enableSurfaceView = true
-    var enableTextureView = false
 
 
     var videoWidth = 0
@@ -73,8 +71,10 @@ class VideoView @JvmOverloads constructor(
     var videoTitle = ""
 
     // FIXME: 2020/5/27 最好添加判断, 只要在播放时才返回当前进度
-    var videoCurrentPosition = iMediaPlayer?.currentPosition ?: 0
-    var videoDuration = iMediaPlayer?.duration ?: 0
+    var videoCurrentPosition = 0L
+        get() = iMediaPlayer?.currentPosition ?: 0
+    var videoDuration = 0L
+        get() = iMediaPlayer?.duration ?: 0
 
     var videoRotationDegree = 0
 
@@ -109,11 +109,11 @@ class VideoView @JvmOverloads constructor(
             field = value
             setScreenAspectRatio(value)
         }
+    // 是否循环播放
+    var loop = true
 
-    var isPlaying = false
-        get() {
-            return iMediaPlayer?.isPlaying ?: false
-        }
+    val isPlaying : Boolean
+        get() = iMediaPlayer?.isPlaying ?: false
 
     fun setEffect(effect: ShaderInterface) {
         mRenderView?.renderEffect = effect
