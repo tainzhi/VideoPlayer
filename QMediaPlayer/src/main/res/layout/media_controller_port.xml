@@ -3,6 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
+	tools:ignore="ContentDescription"
 	android:layout_height="match_parent">
 	
 	<View
@@ -26,7 +27,8 @@
 		app:layout_constraintTop_toTopOf="@id/top_panel_bg"
 		app:layout_constraintVertical_bias="0.65"
 		app:layout_constraintWidth_percent="0.05"
-		app:srcCompat="@drawable/ic_arrow_back" />
+		app:srcCompat="@drawable/ic_arrow_back"
+		/>
 	
 	<TextView
 		android:id="@+id/videoTitleTv"
@@ -116,7 +118,7 @@
 		android:id="@+id/currentTimeTv"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textColor="@android:color/white"
+		android:textColor="?attr/colorPrimary"
 		tools:text="01:53:38"
 		app:layout_constraintBottom_toBottomOf="@+id/progressBar"
 		app:layout_constraintEnd_toStartOf="@+id/progressBar"
