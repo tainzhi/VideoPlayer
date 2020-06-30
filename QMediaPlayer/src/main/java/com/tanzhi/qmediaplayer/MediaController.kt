@@ -321,8 +321,8 @@ class MediaController(val context: Context) {
     private val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             val duration = videoView.videoDuration
-            val newPosition = duration * progress / 1000L
-            videoView.seekTo(duration * progress / 1000L)
+            val newPosition = duration * progress / 100
+            videoView.seekTo(newPosition)
             currentTimeTv.text = Util.stringForTime(newPosition)
         }
 
@@ -333,7 +333,6 @@ class MediaController(val context: Context) {
 
         override fun onStopTrackingTouch(seekBar: SeekBar?) {
             isDragging = false
-            setProgress()
             contentView.post(showProgress)
         }
     }
@@ -355,7 +354,7 @@ class MediaController(val context: Context) {
         val duration = videoView.videoDuration
         // TODO: 2020/6/29 fixme 
         if (duration > 0) {
-            progressSeekbar.progress = 1000 * position.toInt() / duration.toInt()
+            progressSeekbar.progress = (position * 100 / duration).toInt()
         }
         currentTimeTv.text = Util.stringForTime(position)
         endTimeTv.text = Util.stringForTime(duration)
