@@ -6,6 +6,7 @@ import android.media.AudioManager
 import android.provider.Settings
 import android.view.*
 import android.widget.*
+import java.lang.Integer.min
 import kotlin.math.abs
 
 /**
@@ -116,6 +117,7 @@ class MediaController(val context: Context) {
     private var gestureDownPosition = 0L // 触摸屏幕时的视频播放进度
     private var gestureDownBrightness = 0f // 触摸屏幕时的视频亮度
     private var gestureDownVolume = 0 // 触摸屏幕时的声音大小
+    private var amplification = 1 // 放大系数
     private val onTouchListener = object : View.OnTouchListener {
         override fun onTouch(v: View, event: MotionEvent): Boolean {
             val x = event.x
@@ -154,7 +156,7 @@ class MediaController(val context: Context) {
                                         e.printStackTrace()
                                     }
                                 } else {
-                                    gestureDownBrightness = lp.screenBrightness * 255
+                                    gestureDownBrightness = lp.screenBrightness
                                 }
                             } else {
                                 changeVolume = true
@@ -172,27 +174,30 @@ class MediaController(val context: Context) {
                     }
                     if (changeBrightness) {
                         deltaY = -deltaY
-                        val deltaBrightness = 255 * deltaY * 3 / parentHeight
-                        val params = Util.getWindow(context).attributes
-                        if ((gestureDownBrightness + deltaBrightness) / 255 >= 1) {
-                            params.screenBrightness = 1f
-                        } else if((gestureDownBrightness + deltaBrightness) / 255 <= 0) {
-                            params.screenBrightness = 0.01f
-                        } else {
-                            params.screenBrightness =  (gestureDownBrightness + deltaBrightness) / 255
+                        val deltaBrightness = amplification * deltaY  / parentHeight
+                        var afterChangeBrightness = gestureDownBrightness + deltaBrightness
+                        if (afterChangeBrightness <= 0) {
+                            afterChangeBrightness = 0f
+                        } else if (afterChangeBrightness >= 1){
+                            afterChangeBrightness = 1f
                         }
+                        val params = Util.getWindow(context).attributes
+                        params.screenBrightness = afterChangeBrightness
                         Util.getWindow(context).attributes = params
-                        val brightnessPercent = (gestureDownBrightness * 100 / 255 + deltaY * 3 * 100 /parentHeight)
-                        showBrightnessDialog(brightnessPercent.toInt())
-                        downY = y
+                        showBrightnessDialog(afterChangeBrightness )
                     }
                     if (changeVolume) {
                         deltaY = -deltaY
                         val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-                        val deltaVolume = maxVolume * deltaY * 3 / parentHeight
-                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (gestureDownVolume + deltaVolume).toInt(), 0)
-                        val volumePercent = gestureDownVolume * 100 / maxVolume + deltaY * 3 * 100 / parentHeight
-                        showVolumeDialog(-deltaY, volumePercent)
+                        val deltaVolume = maxVolume * deltaY * amplification / parentHeight
+                        var afterChangeVolume = (gestureDownVolume + deltaVolume).toInt()
+                        if (afterChangeVolume <= 0) {
+                            afterChangeVolume = 0
+                        } else {
+                            afterChangeVolume = min(afterChangeVolume, maxVolume)
+                        }
+                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, afterChangeVolume, 0)
+                        showVolumeDialog(afterChangeVolume * 100/ maxVolume )
                     }
 
                 }
@@ -213,7 +218,7 @@ class MediaController(val context: Context) {
     private lateinit var dialogVolumeIv: ImageView
     private lateinit var dialogVolumeTv: TextView
     private lateinit var dialogVolumeProgressBar: ProgressBar
-    private fun showVolumeDialog(deltaY: Float, volumePercent: Float) {
+    private fun showVolumeDialog(volumePercent: Int) {
         if (volumeDialog == null) {
             val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
             dialogVolumeIv = view.findViewById<ImageView>(R.id.dialogVolumeIv)
@@ -227,14 +232,8 @@ class MediaController(val context: Context) {
         } else {
             dialogVolumeIv.setImageResource(R.drawable.ic_volume)
         }
-        var volume = 0
-        if (volumePercent > 100) {
-            volume = 100
-        } else if (volumePercent < 0) {
-            volume = 0
-        }
-        dialogVolumeTv.text = "${volume}%"
-        dialogVolumeProgressBar.progress = volume
+        dialogVolumeTv.text = "${volumePercent}%"
+        dialogVolumeProgressBar.progress = volumePercent
         if (!volumeDialog!!.isShowing) volumeDialog?.show()
     }
 
@@ -246,7 +245,7 @@ class MediaController(val context: Context) {
     private lateinit var dialogBrightnessIv: ImageView
     private lateinit var dialogBrightnessTv: TextView
     private lateinit var dialogBrightnessProgressBar: ProgressBar
-    private fun showBrightnessDialog(brightnessPercent: Int) {
+    private fun showBrightnessDialog(brightnessPercent: Float) {
         if (brightnessDialog == null) {
             val view = LayoutInflater.from(context).inflate(R.layout.dialog_brightness, null)
             dialogBrightnessIv = view.findViewById<ImageView>(R.id.dialogBrightnessIv)
@@ -257,12 +256,8 @@ class MediaController(val context: Context) {
         if (brightnessDialog?.isShowing != true) {
             brightnessDialog?.show()
         }
-        var brightness = 0
-        if (brightnessPercent > 100) {
-            brightness = 100
-        } else if (brightnessPercent < 0) {
-            brightness = 0
-        }
+
+        val brightness: Int = (brightnessPercent * 100).toInt()
         dialogBrightnessTv.text = "${brightness}%"
         dialogBrightnessProgressBar.progress = brightness
 
@@ -291,7 +286,10 @@ class MediaController(val context: Context) {
         }
         progressDialogSeekTimeTv.text = Util.stringForTime(seekTimePosition)
         progressDialogDurationTv.text = "/" + Util.stringForTime(totalTimeDuration)
-        progressSeekbar.progress = if (totalTimeDuration <= 0) 0 else (seekTimePosition * 100 / totalTimeDuration).toInt()
+        val progress = if (totalTimeDuration <= 0) 0 else (seekTimePosition * 100 / totalTimeDuration).toInt()
+        progressSeekbar.progress = progress
+        progressDialogProgressBar.progress = progress
+        videoView.seekTo(seekTimePosition)
         if (deltaX > 0) {
             progressDialogProgressIv.setBackgroundResource(R.drawable.ic_fast_forward)
         } else {
@@ -311,7 +309,7 @@ class MediaController(val context: Context) {
             addFlags(Window.FEATURE_ACTION_BAR)
             addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
             addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-            setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            // setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
             setGravity(Gravity.CENTER)
         }
         return dialog
@@ -319,8 +317,14 @@ class MediaController(val context: Context) {
 
     private val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            // seekBar.progress会触发该回调
+            // 如果不是用户手动调节progress, 则不处理
+            if (!fromUser) {
+                return
+            }
             val duration = videoView.videoDuration
             val newPosition = duration * progress / 100
+            logD(TAG, "onProgressChanged(), newPosition=${newPosition}, progressBar=${progress}")
             videoView.seekTo(newPosition)
             currentTimeTv.text = Util.stringForTime(newPosition)
         }

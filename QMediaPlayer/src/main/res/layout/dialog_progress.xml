@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="155dp"
-	android:layout_height="120dp"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
 	android:background="@drawable/bg_dialog">
 	
 	<ImageView
@@ -20,35 +20,44 @@
 		android:id="@+id/dialogProgressSeekTimeTv"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_marginStart="20dp"
+		android:gravity="end"
 		android:textColor="?attr/colorPrimary"
 		tools:textColor="@android:color/holo_red_dark"
+		android:minWidth="70dp"
 		android:textSize="18sp"
 		app:layout_constraintStart_toStartOf="@+id/dialogProgressIv"
 		app:layout_constraintEnd_toStartOf="@id/dialogProgressDurationTv"
 		app:layout_constraintTop_toBottomOf="@+id/dialogProgressIv"
-		tools:text="05:38" />
+		tools:text="05:11:38" />
 	
 	<TextView
 		android:id="@+id/dialogProgressDurationTv"
 		android:layout_width="wrap_content"
+		android:layout_marginEnd="20dp"
+		android:gravity="start"
 		android:layout_height="wrap_content"
+		android:minWidth="70dp"
 		android:textColor="@android:color/white"
 		android:textSize="18sp"
 		app:layout_constraintStart_toEndOf="@+id/dialogProgressSeekTimeTv"
 		app:layout_constraintEnd_toEndOf="@id/dialogProgressIv"
 		app:layout_constraintTop_toBottomOf="@+id/dialogProgressIv"
-		tools:text="/20:33" />
+		tools:text="/20:20:33" />
 	
 	<ProgressBar
 		android:id="@+id/dialogProgressProgressBar"
 		style="@style/PlayProgress"
-		android:layout_width="100dp"
+		android:layout_width="0dp"
+		android:layout_marginStart="20dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginEnd="20dp"
+		android:layout_marginBottom="14dp"
 		android:layout_height="3dp"
-		android:layout_marginBottom="10dp"
 		android:max="100"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="@+id/dialogProgressIv"
-		app:layout_constraintStart_toStartOf="@+id/dialogProgressIv"
 		app:layout_constraintTop_toBottomOf="@+id/dialogProgressSeekTimeTv"
 		tools:progress="30" />
 
