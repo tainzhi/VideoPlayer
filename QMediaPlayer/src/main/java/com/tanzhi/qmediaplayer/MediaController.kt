@@ -23,7 +23,7 @@ class MediaController(val context: Context) {
     private val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
     // 当前MediaController是否显示
-    var isShowing = true
+    var isShowing = false
 
     // 是否在拖动进度条
     private var isDragging = false
@@ -55,7 +55,6 @@ class MediaController(val context: Context) {
             setOnTouchListener(onTouchListener)
             post(showProgress)
         }
-        parent.addView(contentView, layoutParams)
     }
 
     private fun makeControllerView() : View {
