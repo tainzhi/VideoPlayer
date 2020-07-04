@@ -71,9 +71,9 @@ class VideoView @JvmOverloads constructor(
     var videoTitle = ""
 
     // FIXME: 2020/5/27 最好添加判断, 只要在播放时才返回当前进度
-    var videoCurrentPosition = 0L
+    val videoCurrentPosition
         get() = iMediaPlayer?.currentPosition ?: 0
-    var videoDuration = 0L
+    val videoDuration
         get() = iMediaPlayer?.duration ?: 0
 
     var videoRotationDegree = 0
@@ -313,13 +313,15 @@ class VideoView @JvmOverloads constructor(
     }
 
     fun start() {
-        if (state == STATE_PREPARED) {
+        if (state == STATE_PREPARED || state == STATE_PAUSE) {
+            state = STATE_PLAYING
             iMediaPlayer?.start()
         }
     }
 
     fun pause() {
         if (state == STATE_PLAYING) {
+            state = STATE_PAUSE
             iMediaPlayer?.pause()
         }
     }
