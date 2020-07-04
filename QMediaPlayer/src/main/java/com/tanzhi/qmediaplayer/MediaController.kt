@@ -61,7 +61,9 @@ class MediaController(val context: Context) {
     private fun makeControllerView() : View {
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         // TODO: 2020/5/23 orientaion inflate port or land
-        val contentView = inflate.inflate(R.layout.media_controller_port, null)
+        val contentView = inflate.inflate(
+                if (Util.isOrientationPort(context))  R.layout.media_controller_port else R.layout.media_controller_land,
+                null)
         initControllView(contentView)
         return contentView
     }
@@ -86,13 +88,13 @@ class MediaController(val context: Context) {
     private fun doPlayPause() {
         if (videoView.isPlaying) {
             videoView.pause()
-            playPauseBtn.setImageResource(R.drawable.ic_play)
+            playPauseBtn.setImageResource(R.drawable.ic_pause)
             // 视频停止后, 进度条停止和控制栏自动消失
             contentView.removeCallbacks(showProgress)
             contentView.removeCallbacks(fadeOut)
         } else {
             videoView.start()
-            playPauseBtn.setImageResource(R.drawable.ic_pause)
+            playPauseBtn.setImageResource(R.drawable.ic_play)
             show()
         }
     }
@@ -346,11 +348,12 @@ class MediaController(val context: Context) {
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
             isDragging = true
             contentView.removeCallbacks(showProgress)
+            contentView.removeCallbacks(fadeOut)
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar?) {
             isDragging = false
-            contentView.post(showProgress)
+            show()
         }
     }
 

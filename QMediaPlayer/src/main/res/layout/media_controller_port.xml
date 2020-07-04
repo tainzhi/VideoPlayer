@@ -99,7 +99,7 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintWidth_percent="0.1"
-		android:layout_marginStart="12dp"
+		android:layout_marginStart="16dp"
 		app:srcCompat="@drawable/ic_scissors"
 		tools:tint="@android:color/black" />
 	
@@ -112,7 +112,7 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:layout_marginEnd="12dp"
+		android:layout_marginEnd="16dp"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintWidth_percent="0.1"
 		app:srcCompat="@drawable/ic_lock_open"
