@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.pm.ActivityInfo
 import android.net.ConnectivityManager
 import android.os.Build
 import android.view.View
@@ -92,6 +93,10 @@ object Util {
         }
     }
 
+    fun isOrientationPort(context: Context): Boolean {
+        return getAppCompActivity(context)?.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ?: false
+    }
+
     fun getWindow(context: Context?): Window {
         return if (getAppCompActivity(context) != null) {
             getAppCompActivity(context)!!.window
@@ -105,43 +110,6 @@ object Util {
         return (dpValue * scale + 0.5f).toInt()
     }
 
-    // fun saveProgress(context: Context, url: Any, progress: Long) {
-    //     var progress = progress
-    //     if (!Jzvd.SAVE_PROGRESS) return
-    //     Log.i(TAG, "saveProgress: $progress")
-    //     if (progress < 5000) {
-    //         progress = 0
-    //     }
-    //     val spn = context.getSharedPreferences("JZVD_PROGRESS",
-    //             Context.MODE_PRIVATE)
-    //     val editor = spn.edit()
-    //     editor.putLong("newVersion:$url", progress).apply()
-    // }
-    //
-    // fun getSavedProgress(context: Context, url: Any): Long {
-    //     if (!Jzvd.SAVE_PROGRESS) return 0
-    //     val spn = context.getSharedPreferences("JZVD_PROGRESS",
-    //             Context.MODE_PRIVATE)
-    //     return spn.getLong("newVersion:$url", 0)
-    // }
-    //
-    // /**
-    //  * if url == null, clear all progress
-    //  *
-    //  * @param context context
-    //  * @param url     if url!=null clear this url progress
-    //  */
-    // fun clearSavedProgress(context: Context, url: Any?) {
-    //     if (url == null) {
-    //         val spn = context.getSharedPreferences("JZVD_PROGRESS",
-    //                 Context.MODE_PRIVATE)
-    //         spn.edit().clear().apply()
-    //     } else {
-    //         val spn = context.getSharedPreferences("JZVD_PROGRESS",
-    //                 Context.MODE_PRIVATE)
-    //         spn.edit().putLong("newVersion:$url", 0).apply()
-    //     }
-    // }
 
     @SuppressLint("RestrictedApi")
     fun showStatusBar(context: Context) {
@@ -185,4 +153,6 @@ object Util {
         val uiOptions = View.SYSTEM_UI_FLAG_VISIBLE
         getWindow(context).decorView.systemUiVisibility = SYSTEM_UI
     }
+
+
 }
