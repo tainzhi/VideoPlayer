@@ -40,7 +40,7 @@ class MediaController(val context: Context) {
     }
 
     companion object {
-        const val DefaultTimeout = 3000
+        const val DefaultTimeout = 3000L
 
         // 滑动灵敏度
         const val MOVE_DETECT_THRESHOLD = 80
@@ -86,10 +86,14 @@ class MediaController(val context: Context) {
     private fun doPlayPause() {
         if (videoView.isPlaying) {
             videoView.pause()
-            playPauseBtn.setImageResource(R.drawable.ic_pause)
+            playPauseBtn.setImageResource(R.drawable.ic_play)
+            // 视频停止后, 进度条停止和控制栏自动消失
+            contentView.removeCallbacks(showProgress)
+            contentView.removeCallbacks(fadeOut)
         } else {
             videoView.start()
-            playPauseBtn.setImageResource(R.drawable.ic_play)
+            playPauseBtn.setImageResource(R.drawable.ic_pause)
+            show()
         }
     }
 
@@ -98,14 +102,24 @@ class MediaController(val context: Context) {
             parent.removeView(contentView)
             contentView.removeCallbacks(showProgress)
             isShowing = false
+
+            dismissProgressDialog()
+            dismissBrightnessDialog()
+            dismissVolumeDialog()
         }
     }
 
-    fun show() {
+    fun show() { show(DefaultTimeout)}
+
+    private fun show(timeout: Long) {
         if (!isShowing) {
             isShowing = true
             parent.addView(contentView, layoutParams)
-            contentView.post(showProgress)
+        }
+        contentView.post(showProgress)
+        if (timeout != 0L) {
+            contentView.removeCallbacks(fadeOut)
+            contentView.postDelayed(fadeOut, timeout)
         }
     }
 
@@ -221,9 +235,9 @@ class MediaController(val context: Context) {
     private fun showVolumeDialog(volumePercent: Int) {
         if (volumeDialog == null) {
             val view = LayoutInflater.from(context).inflate(R.layout.dialog_volume, null)
-            dialogVolumeIv = view.findViewById<ImageView>(R.id.dialogVolumeIv)
-            dialogVolumeTv = view.findViewById<TextView>(R.id.dialogVolumeTv)
-            dialogVolumeProgressBar = view.findViewById<ProgressBar>(R.id.dialogVolumeProgressBar)
+            dialogVolumeIv = view.findViewById(R.id.dialogVolumeIv)
+            dialogVolumeTv = view.findViewById(R.id.dialogVolumeTv)
+            dialogVolumeProgressBar = view.findViewById(R.id.dialogVolumeProgressBar)
 
             volumeDialog = createDialogWithView(view)
         }
