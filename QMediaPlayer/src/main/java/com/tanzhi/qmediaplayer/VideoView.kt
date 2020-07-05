@@ -358,6 +358,8 @@ class VideoView @JvmOverloads constructor(
             }
             requestLayout()
         }
+        // 改变orientation
+        mediaController?.changeOrientation()
     }
 
     fun onInfo(what: Int, extra: Int) {
