@@ -37,7 +37,6 @@ class VideoView @JvmOverloads constructor(
         const val TAG = "VideoView"
 
     }
-    private var mediaPlayerClass: Class<*>? = null
     private var iMediaPlayer: IMediaInterface? = null
     
     var mediaController: MediaController? = null
@@ -119,7 +118,7 @@ class VideoView @JvmOverloads constructor(
         mRenderView?.renderEffect = effect
     }
 
-    fun takeShotPic(videoShotListener: IRenderView.VideoShotListener, highShot: Boolean) {
+    fun takeShotPic(highShot: Boolean, videoShotListener: IRenderView.VideoShotListener) {
         mRenderView?.takeShot(videoShotListener, highShot)
     }
 
