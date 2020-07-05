@@ -6,6 +6,7 @@ import android.media.AudioManager
 import android.provider.Settings
 import android.view.*
 import android.widget.*
+import androidx.constraintlayout.widget.Group
 import java.lang.Integer.min
 import kotlin.math.abs
 
@@ -68,6 +69,18 @@ class MediaController(val context: Context) {
         return contentView
     }
 
+    fun changeOrientation() {
+        parent.removeView(contentView)
+        contentView = makeControllerView().apply {
+            setOnTouchListener(onTouchListener)
+            post(showProgress)
+        }
+    }
+
+    // 锁定状态
+    private var lock: Boolean = false
+    // 点击依次改变缩放比率, 总共有6种缩放比率
+    private var aspectRatioCount = 0
     private fun initControllView(view: View) {
         view.findViewById<TextView>(R.id.videoTitleTv).run {
             text = videoView.videoTitle
@@ -83,6 +96,14 @@ class MediaController(val context: Context) {
         }
         currentTimeTv = view.findViewById(R.id.currentTimeTv)
         endTimeTv = view.findViewById(R.id.endTimeTv)
+        view.findViewById<ImageButton>(R.id.scaleBtn).setOnClickListener {
+            videoView.aspectRatio = (aspectRatioCount++) % 6
+        }
+        view.findViewById<ImageButton>(R.id.lockBtn).setOnClickListener {
+            lock = !lock
+            (it as ImageButton).setImageResource(if (lock) R.drawable.ic_lock else R.drawable.ic_lock_open)
+            view.findViewById<Group>(R.id.lockControllerGroup).visibility = if (lock) View.GONE else View.VISIBLE
+        }
     }
 
     private fun doPlayPause() {
@@ -367,7 +388,9 @@ class MediaController(val context: Context) {
 
     }
 
-    private val fadeOut = Runnable { hide() }
+    private val fadeOut = Runnable {
+        hide()
+    }
 
     private fun setProgress() : Int{
         val position = videoView.videoCurrentPosition
