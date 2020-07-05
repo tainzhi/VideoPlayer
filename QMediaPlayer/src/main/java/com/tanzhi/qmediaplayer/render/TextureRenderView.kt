@@ -29,6 +29,10 @@ class TextureRenderView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : TextureView(context, attrs, defStyleAttr), IRenderView {
 
+    companion object {
+        const val TAG = "TextureRenderView"
+    }
+
     private val measureHelper: MeasureHelper by lazy { MeasureHelper(this) }
     private val surfaceCallback: SurfaceCallback by lazy { SurfaceCallback(this) }
 
@@ -38,13 +42,13 @@ class TextureRenderView @JvmOverloads constructor(
 
     override var renderEffect: ShaderInterface? = null
         set(value) {
-            logD("TextureView cannot set render effect")
+            logD(TAG, "TextureView cannot set render effect")
             field = null
         }
 
     override var render: GLViewRender? = null
         set(value) {
-            logD("TextureView cannot set render ")
+            logD(TAG, "TextureView cannot set render ")
             field = null
         }
 
@@ -213,47 +217,47 @@ private class SurfaceCallback(renderView: TextureRenderView) : SurfaceTextureLis
 
         override fun releaseSurfaceTexture(surfaceTexture: SurfaceTexture) {
             if (surfaceTexture == null) {
-                logD("releaseSurfaceTexture: null")
+                logD(TAG, "releaseSurfaceTexture: null")
             } else if (didDetachFromWindow) {
                 if (surfaceTexture !== this.surfaceTexture) {
-                    logD( "releaseSurfaceTexture: didDetachFromWindow(): release different SurfaceTexture")
+                    logD(TAG,  "releaseSurfaceTexture: didDetachFromWindow(): release different SurfaceTexture")
                     surfaceTexture.release()
                 } else if (!ownSurfaceTexture) {
-                    logD( "releaseSurfaceTexture: didDetachFromWindow(): release detached SurfaceTexture")
+                    logD(TAG,  "releaseSurfaceTexture: didDetachFromWindow(): release detached SurfaceTexture")
                     surfaceTexture.release()
                 } else {
-                    logD( "releaseSurfaceTexture: didDetachFromWindow(): already released by TextureView")
+                    logD(TAG,  "releaseSurfaceTexture: didDetachFromWindow(): already released by TextureView")
                 }
             } else if (willDetachFromWindow) {
                 if (surfaceTexture !== this.surfaceTexture) {
-                    logD( "releaseSurfaceTexture: willDetachFromWindow(): release different SurfaceTexture")
+                    logD(TAG,  "releaseSurfaceTexture: willDetachFromWindow(): release different SurfaceTexture")
                     surfaceTexture.release()
                 } else if (!ownSurfaceTexture) {
-                    logD("releaseSurfaceTexture: willDetachFromWindow(): re-attach SurfaceTexture to TextureView")
+                    logD(TAG, "releaseSurfaceTexture: willDetachFromWindow(): re-attach SurfaceTexture to TextureView")
                     setOwnSurfaceTexture(true)
                 } else {
-                    logD("releaseSurfaceTexture: willDetachFromWindow(): will released by TextureView")
+                    logD(TAG, "releaseSurfaceTexture: willDetachFromWindow(): will released by TextureView")
                 }
             } else {
                 if (surfaceTexture !== this.surfaceTexture) {
-                    logD("releaseSurfaceTexture: alive: release different SurfaceTexture")
+                    logD(TAG, "releaseSurfaceTexture: alive: release different SurfaceTexture")
                     surfaceTexture.release()
                 } else if (!ownSurfaceTexture) {
-                    logD("releaseSurfaceTexture: alive: re-attach SurfaceTexture to TextureView")
+                    logD(TAG, "releaseSurfaceTexture: alive: re-attach SurfaceTexture to TextureView")
                     setOwnSurfaceTexture(true)
                 } else {
-                    logD("releaseSurfaceTexture: alive: will released by TextureView")
+                    logD(TAG, "releaseSurfaceTexture: alive: will released by TextureView")
                 }
             }
         }
 
         fun willDetachFromWindow() {
-            logD("willDetachFromWindow()")
+            logD(TAG, "willDetachFromWindow()")
             willDetachFromWindow = true
         }
 
         fun didDetachFromWindow() {
-            logD("didDetachFromWindow()")
+            logD(TAG, "didDetachFromWindow()")
             didDetachFromWindow = true
         }
 

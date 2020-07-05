@@ -2,11 +2,13 @@ package com.tanzhi.qmediaplayer
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.media.AudioManager
 import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.Group
+import com.tanzhi.qmediaplayer.render.IRenderView
 import java.lang.Integer.min
 import kotlin.math.abs
 
@@ -103,6 +105,13 @@ class MediaController(val context: Context) {
             lock = !lock
             (it as ImageButton).setImageResource(if (lock) R.drawable.ic_lock else R.drawable.ic_lock_open)
             view.findViewById<Group>(R.id.lockControllerGroup).visibility = if (lock) View.GONE else View.VISIBLE
+        }
+        view.findViewById<ImageButton>(R.id.scissorsBtn).setOnClickListener {
+            videoView.takeShotPic(highShot = true, videoShotListener = object:IRenderView.VideoShotListener {
+                override fun getBitmap(bitmap: Bitmap) {
+
+                }
+            })
         }
     }
 

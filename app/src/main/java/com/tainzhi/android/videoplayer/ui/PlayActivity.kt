@@ -43,7 +43,7 @@ class PlayActivity : AppCompatActivity() {
         }
         videoView.run {
             videoTitle = mVideoTitle!!
-            renderType = Constant.RenderType.SURFACE_VIEW
+            renderType = Constant.RenderType.GL_SURFACE_VIEW
             screenOrientation = orientation
             startFullScreenDirectly(this@PlayActivity, mVideoUri!!)
             setEffect(NoEffect())

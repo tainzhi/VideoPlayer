@@ -26,6 +26,10 @@ import java.util.concurrent.ConcurrentHashMap
 class GLRenderView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null):
         GLSurfaceView(context, attributeSet), IRenderView, GLRenderViewListener {
 
+    companion object {
+        const val TAG = "GLRenderView"
+    }
+
     private val measureHelper by lazy { MeasureHelper(this) }
     private val surfaceCallback by lazy { SurfaceCallback(this) }
 
@@ -37,12 +41,12 @@ class GLRenderView @JvmOverloads constructor(context: Context, attributeSet: Att
     }
 
     override fun onResume() {
-        logD()
+        logD(TAG, "onResume()")
         super.onResume()
     }
 
     override fun onPause() {
-        logD()
+        logD(TAG, "onPause()")
         super.onPause()
     }
 

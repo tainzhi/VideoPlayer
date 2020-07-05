@@ -27,24 +27,28 @@ class SurfaceRenderView @JvmOverloads constructor(
     private val measureHelper: MeasureHelper by lazy{ MeasureHelper(this) }
     private val surfaceCallback: SurfaceCallback by lazy {SurfaceCallback(this) }
 
+    companion object {
+        const val TAG = "SurfaceRenderView"
+    }
+
     init {
         holder.addCallback(surfaceCallback)
     }
 
     override var render: GLViewRender? = null
         set(value) {
-            logD("SurfaceView cannot set render ")
+            logD(TAG, "SurfaceView cannot set render ")
             field = null
         }
 
     override var renderEffect: ShaderInterface? = null
         set(value) {
-            logD("SurfaceView cannot set render effect")
+            logD(TAG, "SurfaceView cannot set render effect")
             field = null
         }
 
     override fun takeShot(videoShotListener: IRenderView.VideoShotListener, highShot: Boolean) {
-        logI("Surfaceview cannot take shot")
+        logI(TAG, "SurfaceView cannot take shot")
     }
 
     override fun shouldWaitForResize(): Boolean {
@@ -67,7 +71,7 @@ class SurfaceRenderView @JvmOverloads constructor(
     }
 
     override fun setVideoRotation(degree: Int) {
-        logD("degree=${degree}")
+        logD(TAG, "degree=${degree}")
     }
 
     override fun setAspectRatio(aspectRatio: Int) {
