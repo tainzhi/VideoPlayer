@@ -58,47 +58,33 @@
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/top_panel_bg"
-		app:layout_constraintWidth_percent="0.1" />
+		app:layout_constraintWidth_percent="0.12" />
 	
 	<ImageButton
 		android:id="@+id/changePlayerBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:layout_marginStart="16dp"
 		android:background="@drawable/bg_round_black"
 		android:padding="6dp"
+		android:layout_marginStart="16dp"
 		android:src="@drawable/ic_change_player"
 		app:layout_constraintBottom_toBottomOf="@+id/changeScaleTypeBtn"
 		app:layout_constraintDimensionRatio="1:1"
-		app:layout_constraintStart_toEndOf="@+id/changeScaleTypeBtn"
-		app:layout_constraintTop_toTopOf="@+id/changeScaleTypeBtn"
-		app:layout_constraintWidth_percent="0.1" />
-	
-	<ImageButton
-		android:id="@+id/changeScaleTypeBtn"
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		android:layout_marginStart="16dp"
-		android:background="@drawable/bg_round_black"
-		android:padding="6dp"
-		android:src="@drawable/ic_scale_type"
-		app:layout_constraintBottom_toBottomOf="@+id/changeRenderBtn"
-		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintStart_toEndOf="@+id/changeRenderBtn"
 		app:layout_constraintTop_toTopOf="@+id/changeRenderBtn"
-		app:layout_constraintWidth_percent="0.1" />
+		app:layout_constraintWidth_percent="0.12" />
 	
 	<ImageButton
 		android:id="@+id/scissorsBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:background="@android:color/transparent"
+		android:background="@drawable/bg_media_controller_btn"
 		android:scaleType="fitXY"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintWidth_percent="0.1"
+		app:layout_constraintWidth_percent="0.12"
 		android:layout_marginStart="16dp"
 		app:srcCompat="@drawable/ic_scissors"
 		tools:tint="@android:color/black" />
@@ -107,14 +93,14 @@
 		android:id="@+id/lockBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:background="@android:color/transparent"
+		android:background="@drawable/bg_media_controller_btn"
 		android:scaleType="fitXY"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="parent"
 		android:layout_marginEnd="16dp"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintWidth_percent="0.1"
+		app:layout_constraintWidth_percent="0.12"
 		app:srcCompat="@drawable/ic_lock_open"
 		tools:tint="@android:color/black" />
 	
@@ -171,7 +157,7 @@
 		android:id="@+id/scaleBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:background="@android:color/transparent"
+		android:background="@drawable/bg_media_controller_btn"
 		android:scaleType="fitXY"
 		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="1:1"
@@ -179,34 +165,34 @@
 		app:layout_constraintEnd_toStartOf="@+id/playPreviewBtn"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/progressBar"
-		app:layout_constraintWidth_percent="0.1"
+		app:layout_constraintWidth_percent="0.12"
 		app:srcCompat="@drawable/ic_scale" />
 	
 	<ImageButton
 		android:id="@+id/playPreviewBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:background="@android:color/transparent"
+		android:background="@drawable/bg_media_controller_btn"
 		android:scaleType="fitXY"
 		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toStartOf="@+id/playPauseBtn"
 		app:layout_constraintStart_toEndOf="@id/scaleBtn"
 		app:layout_constraintTop_toBottomOf="@+id/progressBar"
-		app:layout_constraintWidth_percent="0.1"
+		app:layout_constraintWidth_percent="0.12"
 		app:srcCompat="@drawable/ic_skip_preview" />
 	
 	<ImageButton
 		android:id="@+id/playPauseBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:background="@android:color/transparent"
+		android:background="@drawable/bg_media_controller_btn"
 		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintStart_toEndOf="@id/playPreviewBtn"
 		app:layout_constraintEnd_toStartOf="@id/playNextBtn"
 		app:layout_constraintTop_toBottomOf="@+id/progressBar"
-		app:layout_constraintWidth_percent="0.13"
+		app:layout_constraintWidth_percent="0.14"
 		android:scaleType="fitXY"
 		app:srcCompat="@drawable/ic_play" />
 	
@@ -214,28 +200,34 @@
 		android:id="@+id/playNextBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:background="@android:color/transparent"
+		android:background="@drawable/bg_media_controller_btn"
 		android:scaleType="fitXY"
 		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="@id/floatWindowBtn"
 		app:layout_constraintStart_toEndOf="@+id/playPauseBtn"
 		app:layout_constraintTop_toBottomOf="@+id/progressBar"
-		app:layout_constraintWidth_percent="0.1"
+		app:layout_constraintWidth_percent="0.12"
 		app:srcCompat="@drawable/ic_skip_next" />
 	
 	<ImageButton
 		android:id="@+id/floatWindowBtn"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:background="@android:color/transparent"
+		android:background="@drawable/bg_media_controller_btn"
 		android:scaleType="fitXY"
 		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="@id/bottom_panel_bg"
 		app:layout_constraintStart_toEndOf="@+id/playNextBtn"
 		app:layout_constraintTop_toBottomOf="@+id/progressBar"
-		app:layout_constraintWidth_percent="0.1"
+		app:layout_constraintWidth_percent="0.12"
 		app:srcCompat="@drawable/ic_float_window" />
+	
+	<androidx.constraintlayout.widget.Group
+		android:id="@+id/lockControllerGroup"
+		app:constraint_referenced_ids="top_panel_bg,bottom_panel_bg,scissorsBtn,changeRenderBtn,changePlayerBtn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
 	
 </androidx.constraintlayout.widget.ConstraintLayout>
