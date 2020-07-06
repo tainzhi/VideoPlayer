@@ -63,7 +63,7 @@ class MediaController(val context: Context) {
 
     private fun makeControllerView() : View {
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        // TODO: 2020/5/23 orientaion inflate port or land
+        // TODO: 2020/5/23 orientation inflate port or land
         val contentView = inflate.inflate(
                 if (Util.isOrientationPort(context))  R.layout.media_controller_port else R.layout.media_controller_land,
                 null)
@@ -109,7 +109,7 @@ class MediaController(val context: Context) {
         view.findViewById<ImageButton>(R.id.scissorsBtn).setOnClickListener {
             videoView.takeShotPic(highShot = true, videoShotListener = object:IRenderView.VideoShotListener {
                 override fun getBitmap(bitmap: Bitmap) {
-
+                    // TODO: 2020/7/6
                 }
             })
         }
@@ -131,6 +131,8 @@ class MediaController(val context: Context) {
 
     fun hide() {
         if (isShowing) {
+            Util.hideSystemUI(context)
+            Util.hideStatusBar(context)
             parent.removeView(contentView)
             contentView.removeCallbacks(showProgress)
             isShowing = false
@@ -148,6 +150,8 @@ class MediaController(val context: Context) {
             isShowing = true
             parent.addView(contentView, layoutParams)
         }
+        Util.showSystemUI(context)
+        Util.showStatusBar(context)
         contentView.post(showProgress)
         if (timeout != 0L) {
             contentView.removeCallbacks(fadeOut)
@@ -164,6 +168,8 @@ class MediaController(val context: Context) {
     private var gestureDownBrightness = 0f // 触摸屏幕时的视频亮度
     private var gestureDownVolume = 0 // 触摸屏幕时的声音大小
     private var amplification = 1 // 放大系数
+    private val volumeAmplification = amplification * 0.5 // 声音范围0-15, 变化效果太明显, 缩小
+    private val brightnessAmplification = amplification * 3 //  亮度范围0-1, 变化效果不明显, 放大
     private val onTouchListener = object : View.OnTouchListener {
         override fun onTouch(v: View, event: MotionEvent): Boolean {
             val x = event.x
@@ -220,7 +226,7 @@ class MediaController(val context: Context) {
                     }
                     if (changeBrightness) {
                         deltaY = -deltaY
-                        val deltaBrightness = amplification * deltaY  / parentHeight
+                        val deltaBrightness = brightnessAmplification * deltaY  / parentHeight
                         var afterChangeBrightness = gestureDownBrightness + deltaBrightness
                         if (afterChangeBrightness <= 0) {
                             afterChangeBrightness = 0f
@@ -235,7 +241,7 @@ class MediaController(val context: Context) {
                     if (changeVolume) {
                         deltaY = -deltaY
                         val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-                        val deltaVolume = maxVolume * deltaY * amplification / parentHeight
+                        val deltaVolume = maxVolume * deltaY * volumeAmplification / parentHeight
                         var afterChangeVolume = (gestureDownVolume + deltaVolume).toInt()
                         if (afterChangeVolume <= 0) {
                             afterChangeVolume = 0
@@ -424,3 +430,4 @@ class MediaController(val context: Context) {
 
 
 }
+

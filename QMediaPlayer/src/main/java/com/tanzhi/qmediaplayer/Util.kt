@@ -152,6 +152,10 @@ object Util {
     fun showSystemUI(context: Context?) {
         val uiOptions = View.SYSTEM_UI_FLAG_VISIBLE
         getWindow(context).decorView.systemUiVisibility = SYSTEM_UI
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 半透明状态栏
+            getWindow(context).addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
     }
 
 
