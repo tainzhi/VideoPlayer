@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.AudioManager
+import android.os.Build
 import android.provider.Settings
 import android.view.*
 import android.widget.*
@@ -98,20 +99,33 @@ class MediaController(val context: Context) {
         }
         currentTimeTv = view.findViewById(R.id.currentTimeTv)
         endTimeTv = view.findViewById(R.id.endTimeTv)
+        // 缩放
         view.findViewById<ImageButton>(R.id.scaleBtn).setOnClickListener {
             videoView.aspectRatio = (aspectRatioCount++) % 6
         }
+        // 锁屏
         view.findViewById<ImageButton>(R.id.lockBtn).setOnClickListener {
             lock = !lock
             (it as ImageButton).setImageResource(if (lock) R.drawable.ic_lock else R.drawable.ic_lock_open)
             view.findViewById<Group>(R.id.lockControllerGroup).visibility = if (lock) View.GONE else View.VISIBLE
         }
+        // 截屏
         view.findViewById<ImageButton>(R.id.scissorsBtn).setOnClickListener {
             videoView.takeShotPic(highShot = true, videoShotListener = object:IRenderView.VideoShotListener {
                 override fun getBitmap(bitmap: Bitmap) {
                     // TODO: 2020/7/6
                 }
             })
+        }
+        // 小悬浮窗
+        view.findViewById<ImageButton>(R.id.floatWindowBtn).setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(context)) {
+                    // show float window
+                } else {
+                    requestDrawOverlayPermission.invoke()
+                }
+            }
         }
     }
 
@@ -428,6 +442,11 @@ class MediaController(val context: Context) {
     //             }
     //         }
 
+
+    var requestDrawOverlayPermission: () -> Unit = {}
+    val requestDrawOverlayPermissionCallback: () -> Unit = {
+        // todo showFloatWindow()
+    }
 
 }
 

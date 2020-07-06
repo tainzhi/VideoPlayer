@@ -5,7 +5,9 @@ import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
@@ -47,7 +49,17 @@ class PlayActivity : AppCompatActivity() {
             screenOrientation = orientation
             startFullScreenDirectly(this@PlayActivity, mVideoUri!!)
             setEffect(NoEffect())
-            mediaController = MediaController(this@PlayActivity)
+            mediaController = MediaController(this@PlayActivity).apply {
+                @RequiresApi(api = 23)
+                requestDrawOverlayPermission = {
+                    startActivityForResult(
+                            Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION").apply {
+                                data = Uri.parse("package:" + context.packageName)
+                            },
+                            1
+                    )
+                }
+            }
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         autoFullScreenListener = AutoFullScreenListener(videoView)
@@ -65,6 +77,14 @@ class PlayActivity : AppCompatActivity() {
         super.onPause()
         sensorManager.unregisterListener(autoFullScreenListener)
         videoView.onPause()
+    }
+
+    @RequiresApi(api = 23)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            videoView.mediaController?.requestDrawOverlayPermissionCallback?.invoke()
+        }
     }
 
     companion object {

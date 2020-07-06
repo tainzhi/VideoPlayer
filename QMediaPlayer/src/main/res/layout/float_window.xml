@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	tools:layout_height="90dp"
+	tools:layout_width="160dp"
+	android:layout_height="match_parent">
+	
+	<VideoView
+		android:id="@+id/floatWindowVideoView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
+	
+	<SeekBar
+		android:id="@+id/progressBar"
+		style="@style/PlayProgress"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:maxHeight="1dp"
+		android:thumbTint="?attr/colorPrimary"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintWidth_percent="1"
+		tools:progress="50" />
+</androidx.constraintlayout.widget.ConstraintLayout>

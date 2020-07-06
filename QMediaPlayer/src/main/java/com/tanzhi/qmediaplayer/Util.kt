@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.pm.ActivityInfo
+import android.graphics.Point
 import android.net.ConnectivityManager
 import android.os.Build
 import android.view.View
@@ -93,6 +94,9 @@ object Util {
         }
     }
 
+    /**
+     * 是否竖屏
+     */
     fun isOrientationPort(context: Context): Boolean {
         return getAppCompActivity(context)?.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ?: false
     }
@@ -104,12 +108,6 @@ object Util {
             scanForActivity(context)!!.window
         }
     }
-
-    fun dip2px(context: Context, dpValue: Float): Int {
-        val scale = context.resources.displayMetrics.density
-        return (dpValue * scale + 0.5f).toInt()
-    }
-
 
     @SuppressLint("RestrictedApi")
     fun showStatusBar(context: Context) {
@@ -159,4 +157,9 @@ object Util {
     }
 
 
+    fun getScreenWidthAndHeight(context: Context) : Point{
+        val point = Point()
+        (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(point)
+        return point
+    }
 }

@@ -125,6 +125,7 @@
 		android:maxHeight="3dp"
 		android:layout_marginTop="10dp"
 		android:layout_marginBottom="20dp"
+		android:thumb="@drawable/bg_round_black"
 		android:thumbTint="?attr/colorPrimary"
 		tools:progress="50"
 		app:layout_constraintTop_toTopOf="@+id/bottom_panel_bg"
