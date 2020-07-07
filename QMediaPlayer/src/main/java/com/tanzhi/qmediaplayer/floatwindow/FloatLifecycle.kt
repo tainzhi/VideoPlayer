@@ -18,7 +18,7 @@ import android.os.Handler
  * 2.监听home键，从而及时隐藏
  * 3.resumeCount计时，针对一些只执行onPause不执行onStop的奇葩情况
  */
-class FloatLifecycle(val applicationContext: Context, private val showFlag: Boolean,
+class FloatLifecycle(private val applicationContext: Context, private val showFlag: Boolean,
                      private val activities: Array<Class<*>>?, lifecycleListener: LifecycleListener) :
         BroadcastReceiver(),
         ActivityLifecycleCallbacks {

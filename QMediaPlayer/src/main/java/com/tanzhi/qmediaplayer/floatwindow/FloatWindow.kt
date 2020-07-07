@@ -1,6 +1,7 @@
 package com.tanzhi.qmediaplayer.floatwindow
 
 import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Build
@@ -12,6 +13,7 @@ import android.view.animation.BounceInterpolator
 import android.widget.ImageButton
 import com.tanzhi.qmediaplayer.R
 import com.tanzhi.qmediaplayer.Util
+import com.tanzhi.qmediaplayer.VideoView
 
 /**
  * @author:      tainzhi
@@ -26,6 +28,7 @@ class FloatWindow(val context: Context) {
     var mX = 0.1
     var mY = 0.2
     var mGravity = Gravity.BOTTOM
+    var moveType = MoveType.back
     private lateinit var floatView: FloatView
     private lateinit var valueAnimator: ValueAnimator
     private lateinit var floatLifecycle: FloatLifecycle
@@ -42,37 +45,55 @@ class FloatWindow(val context: Context) {
         override fun onTouch(v: View, event: MotionEvent): Boolean {
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    lastX = event.x
-                    lastY = event.y
+                    lastX = event.rawX
+                    lastY = event.rawY
                     cancelAnimator()
                 }
                 MotionEvent.ACTION_MOVE -> {
                     changeX = event.rawX - lastX
-                    changeY = event.rawY - lastY
-                    floatView.x += changeX.toInt()
-                    floatView.y += changeY.toInt()
+                    // TODO: 2020/7/7 为什么不是 event.rayY - lastY 
+                    changeY = - event.rawY + lastY
+                    newX = floatView.x + changeX
+                    newY = floatView.y + changeY
+                    floatView.x = newX.toInt()
+                    floatView.y = newY.toInt()
                     floatView.updateLayout()
                     lastX = event.rawX
                     lastY = event.rawY
                 }
                 MotionEvent.ACTION_UP -> {
-                    val startX = floatView.x
-                    val endX = if (startX * 2 + v.width > Util.getScreenWidthAndHeight(context).x) Util.getScreenWidthAndHeight(context).x - v.width else 0
-                    valueAnimator = ObjectAnimator.ofInt(startX, endX)
-                    valueAnimator.addUpdateListener {
-                        floatView.x = it.animatedValue as Int
-                        floatView.updateLayout()
+                    when(moveType) {
+                        MoveType.slide -> {
+                            val startX = floatView.x
+                            val endX = if (startX * 2 + v.width > Util.getScreenWidthAndHeight(context).x) Util.getScreenWidthAndHeight(context).x - v.width else 0
+                            valueAnimator = ObjectAnimator.ofInt(startX, endX)
+                            valueAnimator.addUpdateListener {
+                                floatView.x = it.animatedValue as Int
+                                floatView.updateLayout()
+                            }
+                            startAnimator()
+                        }
+                        MoveType.back -> {
+                            val pvhX = PropertyValuesHolder.ofInt("x", floatView.x, Util.getScreenWidthAndHeight(context).x)
+                            val pvhY = PropertyValuesHolder.ofInt("y", floatView.y, Util.getScreenWidthAndHeight(context).y)
+                            valueAnimator = ObjectAnimator.ofPropertyValuesHolder(pvhX, pvhY)
+                            valueAnimator.addUpdateListener {
+                                floatView.x  = it.getAnimatedValue("x") as Int
+                                floatView.y = it.getAnimatedValue("y") as Int
+                                floatView.updateLayout()
+                            }
+                            startAnimator()
+                        }
                     }
-                    startAnimator()
                 }
             }
-            return false
+            return true
         }
     }
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.float_window, null)
-        view.setOnTouchListener(touchListener)
+        view.findViewById<VideoView>(R.id.floatWindowVideoView).setOnTouchListener(touchListener)
         view.findViewById<ImageButton>(R.id.floatWindowPlayPauseBtn).setOnClickListener {
             // TODO: 2020/7/7
         }
@@ -140,6 +161,7 @@ class FloatWindow(val context: Context) {
 
     private fun postHide() {
         floatView.postHide()
+        isShow = false
     }
 
     private fun startAnimator() {
@@ -149,6 +171,7 @@ class FloatWindow(val context: Context) {
                 it.removeAllUpdateListeners()
                 it.removeAllListeners()
             }
+            valueAnimator.setDuration(500).start()
         }
     }
 
@@ -158,4 +181,9 @@ class FloatWindow(val context: Context) {
         }
     }
 
+}
+
+object MoveType {
+    const val slide = 0
+    const val back = 1
 }
