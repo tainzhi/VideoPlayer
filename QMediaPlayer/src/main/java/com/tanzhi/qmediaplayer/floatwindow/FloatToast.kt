@@ -13,12 +13,17 @@ import java.lang.reflect.Method
  * @description: 自定义toast方式, 无需申请权限
  **/
 
-class FloatToast(val context: Context) : FloatView(){
+class FloatToast(val context: Context, val view: View) : FloatView(){
 
     private val toast: Toast = Toast(context)
     private lateinit var tn: Any
     private lateinit var show: Method
     private lateinit var hide: Method
+
+    init {
+        toast.view = view
+        initTN()
+    }
 
     override var gravity: Int = 0
         set(value) {
@@ -42,10 +47,11 @@ class FloatToast(val context: Context) : FloatView(){
         }
     }
 
-    override fun setView(view: View) {
-        toast.view = view
-        initTN()
-    }
+    override var visible: Boolean = false
+        set(value) {
+            view.visibility = if (value) View.VISIBLE else View.INVISIBLE
+            field = value
+        }
 
     private fun initTN() {
         try {
@@ -73,5 +79,9 @@ class FloatToast(val context: Context) : FloatView(){
 
     override fun updateLayout() {
         TODO("Not yet implemented")
+    }
+
+    override fun postHide() {
+        view.post { visible = false }
     }
 }

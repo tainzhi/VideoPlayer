@@ -17,11 +17,10 @@ import kotlin.properties.Delegates
  * @description: 7.1以上需要申请权限
  **/
  
-class FloatPhone(val context: Context): FloatView() {
+class FloatPhone(val context: Context, val view: View): FloatView() {
 
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val layoutParams = WindowManager.LayoutParams()
-    private lateinit var contentView: View
 
     override var x: Int = 0
         set(value) {
@@ -49,20 +48,13 @@ class FloatPhone(val context: Context): FloatView() {
             field = value
         }
 
-    override fun show() {
-        if (Settings.canDrawOverlays(context)) {
-            layoutParams.format = PixelFormat.RGBA_8888
-            windowManager.addView(contentView, layoutParams)
-        } else {
-            Log.e("FloatWindow/FloatPhone.show()", "should grand overlay permission")
+    override var visible : Boolean = false
+        set(value) {
+            view.visibility = if (value) View.VISIBLE else View.INVISIBLE
+            field = value
         }
-    }
 
-    override fun dismiss() {
-        windowManager.removeView(contentView)
-    }
-
-    override fun setView(view: View) {
+    init {
         var layoutType by Delegates.notNull<Int>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             layoutType = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -72,11 +64,26 @@ class FloatPhone(val context: Context): FloatView() {
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL.or (WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
         layoutParams.type = layoutType
         layoutParams.windowAnimations = 0
-        contentView = view
+    }
+
+    override fun show() {
+        if (Settings.canDrawOverlays(context)) {
+            layoutParams.format = PixelFormat.RGBA_8888
+            windowManager.addView(view, layoutParams)
+        } else {
+            Log.e("FloatWindow/FloatPhone.show()", "should grand overlay permission")
+        }
+    }
+
+    override fun dismiss() {
+        windowManager.removeView(view)
     }
 
     override fun updateLayout() {
-        windowManager.updateViewLayout(contentView, layoutParams)
+        windowManager.updateViewLayout(view, layoutParams)
     }
 
+    override fun postHide() {
+        view.post { visible = false }
+    }
 }

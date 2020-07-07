@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.Group
+import com.tanzhi.qmediaplayer.floatwindow.FloatWindow
 import com.tanzhi.qmediaplayer.render.IRenderView
 import java.lang.Integer.min
 import kotlin.math.abs
@@ -38,6 +39,9 @@ class MediaController(val context: Context) {
     private lateinit var progressSeekbar: SeekBar
     private lateinit var endTimeTv: TextView
     private lateinit var currentTimeTv: TextView
+
+    // 悬浮窗播放
+    private lateinit var floatWindow: FloatWindow
 
     private val audioManager by lazy {
         (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager)
@@ -121,7 +125,10 @@ class MediaController(val context: Context) {
         view.findViewById<ImageButton>(R.id.floatWindowBtn).setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(context)) {
-                    // show float window
+                    if (!this::floatWindow.isInitialized) {
+                        floatWindow = FloatWindow(context)
+                    }
+                    floatWindow.show()
                 } else {
                     requestDrawOverlayPermission.invoke()
                 }
@@ -445,7 +452,10 @@ class MediaController(val context: Context) {
 
     var requestDrawOverlayPermission: () -> Unit = {}
     val requestDrawOverlayPermissionCallback: () -> Unit = {
-        // todo showFloatWindow()
+        if (!this::floatWindow.isInitialized) {
+            floatWindow = FloatWindow(context)
+        }
+        floatWindow.show()
     }
 
 }
