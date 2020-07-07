@@ -24,12 +24,12 @@ class FloatPhone(val context: Context, val view: View): FloatView() {
 
     override var x: Int = 0
         set(value) {
-            layoutParams.x = 0
+            layoutParams.x = value
             field = value
         }
     override var y: Int = 0
         set(value) {
-            layoutParams.y = 0
+            layoutParams.y = value
             field = value
         }
     override var gravity: Int = Gravity.BOTTOM.or(Gravity.END)
@@ -56,12 +56,12 @@ class FloatPhone(val context: Context, val view: View): FloatView() {
 
     init {
         var layoutType by Delegates.notNull<Int>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             layoutType = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
             layoutType = WindowManager.LayoutParams.TYPE_PHONE
         }
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL.or (WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
         layoutParams.type = layoutType
         layoutParams.windowAnimations = 0
     }
@@ -86,4 +86,5 @@ class FloatPhone(val context: Context, val view: View): FloatView() {
     override fun postHide() {
         view.post { visible = false }
     }
+
 }
