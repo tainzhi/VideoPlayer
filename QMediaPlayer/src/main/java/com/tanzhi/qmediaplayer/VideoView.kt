@@ -325,13 +325,22 @@ class VideoView @JvmOverloads constructor(
         }
     }
 
+    private var seekWhenPrepared = 0L
     fun seekTo(progress: Long) {
-        iMediaPlayer?.seekTo(progress)
+        if (isPlaying) {
+            iMediaPlayer?.seekTo(progress)
+            seekWhenPrepared = 0
+        } else {
+            seekWhenPrepared = progress
+        }
     }
 
     fun onPrepared() {
         Log.i(TAG, "onPrepared ")
         state = STATE_PREPARED
+        if (seekWhenPrepared != 0L) {
+            iMediaPlayer?.seekTo(seekWhenPrepared)
+        }
         start()
         state = STATE_PLAYING
     }

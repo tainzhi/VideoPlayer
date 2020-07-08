@@ -56,6 +56,7 @@ class FloatLifecycle(private val applicationContext: Context, private val showFl
         mHandler.postDelayed({
             if (resumeCount == 0) {
                 appBackground = true
+                // 不注释掉,那么悬浮窗只在该activity显示,不能在其他activity和桌面显示
                 mLifecycleListener.onPostHide()
             }
         }, delay)
@@ -72,8 +73,8 @@ class FloatLifecycle(private val applicationContext: Context, private val showFl
         }
     }
 
-    override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action
+    override fun onReceive(context: Context, intent: Intent?) {
+        val action = intent?.action
         if (action != null && action == Intent.ACTION_CLOSE_SYSTEM_DIALOGS) {
             val reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY)
             if (SYSTEM_DIALOG_REASON_HOME_KEY == reason) {

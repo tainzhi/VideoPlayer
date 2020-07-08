@@ -321,7 +321,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/lock/baseline_lock_24.xml" />
+                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/close/baseline_close_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -331,10 +331,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
                             <entry key="autoMirrored" value="true" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_full_screen" />
+                            <entry key="outputName" value="ic_close" />
                             <entry key="sourceFile" value="$USER_HOME$/Downloads/full-screen.svg" />
                           </map>
                         </option>

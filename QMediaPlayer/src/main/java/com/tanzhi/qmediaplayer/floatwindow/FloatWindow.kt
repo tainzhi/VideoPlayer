@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -22,18 +23,21 @@ import com.tanzhi.qmediaplayer.VideoView
  * @description:
  **/
 
-class FloatWindow(val context: Context) {
+class FloatWindow(val context: Context,
+                  val videouri: Uri?,
+                  val currentPosition: Long = 0L,
+                  val duration: Long = 0L
+) {
     var mWidth = 0.3
     var mHeight = 0.4
     var mX = 0.1
     var mY = 0.2
     var mGravity = Gravity.BOTTOM
     var moveType = MoveType.back
+    // var filterActivities: Array<Class<*>>? = null //设置Activity过滤器,用于指定在哪些界面显示悬浮窗, 默认全部界面显示
     private lateinit var floatView: FloatView
     private lateinit var valueAnimator: ValueAnimator
-    private lateinit var floatLifecycle: FloatLifecycle
-    private var isShow = false
-    private var floatInit = false
+    // private lateinit var floatLifecycle: FloatLifecycle
 
     private val touchListener = object: View.OnTouchListener {
         var lastX = 0f
@@ -93,7 +97,11 @@ class FloatWindow(val context: Context) {
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.float_window, null)
-        view.findViewById<VideoView>(R.id.floatWindowVideoView).setOnTouchListener(touchListener)
+        view.findViewById<VideoView>(R.id.floatWindowVideoView).run {
+            setOnTouchListener(touchListener)
+            videoUri = videouri
+            seekTo(currentPosition)
+        }
         view.findViewById<ImageButton>(R.id.floatWindowPlayPauseBtn).setOnClickListener {
             // TODO: 2020/7/7
         }
@@ -114,55 +122,46 @@ class FloatWindow(val context: Context) {
             height = (mHeight * Util.getScreenWidthAndHeight(context).y).toInt()
             gravity = mGravity
         }
-        floatLifecycle = FloatLifecycle(context.applicationContext, true, null, object: LifecycleListener {
-            override fun onShow() {
-                show()
-            }
-
-            override fun onHide() {
-                hide()
-            }
-
-            override fun onPostHide() {
-                postHide()
-            }
-        })
+        // floatLifecycle = FloatLifecycle(context.applicationContext, true, filterActivities, object : LifecycleListener {
+        //     override fun onShow() {
+        //         show()
+        //     }
+        //
+        //     override fun onHide() {
+        //         hide()
+        //     }
+        //
+        //     override fun onPostHide() {
+        //         postHide()
+        //     }
+        // })
     }
 
     // 显示悬浮窗
     // 如果是第一次展示, 那么显示就是第一次显示
     // 否则就是隐藏之后的显示
     fun show() {
-        if (!isShow) {
-            if (!floatInit) {
-                floatView.show()
-                floatInit = true
-            } else {
-                floatView.visible = true
-            }
-            isShow = true
-        }
+        floatView.show()
     }
 
     // 删除悬浮窗
     fun dismiss() {
         floatView.dismiss()
-        isShow = false
-        floatLifecycle.unregister()
+        // floatLifecycle.unregister()
     }
 
-    // 隐藏悬浮窗
-    private fun hide() {
-        if (isShow) {
-            floatView.visible = false
-            isShow = false
-        }
-    }
-
-    private fun postHide() {
-        floatView.postHide()
-        isShow = false
-    }
+    // // 隐藏悬浮窗
+    // private fun hide() {
+    //     if (isShow) {
+    //         floatView.visible = false
+    //         isShow = false
+    //     }
+    // }
+    //
+    // private fun postHide() {
+    //     floatView.postHide()
+    //     isShow = false
+    // }
 
     private fun startAnimator() {
         if (this::valueAnimator.isInitialized) {
