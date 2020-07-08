@@ -4,9 +4,7 @@ import android.content.ContentUris
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.provider.MediaStore
-import android.util.Size
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -41,14 +39,16 @@ fun bindVideoThumbnail(
         height: Int? = null
 ) {
     var thumbnail: Bitmap? = null
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        thumbnail =
-                App.CONTEXT.contentResolver.loadThumbnail(
-                        videoUri, Size(320, 240), null)
-    } else {
-        thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
-                BitmapFactory.Options())
-    }
+    // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    //     thumbnail =
+    //             App.CONTEXT.contentResolver.loadThumbnail(
+    //                     videoUri, Size(320, 240), null)
+    // } else {
+    //     thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
+    //             BitmapFactory.Options())
+    // }
+    thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
+            BitmapFactory.Options())
     val options = RequestOptions()
     placeHolder?.let {options.placeholder(placeHolder)}
     cornerRadius?.let { options.transform(RoundedCorners(it)) }
