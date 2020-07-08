@@ -77,7 +77,7 @@ class VideoView @JvmOverloads constructor(
 
     var videoRotationDegree = 0
 
-    var screenOrientation = 0
+    var screenOrientation = 0 // 0 或者90
 
     var videoUri: Uri? = null
         set(value) {
@@ -272,14 +272,14 @@ class VideoView @JvmOverloads constructor(
     
 
     private fun fullScreenHideAll(context: Context) {
-        Util.hideStatusBar(context)
-        Util.hideActionBar(context)
         if (screenOrientation == 0) {
             Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         }  else {
             Util.setRequestedOrientation(context, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         }
         Util.hideSystemUI(context)
+        Util.hideActionBar(context)
+        Util.hideStatusBar(context)
     }
 
     fun autoFullScreen(x: Float) {

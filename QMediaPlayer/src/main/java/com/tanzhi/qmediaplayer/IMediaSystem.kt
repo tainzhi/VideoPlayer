@@ -31,14 +31,14 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     private var mMediaPlayer: MediaPlayer? = null
     override fun start() {
         logI(TAG, "start()")
-        mMediaHandler!!.post { mMediaPlayer!!.start() }
+        mMediaHandler?.post { mMediaPlayer?.start() }
     }
 
     override fun prepare() {
         logI(TAG, "prepare()")
         release()
         mMediaHandlerThread = HandlerThread("QVideoPlayer")
-        mMediaHandlerThread!!.start()
+        mMediaHandlerThread?.start()
         mMediaHandler = Handler(mMediaHandlerThread!!.looper)
         mHandler = Handler()
         mMediaHandler!!.post {
@@ -77,7 +77,7 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
 
     override fun pause() {
         logI(TAG, "pause()")
-        mMediaHandler!!.post { mMediaPlayer!!.pause() }
+        mMediaHandler?.post { mMediaPlayer?.pause() }
     }
 
     override val isPlaying
