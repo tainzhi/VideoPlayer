@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.smarx.notchlib.NotchScreenManager
 import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
 import com.tanzhi.qmediaplayer.Constant
@@ -59,10 +60,24 @@ class PlayActivity : AppCompatActivity() {
                             1
                     )
                 }
+                mediaControllerFloatWindowCallback = {
+                    finish()
+                }
+                backToFullScreenCallback = { starter, uri, name, duration, progress ->
+                    val intent = Intent(starter, PlayActivity::class.java)
+                    intent.data = uri
+                    intent.putExtra(VIDEO_NAME, name)
+                    intent.putExtra(VIDEO_DURATION, duration)
+                    intent.putExtra(VIDEO_PROGRESS, progress)
+                    intent.putExtra(VIDEO_RESOLUTION, resolution)
+                    starter.startActivity(intent)
+                }
             }
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         autoFullScreenListener = AutoFullScreenListener(videoView)
+
+        NotchScreenManager.getInstance().setDisplayInNotch(this)
     }
 
     override fun onResume() {

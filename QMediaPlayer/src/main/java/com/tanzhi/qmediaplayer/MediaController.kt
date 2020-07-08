@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.*
@@ -129,10 +130,13 @@ class MediaController(val context: Context) {
                         floatWindow = FloatWindow(context,
                                 videoView.videoUri,
                                 videoView.videoCurrentPosition,
-                                videoView.videoDuration
+                                videoView.videoDuration,
+                                videoView.screenOrientation,
+                                backToFullScreenCallback = backToFullScreenCallback
                         )
                     }
                     floatWindow.show()
+                    mediaControllerFloatWindowCallback.invoke()
                 } else {
                     requestDrawOverlayPermission.invoke()
                 }
@@ -460,10 +464,16 @@ class MediaController(val context: Context) {
             floatWindow = FloatWindow(context,
                     videoView.videoUri,
                     videoView.videoCurrentPosition,
-            videoView.videoDuration)
+                    videoView.videoDuration,
+                    videoView.screenOrientation,
+                    backToFullScreenCallback = backToFullScreenCallback
+            )
         }
         floatWindow.show()
+        mediaControllerFloatWindowCallback.invoke()
     }
+    var mediaControllerFloatWindowCallback: () -> Unit = {}
+    lateinit var backToFullScreenCallback: (starter: Context, uri: Uri, name: String, duration: Long, progress: Long) -> Unit
 
 }
 

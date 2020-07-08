@@ -12,6 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.BounceInterpolator
 import android.widget.ImageButton
+import android.widget.ProgressBar
+import androidx.constraintlayout.widget.Group
 import com.tanzhi.qmediaplayer.R
 import com.tanzhi.qmediaplayer.Util
 import com.tanzhi.qmediaplayer.VideoView
@@ -26,7 +28,9 @@ import com.tanzhi.qmediaplayer.VideoView
 class FloatWindow(val context: Context,
                   val videouri: Uri?,
                   val currentPosition: Long = 0L,
-                  val duration: Long = 0L
+                  val duration: Long = 0L,
+                  val orientation: Int, // 0 横屏, 90 竖屏
+                  val backToFullScreenCallback: (starter: Context, uri: Uri, name: String, duration: Long, progress: Long) -> Unit
 ) {
     var mWidth = 0.3
     var mHeight = 0.4
@@ -34,12 +38,18 @@ class FloatWindow(val context: Context,
     var mY = 0.2
     var mGravity = Gravity.BOTTOM
     var moveType = MoveType.back
+
     // var filterActivities: Array<Class<*>>? = null //设置Activity过滤器,用于指定在哪些界面显示悬浮窗, 默认全部界面显示
     private lateinit var floatView: FloatView
     private lateinit var valueAnimator: ValueAnimator
+    private var view: View = LayoutInflater.from(context).inflate(if (orientation == 0) R.layout.float_window_land else R.layout.float_window_port , null)
+    private var videoView: VideoView
+    private var playPauseBtn: ImageButton
+    private var progressBar: ProgressBar
+    private var controlGroup: Group
     // private lateinit var floatLifecycle: FloatLifecycle
 
-    private val touchListener = object: View.OnTouchListener {
+    private val touchListener = object : View.OnTouchListener {
         var lastX = 0f
         var lastY = 0f
         var changeX = 0f
@@ -47,16 +57,17 @@ class FloatWindow(val context: Context,
         var newX = 0f
         var newY = 0f
         override fun onTouch(v: View, event: MotionEvent): Boolean {
-            when(event.action) {
+            when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     lastX = event.rawX
                     lastY = event.rawY
                     cancelAnimator()
+                    showControllPanel()
                 }
                 MotionEvent.ACTION_MOVE -> {
                     changeX = event.rawX - lastX
                     // TODO: 2020/7/7 为什么不是 event.rayY - lastY 
-                    changeY = - event.rawY + lastY
+                    changeY = -event.rawY + lastY
                     newX = floatView.x + changeX
                     newY = floatView.y + changeY
                     floatView.x = newX.toInt()
@@ -96,20 +107,35 @@ class FloatWindow(val context: Context,
     }
 
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.float_window, null)
-        view.findViewById<VideoView>(R.id.floatWindowVideoView).run {
+        // 竖屏
+        if (orientation != 0) {
+            val tmp = mWidth
+            mWidth = mHeight
+            mHeight = mWidth
+        }
+        videoView = view.findViewById<VideoView>(R.id.floatWindowVideoView).apply {
             setOnTouchListener(touchListener)
             videoUri = videouri
             seekTo(currentPosition)
         }
-        view.findViewById<ImageButton>(R.id.floatWindowPlayPauseBtn).setOnClickListener {
-            // TODO: 2020/7/7
+        playPauseBtn = view.findViewById<ImageButton>(R.id.floatWindowPlayPauseBtn).apply {
+            setOnClickListener {
+                doPlayPause()
+            }
         }
         view.findViewById<ImageButton>(R.id.floatWindowFullScreenBtn).setOnClickListener {
             dismiss()
+            videoView.onPause()
+            videoView.onStop()
+            backToFullScreenCallback(context, videoView.videoUri!!, videoView.videoTitle, videoView.videoDuration, videoView.videoCurrentPosition)
         }
-        // TODO: 2020/7/7
-        // view.findViewById<SeekBar>(R.id.floatWindowProgressBar).setOnSeekBarChangeListener()
+        view.findViewById<ImageButton>(R.id.floatWindowCloseBtn).setOnClickListener {
+            videoView.onPause()
+            videoView.onStop()
+            dismiss()
+        }
+        progressBar = view.findViewById<ProgressBar>(R.id.floatWindowProgressBar)
+        controlGroup = view.findViewById(R.id.floatWindowGroup)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             floatView = FloatPhone(context, view)
         } else {
@@ -150,18 +176,57 @@ class FloatWindow(val context: Context,
         // floatLifecycle.unregister()
     }
 
-    // // 隐藏悬浮窗
-    // private fun hide() {
-    //     if (isShow) {
-    //         floatView.visible = false
-    //         isShow = false
-    //     }
-    // }
-    //
-    // private fun postHide() {
-    //     floatView.postHide()
-    //     isShow = false
-    // }
+// // 隐藏悬浮窗
+// private fun hide() {
+//     if (isShow) {
+//         floatView.visible = false
+//         isShow = false
+//     }
+// }
+//
+// private fun postHide() {
+//     floatView.postHide()
+//     isShow = false
+// }
+
+    private fun doPlayPause() {
+        if (videoView.isPlaying) {
+            videoView.pause()
+            playPauseBtn.setImageResource(R.drawable.ic_pause)
+            view.removeCallbacks(showProgress)
+            view.removeCallbacks(fadeOut)
+        } else {
+            videoView.start()
+            playPauseBtn.setImageResource(R.drawable.ic_play)
+            view.post(showProgress)
+            view.postDelayed(fadeOut, 3000)
+        }
+    }
+
+    private fun showControllPanel() {
+        if (!isShowing) {
+            controlGroup.visibility = View.VISIBLE
+            view.post(showProgress)
+            view.postDelayed(fadeOut, 3000)
+        }
+    }
+
+    private var isShowing = false
+    private val fadeOut = Runnable {
+        controlGroup.visibility = View.GONE
+        isShowing = false
+    }
+
+    private val showProgress = object : Runnable {
+        override fun run() {
+            val p = videoView.videoCurrentPosition * 100 / videoView.videoDuration
+            progressBar.progress = p.toInt()
+            if (isShowing && videoView.isPlaying) {
+                view.postDelayed(this, 1000L - (p % 1000))
+            }
+        }
+
+    }
 
     private fun startAnimator() {
         if (this::valueAnimator.isInitialized) {
