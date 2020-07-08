@@ -24,7 +24,7 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintVertical_bias="0.3"
-		app:layout_constraintWidth_percent="0.2"
+		app:layout_constraintWidth_percent="0.15"
 		app:srcCompat="@drawable/ic_close" />
 	
 	<ImageButton
@@ -39,8 +39,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_bias="0.3"
-		app:layout_constraintWidth_percent="0.3"
+		app:layout_constraintWidth_percent="0.2"
 		app:srcCompat="@drawable/ic_play" />
 	
 	<ImageButton
@@ -52,23 +51,26 @@
 		app:layout_constraintBottom_toTopOf="@id/floatWindowProgressBar"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintWidth_percent="0.2"
+		app:layout_constraintWidth_percent="0.15"
 		app:srcCompat="@drawable/ic_full_screen" />
 	
 	<ProgressBar
 		android:id="@+id/floatWindowProgressBar"
 		style="?android:attr/progressBarStyleHorizontal"
+		android:progressTint="?colorPrimary"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:maxHeight="1dp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintWidth_percent="1"
+		app:layout_constraintWidth_percent="0.8"
 		android:progress="50" />
 	<androidx.constraintlayout.widget.Group
 		android:id="@+id/floatWindowGroup"
 		app:constraint_referenced_ids="floatWindowPlayPauseBtn, floatWindowProgressBar, floatWindowFullScreenBtn, floatWindowCloseBtn"
+		android:visibility="gone"
+		tools:visibility="visible"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

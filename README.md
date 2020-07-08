@@ -58,6 +58,7 @@
 | :----- | :--------- |
 |[lottie](https://github.com/airbnb/lottie-android) | 动画 |
 | [Jsoup](https://jsoup.org/) | 网页解析(爬虫) |
+| [NotchScreenTool](https://github.com/smarxpan/NotchScreenTool) | 刘海屏全面屏工具,全屏播放时使用刘海 |
 | [弃用]Volley,使用简单封装的HttpUrlConnection | 网络请求 |
 
 ## 资源获取方法
