@@ -126,7 +126,11 @@ class MediaController(val context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(context)) {
                     if (!this::floatWindow.isInitialized) {
-                        floatWindow = FloatWindow(context)
+                        floatWindow = FloatWindow(context,
+                                videoView.videoUri,
+                                videoView.videoCurrentPosition,
+                                videoView.videoDuration
+                        )
                     }
                     floatWindow.show()
                 } else {
@@ -453,7 +457,10 @@ class MediaController(val context: Context) {
     var requestDrawOverlayPermission: () -> Unit = {}
     val requestDrawOverlayPermissionCallback: () -> Unit = {
         if (!this::floatWindow.isInitialized) {
-            floatWindow = FloatWindow(context)
+            floatWindow = FloatWindow(context,
+                    videoView.videoUri,
+                    videoView.videoCurrentPosition,
+            videoView.videoDuration)
         }
         floatWindow.show()
     }
