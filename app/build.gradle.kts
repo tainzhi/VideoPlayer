@@ -149,6 +149,7 @@ dependencies {
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.Paging.runtimeKtx)
     implementation(Libs.AndroidX.Work.runtimeKtx)
+    implementation(Libs.AndroidX.browser)
     
     implementation(Libs.Google.material)
     

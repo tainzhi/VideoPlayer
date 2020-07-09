@@ -28,8 +28,7 @@
 				android:id="@+id/tvImage"
 				android:layout_width="0dp"
 				android:layout_height="0dp"
-				android:scaleType="fitXY"
-				app:imagePlaceholder="@{R.drawable.ic_default_tv_channel}"
+				app:imagePlaceholder="@{R.drawable.ic_default_tv}"
 				app:imageUrl="@{tv.image}"
 				app:roundCornerRadiusImage="@{5}"
 				app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +37,7 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
 				tools:ignore="ContentDescription"
-				tools:src="@drawable/thumbnail_default" />
+				tools:src="@drawable/ic_default_tv" />
 			
 			<TextView
 				android:id="@+id/tvName"

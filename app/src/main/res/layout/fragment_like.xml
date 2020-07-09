@@ -1,13 +1,72 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context="com.tainzhi.android.videoplayer.ui.FavouritFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+	<data>
+		
+		<variable
+			name="viewModel"
+			type="com.tainzhi.android.videoplayer.ui.like.LikeViewModel" />
+	</data>
 	
-	<!-- TODO: Update blank fragment layout -->
-	<TextView
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+		tools:context="com.tainzhi.android.videoplayer.ui.FavouritFragment">
+		
+		
+		<TextView
+			android:id="@+id/choosePlayerTv"
+			style="@style/VideoTheme.Settings.Button"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="播放器"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<TextView
+			android:id="@+id/choosePlayerRenderTv"
+			style="@style/VideoTheme.Settings.Button"
+			android:layout_width="match_parent"
+			android:focusable="true"
+			android:layout_height="wrap_content"
+			android:text="渲染方式"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/choosePlayerTv" />
+		<!-- AppCompat/MaterialComponents layout inflators don't automatically handle
+			 Switch widgets. See https://material.io/develop/android/components/switch/ -->
+		<com.google.android.material.switchmaterial.SwitchMaterial
+			android:id="@+id/advertisingSwitch"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			style="@style/VideoTheme.Settings.Switch"
+			android:checked="@{viewModel.advertising}"
+			android:onCheckedChanged="@{(view, checked) -> viewModel.toggleAdvertising(checked)}"
+			android:text="视频前播放广告"
+			app:layout_constraintTop_toBottomOf="@+id/choosePlayerRenderTv" />
+		<View
+			app:layout_constraintTop_toBottomOf="@id/advertisingSwitch"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="?android:dividerHorizontal"/>
+		
+		<TextView
+			android:id="@+id/textView3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="About"
+			style="@style/VideoTheme.Settings.Button.About"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/advertisingSwitch" />
+		
+		<TextView
+			android:id="@+id/sourceUrl"
+			style="@style/VideoTheme.Settings.Button.WebLink"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:focusable="true"
+			android:text="源码地址"
+			app:layout_constraintTop_toBottomOf="@+id/textView3"
+			websiteLink="https://github.com/tainzhi/VideoPlayer" />
+<!--		<todo>websiteLink无法点击的原因</todo>-->
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
