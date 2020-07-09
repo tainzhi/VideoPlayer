@@ -29,7 +29,7 @@
         <item name="elevation">@dimen/design_bottom_navigation_elevation</item>
     </style>
 	
-	<style name="VideoDetailsTag">
+	<style name="VideoTheme.LocalVideo.VideoDetailsTag" parent="AppTheme.DayNight">
 		<item name="android:background">@drawable/bg_grey_tag</item>
 		<item name="android:textSize">10sp</item>
 	</style>
@@ -40,5 +40,40 @@
 <!--        &lt;!&ndash;Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色&ndash;&gt;-->
 <!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
 <!--    </style>-->
-
+	
+	<style name="VideoTheme.Settings" parent="AppTheme.DayNight">
+		<item name="android:gravity">start|center_vertical</item>
+		<item name="android:minHeight">?listPreferredItemHeightSmall</item>
+		<item name="android:paddingBottom">@dimen/spacing_normal</item>
+		<item name="android:paddingRight">?listPreferredItemPaddingEnd</item>
+		<item name="android:paddingStart">?listPreferredItemPaddingStart</item>
+		<item name="android:textAlignment">viewStart</item>
+		<item name="android:paddingTop">@dimen/spacing_normal</item>
+		<item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+	</style>
+	
+	<style name="VideoTheme.Settings.Button">
+		<item name="android:background">?android:attr/selectableItemBackground</item>
+		<item name="android:clickable">true</item>
+	</style>
+	
+	<style name="VideoTheme.Settings.Switch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+		<item name="android:background">@null</item>
+		<item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
+		<item name="android:padding">@dimen/margin_normal</item>
+		<item name="android:textAlignment">viewStart</item>
+		<item name="switchPadding">@dimen/margin_small</item>
+		<item name="colorControlActivated">?colorPrimary</item>
+		<item name="colorControlNormal">@color/color_background</item>
+		<item name="switchTextAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+	</style>
+	
+	<style name="VideoTheme.Settings.Button.About">
+		<item name="android:clickable">false</item>
+		<item name="switchTextAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+	</style>
+	
+	<style name="VideoTheme.Settings.Button.WebLink">
+		<item name="android:textColor">@android:color/holo_blue_bright</item>
+	</style>
 </resources>

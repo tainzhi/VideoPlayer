@@ -95,6 +95,7 @@ class MediaController(val context: Context) {
             requestFocus()
             isSelected = true
         }
+        view.findViewById<ImageButton>(R.id.backIv).setOnClickListener { mediaControllerCloseCallback.invoke() }
         playPauseBtn = view.findViewById<ImageButton>(R.id.playPauseBtn)
         playPauseBtn.setOnClickListener {
             doPlayPause()
@@ -458,7 +459,7 @@ class MediaController(val context: Context) {
     //         }
 
 
-    var requestDrawOverlayPermission: () -> Unit = {}
+    lateinit var requestDrawOverlayPermission: () -> Unit
     val requestDrawOverlayPermissionCallback: () -> Unit = {
         if (!this::floatWindow.isInitialized) {
             floatWindow = FloatWindow(context,
@@ -472,7 +473,8 @@ class MediaController(val context: Context) {
         floatWindow.show()
         mediaControllerFloatWindowCallback.invoke()
     }
-    var mediaControllerFloatWindowCallback: () -> Unit = {}
+    lateinit var mediaControllerFloatWindowCallback: () -> Unit
+    lateinit var mediaControllerCloseCallback: () -> Unit
     lateinit var backToFullScreenCallback: (starter: Context, uri: Uri, name: String, duration: Long, progress: Long) -> Unit
 
 }

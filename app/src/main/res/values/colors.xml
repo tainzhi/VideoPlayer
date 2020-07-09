@@ -17,7 +17,6 @@
     <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
     <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
     <!--selection controls.-->
-    <color name="zhuganzi">#511d23</color>
     <color name="Blue_Grey">#607d8b</color>
     <color name="textColorPrimary">#FFC107</color>
     <color name="viewBackground">@android:color/white</color>

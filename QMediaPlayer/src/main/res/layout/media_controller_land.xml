@@ -11,23 +11,24 @@
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:background="@color/color_media_controller_panel"
-		android:paddingTop="24dp"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHeight_percent="0.16"
+		app:layout_constraintHeight_percent="0.15"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 	
-	<ImageView
+	<ImageButton
 		android:id="@+id/backIv"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginStart="16dp"
+		android:layout_marginTop="25dp"
+		android:scaleType="fitXY"
 		app:layout_constraintBottom_toBottomOf="@id/top_panel_bg"
 		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintStart_toStartOf="@id/top_panel_bg"
 		app:layout_constraintTop_toTopOf="@id/top_panel_bg"
-		app:layout_constraintVertical_bias="0.65"
 		app:layout_constraintWidth_percent="0.04"
+		android:background="@drawable/bg_media_controller_btn"
 		app:srcCompat="@drawable/ic_arrow_back"
 		/>
 	
@@ -126,7 +127,7 @@
 		android:layout_marginTop="10dp"
 		android:layout_marginBottom="20dp"
 		android:thumb="@drawable/bg_round_black"
-		android:thumbTint="?attr/colorPrimary"
+		android:thumbTint="?colorPrimary"
 		tools:progress="50"
 		app:layout_constraintTop_toTopOf="@+id/bottom_panel_bg"
 		app:layout_constraintDimensionRatio="h, 635:10"

@@ -109,9 +109,8 @@ class FloatWindow(val context: Context,
     init {
         // 竖屏
         if (orientation != 0) {
-            val tmp = mWidth
-            mWidth = mHeight
-            mHeight = mWidth
+            mWidth = 0.3
+            mHeight = 0.3
         }
         videoView = view.findViewById<VideoView>(R.id.floatWindowVideoView).apply {
             setOnTouchListener(touchListener)

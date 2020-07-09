@@ -72,6 +72,10 @@ class PlayActivity : AppCompatActivity() {
                     intent.putExtra(VIDEO_RESOLUTION, resolution)
                     starter.startActivity(intent)
                 }
+                mediaControllerCloseCallback = {
+                    this@PlayActivity.onPause()
+                    finish()
+                }
             }
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
