@@ -56,15 +56,15 @@
 			android:layout_height="match_parent"
 			android:layout_marginStart="@dimen/margin_normal"
 			android:layout_marginTop="12dp"
-			android:scaleType="fitXY"
-			app:layout_constraintDimensionRatio="w, 35:21"
+			android:background="@drawable/bg_video_thumbnail"
+			app:layout_constraintDimensionRatio="w, 35:20"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:thumbPlaceHolder="@{R.drawable.thumbnail_default}"
+			app:thumbPlaceHolder="@{R.drawable.ic_default_thumbnail}"
 			app:videoUri="@{video.uri}"
-			app:cornerRadius="@{5}"
+			app:cornerRadius="@{6}"
 			tools:ignore="ContentDescription"
-			tools:src="@drawable/thumbnail_default" />
+			tools:src="@drawable/ic_default_thumbnail" />
 		
 		<TextView
 			android:id="@+id/videoDurationTv"
@@ -98,7 +98,7 @@
 		
 		<TextView
 			android:id="@+id/videoResolutionTv"
-			style="@style/VideoDetailsTag"
+			style="@style/VideoTheme.LocalVideo.VideoDetailsTag"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/margin_small"
@@ -110,7 +110,7 @@
 		
 		<TextView
 			android:id="@+id/item_video_size"
-			style="@style/VideoDetailsTag"
+			style="@style/VideoTheme.LocalVideo.VideoDetailsTag"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@{video.size}"
@@ -121,7 +121,7 @@
 		
 		<TextView
 			android:id="@+id/item_video_date_added"
-			style="@style/VideoDetailsTag"
+			style="@style/VideoTheme.LocalVideo.VideoDetailsTag"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@{video.dateModified}"

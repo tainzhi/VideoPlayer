@@ -1,18 +1,26 @@
 package com.tainzhi.android.videoplayer.binding
 
 import android.content.ContentUris
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsService
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.tainzhi.android.common.util.FormatUtil.formatMediaDuration
 import com.tainzhi.android.videoplayer.App
+import com.tainzhi.android.videoplayer.R
 
 /**
  * @author:      tainzhi
@@ -39,6 +47,7 @@ fun bindVideoThumbnail(
         height: Int? = null
 ) {
     var thumbnail: Bitmap? = null
+    // TODO: 2020/7/9 小米9 android10上file not found exception
     // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
     //     thumbnail =
     //             App.CONTEXT.contentResolver.loadThumbnail(
@@ -63,3 +72,52 @@ fun bindVideoThumbnail(
 fun bindDuration(textView: TextView, duration: Long) {
     textView.text = duration.formatMediaDuration()
 }
+
+private const val CHROME_PACKAGE = "com.android.chrome"
+
+@BindingAdapter("websiteLink", "hideWhenEmpty", requireAll = false)
+fun websiteLink(
+        button: View,
+        url: String?,
+        hideWhenEmpty: Boolean = false
+) {
+    if (url.isNullOrEmpty()) {
+        if (hideWhenEmpty) {
+            button.isVisible = false
+        } else {
+            button.isClickable = false
+        }
+        return
+    }
+    button.isVisible = true
+    button.setOnClickListener {
+        openWebsiteUrl(it.context, url)
+    }
+}
+
+fun openWebsiteUrl(context: Context, url: String) {
+    if (url.isBlank()) {
+        return
+    }
+    openWebsiteUri(context, Uri.parse(url))
+}
+
+fun openWebsiteUri(context: Context, uri: Uri) {
+    if (context.isChromeCustomTabsSupported()) {
+        CustomTabsIntent.Builder()
+                .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+                .build()
+                .launchUrl(context, uri)
+    } else {
+        context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+    }
+}
+
+private fun Context.isChromeCustomTabsSupported(): Boolean {
+    val serviceIntent = Intent(CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION)
+    serviceIntent.setPackage(CHROME_PACKAGE)
+    val resolveInfos = packageManager.queryIntentServices(serviceIntent, 0)
+    return !resolveInfos.isNullOrEmpty()
+}
+
