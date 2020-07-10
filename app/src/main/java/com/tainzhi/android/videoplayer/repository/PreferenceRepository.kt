@@ -3,10 +3,8 @@ package com.tainzhi.android.videoplayer.repository
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.content.res.Resources
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
-import java.io.PipedReader
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -27,8 +25,8 @@ class PreferenceRepository (val context: Context) {
     }
 
     var advertising by BooleanPreference(prefs, PREF_ADVERTISING, false)
-    var playerType by StringPreference(prefs, PREF_PLAYER, "")
-    var playerRenderType by StringPreference(prefs, PREF_RENDER_TYPE, "")
+    var playerType by IntPreference(prefs, PREF_PLAYER, 0)
+    var playerRenderType by IntPreference(prefs, PREF_RENDER_TYPE, 0)
     var selectedTheme by StringPreference(prefs, PREF_DARK_MODE_ENABLED, "")
 
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -75,5 +73,19 @@ class StringPreference(
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
         preferences.value.edit { putString(name, value) }
+    }
+}
+
+class IntPreference(
+        private val preferences: Lazy<SharedPreferences>,
+        private val name: String,
+        private val defaultValue: Int
+) : ReadWriteProperty<Any, Int> {
+    override fun getValue(thisRef: Any, property: KProperty<*>): Int {
+        return preferences.value.getInt(name, defaultValue) ?: defaultValue
+    }
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: Int) {
+        preferences.value.edit { putInt(name, value ?: defaultValue) }
     }
 }

@@ -131,7 +131,6 @@ class MediaController(val context: Context) {
                         floatWindow = FloatWindow(context,
                                 videoView.videoUri,
                                 videoView.videoCurrentPosition,
-                                videoView.videoDuration,
                                 videoView.screenOrientation,
                                 backToFullScreenCallback = backToFullScreenCallback
                         )
@@ -465,7 +464,6 @@ class MediaController(val context: Context) {
             floatWindow = FloatWindow(context,
                     videoView.videoUri,
                     videoView.videoCurrentPosition,
-                    videoView.videoDuration,
                     videoView.screenOrientation,
                     backToFullScreenCallback = backToFullScreenCallback
             )
@@ -475,7 +473,7 @@ class MediaController(val context: Context) {
     }
     lateinit var mediaControllerFloatWindowCallback: () -> Unit
     lateinit var mediaControllerCloseCallback: () -> Unit
-    lateinit var backToFullScreenCallback: (starter: Context, uri: Uri, name: String, duration: Long, progress: Long) -> Unit
+    lateinit var backToFullScreenCallback: (starter: Context, uri: Uri, name: String, progress: Long) -> Unit
 
 }
 

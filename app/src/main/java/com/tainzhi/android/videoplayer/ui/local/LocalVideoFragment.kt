@@ -38,7 +38,6 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             PlayActivity.startPlay(requireActivity(),
                     video.uri,
                     video.title,
-                    video.duration,
                     resolution = video.resolution
             )
         }
