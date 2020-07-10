@@ -28,9 +28,8 @@ import com.tanzhi.qmediaplayer.VideoView
 class FloatWindow(val context: Context,
                   val videouri: Uri?,
                   val currentPosition: Long = 0L,
-                  val duration: Long = 0L,
                   val orientation: Int, // 0 横屏, 90 竖屏
-                  val backToFullScreenCallback: (starter: Context, uri: Uri, name: String, duration: Long, progress: Long) -> Unit
+                  val backToFullScreenCallback: (starter: Context, uri: Uri, name: String, progress: Long) -> Unit
 ) {
     var mWidth = 0.3
     var mHeight = 0.4
@@ -126,7 +125,7 @@ class FloatWindow(val context: Context,
             dismiss()
             videoView.onPause()
             videoView.onStop()
-            backToFullScreenCallback(context, videoView.videoUri!!, videoView.videoTitle, videoView.videoDuration, videoView.videoCurrentPosition)
+            backToFullScreenCallback(context, videoView.videoUri!!, videoView.videoTitle, videoView.videoCurrentPosition)
         }
         view.findViewById<ImageButton>(R.id.floatWindowCloseBtn).setOnClickListener {
             videoView.onPause()
