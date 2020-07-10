@@ -11,16 +11,20 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.smarx.notchlib.NotchScreenManager
 import com.tainzhi.android.videoplayer.R
+import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
 import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.MediaController
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
+import org.koin.android.ext.android.inject
 
 class PlayActivity : AppCompatActivity() {
     private lateinit var autoFullScreenListener: AutoFullScreenListener
     private lateinit var sensorManager: SensorManager
     private lateinit var videoView: VideoView
+
+    private val preferenceRepository: PreferenceRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +34,6 @@ class PlayActivity : AppCompatActivity() {
         val mVideoUri = intent.data
         val bundle = intent.extras
         val mVideoTitle = bundle!!.getString(VIDEO_NAME)
-        val mVideoDuration = bundle.getLong(VIDEO_DURATION, 0)
         val mVideoProgress = bundle.getLong(VIDEO_PROGRESS, 0)
         val resolution = bundle.getString(VIDEO_RESOLUTION)
         var orientation = 0
@@ -46,7 +49,8 @@ class PlayActivity : AppCompatActivity() {
         }
         videoView.run {
             videoTitle = mVideoTitle!!
-            renderType = Constant.RenderType.GL_SURFACE_VIEW
+            mediaPlayerType = preferenceRepository.playerType
+            renderType = preferenceRepository.playerRenderType
             screenOrientation = orientation
             startFullScreenDirectly(this@PlayActivity, mVideoUri!!)
             setEffect(NoEffect())
@@ -63,11 +67,10 @@ class PlayActivity : AppCompatActivity() {
                 mediaControllerFloatWindowCallback = {
                     finish()
                 }
-                backToFullScreenCallback = { starter, uri, name, duration, progress ->
+                backToFullScreenCallback = { starter, uri, name, progress ->
                     val intent = Intent(starter, PlayActivity::class.java)
                     intent.data = uri
                     intent.putExtra(VIDEO_NAME, name)
-                    intent.putExtra(VIDEO_DURATION, duration)
                     intent.putExtra(VIDEO_PROGRESS, progress)
                     intent.putExtra(VIDEO_RESOLUTION, resolution)
                     starter.startActivity(intent)
@@ -109,15 +112,13 @@ class PlayActivity : AppCompatActivity() {
     companion object {
         private const val VIDEO_RUL = "url"
         private const val VIDEO_NAME = "name"
-        private const val VIDEO_DURATION = "duration"
         private const val VIDEO_PROGRESS = "progress"
         private const val VIDEO_RESOLUTION = "resolution"
         @JvmStatic
-        fun startPlay(starter: Context, uri: Uri, name: String, duration: Long = 100, progress: Long = 100, resolution: String = "") {
+        fun startPlay(starter: Context, uri: Uri, name: String, progress: Long = 100, resolution: String = "") {
             val intent = Intent(starter, PlayActivity::class.java)
             intent.data = uri
             intent.putExtra(VIDEO_NAME, name)
-            intent.putExtra(VIDEO_DURATION, duration)
             intent.putExtra(VIDEO_PROGRESS, progress)
             intent.putExtra(VIDEO_RESOLUTION, resolution)
             starter.startActivity(intent)

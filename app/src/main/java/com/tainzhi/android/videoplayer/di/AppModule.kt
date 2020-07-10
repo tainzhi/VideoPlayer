@@ -35,7 +35,7 @@ val viewModelModule = module {
     viewModel { DouyuCategoryViewModel(get(), get()) }
     viewModel { MainViewModel() }
     viewModel { PlayDouyuViewModel(get(), get())}
-    viewModel { LikeViewModel(get(), get()) }
+    viewModel { LikeViewModel(get()) }
 }
 
 val repositoryModule = module {

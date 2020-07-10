@@ -38,6 +38,7 @@
 			android:id="@+id/advertisingSwitch"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			tools:checked="true"
 			style="@style/VideoTheme.Settings.Switch"
 			android:checked="@{viewModel.advertising}"
 			android:onCheckedChanged="@{(view, checked) -> viewModel.toggleAdvertising(checked)}"
