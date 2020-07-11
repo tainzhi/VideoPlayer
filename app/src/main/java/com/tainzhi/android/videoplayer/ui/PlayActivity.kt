@@ -13,8 +13,7 @@ import com.smarx.notchlib.NotchScreenManager
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
-import com.tanzhi.qmediaplayer.Constant
-import com.tanzhi.qmediaplayer.MediaController
+import com.tanzhi.qmediaplayer.controller.MediaController
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
 import org.koin.android.ext.android.inject
@@ -89,7 +88,6 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        videoView.onResume()
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(autoFullScreenListener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
         videoView.onResume()

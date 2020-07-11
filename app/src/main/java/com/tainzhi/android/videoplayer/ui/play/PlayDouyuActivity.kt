@@ -5,14 +5,15 @@ import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
-import com.tanzhi.qmediaplayer.Constant
-import com.tanzhi.qmediaplayer.MediaController
+import com.tanzhi.qmediaplayer.controller.MediaController
 import com.tanzhi.qmediaplayer.VideoView
+import com.tanzhi.qmediaplayer.controller.NetMediaController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
@@ -66,12 +67,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         val id = bundle?.getString(VIDEO_ID)
         val mVideoTitle = bundle?.getString(VIDEO_NAME)
 
-        videoView.run {
-            videoTitle = mVideoTitle!!
-            // System MediaPlayer也可以播放视频
-            mediaPlayerType = Constant.PlayerType.EXO_PLAYER
-            // setEffect(NoEffect())
-        }
+        videoView.videoTitle = mVideoTitle!!
 
         mViewModel.getRoomCircuit(id!!)
     }
@@ -83,7 +79,32 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
             val uri = Uri.parse(it)
             videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
             // 如果先加载MediaController, 将不会显示
-            videoView.mediaController = MediaController(this@PlayDouyuActivity)
+            videoView.mediaController = NetMediaController(this@PlayDouyuActivity).apply {
+                @RequiresApi(api = 23)
+                requestDrawOverlayPermission = {
+                    startActivityForResult(
+                            Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION").apply {
+                                data = Uri.parse("package:" + context.packageName)
+                            },
+                            1
+                    )
+                }
+                mediaControllerFloatWindowCallback = {
+                    finish()
+                }
+                backToFullScreenCallback = { starter, uri, name, progress ->
+                    // val intent = Intent(starter, PlayActivity::class.java)
+                    // intent.data = uri
+                    // intent.putExtra(VIDEO_NAME, name)
+                    // intent.putExtra(VIDEO_PROGRESS, progress)
+                    // intent.putExtra(VIDEO_RESOLUTION, resolution)
+                    // starter.startActivity(intent)
+                }
+                mediaControllerCloseCallback = {
+                    this@PlayDouyuActivity.onPause()
+                    finish()
+                }
+            }
         })
         mViewModel.error.observe(this@PlayDouyuActivity, Observer {
             Snackbar.make(videoView, it, Snackbar.LENGTH_SHORT)
