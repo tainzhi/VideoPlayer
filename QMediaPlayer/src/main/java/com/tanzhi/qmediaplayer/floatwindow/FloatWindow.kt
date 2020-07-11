@@ -189,12 +189,12 @@ class FloatWindow(val context: Context,
 
     private fun doPlayPause() {
         if (videoView.isPlaying) {
-            videoView.pause()
+            videoView.pausePlay()
             playPauseBtn.setImageResource(R.drawable.ic_pause)
             view.removeCallbacks(showProgress)
             view.removeCallbacks(fadeOut)
         } else {
-            videoView.start()
+            videoView.startPlay()
             playPauseBtn.setImageResource(R.drawable.ic_play)
             view.post(showProgress)
             view.postDelayed(fadeOut, 3000)

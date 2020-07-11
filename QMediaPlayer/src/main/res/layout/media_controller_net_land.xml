@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	tools:ignore="ContentDescription"
+	android:layout_height="match_parent">
+	
+	<View
+		android:id="@+id/top_panel_bg"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:background="@color/color_media_controller_panel"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHeight_percent="0.15"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<ImageButton
+		android:id="@+id/backIv"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="25dp"
+		android:scaleType="fitXY"
+		app:layout_constraintBottom_toBottomOf="@id/top_panel_bg"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toStartOf="@id/top_panel_bg"
+		app:layout_constraintTop_toTopOf="@id/top_panel_bg"
+		app:layout_constraintWidth_percent="0.04"
+		android:background="@drawable/bg_media_controller_btn"
+		app:srcCompat="@drawable/ic_arrow_back"
+		/>
+	
+	<TextView
+		android:id="@+id/videoTitleTv"
+		android:layout_width="0dp"
+		app:layout_constraintWidth_percent="0.6"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		tools:text="This is a video title"
+		android:textColor="@android:color/white"
+		android:textSize="20sp"
+		android:ellipsize="marquee"
+		android:scrollHorizontally="true"
+		android:singleLine="true"
+		app:layout_constraintBottom_toBottomOf="@+id/backIv"
+		app:layout_constraintStart_toEndOf="@+id/backIv"
+		app:layout_constraintTop_toTopOf="@+id/backIv" />
+	
+	<ImageButton
+		android:id="@+id/changeRenderBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:background="@drawable/bg_round_black"
+		android:padding="6dp"
+		android:src="@drawable/ic_render"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/top_panel_bg"
+		app:layout_constraintWidth_percent="0.07" />
+	
+	<ImageButton
+		android:id="@+id/changePlayerBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_round_black"
+		android:layout_marginStart="16dp"
+		android:padding="6dp"
+		android:src="@drawable/ic_change_player"
+		app:layout_constraintBottom_toBottomOf="@+id/changeScaleTypeBtn"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toEndOf="@+id/changeRenderBtn"
+		app:layout_constraintTop_toTopOf="@+id/changeRenderBtn"
+		app:layout_constraintWidth_percent="0.07" />
+	
+	<ImageButton
+		android:id="@+id/scissorsBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_media_controller_btn"
+		android:scaleType="fitXY"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintWidth_percent="0.07"
+		android:layout_marginStart="16dp"
+		app:srcCompat="@drawable/ic_scissors"
+		tools:tint="@android:color/black" />
+	
+	<ProgressBar
+		android:id="@+id/loadingProgressBar"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintDimensionRatio="h, 1:1"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintWidth_percent="0.1" />
+	
+	<ImageButton
+		android:id="@+id/lockBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_media_controller_btn"
+		android:scaleType="fitXY"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:layout_marginEnd="16dp"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintWidth_percent="0.07"
+		app:srcCompat="@drawable/ic_lock_open"
+		tools:tint="@android:color/black" />
+	
+	
+	<!--	bottom控制栏-->
+	<View
+		android:id="@+id/bottom_panel_bg"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:background="@color/color_media_controller_panel"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHeight_percent="0.22"
+		app:layout_constraintStart_toStartOf="parent" />
+	
+	
+	<TextView
+		android:id="@+id/endTimeTv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		tools:text="1:60:59"
+		android:textColor="@android:color/white"
+		app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+		app:layout_constraintStart_toEndOf="@+id/progressBar"
+		app:layout_constraintTop_toTopOf="@+id/progressBar" />
+	
+	<TextView
+		android:id="@+id/currentTimeTv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="?attr/colorPrimary"
+		tools:text="01:53:38"
+		tools:textColor="@android:color/holo_red_dark"
+		app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+		app:layout_constraintEnd_toStartOf="@+id/progressBar"
+		app:layout_constraintTop_toTopOf="@+id/progressBar" />
+	
+	<ImageButton
+		android:id="@+id/playPauseBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_media_controller_btn"
+		android:scaleType="fitXY"
+		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
+		app:layout_constraintTop_toTopOf="@id/bottom_panel_bg"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toStartOf="@+id/bottom_panel_bg"
+		app:layout_constraintWidth_percent="0.085"
+		app:srcCompat="@drawable/ic_play" />
+	
+	<ImageButton
+		android:id="@+id/refreshButton"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_media_controller_btn"
+		android:scaleType="fitXY"
+		app:layout_constraintBottom_toBottomOf="@+id/bottom_panel_bg"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintStart_toEndOf="@+id/playPauseBtn"
+		app:layout_constraintTop_toTopOf="@id/bottom_panel_bg"
+		app:layout_constraintWidth_percent="0.085"
+		app:srcCompat="@drawable/ic_refresh" />
+	
+	<ImageButton
+		android:id="@+id/resolutionBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_media_controller_btn"
+		android:scaleType="fitXY"
+		app:layout_constraintBottom_toBottomOf="@+id/top_panel_bg"
+		app:layout_constraintDimensionRatio="h, 25:16"
+		app:layout_constraintEnd_toEndOf="@id/bottom_panel_bg"
+		app:layout_constraintWidth_percent="0.08"
+		app:srcCompat="@drawable/ic_hd" />
+	
+	<ImageButton
+		android:id="@+id/danmuBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_media_controller_btn"
+		android:scaleType="fitXY"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintTop_toTopOf="@id/bottom_panel_bg"
+		app:layout_constraintBottom_toBottomOf="@id/bottom_panel_bg"
+		app:layout_constraintEnd_toStartOf="@id/floatWindowBtn"
+		app:layout_constraintWidth_percent="0.085"
+		app:srcCompat="@drawable/ic_danmu_on" />
+	
+	<ImageButton
+		android:id="@+id/floatWindowBtn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@drawable/bg_media_controller_btn"
+		android:scaleType="fitXY"
+		app:layout_constraintDimensionRatio="1:1"
+		app:layout_constraintEnd_toEndOf="@id/bottom_panel_bg"
+		app:layout_constraintBottom_toBottomOf="@id/bottom_panel_bg"
+		app:layout_constraintTop_toTopOf="@id/bottom_panel_bg"
+		app:layout_constraintWidth_percent="0.085"
+		app:srcCompat="@drawable/ic_float_window" />
+	
+	<androidx.constraintlayout.widget.Group
+		android:id="@+id/lockControllerGroup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:constraint_referenced_ids="top_panel_bg,bottom_panel_bg,scissorsBtn,changeRenderBtn,changePlayerBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

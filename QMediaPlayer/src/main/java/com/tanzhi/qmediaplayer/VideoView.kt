@@ -6,7 +6,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.media.AudioManager
 import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
@@ -17,6 +16,7 @@ import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_IDLE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PAUSE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PLAYING
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PREPARED
+import com.tanzhi.qmediaplayer.controller.IController
 import com.tanzhi.qmediaplayer.render.GLRenderView
 import com.tanzhi.qmediaplayer.render.IRenderView
 import com.tanzhi.qmediaplayer.render.SurfaceRenderView
@@ -38,22 +38,13 @@ class VideoView @JvmOverloads constructor(
 
     }
     private var iMediaPlayer: IMediaInterface? = null
-    
-    var mediaController: MediaController? = null
+
+    var mediaController: IController? = null
         set(value) {
             field?.hide()
             field = value
             attachMediaController()
         }
-
-    private val audioMediaController by lazy {
-        (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).apply {
-            requestAudioFocus(onAudioChangeListener,
-                AudioManager.STREAM_MUSIC,
-                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
-        }
-    }
-
     // 上一次通过翻转屏幕, 自动全屏时间
     var lastAutoFullScreenTime = 0
 
@@ -133,7 +124,7 @@ class VideoView @JvmOverloads constructor(
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onResume()
         }
-        start()
+        startPlay()
     }
 
     /**
@@ -143,7 +134,7 @@ class VideoView @JvmOverloads constructor(
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onPause()
         }
-        pause()
+        pausePlay()
     }
 
     fun onStop() {
@@ -311,14 +302,14 @@ class VideoView @JvmOverloads constructor(
         fullScreenHideAll(context)
     }
 
-    fun start() {
+    fun startPlay() {
         if (state == STATE_PREPARED || state == STATE_PAUSE) {
             state = STATE_PLAYING
             iMediaPlayer?.start()
         }
     }
 
-    fun pause() {
+    fun pausePlay() {
         if (state == STATE_PLAYING) {
             state = STATE_PAUSE
             iMediaPlayer?.pause()
@@ -341,7 +332,7 @@ class VideoView @JvmOverloads constructor(
         if (seekWhenPrepared != 0L) {
             iMediaPlayer?.seekTo(seekWhenPrepared)
         }
-        start()
+        startPlay()
         state = STATE_PLAYING
     }
 
@@ -452,7 +443,7 @@ class VideoView @JvmOverloads constructor(
             if (keyCode == KeyEvent.KEYCODE_HEADSETHOOK ||
                     keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
                 if (iMediaPlayer!!.isPlaying) {
-                    pause()
+                    pausePlay()
                     mediaController!!.show()
                 } else {
                     iMediaPlayer?.start()
@@ -461,14 +452,14 @@ class VideoView @JvmOverloads constructor(
                 return true
             } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
                 if (!iMediaPlayer!!.isPlaying) {
-                    start()
+                    startPlay()
                     mediaController!!.hide()
                 }
                 return true
             } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP
                     || keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
                 if (iMediaPlayer!!.isPlaying) {
-                    pause()
+                    pausePlay()
                     mediaController!!.show()
                 }
                 return true
@@ -508,18 +499,6 @@ class VideoView @JvmOverloads constructor(
         }
     }
 
-    // FIXME: 2020/5/27 AudioManager
-    private val onAudioChangeListener = object: AudioManager.OnAudioFocusChangeListener {
-        override fun onAudioFocusChange(focusChange: Int) {
-            when(focusChange) {
-                // FIXME: 2020/5/27
-                // AudioManager.AUDIOFOCUS_GAIN, AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> Unit
-                // AudioManager.AUDIOFOCUS_LOSS -> {
-                //     releaseAllVideos()
-                // }
-            }
-        }
-    }
 }
 
 class AutoFullScreenListener(val videoView: VideoView): SensorEventListener {
