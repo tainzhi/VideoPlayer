@@ -1,15 +1,16 @@
-package com.tanzhi.qmediaplayer
+package com.tanzhi.qmediaplayer.controller
 
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.AudioManager
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.Group
+import com.tanzhi.qmediaplayer.*
+import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.floatwindow.FloatWindow
 import com.tanzhi.qmediaplayer.render.IRenderView
 import java.lang.Integer.min
@@ -20,17 +21,15 @@ import kotlin.math.abs
  * @mail:        qfq61@qq.com
  * @date:        2020/5/22 17:03
  * @description: 播放控制器, 添加控制按钮, 控制[VideoView]播放
+ * 普通播放器, 根据视频size(width * heigth)竖屏(0)或者横屏(90), 有进度条
  **/
 
-class MediaController(val context: Context) {
+class MediaController(val context: Context) : IController(context) {
 
     private lateinit var parent: ViewGroup
     private lateinit var videoView: VideoView
     private lateinit var contentView: View
     private val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-
-    // 当前MediaController是否显示
-    var isShowing = false
 
     // 是否在拖动进度条
     private var isDragging = false
@@ -44,10 +43,6 @@ class MediaController(val context: Context) {
     // 悬浮窗播放
     private lateinit var floatWindow: FloatWindow
 
-    private val audioManager by lazy {
-        (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager)
-    }
-
     companion object {
         const val DefaultTimeout = 3000L
 
@@ -58,14 +53,15 @@ class MediaController(val context: Context) {
     /**
      * 把MediaController绑定到VideoView
      */
-    fun bindVideoView(videoView: VideoView) {
-        this@MediaController.videoView = videoView
-        parent = videoView.parent as ViewGroup
+    override fun bindVideoView(viewGroup: ViewGroup) {
+        this@MediaController.videoView = viewGroup as VideoView
+        parent = viewGroup.parent as ViewGroup
         contentView = makeControllerView().apply {
             setOnTouchListener(onTouchListener)
             post(showProgress)
         }
     }
+
 
     private fun makeControllerView() : View {
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -77,7 +73,7 @@ class MediaController(val context: Context) {
         return contentView
     }
 
-    fun changeOrientation() {
+    override fun changeOrientation() {
         parent.removeView(contentView)
         contentView = makeControllerView().apply {
             setOnTouchListener(onTouchListener)
@@ -146,19 +142,19 @@ class MediaController(val context: Context) {
 
     private fun doPlayPause() {
         if (videoView.isPlaying) {
-            videoView.pause()
+            videoView.pausePlay()
             playPauseBtn.setImageResource(R.drawable.ic_pause)
             // 视频停止后, 进度条停止和控制栏自动消失
             contentView.removeCallbacks(showProgress)
             contentView.removeCallbacks(fadeOut)
         } else {
-            videoView.start()
+            videoView.startPlay()
             playPauseBtn.setImageResource(R.drawable.ic_play)
             show()
         }
     }
 
-    fun hide() {
+    override fun hide() {
         if (isShowing) {
             Util.hideSystemUI(context)
             Util.hideStatusBar(context)
@@ -172,7 +168,9 @@ class MediaController(val context: Context) {
         }
     }
 
-    fun show() { show(DefaultTimeout)}
+    override fun show() {
+        show(DefaultTimeout)
+    }
 
     private fun show(timeout: Long) {
         if (!isShowing) {
@@ -457,23 +455,19 @@ class MediaController(val context: Context) {
     //             }
     //         }
 
-
-    lateinit var requestDrawOverlayPermission: () -> Unit
-    val requestDrawOverlayPermissionCallback: () -> Unit = {
-        if (!this::floatWindow.isInitialized) {
-            floatWindow = FloatWindow(context,
-                    videoView.videoUri,
-                    videoView.videoCurrentPosition,
-                    videoView.screenOrientation,
-                    backToFullScreenCallback = backToFullScreenCallback
-            )
+    override val requestDrawOverlayPermissionCallback: () -> Unit
+        get() = {
+            if (!this::floatWindow.isInitialized) {
+                floatWindow = FloatWindow(context,
+                        videoView.videoUri,
+                        videoView.videoCurrentPosition,
+                        videoView.screenOrientation,
+                        backToFullScreenCallback = backToFullScreenCallback
+                )
+            }
+            floatWindow.show()
+            mediaControllerFloatWindowCallback.invoke()
         }
-        floatWindow.show()
-        mediaControllerFloatWindowCallback.invoke()
-    }
-    lateinit var mediaControllerFloatWindowCallback: () -> Unit
-    lateinit var mediaControllerCloseCallback: () -> Unit
-    lateinit var backToFullScreenCallback: (starter: Context, uri: Uri, name: String, progress: Long) -> Unit
 
 }
 
