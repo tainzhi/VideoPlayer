@@ -66,7 +66,9 @@ class IMediaSystem(videoView: VideoView) : IMediaInterface(videoView),
     }
 
     override fun resetDataSource(uri: Uri) {
+        mMediaPlayer?.reset()
         mMediaPlayer?.setDataSource(mVideoView.context, uri)
+        mMediaPlayer?.prepareAsync()
     }
 
     override fun setDisplay(surfaceHolder: SurfaceHolder) {

@@ -37,7 +37,6 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        videoView.onResume()
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(autoFullScreenListener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
     }
@@ -45,12 +44,6 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(autoFullScreenListener)
-        videoView.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        videoView.onStop()
     }
 
     override fun initVM(): PlayDouyuViewModel = getViewModel()
@@ -66,6 +59,8 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         val bundle = intent.extras
         val id = bundle?.getString(VIDEO_ID)
         val mVideoTitle = bundle?.getString(VIDEO_NAME)
+
+        lifecycle.addObserver(videoView)
 
         videoView.videoTitle = mVideoTitle!!
         videoView.mediaController = NetMediaController(this@PlayDouyuActivity).apply {

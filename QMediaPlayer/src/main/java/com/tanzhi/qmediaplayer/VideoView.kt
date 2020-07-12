@@ -11,6 +11,9 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_ERROR
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_IDLE
 import com.tanzhi.qmediaplayer.Constant.PlayState.STATE_PAUSE
@@ -31,7 +34,7 @@ import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
 
 class VideoView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) , LifecycleObserver {
 
     companion object {
         const val TAG = "VideoView"
@@ -119,6 +122,7 @@ class VideoView @JvmOverloads constructor(
     /**
      * GLSurfaceView onResume
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onResume()
@@ -129,6 +133,7 @@ class VideoView @JvmOverloads constructor(
     /**
      * GLSurfaceView onPause
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         if (renderType == Constant.RenderType.GL_SURFACE_VIEW) {
             (mRenderView as GLRenderView).onPause()
@@ -136,6 +141,7 @@ class VideoView @JvmOverloads constructor(
         pausePlay()
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {
         iMediaPlayer?.release()
     }
@@ -503,6 +509,8 @@ class VideoView @JvmOverloads constructor(
             logD()
         }
     }
+
+
 
 }
 
