@@ -85,7 +85,9 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
     }
 
     override fun resetDataSource(uri: Uri) {
+        mIjkMediaPlayer?.reset()
         mIjkMediaPlayer?.setDataSource(mVideoView.context, uri)
+        mIjkMediaPlayer?.prepareAsync()
     }
 
     override val isPlaying: Boolean
