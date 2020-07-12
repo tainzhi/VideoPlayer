@@ -111,6 +111,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
         // }
         videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(mVideoView.videoUri)
+        simpleExoPlayer?.release()
         simpleExoPlayer?.prepare(videoSource)
     }
 

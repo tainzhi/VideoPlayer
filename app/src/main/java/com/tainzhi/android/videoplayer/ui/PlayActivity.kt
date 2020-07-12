@@ -29,6 +29,9 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_test)
         videoView = findViewById<VideoView>(R.id.video_view)
+
+        lifecycle.addObserver(videoView)
+
         val intent = intent
         val mVideoUri = intent.data
         val bundle = intent.extras
@@ -90,13 +93,11 @@ class PlayActivity : AppCompatActivity() {
         super.onResume()
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(autoFullScreenListener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
-        videoView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(autoFullScreenListener)
-        videoView.onPause()
     }
 
     @RequiresApi(api = 23)
