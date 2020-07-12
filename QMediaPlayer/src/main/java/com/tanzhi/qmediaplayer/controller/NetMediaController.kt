@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.Group
+import com.tanzhi.android.danmu.DanmuView
 import com.tanzhi.qmediaplayer.*
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.floatwindow.FloatWindow
@@ -21,7 +22,8 @@ import kotlin.math.abs
  * @mail:        qfq61@qq.com
  * @date:        2020/5/22 17:03
  * @description: 播放控制器, 添加控制按钮, 控制[VideoView]播放
- * 网络视频播放器, 默认横屏, 没有进度条, 又刷新进度条, 可以展示弹幕, 选择线路和视频分辨率
+ * 网络视频播放器, 默认横屏, 没有水平进度条, 有旋转刷新进度圆环, 可以展示弹幕, 选择线路和视频分辨率
+ * 默认显示控制栏
  **/
 
 class NetMediaController(val context: Context) : IController(context) {
@@ -31,11 +33,10 @@ class NetMediaController(val context: Context) : IController(context) {
     private lateinit var contentView: View
     private val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-
     private lateinit var playPauseBtn: ImageButton
-
     // 悬浮窗播放
     private lateinit var floatWindow: FloatWindow
+    private lateinit var loadingProgressBar: ProgressBar
 
     companion object {
         const val DefaultTimeout = 3000L
@@ -53,6 +54,9 @@ class NetMediaController(val context: Context) : IController(context) {
         contentView = makeControllerView().apply {
             setOnTouchListener(onTouchListener)
         }
+        // 默认显示控制栏
+        isShowing = true
+        parent.addView(contentView, layoutParams)
     }
 
 
@@ -63,17 +67,16 @@ class NetMediaController(val context: Context) : IController(context) {
         return contentView
     }
 
+    // 网络视频默认横屏, 不需要改变orientation
     override fun changeOrientation() {
-        parent.removeView(contentView)
-        contentView = makeControllerView().apply {
-            setOnTouchListener(onTouchListener)
-        }
     }
 
     // 锁定状态
     private var lock: Boolean = false
     // 点击依次改变缩放比率, 总共有6种缩放比率
     private var aspectRatioCount = 0
+    // 弹幕是否打开
+    private var isDanmuOn = false
     private fun initControllView(view: View) {
         view.findViewById<TextView>(R.id.videoTitleTv).run {
             text = videoView.videoTitle
@@ -119,7 +122,30 @@ class NetMediaController(val context: Context) : IController(context) {
                 }
             }
         }
+        loadingProgressBar = view.findViewById(R.id.loadingProgressBar)
+        view.findViewById<ImageButton>(R.id.refreshButton).setOnClickListener {
+            showLoading()
+            videoView.resetDataSource()
+        }
+        view.findViewById<ImageButton>(R.id.danmuBtn).setOnClickListener {
+            isDanmuOn = !isDanmuOn
+            (it as ImageButton).setImageResource(if (isDanmuOn) R.drawable.ic_danmu_on else R.drawable.ic_danmu_off)
+            if (!this::danmuView.isInitialized) {
+                danmuLayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 700)
+                danmuView = DanmuView(context)
+            }
+            if (isDanmuOn) {
+                parent.addView(danmuView, danmuLayoutParams)
+                danmuView.datas = com.tanzhi.android.danmu.Util.loadData()
+            } else {
+                danmuView.clear()
+                parent.removeView(danmuView)
+            }
+        }
     }
+
+    private lateinit var danmuView: DanmuView
+    private lateinit var danmuLayoutParams: ViewGroup.LayoutParams
 
     private fun doPlayPause() {
         if (videoView.isPlaying) {
@@ -345,5 +371,12 @@ class NetMediaController(val context: Context) : IController(context) {
             mediaControllerFloatWindowCallback.invoke()
         }
 
+    override fun showLoading() {
+        loadingProgressBar.visibility = View.VISIBLE
+    }
+
+    override fun dismissLoading() {
+        loadingProgressBar.visibility = View.GONE
+    }
 }
 

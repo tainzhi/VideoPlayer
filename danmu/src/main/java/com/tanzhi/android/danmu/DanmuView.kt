@@ -22,7 +22,7 @@ class DanmuView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    val datas: List<DanmuBean> = arrayListOf()
+    var datas: List<DanmuBean> = arrayListOf()
     val widthPixels = resources.displayMetrics.widthPixels
     val heightPixels = resources.displayMetrics.heightPixels
     var curPos = 0
@@ -43,16 +43,26 @@ class DanmuView @JvmOverloads constructor(
         addHandler.sendEmptyMessage(0)
     }
 
+    /**
+     * 清除所有的弹幕
+     */
+    fun clear() {
+        removeAllViews()
+    }
+
     private fun addTextView() {
         // 循环播放
         if (curPos == datas.size) {
             curPos = 0
         }
-        val danmuItemView = DanmuItemView(context, datas[curPos++]).apply {
+
+        val danmuItemView = DanmuItemView(context, datas[curPos++])
+        addView(danmuItemView)
+
+        danmuItemView.run {
             randomVerticalPosition(heightPixels)
             startTranslateAnim(this)
         }
-        addView(danmuItemView)
     }
 
     /**
