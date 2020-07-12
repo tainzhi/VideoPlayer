@@ -20,6 +20,9 @@ abstract class IController(context: Context) {
     abstract fun show()
     abstract fun bindVideoView(viewGroup: ViewGroup)
     abstract fun changeOrientation()
+    // 网络视频加载中的dialog
+    open fun showLoading() {}
+    open fun dismissLoading() {}
     protected val audioManager by lazy {
         (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).apply {
             requestAudioFocus(onAudioChangeListener,

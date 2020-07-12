@@ -1,5 +1,6 @@
 package com.tanzhi.qmediaplayer
 
+import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.Surface
@@ -93,6 +94,24 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
     override fun pause() {
         logI(TAG, "pause()")
         simpleExoPlayer?.playWhenReady = false
+    }
+
+    override fun resetDataSource(uri: Uri) {
+        val context = mVideoView.context
+        val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(context,
+                Util.getUserAgent(context, "QMediaPlayer"))
+        // String currUrl = jzvd.jzDataSource.getCurrentUrl().toString();
+        val videoSource: MediaSource
+        // if (currUrl.contains(".m3u8")) {
+        // 	videoSource = new HlsMediaSource.Factory(dataSourceFactory)
+        // 			              .createMediaSource(Uri.parse(currUrl), handler, null);
+        // } else {
+        // 	videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+        // 			              .createMediaSource(Uri.parse(currUrl));
+        // }
+        videoSource = ExtractorMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(mVideoView.videoUri)
+        simpleExoPlayer?.prepare(videoSource)
     }
 
     override val isPlaying: Boolean

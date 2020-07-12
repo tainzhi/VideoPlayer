@@ -20,7 +20,8 @@ import kotlin.random.Random
 class DanmuItemView( context: Context, danmuBean: DanmuBean) : LinearLayout(context) {
 
     init {
-        val view = inflate(context, R.layout.danmu_item, this)
+        val view = inflate(context, R.layout.danmu_item, null)
+        addView(view)
 
         view.findViewById<ImageView>(R.id.avator).setImageResource(danmuBean.avatorId)
         view.findViewById<TextView>(R.id.tv_name).text = danmuBean.userName

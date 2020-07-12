@@ -200,7 +200,7 @@
 		app:layout_constraintBottom_toBottomOf="@id/bottom_panel_bg"
 		app:layout_constraintEnd_toStartOf="@id/floatWindowBtn"
 		app:layout_constraintWidth_percent="0.085"
-		app:srcCompat="@drawable/ic_danmu_on" />
+		app:srcCompat="@drawable/ic_danmu_off" />
 	
 	<ImageButton
 		android:id="@+id/floatWindowBtn"

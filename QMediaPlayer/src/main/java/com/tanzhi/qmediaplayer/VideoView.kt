@@ -41,7 +41,6 @@ class VideoView @JvmOverloads constructor(
 
     var mediaController: IController? = null
         set(value) {
-            field?.hide()
             field = value
             attachMediaController()
         }
@@ -141,6 +140,11 @@ class VideoView @JvmOverloads constructor(
         iMediaPlayer?.release()
     }
 
+    // 重新加载网络uri, 即刷新
+    fun resetDataSource() {
+        iMediaPlayer?.resetDataSource(videoUri!!)
+    }
+
 
     private fun openVideo() {
         setRender()
@@ -227,7 +231,7 @@ class VideoView @JvmOverloads constructor(
      * 设置controller
      */
     private fun attachMediaController() {
-        if (iMediaPlayer != null && mediaController != null) {
+        if (mediaController != null) {
             mediaController?.bindVideoView(this@VideoView)
         }
     }
@@ -307,6 +311,7 @@ class VideoView @JvmOverloads constructor(
             state = STATE_PLAYING
             iMediaPlayer?.start()
         }
+        mediaController?.dismissLoading()
     }
 
     fun pausePlay() {

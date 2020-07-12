@@ -84,6 +84,10 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
         mIjkMediaPlayer?.pause()
     }
 
+    override fun resetDataSource(uri: Uri) {
+        mIjkMediaPlayer?.setDataSource(mVideoView.context, uri)
+    }
+
     override val isPlaying: Boolean
         get() = mIjkMediaPlayer?.isPlaying ?: false
 

@@ -130,7 +130,6 @@ dependencies {
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
     implementation(project(":ffmpeg"))
-    implementation(project(":danmu"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.appcompat)
