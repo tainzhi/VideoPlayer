@@ -1,5 +1,6 @@
 package com.tanzhi.qmediaplayer
 
+import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.Surface
@@ -21,6 +22,7 @@ abstract class IMediaInterface(var mVideoView: VideoView) {
     abstract fun start()
     abstract fun prepare()
     abstract fun pause()
+    abstract fun resetDataSource(uri: Uri)
     abstract val isPlaying: Boolean
     abstract fun seekTo(time: Long)
     abstract fun release()

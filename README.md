@@ -46,12 +46,16 @@
 - 该module可以执行ffmpeg命令, 在cpp线程中执行, 提供了回调,命令执行进度,命令停止功能
 - 编译过程和使用参考[ffmpeg/README.md](./ffmpeg/README.md)
 
+### danmmu
+- 弹幕库, 分为简单版和复杂版
+- 复杂版使用SurfaceView, 待实现
+
 ## 实现的功能
 - PlayVideoViewActivity: VideoView+MediaController简单播放功能
 
 ## 依赖框架和技术
-- master分支(第一版): MVP, retrofit2, rxjava2等等
-- kotlin分支(当前开发版): kotlin, MVVM(google jetpack), jsoup, ijkplayer,
+- javaMVP(第一版): MVP, retrofit2, rxjava2等等
+- master(当前开发版): kotlin, MVVM(google jetpack), jsoup, ijkplayer,
   mediaplayer, exoplayer...
 
 | 库 | 功能 |

@@ -47,6 +47,7 @@ dependencies {
     implementation(Libs.AndroidX.appcompat)
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.constraintlayout)
+    implementation(project(":danmu"))
 
     api("tv.danmaku.ijk.media:ijkplayer-java:0.8.8")
     // Other ABIs: optional
