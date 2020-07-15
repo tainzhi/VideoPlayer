@@ -26,7 +26,7 @@
 #define AVUTIL_LIBM_H
 
 #include <math.h>
-#include "../../config.h"
+#include "../../../cpp/ffmpeg-invoker/include/config.h"
 #include "attributes.h"
 #include "intfloat.h"
 #include "mathematics.h"

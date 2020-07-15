@@ -29,7 +29,7 @@
    Studio) will not omit unused inline functions and create undefined
    references to libraries that are not being built. */
 
-#include "config.h"
+#include "include/config.h"
 #include "compat/va_copy.h"
 #include "libavformat/avformat.h"
 #include "libavfilter/avfilter.h"
@@ -54,14 +54,14 @@
 #include "libavutil/cpu.h"
 #include "libavutil/ffversion.h"
 #include "libavutil/version.h"
-#include "cmdutils.h"
+#include "include/cmdutils.h"
 #if CONFIG_NETWORK
 #include "libavformat/network.h"
 #endif
 #if HAVE_SYS_RESOURCE_H
 #include <sys/time.h>
 #include <sys/resource.h>
-#include <ffmpeg_thread.h>
+#include "include/ffmpeg_thread.h"
 
 #endif
 #ifdef _WIN32

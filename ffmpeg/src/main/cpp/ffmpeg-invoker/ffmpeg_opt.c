@@ -20,8 +20,8 @@
 
 #include <stdint.h>
 
-#include "ffmpeg.h"
-#include "cmdutils.h"
+#include "include/ffmpeg.h"
+#include "include/cmdutils.h"
 
 #include "libavformat/avformat.h"
 

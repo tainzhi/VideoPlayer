@@ -1,5 +1,4 @@
-#include <jni.h>
-#include <string.h>
+#include "jni.h"
 
 #ifdef __cplusplus
 extern "C"
