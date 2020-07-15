@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.ffmpeg.FFmpegInvoker
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder

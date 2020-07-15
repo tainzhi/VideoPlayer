@@ -12,7 +12,11 @@ object FFmpegInvoker {
     external fun getAVFormatInfo(): String
     external fun getAVFilterInfo(): String
 
-    fun exec(cmd: String, listener: Callback) {
+    fun ffmpegVersion() {
+        exec("ffmpeg -version")
+    }
+
+    fun exec(cmd: String, listener: Callback ?= null) {
         sCallback = listener
         val cmds: Array<String> = cmd.split(" ".toRegex()).toTypedArray()
         Log.i(TAG, "ffmpeg cmd:$cmd")
@@ -61,6 +65,9 @@ object FFmpegInvoker {
         System.loadLibrary("swscale")
         System.loadLibrary("avfilter")
         System.loadLibrary("postproc")
+
+        System.loadLibrary("rtmp")
+
         System.loadLibrary("ffmpeg-invoke")
     }
 

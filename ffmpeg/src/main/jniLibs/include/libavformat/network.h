@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <stdint.h>
 
-#include "config.h"
+#include "../../../cpp/ffmpeg-invoker/include/config.h"
 #include "libavutil/error.h"
 #include "os_support.h"
 #include "avio.h"

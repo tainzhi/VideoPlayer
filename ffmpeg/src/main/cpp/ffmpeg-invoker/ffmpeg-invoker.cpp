@@ -4,10 +4,10 @@
 
 
 extern "C" {
-    #include "ffmpeg.h"
-    #include "ffmpeg_thread.h"
-    #include "cmdutils.h"
-    #include "ffmpeg-invoker.h"
+    #include "include/ffmpeg.h"
+    #include "include/ffmpeg_thread.h"
+    #include "include/cmdutils.h"
+    #include "include/ffmpeg-invoker.h"
 }
 
 #define TAG "ffmpeg-invoker"

@@ -27,7 +27,7 @@
  * miscellaneous OS support macros and functions.
  */
 
-#include "../../config.h"
+#include "../../../cpp/ffmpeg-invoker/include/config.h"
 
 #include <sys/stat.h>
 

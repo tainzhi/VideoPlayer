@@ -23,7 +23,7 @@
  * multimedia converter based on the FFmpeg libraries
  */
 
-#include "config.h"
+#include "include/config.h"
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
@@ -101,13 +101,12 @@
 
 #include <time.h>
 
-#include "ffmpeg.h"
-#include "cmdutils.h"
-#include "ffmpeg-invoker.h"
+#include "include/ffmpeg.h"
+#include "include/cmdutils.h"
+#include "include/ffmpeg-invoker.h"
 
 #include "libavutil/avassert.h"
-
-#include "android_log.h"
+#include "include/android_log.h"
 
 const char program_name[] = "ffmpeg";
 const int program_birth_year = 2000;
