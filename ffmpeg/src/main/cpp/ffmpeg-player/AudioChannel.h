@@ -7,14 +7,16 @@
 #define VIDEOPLAYER_AUDIOCHANNEL_H
 
 
-#include "../../jniLibs/include/libavcodec/vdpau.h"
-#include "../../jniLibs/include/libavutil/rational.h"
 #include "JNICallback.h"
 
 #include "BaseChannel.h"
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_android.h>
-#include <libswresample/swresample.h>
+extern "C" {
+#include <libswscale/swscale.h>
+#include <libavutil/channel_layout.h>
+#include <libswresample/swresample.h> // 重采样支持
+};
 
 #define AUDIO_SAMPLE_RATE 44100
 

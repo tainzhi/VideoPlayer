@@ -8,19 +8,26 @@
 
 
 #include "JNICallback.h"
-#include "../../jniLibs/include/libavformat/avformat.h"
-#include "../../jniLibs/include/libavutil/time.h"
 #include "AudioChannel.h"
 #include "VideoChannel.h"
+#include "util/macro.h"
+#include <unistd.h>
+
+extern "C" {
+#include <libavformat/avformat.h>
+#include <libavutil/time.h>
+};
 
 class Player {
 public:
     Player();
-    Player(const char *data_source, JNICallback * pCallback);
+
+    Player(const char *data_source, JNICallback *pCallback);
 
     ~Player();
 
     void prepare();
+
     void prepare_();
 
     void start();

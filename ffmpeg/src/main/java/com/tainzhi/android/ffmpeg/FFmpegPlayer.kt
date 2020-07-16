@@ -1,5 +1,7 @@
 package com.tainzhi.android.ffmpeg
 
+import android.net.Uri
+import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 
@@ -10,9 +12,9 @@ import android.view.SurfaceView
  * @description:
  **/
 
-class Player: SurfaceHolder.Callback {
+class FFmpegPlayer {
 
-    val playerManager = FFmpegPlayerManager()
+    private val playerManager = FFmpegPlayerManager()
 
     var dataSource: String? = null
 
@@ -21,8 +23,8 @@ class Player: SurfaceHolder.Callback {
 
     fun ffmpegVersion() = playerManager.ffmpegVersion()
 
-    fun setSurfaceView(surfaceView: SurfaceView) {
-
+    fun setSurface(surface: Surface) {
+        playerManager.setSurfaceNative(surface)
     }
 
     fun prepare() {
@@ -39,17 +41,5 @@ class Player: SurfaceHolder.Callback {
 
     companion object {
         const val TAG = "FFmpegPlayer"
-    }
-
-    override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun surfaceDestroyed(holder: SurfaceHolder?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun surfaceCreated(holder: SurfaceHolder?) {
-        TODO("Not yet implemented")
     }
 }
