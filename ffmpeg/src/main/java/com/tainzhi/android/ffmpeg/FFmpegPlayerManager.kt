@@ -1,6 +1,5 @@
 package com.tainzhi.android.ffmpeg
 
-import android.provider.SyncStateContract
 import android.view.Surface
 
 /**

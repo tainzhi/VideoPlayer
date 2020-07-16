@@ -15,6 +15,7 @@ object Constant {
         const val SYSTEM_PLAYER = 0 // Android系统自带的MediaPlayer
         const val IJK_PLAYER = 1    // IjkPlayer
         const val EXO_PLAYER = 2    // ExoPlayer
+        const val FFmpeg_PLAYER = 3 // FFmpegPlayer
     }
 
     object RenderType {

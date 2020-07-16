@@ -47,7 +47,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
         logI(TAG, "prepare()")
         val context = mVideoView.context
         release()
-        mMediaHandlerThread = HandlerThread("VideoPlayer")
+        mMediaHandlerThread = HandlerThread("QMediaPlayer")
         mMediaHandlerThread!!.start()
         mMediaHandler = Handler(mMediaHandlerThread!!.looper)
         mHandler = Handler()

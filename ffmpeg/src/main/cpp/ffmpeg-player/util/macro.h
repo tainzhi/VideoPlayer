@@ -5,7 +5,7 @@
 
 
 #include <android/log.h>
-#define TAG "ykav_common"
+#define TAG "FFmpeg-Player"
 // __VA_ARGS__ 代表 ...的可变参数
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG,  __VA_ARGS__);
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG,  __VA_ARGS__);

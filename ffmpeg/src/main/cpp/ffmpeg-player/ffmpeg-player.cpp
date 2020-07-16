@@ -4,11 +4,15 @@
 //
 
 #include <jni.h>
-#include <string.h>
-#include <android/log.h>
 #include <android/native_window_jni.h>
-#include <libavutil/file.h>
+#include <android/log.h>
+#include "JNICallback.h"
 #include "Player.h"
+
+
+extern "C" {
+#include <libavutil/avutil.h>
+}
 
 JavaVM *javaVM = nullptr;
 Player * player = nullptr;

@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -UNDEBUG")
 # 添加头文件
 include_directories(
         src/main/cpp/ffmpeg-invoker/include
+        src/main/cpp/ffmpeg-player
         src/main/jniLibs/include
 )
 
@@ -129,7 +130,7 @@ target_link_libraries(
 
 
 #        native window
-        -landroid
+        android
 
 #        音频播放
         OpenSLES
