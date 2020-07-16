@@ -21,7 +21,7 @@ public:
     ~JNICallback();
 
 private:
-    JavaVM  *javaVm = nullptr;
+    JavaVM  *javaVM = nullptr;
     JNIEnv  *env = nullptr;
     jobject instance;
 

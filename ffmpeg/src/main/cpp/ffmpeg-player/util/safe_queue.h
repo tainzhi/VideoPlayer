@@ -7,7 +7,6 @@
 
 #include <queue>
 #include <pthread.h>
-#include <rtmp.h>
 
 
 using namespace std;

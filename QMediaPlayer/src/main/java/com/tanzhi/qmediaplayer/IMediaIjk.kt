@@ -36,7 +36,7 @@ class IMediaIjk(videoView: VideoView) : IMediaInterface(videoView), IMediaPlayer
     override fun prepare() {
         logI(TAG, "prepare()")
         release()
-        mMediaHandlerThread = HandlerThread("VideoView")
+        mMediaHandlerThread = HandlerThread("QMediaPlayer")
         mMediaHandlerThread!!.start()
         mMediaHandler = Handler(mMediaHandlerThread!!.looper)
         mHandler = Handler()

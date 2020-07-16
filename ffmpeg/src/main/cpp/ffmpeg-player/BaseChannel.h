@@ -7,17 +7,16 @@
 #define VIDEOPLAYER_BASECHANNEL_H
 
 
-extern "C" {
-#include "libavcodec/avcodec.h"
-#include "libavutil/time.h"
-};
 
 #include "util/safe_queue.h"
 #include "util/Constants.h"
 #include "JNICallback.h"
-#include "../../jniLibs/include/libavcodec/xvmc.h"
-#include "../../jniLibs/include/libavutil/rational.h"
-#include "../../jniLibs/include/libavutil/frame.h"
+#include "util/macro.h"
+
+extern "C" {
+#include "libavcodec/avcodec.h"
+#include "libavutil/time.h"
+};
 
 class BaseChannel {
 public:

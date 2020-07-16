@@ -4,7 +4,6 @@
 //
 
 #include "Player.h"
-#include <unistd.h>
 
 /**
  * 异步 准备工作prepare
@@ -32,7 +31,7 @@ Player::Player() {
 }
 
 Player::Player(const char *data_source, JNICallback *pCallback) {
-    this->data_source = new Char[strlen(data_source) + 1];
+    this->data_source = new char[strlen(data_source) + 1];
     strcpy(this->data_source, data_source);
     this->pCallback = pCallback;
     duration = 0;
@@ -51,7 +50,7 @@ Player::~Player() {
 void Player::prepare() {
     // 通过ffmpeg 解析流媒体
     // 异步, 因为从java主线程调用该方法
-    pthread_create(*pid_prepare, 0, customTaskPrepareThread, this);
+    pthread_create(&pid_prepare, 0, customTaskPrepareThread, this);
 }
 
 /**

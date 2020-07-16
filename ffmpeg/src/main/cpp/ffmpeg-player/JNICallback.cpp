@@ -5,8 +5,8 @@
 
 #include "JNICallback.h"
 
-JNICallback::JNICallback(JavaVM *javaVm, JNIEnv *env, jobject instance) {
-    this->javaVm = javaVm;
+JNICallback::JNICallback(JavaVM *javaVM, JNIEnv *env, jobject instance) {
+    this->javaVM = javaVM;
     this->env = env;
     // jobject, 跨线程, 必须用全局引用
     this->instance = env->NewGlobalRef(instance);
@@ -27,12 +27,12 @@ void JNICallback::onPrepared(int thread_mode) {
         env->CallVoidMethod(this->instance, jmd_prepared);
     } else {
         JNIEnv  *jniEnv = nullptr;
-        jint ret = javaVm->AttachCurrentThread(&jniEnv, 0);
+        jint ret = javaVM->AttachCurrentThread(&jniEnv, 0);
         if (ret != JNI_OK) {
             return;
         }
         jniEnv->CallVoidMethod(this->instance, jmd_prepared);
-        javaVm->DetachCurrentThread();
+        javaVM->DetachCurrentThread();
     }
 }
 
@@ -66,7 +66,7 @@ void JNICallback::onProgress(int thread, int progress) {
 
 JNICallback::~JNICallback() {
     LOGD("~JNICallback")
-    this->javaVm = nullptr;
+    this->javaVM = nullptr;
     env->DeleteGlobalRef(this->instance);
     this->instance = 0;
     env = nullptr;
