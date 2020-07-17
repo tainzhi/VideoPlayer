@@ -59,14 +59,14 @@ object FFmpegInvoker {
     init {
 
         System.loadLibrary("ffmpeg-invoke")
-        System.loadLibrary("ffmpeg/avdevice")
-        System.loadLibrary("ffmpeg/avutil")
-        System.loadLibrary("ffmpeg/avcodec")
-        System.loadLibrary("ffmpeg/swresample")
-        System.loadLibrary("ffmpeg/avformat")
-        System.loadLibrary("ffmpeg/swscale")
-        System.loadLibrary("ffmpeg/avfilter")
-        System.loadLibrary("ffmpeg/postproc")
+        System.loadLibrary("avcodec")
+        System.loadLibrary("avdevice")
+        System.loadLibrary("avfilter")
+        System.loadLibrary("avformat")
+        System.loadLibrary("avutil")
+        System.loadLibrary("postproc")
+        System.loadLibrary("swresample")
+        System.loadLibrary("swscale")
     }
 
 }

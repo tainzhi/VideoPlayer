@@ -57,7 +57,6 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
         }
 
         mBinding.localVideoFab.setOnClickListener {
-            FFmpegInvoker.ffmpegVersion()
             showShackBarMessage("to implement: 播放最近一次观看的视频")
         }
 
