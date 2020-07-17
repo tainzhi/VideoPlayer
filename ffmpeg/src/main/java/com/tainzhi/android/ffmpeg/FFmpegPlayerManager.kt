@@ -13,6 +13,16 @@ class FFmpegPlayerManager {
 
     companion object {
         init {
+            System.loadLibrary("ffmpeg/avdevice")
+            System.loadLibrary("ffmpeg/avutil")
+            System.loadLibrary("ffmpeg/avcodec")
+            System.loadLibrary("ffmpeg/swresample")
+            System.loadLibrary("ffmpeg/avformat")
+            System.loadLibrary("ffmpeg/swscale")
+            System.loadLibrary("ffmpeg/avfilter")
+            System.loadLibrary("ffmpeg/postproc")
+
+            System.loadLibrary("rtmp")
             System.loadLibrary("ffmpeg-player")
         }
     }

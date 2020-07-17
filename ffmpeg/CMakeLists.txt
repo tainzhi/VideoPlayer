@@ -78,12 +78,10 @@ set_target_properties( libpostproc
         ${distribution_ffmpeg_DIR}/libpostproc.so )
 
 add_library( libswresample SHARED IMPORTED )
-set_target_properties(
-        libswresample
+set_target_properties( libswresample
         PROPERTIES IMPORTED_LOCATION
         ${distribution_ffmpeg_DIR}/libswresample.so
 )
-
 
 add_library( libswscale SHARED IMPORTED )
 set_target_properties( libswscale
@@ -109,6 +107,7 @@ target_link_libraries(
         #        链接ffmpeg invoker
         ffmpeg-player
         librtmp
+        -Wl,--start-group
         #        编码(最重要)
         libavcodec
         #        设备信息
@@ -125,6 +124,8 @@ target_link_libraries(
         libswresample
         #        视频像素数据格式转换
         libswscale
+        -Wl,--end-group
+        Z
         #        native window
         android
         #        音频播放
@@ -139,6 +140,8 @@ target_link_libraries(
 #        链接ffmpeg invoker
         ffmpeg-invoke
 
+#        # 写了此命令不用在乎添加 ffmpeg lib 顺序问题导致应用崩溃
+#        -Wl,--start-group
 #        编码(最重要)
         libavcodec
 #        设备信息
@@ -155,6 +158,8 @@ target_link_libraries(
         libswresample
 #        视频像素数据格式转换
         libswscale
+#        -Wl,--end-group
+#        Z
 
         # Links the target library to the log library
         # included in the NDK.
