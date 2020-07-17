@@ -7,7 +7,7 @@
 #define VIDEOPLAYER_JNICALLBACK_H
 
 #include "util/Constants.h"
-#include "../../../../../../../Library/Android/sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h"
+#include "util/macro.h"
 #include <jni.h>
 
 class JNICallback {

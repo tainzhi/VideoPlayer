@@ -104,13 +104,41 @@ find_library( # Sets the name of the path variable.
         # you want CMake to locate.
         log)
 
+#播放 so
+target_link_libraries(
+        #        链接ffmpeg invoker
+        ffmpeg-player
+        librtmp
+        #        编码(最重要)
+        libavcodec
+        #        设备信息
+        libavdevice
+        #        滤镜特效处理
+        libavfilter
+        #        封装格式处理
+        libavformat
+        #        工具库(大部分库都需要该库支持)
+        libavutil
+        #        后期处理
+        libpostproc
+        #        音频采样数据格式转换库
+        libswresample
+        #        视频像素数据格式转换
+        libswscale
+        #        native window
+        android
+        #        音频播放
+        OpenSLES
+
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib})
 
 # Include libraries needed for native-codec-jni lib
 target_link_libraries(
 #        链接ffmpeg invoker
         ffmpeg-invoke
-        ffmpeg-player
-        librtmp
+
 #        编码(最重要)
         libavcodec
 #        设备信息
@@ -127,13 +155,6 @@ target_link_libraries(
         libswresample
 #        视频像素数据格式转换
         libswscale
-
-
-#        native window
-        android
-
-#        音频播放
-        OpenSLES
 
         # Links the target library to the log library
         # included in the NDK.

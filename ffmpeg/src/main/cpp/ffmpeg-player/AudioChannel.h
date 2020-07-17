@@ -12,11 +12,18 @@
 #include "BaseChannel.h"
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_android.h>
+
+#ifdef __cplusplus
 extern "C" {
-#include <libswscale/swscale.h>
-#include <libavutil/channel_layout.h>
-#include <libswresample/swresample.h> // 重采样支持
+#endif
+
+#include "libswscale/swscale.h"
+#include "libavutil/channel_layout.h"
+#include "libswresample/swresample.h" // 重采样支持
+
+#ifdef __cplusplus
 };
+#endif
 
 #define AUDIO_SAMPLE_RATE 44100
 
