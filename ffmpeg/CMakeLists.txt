@@ -37,7 +37,7 @@ add_library(
 )
 
 # 设置ffmpeg库所在路径的目录
-set(distribution_ffmpeg_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/ffmpeg)
+set(distribution_ffmpeg_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
 # 设置rtmp静态库目录
 set(distribution_rtmp ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/librtmp.a)
 

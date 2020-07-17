@@ -4,10 +4,11 @@
 
 
 extern "C" {
-    #include "include/ffmpeg.h"
-    #include "include/ffmpeg_thread.h"
-    #include "include/cmdutils.h"
-    #include "include/ffmpeg-invoker.h"
+#include "ffmpeg.h"
+#include "ffmpeg_thread.h"
+//    #include "android_log.h"
+#include "cmdutils.h"
+#include "ffmpeg-invoker.h"
 }
 
 #define TAG "ffmpeg-invoker"
@@ -15,7 +16,7 @@ extern "C" {
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 
 static JavaVM * jvm = nullptr; //java虚拟机
-static jclass m_clazz = nullptr;
+static jobject object = nullptr;
 
 /**
  * 回调执行Java方法
@@ -26,6 +27,8 @@ void callJavaMethod(JNIEnv *env, jclass clazz,int ret) {
         LOGE("---------------clazz isnullptr---------------");
         return;
     }
+    //todo remove log
+    LOGD("callJavaMethod()");
     if (clazz == nullptr) {
         LOGE("class is null");
     }
@@ -61,7 +64,8 @@ static void ffmpeg_callback(int ret) {
     JNIEnv *env;
     //附加到当前线程从JVM中取出JNIEnv, C/C++从子线程中直接回到Java里的方法时  必须经过这个步骤
     jvm->AttachCurrentThread(&env, nullptr);
-    callJavaMethod(env, m_clazz,ret);
+    jclass clazz = env->GetObjectClass(object);
+    callJavaMethod(env, clazz,ret);
 
     //完毕-脱离当前线程
     jvm->DetachCurrentThread();
@@ -70,7 +74,8 @@ static void ffmpeg_callback(int ret) {
 void ffmpeg_progress(float percent) {
     JNIEnv *env;
     jvm->AttachCurrentThread(&env, nullptr);
-    callJavaMethodProgress(env, m_clazz,percent);
+    jclass clazz = env->GetObjectClass(object);
+    callJavaMethodProgress(env, clazz,percent);
     jvm->DetachCurrentThread();
 }
 
@@ -80,7 +85,8 @@ Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exec(JNIEnv *env, jobject thiz, ji
                                                    jobjectArray cmdline) {
     //set java vm
     env->GetJavaVM(&jvm);
-    m_clazz = env->GetObjectClass(thiz);
+    // todo delete GlobalRef
+    object = env->NewGlobalRef(thiz);
 
     //---------------------------------C语言 反射Java 相关----------------------------------------
     //---------------------------------java 数组转C语言数组----------------------------------------
