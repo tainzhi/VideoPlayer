@@ -10,8 +10,8 @@
 #include "AudioChannel.h"
 
 extern "C" {
-#include <libswscale/swscale.h>
-#include <libavutil/imgutils.h>
+#include "libswscale/swscale.h"
+#include "libavutil/imgutils.h"
 };
 
 typedef void (*RenderCallback)(uint8_t *, int, int, int);
