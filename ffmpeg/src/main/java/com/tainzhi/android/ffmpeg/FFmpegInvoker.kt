@@ -57,18 +57,16 @@ object FFmpegInvoker {
     const val TAG = "FFmpegInvoker"
 
     init {
-        // System.loadLibrary("avdevice")
-        // System.loadLibrary("avutil")
-        // System.loadLibrary("avcodec")
-        // System.loadLibrary("swresample")
-        // System.loadLibrary("avformat")
-        // System.loadLibrary("swscale")
-        // System.loadLibrary("avfilter")
-        // System.loadLibrary("postproc")
-        //
-        // System.loadLibrary("rtmp")
-        //
+
         System.loadLibrary("ffmpeg-invoke")
+        System.loadLibrary("ffmpeg/avdevice")
+        System.loadLibrary("ffmpeg/avutil")
+        System.loadLibrary("ffmpeg/avcodec")
+        System.loadLibrary("ffmpeg/swresample")
+        System.loadLibrary("ffmpeg/avformat")
+        System.loadLibrary("ffmpeg/swscale")
+        System.loadLibrary("ffmpeg/avfilter")
+        System.loadLibrary("ffmpeg/postproc")
     }
 
 }
