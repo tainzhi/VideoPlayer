@@ -3,6 +3,7 @@ package com.tanzhi.qmediaplayer
 import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import android.view.Surface
 import android.view.SurfaceHolder
 import com.tainzhi.android.ffmpeg.FFmpegPlayer
@@ -34,7 +35,9 @@ class IMediaFFmpeg(videoView: VideoView): IMediaInterface(videoView), PlayerCall
                 dataSource = mVideoView.videoUri.toString()
                 prepare()
             }
+            fFmpegPlayer?.playerCallback = this
         }
+        mVideoView.mSurfaceHolder!!.bindToMediaPlayer(this)
 
     }
 
@@ -71,6 +74,7 @@ class IMediaFFmpeg(videoView: VideoView): IMediaInterface(videoView), PlayerCall
     }
 
     override fun setDisplay(surface: Surface) {
+        Log.d(TAG, "setDisplay()")
         fFmpegPlayer?.setSurface(surface)
     }
 
@@ -78,9 +82,11 @@ class IMediaFFmpeg(videoView: VideoView): IMediaInterface(videoView), PlayerCall
     }
 
     override fun onPrepared() {
+        Log.d(TAG, "onPrepared()")
         mVideoView.onPrepared()
     }
 
     override fun onError(errorText: String) {
+        Log.d(TAG, "onError()=${errorText}")
     }
 }
