@@ -81,6 +81,7 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_prepareNative(JNIEnv *env, jobject thiz,
                                                                   jstring dataSource) {
+    LOGD("Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_prepareNative")
     JNICallback * jniCallback = new JNICallback(javaVM, env, thiz);
     const char *data_source = env->GetStringUTFChars(dataSource, nullptr);
     player = new Player(data_source, jniCallback);

@@ -113,7 +113,6 @@ lint/tmp/
 # Compiled Static libraries
 *.lai
 *.la
-*.a
 *.lib
 
 # Executables
@@ -276,7 +275,7 @@ hs_err_pid*
 
 # Libraries
 *.lib
-*.a
+# *.a
 *.la
 *.lo
 

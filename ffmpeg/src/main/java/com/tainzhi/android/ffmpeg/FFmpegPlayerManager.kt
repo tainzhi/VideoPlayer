@@ -1,5 +1,6 @@
 package com.tainzhi.android.ffmpeg
 
+import android.util.Log
 import android.view.Surface
 
 /**
@@ -12,6 +13,7 @@ import android.view.Surface
 class FFmpegPlayerManager {
 
     companion object {
+        const val TAG = "FFmpegPlayerManager"
         init {
         System.loadLibrary("avdevice")
         System.loadLibrary("avutil")
@@ -22,7 +24,6 @@ class FFmpegPlayerManager {
         System.loadLibrary("avfilter")
         System.loadLibrary("postproc")
 
-        System.loadLibrary("rtmp")
         System.loadLibrary("ffmpeg-player")
         }
     }
@@ -40,6 +41,7 @@ class FFmpegPlayerManager {
     var playerCallback: PlayerCallback ?= null
 
     fun onPrepared() {
+        Log.d(TAG, "onPrepared()")
         playerCallback?.onPrepared()
     }
 

@@ -9,6 +9,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.tainzhi.android.ffmpeg.FFmpegPlayer
 import com.tanzhi.qmediaplayer.*
 import com.tanzhi.qmediaplayer.render.glrender.GLViewRender
 import com.tanzhi.qmediaplayer.render.glrender.effect.ShaderInterface
@@ -100,6 +101,9 @@ class SurfaceRenderView @JvmOverloads constructor(
                 }
                 is IMediaExo -> {
                     mp.setDisplay(surfaceHolder)
+                }
+                is IMediaFFmpeg -> {
+                    mp.setDisplay(openSurface()!!)
                 }
             }
         }
