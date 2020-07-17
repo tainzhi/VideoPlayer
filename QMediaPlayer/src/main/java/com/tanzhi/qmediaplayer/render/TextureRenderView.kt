@@ -129,6 +129,9 @@ class TextureRenderView @JvmOverloads constructor(
                 is IMediaExo -> {
                     mp.setDisplay(openSurface())
                 }
+                is IMediaFFmpeg -> {
+                    mp.setDisplay(openSurface())
+                }
             }
         }
 

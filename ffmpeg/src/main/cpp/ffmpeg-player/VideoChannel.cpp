@@ -6,35 +6,50 @@
 #include "VideoChannel.h"
 #include <unistd.h>
 
+#include <unistd.h>
+
+
+/**
+ * 丢包 原始
+ */
 void dropAVFrame(queue<AVFrame *> &qq) {
     if (!qq.empty()) {
         AVFrame *frame = qq.front();
-        BaseChannel::releaseAVFrame(&frame);
+        BaseChannel::releaseAVFrame(&frame);//释放掉
         qq.pop();
     }
+
 }
 
+/**
+ * 丢包 压缩
+ */
 void dropAVPacket(queue<AVPacket *> &qq) {
     if (!qq.empty()) {
         AVPacket *packet = qq.front();
-        // 不删除关键帧
+        //这里需要判断当前删除的是否是关键帧，不能删除关键帧不然不能解码了
         if (packet->flags != AV_PKT_FLAG_KEY) {
-            BaseChannel::releaseAVPacket(&packet);
+            BaseChannel::releaseAVPacket(&packet);//释放掉
         }
         qq.pop();
     }
 }
 
-VideoChannel::VideoChannel(int stream_index, AVCodecContext *pContext, AVRational rational, int,
+
+VideoChannel::VideoChannel(int stream, AVCodecContext *pContext, AVRational rational, int fpsValue,
                            JNICallback *jniCallback)
-               :BaseChannel(stream_index, pContext, rational, jniCallback){
+        : BaseChannel(stream, pContext, rational, jniCallback) {
     this->fpsValue = fpsValue;
     this->frames.setDeleteVideoFrameCallback(dropAVFrame);
     this->packages.setDeleteVideoFrameCallback(dropAVPacket);
 
+
 }
 
-VideoChannel::~VideoChannel() = default;
+VideoChannel::~VideoChannel() {
+
+}
+
 
 /**
  * 解码线程

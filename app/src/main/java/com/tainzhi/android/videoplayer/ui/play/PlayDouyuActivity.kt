@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
 import com.tanzhi.qmediaplayer.AutoFullScreenListener
+import com.tanzhi.qmediaplayer.Constant
 import com.tanzhi.qmediaplayer.controller.MediaController
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.controller.NetMediaController
@@ -63,6 +64,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         lifecycle.addObserver(videoView)
 
         videoView.videoTitle = mVideoTitle!!
+        videoView.mediaPlayerType = Constant.PlayerType.FFmpeg_PLAYER
         videoView.mediaController = NetMediaController(this@PlayDouyuActivity).apply {
             @RequiresApi(api = 23)
             requestDrawOverlayPermission = {
@@ -97,7 +99,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
 
     override fun startObserve() {
         mViewModel.roomCircuitId.observe(this@PlayDouyuActivity, Observer {
-            val uri = Uri.parse(it)
+            val uri = Uri.parse("http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8")
             videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
             // 如果先加载MediaController, 将不会显示
         })

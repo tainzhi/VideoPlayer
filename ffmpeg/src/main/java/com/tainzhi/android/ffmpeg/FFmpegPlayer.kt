@@ -14,7 +14,18 @@ import android.view.SurfaceView
 
 class FFmpegPlayer {
 
+    companion object {
+        const val TAG = "FFmpegPlayer"
+    }
+
+
     private val playerManager = FFmpegPlayerManager()
+
+    var playerCallback: PlayerCallback ?= null
+        set(value) {
+            playerManager.playerCallback = value
+            field = value
+        }
 
     var dataSource: String? = null
 
@@ -37,9 +48,5 @@ class FFmpegPlayer {
 
     fun release() {
         playerManager.releaseNative()
-    }
-
-    companion object {
-        const val TAG = "FFmpegPlayer"
     }
 }
