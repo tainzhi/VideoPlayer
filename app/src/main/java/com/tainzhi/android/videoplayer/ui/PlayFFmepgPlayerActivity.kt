@@ -31,7 +31,7 @@ class PlayFFmepgPlayerActivity : AppCompatActivity() {
             override fun onError(errorText: String) {
             }
         }
-        player.dataSource = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
+        player.dataSource = "rtmp://202.69.69.180:443/webcast/bshdlive-pc"
         player.prepare()
 
     }

@@ -1,22 +1,15 @@
-//
-// Created by muqing on 2020/7/15.
-// Email: qfq61@qq.com
-//
-
-#ifndef VIDEOPLAYER_PLAYER_H
-#define VIDEOPLAYER_PLAYER_H
+#ifndef NDK_SAMPLE_Player_H
+#define NDK_SAMPLE_Player_H
 
 
 #include "JNICallback.h"
-#include "AudioChannel.h"
 #include "VideoChannel.h"
-#include "util/macro.h"
-#include <unistd.h>
+#include "AudioChannel.h"
 
 extern "C" {
 #include "libavformat/avformat.h"
 #include "libavutil/time.h"
-};
+}
 
 class Player {
 public:
@@ -31,34 +24,44 @@ public:
     void prepare_();
 
     void start();
+
     void start_();
     void restart();
 
     void stop();
+
     void release();
+
     void setRenderCallback(RenderCallback renderCallback);
 
     bool isPlaying;
 
-    void seek(int i);
 
     int getDuration() {
         return duration;
     }
 
+    void seek(int i);
+
 private:
-    char *data_source = nullptr;
+    char *data_source = 0;
     pthread_t pid_prepare;
+
+    AVFormatContext *formatContext = 0;
+
+    AudioChannel *audioChannel = 0;
+
+    VideoChannel *videoChannel = 0;
+
+    JNICallback *pCallback = 0;
+
     pthread_t pid_start;
 
-    AVFormatContext *formatContext = nullptr;
-    AudioChannel *audioChannel = nullptr;
-    VideoChannel *videoChannel = nullptr;
-    JNICallback *pCallback = nullptr;
-
     bool isStop = false;
+
     RenderCallback renderCallback;
-    AVCodecContext *codecContext = nullptr;
+
+    AVCodecContext *codecContext = 0;
 
     pthread_mutex_t seekMutex;
 
@@ -66,8 +69,7 @@ private:
 
     bool isSeek = 0;
 
-
 };
 
 
-#endif //VIDEOPLAYER_PLAYER_H
+#endif //NDK_SAMPLE_Player_H

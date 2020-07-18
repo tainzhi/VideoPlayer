@@ -11,7 +11,7 @@
 
 
 extern "C" {
-#include <libavutil/avutil.h>
+#include "libavutil/avutil.h"
 }
 
 JavaVM *javaVM = nullptr;

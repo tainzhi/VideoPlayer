@@ -1,7 +1,3 @@
-//
-// Created by Administrator on 2020/1/5.
-//
-
 #ifndef KEVINPLAYER_SAFE_QUEUE_H
 #define KEVINPLAYER_SAFE_QUEUE_H
 

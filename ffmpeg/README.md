@@ -34,3 +34,10 @@ FFmpegInvoker.exit()
 
 # 该项目介绍
 真正执行ffmpeg命令的是`ffmpeg.c`中的`int ffmpeg_exec(int argc, char **argv)`
+
+# rtsp和rtmp测试地址
+- 大熊兔: rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
+- rtmp: 香港财经 rtmp://202.69.69.180:443/webcast/bshdlive-pc
+- rtmp: 湖南卫视 rtmp://58.200.131.2:1935/livetv/hunantv
+- hls: cctv-1 http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8
+

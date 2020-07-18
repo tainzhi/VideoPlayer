@@ -1,8 +1,6 @@
-//
-// Created by muqing on 2020/7/15.
-// Email: qfq61@qq.com
-//
-
+#include <malloc.h>
+#include <cstring>
+#include <cstdio>
 #include "AudioChannel.h"
 
 AudioChannel::AudioChannel(int stream_index,
@@ -183,8 +181,8 @@ int AudioChannel::getPCM() {
         //用于音视频同步
         audio_time = pcmFrame->best_effort_timestamp * av_q2d(this->base_time);
 
-        if (javaCallback) {
-            javaCallback->onProgress(THREAD_CHILD, (int)audio_time);
+        if (javaCallHelper) {
+            javaCallHelper->onProgress(THREAD_CHILD, audio_time);
         }
         break;
     }
@@ -326,8 +324,8 @@ void AudioChannel::audio_player() {
 void AudioChannel::stop() {
     isStop = true;
 
-    if (javaCallback)
-        javaCallback = 0;
+    if (javaCallHelper)
+        javaCallHelper = 0;
 }
 
 /**
