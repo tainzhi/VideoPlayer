@@ -12,14 +12,15 @@ JNICallback::JNICallback(JavaVM *javaVM, JNIEnv *env, jobject instance) {
     this->instance = env->NewGlobalRef(instance);
 
     jclass playerClass = env->GetObjectClass(this->instance);
-    const char * sigPrepred = "()V";
+    const char * sigPrepared = "()V";
     const char *sigError = "(I)V";
     const char *sigProgress = "(I)V";
 
 
-    this->jmd_prepared = env->GetMethodID(playerClass, "onPrepared", sigPrepred);
+    // 调用FFmpegPlayerManager.kt中的onPrepare(), onError(), onProgress
+    this->jmd_prepared = env->GetMethodID(playerClass, "onPrepared", sigPrepared);
     this->jmd_error = env->GetMethodID(playerClass, "onError", sigError);
-    this->jmd_progress = env->GetMethodID(playerClass, "onProgress", sigProgress);
+    this->jmid_progress = env->GetMethodID(playerClass, "onProgress", sigProgress);
 }
 
 void JNICallback::onPrepared(int thread_mode) {
@@ -57,10 +58,10 @@ void JNICallback::onProgress(int thread, int progress) {
         if (javaVM->AttachCurrentThread(&jniEnv, 0) != JNI_OK) {
             return;
         }
-        jniEnv->CallVoidMethod(this->instance, jmd_progress, progress);
+        jniEnv->CallVoidMethod(this->instance, jmid_progress, progress);
         javaVM->DetachCurrentThread();
     } else {
-        env->CallVoidMethod(this->instance, jmd_progress, progress);
+        env->CallVoidMethod(this->instance, jmid_progress, progress);
     }
 }
 

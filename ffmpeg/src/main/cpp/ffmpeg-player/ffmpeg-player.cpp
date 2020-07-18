@@ -49,7 +49,8 @@ void renderFrame(uint8_t *src_data, int width, int height, int src_size) {
     }
 
     auto *dst_data = static_cast<uint8_t *>(window_buffer.bits);
-    int lineSize = window_buffer.stride * 4;
+    int lineSize = window_buffer.stride * 4; //RGBA
+    // 逐行 copy
     for (int i = 0; i < window_buffer.height; ++i) {
         memcpy(dst_data + i * lineSize, src_data + i * src_size, lineSize);
     }
@@ -82,7 +83,7 @@ JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_prepareNative(JNIEnv *env, jobject thiz,
                                                                   jstring dataSource) {
     LOGD("Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_prepareNative")
-    JNICallback * jniCallback = new JNICallback(javaVM, env, thiz);
+    auto * jniCallback = new JNICallback(javaVM, env, thiz);
     const char *data_source = env->GetStringUTFChars(dataSource, nullptr);
     player = new Player(data_source, jniCallback);
     player->setRenderCallback(renderFrame);

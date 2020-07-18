@@ -27,7 +27,7 @@ private:
 
     jmethodID jmd_prepared;
     jmethodID  jmd_error;
-    jmethodID  jmd_progress;
+    jmethodID  jmid_progress;
 
 };
 
