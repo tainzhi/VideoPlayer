@@ -5,10 +5,10 @@
 
 #include "AudioChannel.h"
 
-AudioChannel::AudioChannel(int stream_index, AVCodecContext *pContext, AVRational avRational,
+AudioChannel::AudioChannel(int stream_index,
+                           AVCodecContext *pContext, AVRational avRational,
                            JNICallback *jniCallback)
-                           : BaseChannel(stream_index, pContext, avRational, jniCallback){
-
+        : BaseChannel(stream_index, pContext, avRational, jniCallback) {
 
 
 
@@ -39,26 +39,34 @@ AudioChannel::AudioChannel(int stream_index, AVCodecContext *pContext, AVRationa
     swr_init(swr_ctx);
 
 
-    LOGE("AudioChannel()");
+    LOGE("AudioChannel---");
 }
 
 /**
  * 解码线程
  */
 void *thread_audio_decode(void *pVoid) {
-    auto *audioChannel = static_cast<AudioChannel *>(pVoid);
-    audioChannel->audio_decode();
-    return nullptr;
+    AudioChannel *audioChannel = static_cast<AudioChannel *>(pVoid);
+    audioChannel->audio_decode();//真正音频解码的函数
+    return 0;
 }
 
 /**
  * 播放线程
  */
- void *thread_audio_player(void *pVoid) {
-     auto *audioChannel = static_cast<AudioChannel *>(pVoid);
-     audioChannel->audio_player();
-     return nullptr;
- }
+void *thread_audio_player(void *pVoid) {
+    AudioChannel *audioChannel = static_cast<AudioChannel *>(pVoid);
+    audioChannel->audio_player();//真正播放的函数
+    return 0;
+
+}
+
+/**
+ * 准备做一些释放工作
+ */
+AudioChannel::~AudioChannel() {
+
+}
 
 
 /**
@@ -66,7 +74,7 @@ void *thread_audio_decode(void *pVoid) {
  */
 void AudioChannel::audio_decode() {
     //待解码的 packet
-    AVPacket *avPacket = nullptr;
+    AVPacket *avPacket = 0;
     //只要正在播放，就循环取数据
     while (isPlaying) {
 
@@ -176,7 +184,7 @@ int AudioChannel::getPCM() {
         audio_time = pcmFrame->best_effort_timestamp * av_q2d(this->base_time);
 
         if (javaCallback) {
-            javaCallback->onProgress(THREAD_CHILD, audio_time);
+            javaCallback->onProgress(THREAD_CHILD, (int)audio_time);
         }
         break;
     }
@@ -393,6 +401,4 @@ void AudioChannel::release() {
 void AudioChannel::restart() {
     isStop = false;
 }
-
-AudioChannel::~AudioChannel() = default;
 

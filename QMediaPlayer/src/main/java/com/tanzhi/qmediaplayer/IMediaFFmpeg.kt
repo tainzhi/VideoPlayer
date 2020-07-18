@@ -75,7 +75,7 @@ class IMediaFFmpeg(videoView: VideoView): IMediaInterface(videoView), PlayerCall
 
     override fun setDisplay(surface: Surface) {
         Log.d(TAG, "setDisplay()")
-        fFmpegPlayer?.setSurface(surface)
+        // fFmpegPlayer?.setSurface(surface)
     }
 
     override fun onProgress(progress: Int) {
