@@ -1,35 +1,34 @@
-//
-// Created by muqing on 2020/7/15.
-// Email: qfq61@qq.com
-//
+#ifndef NDK_SAMPLE_JNICALLBACK_H
+#define NDK_SAMPLE_JNICALLBACK_H
 
-#ifndef VIDEOPLAYER_JNICALLBACK_H
-#define VIDEOPLAYER_JNICALLBACK_H
 
-#include "util/Constants.h"
-#include "util/macro.h"
 #include <jni.h>
+#include "util/Constants.h"
+
 
 class JNICallback {
+    //定义公有方法
 public:
-    JNICallback(JavaVM *javaVm, JNIEnv *env, jobject instance);
+    JNICallback(JavaVM *javaVM,JNIEnv * env ,jobject instance);
 
-    void onPrepared(int thread_mode);
-    void onErrorAction(int thread_mode, int error_code);
+     //回调
+     void onPrepared(int thread_mode);
+     void onErrorAction(int thread_mode,int error_code);
     void onProgress(int thread, int progress);
 
+    //析构函数声明
     ~JNICallback();
 
 private:
-    JavaVM  *javaVM = nullptr;
-    JNIEnv  *env = nullptr;
-    jobject instance;
+    JavaVM *javaVM = 0;
+    JNIEnv *env = 0;
+    jobject  instance;
 
-    jmethodID jmd_prepared;
-    jmethodID  jmd_error;
-    jmethodID  jmid_progress;
-
+    //相当于反射拿到 Java 函数
+    jmethodID jmd_repared;
+    jmethodID jmd_error;
+    jmethodID jmid_progress;
 };
 
 
-#endif //VIDEOPLAYER_JNICALLBACK_H
+#endif //NDK_SAMPLE_JNICALLBACK_H

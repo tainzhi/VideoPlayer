@@ -1,59 +1,44 @@
-//
-// Created by muqing on 2020/7/15.
-// Email: qfq61@qq.com
-//
+// TODO 视频解码 和 音频解码 有公用的东西，所以需要抽取父类
 
-#ifndef VIDEOPLAYER_BASECHANNEL_H
-#define VIDEOPLAYER_BASECHANNEL_H
+#ifndef KEVINPLAYER_BASECHANNEL_H
+#define KEVINPLAYER_BASECHANNEL_H
 
-
+extern "C" {
+#include <libavcodec/avcodec.h>
+#include <libavutil/time.h>
+};
 
 #include "util/safe_queue.h"
 #include "util/Constants.h"
 #include "JNICallback.h"
-#include "util/macro.h"
 
-extern "C" {
-#include "libavcodec/avcodec.h"
-#include "libavutil/time.h"
-};
-
+/**
+ * Video & Audio 通道抽出的父类
+ */
 class BaseChannel {
 public:
     int stream_index;
 
-    bool isPlaying = 1;
-    bool isStop = false;
-
-    AVCodecContext *pContext;
-    JNICallback *javaCallback;
-
-    // 音视频同步所需要
-    AVRational base_time;
-    double audio_time;
-    double video_time;
-
-    // AVPacket Audio: aac Video: h264
-    SafeQueue<AVPacket *> packages;
-    // AVFrame Audio: PCM Video: YUV
-    SafeQueue<AVFrame *> frames;
-
-    BaseChannel(int stream_index, AVCodecContext * pContext, AVRational av_base_time, JNICallback
-    * jniCallback) {
+    BaseChannel(int stream_index, AVCodecContext *pContext,AVRational av_base_time,JNICallback* jniCallback) {
         this->stream_index = stream_index;
         this->pContext = pContext;
         this->base_time = av_base_time;
-        this->javaCallback = javaCallback;
+        this->javaCallHelper = jniCallback;
         packages.setReleaseCallback(releaseAVPacket);
         frames.setReleaseCallback(releaseAVFrame);
+
     }
 
-    // 父类, 析构函数必须是虚函数
+    // 注意：由于是父类，析构函数，必须是虚函数
     virtual ~BaseChannel() {
         packages.clearQueue();
         frames.clearQueue();
     }
 
+    /**
+     * 释放AVPacket 队列
+     * @param avPacket
+     */
     static void releaseAVPacket(AVPacket **avPacket) {
         if (avPacket) {
             av_packet_free(avPacket);
@@ -61,6 +46,10 @@ public:
         }
     }
 
+    /**
+     * 释放AVFrame 队列
+     * @param avFrame
+     */
     static void releaseAVFrame(AVFrame **avFrame) {
         if (avFrame) {
             av_frame_free(avFrame);
@@ -68,10 +57,35 @@ public:
         }
     }
 
+    // AVPacket  音频：aac，  视频：h264
+    SafeQueue<AVPacket *> packages; // 音频 或者 视频 的压缩数据包 (是编码的数据包)
+
+    // AVFrame 音频：PCM，   视频：YUV
+    SafeQueue<AVFrame *> frames; // 音频 或者 视频 的原始数据包（可以直接 渲染 和 播放 的）
+
+
     void clear() {
         packages.clearQueue();
         frames.clearQueue();
     }
 
+
+
+
+
+    bool isPlaying = 1;
+    bool isStop = false;
+
+    AVCodecContext *pContext;
+
+    JNICallback * javaCallHelper;
+
+//###############下面是音视频同步需要用到的
+    //FFmpeg 时间基: 内部时间
+    AVRational base_time;
+    double audio_time;
+    double video_time;
+//###############下面是音视频同步需要用到的
 };
-#endif //VIDEOPLAYER_BASECHANNEL_H
+
+#endif //KEVINPLAYER_BASECHANNEL_H

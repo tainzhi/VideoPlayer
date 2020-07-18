@@ -1,23 +1,20 @@
-//
-// Created by muqing on 2020/7/15.
-// Email: qfq61@qq.com
-//
-
 #include "Player.h"
+#include <unistd.h>
+
 
 //异步 函数指针 void* (*__start_routine)(void*) 准备工作 prepare
 void *customTaskPrepareThread(void *pVoid) {
-    Player *ykPlayer = static_cast<Player *>(pVoid);
+    auto player = static_cast<Player *>(pVoid);
     LOGD("customTashPrepareThread-->")
-    ykPlayer->prepare_();
+    player->prepare_();
     return 0;//这里是坑一定要记得 return;
 
 }
 
 //异步 函数指针 开始播放工作 start
 void *customTaskStartThread(void *pVoid) {
-    Player *ykPlayer = static_cast<Player *>(pVoid);
-    ykPlayer->start_();
+    auto player = static_cast<Player *>(pVoid);
+    player->start_();
     return 0;//这里是坑一定要记得 return;
 }
 
@@ -293,10 +290,10 @@ void Player::stop() {
         audioChannel->stop();
     }
     if (videoChannel) {
-        videoChannel->javaCallback = 0;
+        videoChannel->javaCallHelper = 0;
     }
     if (audioChannel) {
-        audioChannel->javaCallback = 0;
+        audioChannel->javaCallHelper = 0;
     }
 
 

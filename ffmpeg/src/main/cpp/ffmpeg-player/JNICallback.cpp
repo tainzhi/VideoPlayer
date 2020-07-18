@@ -1,40 +1,41 @@
-//
-// Created by muqing on 2020/7/15.
-// Email: qfq61@qq.com
-//
-
 #include "JNICallback.h"
+
 
 JNICallback::JNICallback(JavaVM *javaVM, JNIEnv *env, jobject instance) {
     this->javaVM = javaVM;
     this->env = env;
-    // jobject, 跨线程, 必须用全局引用
-    this->instance = env->NewGlobalRef(instance);
+    this->instance = env->NewGlobalRef(instance);// 坑，需要是全局（jobject一旦涉及到跨函数，跨线程，必须是全局引用）
 
+
+    //拿到 Java 对象的 class
     jclass playerClass = env->GetObjectClass(this->instance);
-    const char * sigPrepared = "()V";
-    const char *sigError = "(I)V";
-    const char *sigProgress = "(I)V";
+    //声明 Java onPrepared/onError 回调签名
+    const char *sigPre = "()V"; //空参无返回值
+    const char *sigErr = "(I)V"; //Int 参数，无返回值
+    const char *sigPro = "(I)V"; //Int 参数，无返回值
 
-
-    // 调用FFmpegPlayerManager.kt中的onPrepare(), onError(), onProgress
-    this->jmd_prepared = env->GetMethodID(playerClass, "onPrepared", sigPrepared);
-    this->jmd_error = env->GetMethodID(playerClass, "onError", sigError);
-    this->jmid_progress = env->GetMethodID(playerClass, "onProgress", sigProgress);
+    this->jmd_repared = env->GetMethodID(playerClass, "onPrepared", sigPre);
+    this->jmd_error = env->GetMethodID(playerClass, "onError", sigErr);
+    this->jmid_progress = env->GetMethodID(playerClass, "onProgress", sigPro);
 }
+
+
 
 void JNICallback::onPrepared(int thread_mode) {
     if (thread_mode == THREAD_MAIN) {
-        env->CallVoidMethod(this->instance, jmd_prepared);
+        env->CallVoidMethod(this->instance, jmd_repared);//主线程可以直接调用 Java 方法
     } else {
-        JNIEnv  *jniEnv = nullptr;
+        //子线程，用附加 native 线程到 JVM 的方式，来获取到权限 env
+        JNIEnv *jniEnv = nullptr;
         jint ret = javaVM->AttachCurrentThread(&jniEnv, 0);
         if (ret != JNI_OK) {
             return;
         }
-        jniEnv->CallVoidMethod(this->instance, jmd_prepared);
-        javaVM->DetachCurrentThread();
+        jniEnv->CallVoidMethod(this->instance, jmd_repared);//开始调用 Java 方法
+        javaVM->DetachCurrentThread();//解除附加
     }
+
+
 }
 
 void JNICallback::onErrorAction(int thread_mode, int error_code) {
@@ -50,7 +51,10 @@ void JNICallback::onErrorAction(int thread_mode, int error_code) {
         jniEnv->CallVoidMethod(this->instance, jmd_error,error_code);//开始调用 Java 方法
         javaVM->DetachCurrentThread();//解除附加
     }
+
+
 }
+
 
 void JNICallback::onProgress(int thread, int progress) {
     if (thread == THREAD_CHILD) {
@@ -65,10 +69,16 @@ void JNICallback::onProgress(int thread, int progress) {
     }
 }
 
+
+
+/**
+ * 析构函数：专门完成释放的工作
+ */
 JNICallback::~JNICallback() {
     LOGD("~JNICallback")
-    this->javaVM = nullptr;
-    env->DeleteGlobalRef(this->instance);
+    this->javaVM = 0;
+    env->DeleteGlobalRef(this->instance);//释放全局
     this->instance = 0;
-    env = nullptr;
+    env = 0;
+
 }
