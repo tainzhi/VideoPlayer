@@ -1,12 +1,5 @@
-//
-// Created by muqing on 2020/7/15.
-// Email: qfq61@qq.com
-//
-
 #include "VideoChannel.h"
-#include <unistd.h>
 
-#include <unistd.h>
 
 
 /**
@@ -270,8 +263,8 @@ void VideoChannel::video_player() {
 
 
         //diff太大了不回调了
-        if (javaCallback && !audioChannel) {
-            javaCallback->onProgress(THREAD_CHILD, video_time);
+        if (javaCallHelper && !audioChannel) {
+            javaCallHelper->onProgress(THREAD_CHILD, video_time);
         }
 
         //开始渲染，显示屏幕上
@@ -294,8 +287,8 @@ void VideoChannel::video_player() {
  */
 void VideoChannel::stop() {
     isStop = true;
-    if (javaCallback)
-        javaCallback = 0;
+    if (javaCallHelper)
+        javaCallHelper = 0;
 }
 
 
