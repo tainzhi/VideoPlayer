@@ -5,38 +5,37 @@
 
 #include "Player.h"
 
-/**
- * 异步 准备工作prepare
- */
+//异步 函数指针 void* (*__start_routine)(void*) 准备工作 prepare
 void *customTaskPrepareThread(void *pVoid) {
-    Player *player = static_cast<Player *>(pVoid);
-    LOGD("customTaskPrepareThread-->");
-    player->prepare_();
-    // 必须return
-    return nullptr;
+    Player *ykPlayer = static_cast<Player *>(pVoid);
+    LOGD("customTashPrepareThread-->")
+    ykPlayer->prepare_();
+    return 0;//这里是坑一定要记得 return;
+
 }
 
-/**
- * 异步 开始播放
- */
+//异步 函数指针 开始播放工作 start
 void *customTaskStartThread(void *pVoid) {
-    auto *player = static_cast<Player *>(pVoid);
-    player->start_();
-    // 必须return
-    return nullptr;
+    Player *ykPlayer = static_cast<Player *>(pVoid);
+    ykPlayer->start_();
+    return 0;//这里是坑一定要记得 return;
 }
+
 
 Player::Player() {
 
 }
 
-Player::Player(const char *data_source, JNICallback *pCallback) {
-    this->data_source = new char[strlen(data_source) + 1];
-    strcpy(this->data_source, data_source);
+Player::Player(const char *dataSource, JNICallback *pCallback) {
+    // 这里有坑，这里赋值之后，不能给其他地方用，因为被释放了，变成了悬空指针
+    // this->data_source = data_source;
+
+    //解决上面的坑，自己 copy 才行 +1 在 C++ 中有一个 \n
+    this->data_source = new char[strlen(dataSource) + 1];
+    strcpy(this->data_source, dataSource);
     this->pCallback = pCallback;
     duration = 0;
     pthread_mutex_init(&seekMutex, 0);
-
 }
 
 Player::~Player() {
@@ -45,26 +44,30 @@ Player::~Player() {
         this->data_source = 0;
     }
     pthread_mutex_destroy(&seekMutex);
+
 }
 
 void Player::prepare() {
-    // 通过ffmpeg 解析流媒体
-    // 异步, 因为从java主线程调用该方法
+    //解析流媒体，通过 ffmpeg  API 来解析 dataSource
+    //这里需要异步，由于这个函数从 Java 主线程调用的，所以这里需要创建一个异步线程
     pthread_create(&pid_prepare, 0, customTaskPrepareThread, this);
+
 }
 
 /**
- * 真正的解封装, 在子线程开启并调用
+ * 该函数是真正的解封装，是在子线程开启并调用的。
  */
 void Player::prepare_() {
+    LOGD("第一步 打开流媒体地址");
     //1. 打开流媒体地址(文件路径、直播地址)
     // 可以初始为NULL，如果初始为NULL，当执行avformat_open_input函数时，内部会自动申请avformat_alloc_context，这里干脆手动申请
     // 封装了媒体流的格式信息
-    LOGD("1 open stream url")
     formatContext = avformat_alloc_context();
 
-    AVDictionary *dictionary = nullptr;
-    av_dict_set(&dictionary, "timeout", "5000000", 0); //单位毫秒
+    //字典: 键值对
+    AVDictionary *dictionary = 0;
+    av_dict_set(&dictionary, "timeout", "5000000", 0);//单位是微妙
+
 
     /**
      *
@@ -300,7 +303,7 @@ void Player::stop() {
 }
 
 void Player::release() {
-    LOGD("YKPlayer ：%s", "执行了销毁");
+    LOGD("Player ：%s", "执行了销毁");
     isPlaying = false;
     stop();
     if (videoChannel)

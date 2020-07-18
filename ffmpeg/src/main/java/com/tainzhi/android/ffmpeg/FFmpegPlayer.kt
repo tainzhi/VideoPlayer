@@ -12,7 +12,7 @@ import android.view.SurfaceView
  * @description:
  **/
 
-class FFmpegPlayer {
+class FFmpegPlayer: SurfaceHolder.Callback {
 
     companion object {
         const val TAG = "FFmpegPlayer"
@@ -20,6 +20,7 @@ class FFmpegPlayer {
 
 
     private val playerManager = FFmpegPlayerManager()
+    private var surfaceHolder: SurfaceHolder? = null
 
     var playerCallback: PlayerCallback ?= null
         set(value) {
@@ -34,8 +35,10 @@ class FFmpegPlayer {
 
     fun ffmpegVersion() = playerManager.ffmpegVersion()
 
-    fun setSurface(surface: Surface) {
-        playerManager.setSurfaceNative(surface)
+    fun setSurfaceView(surfaceView: SurfaceView) {
+        if (surfaceHolder != null) surfaceHolder?.removeCallback(this)
+        surfaceHolder = surfaceView.holder
+        surfaceHolder?.addCallback(this)
     }
 
     fun prepare() {
@@ -48,5 +51,15 @@ class FFmpegPlayer {
 
     fun release() {
         playerManager.releaseNative()
+    }
+
+    override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+    }
+
+    override fun surfaceDestroyed(holder: SurfaceHolder?) {
+    }
+
+    override fun surfaceCreated(holder: SurfaceHolder?) {
+        playerManager.setSurfaceNative(surfaceHolder?.surface!!)
     }
 }
