@@ -106,8 +106,8 @@ find_library( # Sets the name of the path variable.
 target_link_libraries(
         #        链接ffmpeg invoker
         ffmpeg-player
+        Z
         librtmp
-        -Wl,--start-group
         #        编码(最重要)
         libavcodec
         #        设备信息
@@ -124,8 +124,6 @@ target_link_libraries(
         libswresample
         #        视频像素数据格式转换
         libswscale
-        -Wl,--end-group
-        Z
         #        native window
         android
         #        音频播放
