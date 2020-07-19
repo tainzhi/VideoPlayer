@@ -31,7 +31,9 @@ class PlayFFmepgPlayerActivity : AppCompatActivity() {
             override fun onError(errorText: String) {
             }
         }
-        player.dataSource = "rtmp://202.69.69.180:443/webcast/bshdlive-pc"
+        player.dataSource = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
+        // rtmp不能播放, librtmp编译失败或者ffmpeg连接rtmp失败
+        // player.dataSource = "rtmp://202.69.69.180:443/webcast/bshdlive-pc"
         player.prepare()
 
     }
