@@ -12,11 +12,11 @@ import com.tainzhi.android.videoplayer.R
 import kotlinx.android.synthetic.main.activity_play_f_fmepg_player.*
 
 class PlayFFmepgPlayerActivity : AppCompatActivity() {
+    private val player = FFmpegPlayer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_f_fmepg_player)
 
-        val player = FFmpegPlayer()
         player.setSurfaceView(ffmpegSurfaceView!!)
         player.playerCallback = object: PlayerCallback {
             override fun onProgress(progress: Int) {
@@ -44,6 +44,10 @@ class PlayFFmepgPlayerActivity : AppCompatActivity() {
 
     }
 
+    override fun onStop() {
+        player.release()
+        super.onStop()
+    }
 
     companion object {
         const val PlayRtmp = "rtmp"
@@ -51,7 +55,7 @@ class PlayFFmepgPlayerActivity : AppCompatActivity() {
         private const val TYPE = "type"
         @JvmStatic
         fun startPlay(starter: Context, type: String) {
-            val intent = Intent(starter, PlayActivity::class.java)
+            val intent = Intent(starter, PlayFFmepgPlayerActivity::class.java)
             intent.putExtra(TYPE, type)
             starter.startActivity(intent)
         }
