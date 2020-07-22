@@ -1,5 +1,8 @@
 package com.tainzhi.android.videoplayer.ui
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -31,10 +34,26 @@ class PlayFFmepgPlayerActivity : AppCompatActivity() {
             override fun onError(errorText: String) {
             }
         }
-        player.dataSource = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
-        // rtmp不能播放, librtmp编译失败或者ffmpeg连接rtmp失败
-        // player.dataSource = "rtmp://202.69.69.180:443/webcast/bshdlive-pc"
+        if (intent.extras?.getString(TYPE) == PlayRtmp) {
+            // rtmp不能播放, librtmp编译失败或者ffmpeg连接rtmp失败
+            player.dataSource = "rtmp://202.69.69.180:443/webcast/bshdlive-pc"
+        } else {
+            player.dataSource = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
+        }
         player.prepare()
 
+    }
+
+
+    companion object {
+        const val PlayRtmp = "rtmp"
+        const val PlayHlv = "hlv"
+        private const val TYPE = "type"
+        @JvmStatic
+        fun startPlay(starter: Context, type: String) {
+            val intent = Intent(starter, PlayActivity::class.java)
+            intent.putExtra(TYPE, type)
+            starter.startActivity(intent)
+        }
     }
 }
