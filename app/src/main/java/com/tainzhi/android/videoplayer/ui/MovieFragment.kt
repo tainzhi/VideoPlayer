@@ -29,8 +29,11 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ffmpegPlayer.setOnClickListener {
-            requireActivity().startActivity(Intent(context, PlayFFmepgPlayerActivity::class.java))
+        ffmpegPlayerHlv.setOnClickListener {
+            PlayFFmepgPlayerActivity.startPlay(requireContext(), PlayFFmepgPlayerActivity.PlayHlv)
+        }
+        ffmpegPlayerRtmp.setOnClickListener {
+            PlayFFmepgPlayerActivity.startPlay(requireContext(), PlayFFmepgPlayerActivity.PlayRtmp)
         }
     }
 }
