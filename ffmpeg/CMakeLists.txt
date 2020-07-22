@@ -8,7 +8,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -UNDEBUG")
 include_directories(
         src/main/cpp/ffmpeg-invoker/include
         src/main/cpp/ffmpeg-player
+        # ffmpeg headers
         src/main/jniLibs/include
+        # rtmp headers
+        src/main/jniLibs/librtmp
 )
 
 # 定义源码所在目录
@@ -106,7 +109,6 @@ find_library( # Sets the name of the path variable.
 target_link_libraries(
         #        链接ffmpeg invoker
         ffmpeg-player
-        Z
         librtmp
         #        编码(最重要)
         libavcodec
