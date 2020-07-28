@@ -41,6 +41,10 @@ class FFmpegPlayer: SurfaceHolder.Callback {
         surfaceHolder?.addCallback(this)
     }
 
+    fun setSurface(surface: Surface) {
+        playerManager.setSurfaceNative(surface)
+    }
+
     fun prepare() {
         playerManager.prepareNative(dataSource!!)
     }
