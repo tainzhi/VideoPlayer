@@ -53,6 +53,10 @@ class FFmpegPlayer: SurfaceHolder.Callback {
         playerManager.startNative()
     }
 
+    fun stop() {
+        playerManager.stopNative()
+    }
+
     fun release() {
         playerManager.releaseNative()
     }
