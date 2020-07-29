@@ -45,8 +45,13 @@ class PlayFFmepgPlayerActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        player.release()
+        player.stop()
         super.onStop()
+    }
+
+    override fun onDestroy() {
+        player.release()
+        super.onDestroy()
     }
 
     companion object {
