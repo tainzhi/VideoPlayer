@@ -24,7 +24,7 @@ private:
     pthread_cond_t cond;
     int flag; // 标记队列释放工作[true=工作状态，false=非工作状态]
     ReleaseCallback releaseCallback;
-    RTMPReleaseCallback rtmpReleaseCallback = nullptr;
+    RTMPReleaseCallback rtmpReleaseCallback;
     DeleteFrameCallback delFrameCallback;
 
 public:
