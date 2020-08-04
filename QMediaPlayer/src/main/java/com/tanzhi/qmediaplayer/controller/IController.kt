@@ -26,16 +26,31 @@ abstract class IController(context: Context) {
     protected val audioManager by lazy {
         (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager).apply {
             requestAudioFocus(onAudioChangeListener,
-                    AudioManager.STREAM_MUSIC,
+                   AudioManager.STREAM_MUSIC,
                     AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
         }
     }
     private val onAudioChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
         when (focusChange) {
-            AudioManager.AUDIOFOCUS_GAIN, AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> Unit
+            // TODO: 2020/8/4 音频焦点处理
+            // 获得音频焦点
+            AudioManager.AUDIOFOCUS_GAIN -> {
+                // mediaPlayer.start()
+                // mediaPlayer.setVolume(1.0f, 1.6f)
+            }
             AudioManager.AUDIOFOCUS_LOSS -> {
-                // TODO: 2020/7/11  失去声音焦点怎么处理
+                // mediaPlayer.release()
                 // releaseAllVideos()
+            }
+            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                // Lost focus for a short time, but it's ok to keep playing
+                // at an attenuated level
+
+            }
+            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
+                // Lost focus for a short time, but we have to stop playback.
+                // We don't release the media player because playback is likely to resume
+                // if (mediaPlayer.isPlaying) mediaPlayer.setVolume(0.1f, 0.1f)
             }
         }
     }
