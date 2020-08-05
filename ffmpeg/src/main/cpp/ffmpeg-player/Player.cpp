@@ -281,6 +281,7 @@ void Player::setRenderCallback(RenderCallback renderCallback) {
 
 void Player::stop() {
 
+    LOGD("Player::stop()")
     isStop = true;
 
     if (videoChannel) {
@@ -300,7 +301,7 @@ void Player::stop() {
 }
 
 void Player::release() {
-    LOGD("Player ：%s", "执行了销毁");
+    LOGD("Player::release() ：%s", "执行了销毁");
     isPlaying = false;
     stop();
     if (videoChannel)
