@@ -298,7 +298,7 @@ void VideoChannel::setRenderCallback(RenderCallback renderCallback) {
 }
 
 void VideoChannel::release() {
-    LOGE("av_time_diff release 睡眠 size :%d", frames.queueSize());
+    LOGE("VideoCahnnel::release() av_time_diff release 睡眠 size :%d", frames.queueSize());
     isPlaying = false;
     stop();
     if (frames.queueSize() > 0) {
@@ -311,7 +311,7 @@ void VideoChannel::release() {
     if (renderCallback) {
         renderCallback = 0;
     }
-    LOGE("av_time_diff release 睡眠 size :%d", frames.queueSize());
+    LOGE("VideoChannel::release() av_time_diff release 睡眠 size :%d", frames.queueSize());
 
 
 }
