@@ -29,8 +29,8 @@ object FFmpegInvoker {
     @JvmStatic
     fun onExecuted(ret: Int) {
         if (sCallback != null) {
+            exit()
             if (ret == 0) {
-                sCallback?.onProgress(1f)
                 sCallback?.onSuccess()
             } else {
                 sCallback?.onFailure()
