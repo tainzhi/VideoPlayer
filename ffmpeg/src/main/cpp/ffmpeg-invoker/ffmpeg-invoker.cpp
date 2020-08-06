@@ -121,9 +121,7 @@ JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegInvoker_exit(JNIEnv *env, jobject thiz) {
     env->GetJavaVM(&jvm);
     ffmpeg_thread_cancel();
-//    object = env->NewGlobalRef(thiz);
-//    删除全局引用
-//    env->DeleteGlobalRef(thiz);
+    env->DeleteGlobalRef(object);
 }
 
 extern "C"
