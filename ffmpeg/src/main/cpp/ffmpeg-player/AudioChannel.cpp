@@ -331,8 +331,7 @@ void AudioChannel::stop() {
 /**
  * 开始播放
  */
-void AudioChannel::start() {
-    //设置正在播放的标志
+void AudioChannel::start() { //设置正在播放的标志
     isPlaying = true;
     //存放为解码的队列开始工作了
     packages.setFlag(1);

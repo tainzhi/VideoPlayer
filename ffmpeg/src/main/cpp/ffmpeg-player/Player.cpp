@@ -4,7 +4,7 @@
 
 //异步 函数指针 void* (*__start_routine)(void*) 准备工作 prepare
 void *customTaskPrepareThread(void *pVoid) {
-    auto player = static_cast<Player *>(pVoid);
+    Player *player = static_cast<Player *>(pVoid);
     LOGD("customTashPrepareThread-->")
     player->prepare_();
     return 0;//这里是坑一定要记得 return;
@@ -13,7 +13,7 @@ void *customTaskPrepareThread(void *pVoid) {
 
 //异步 函数指针 开始播放工作 start
 void *customTaskStartThread(void *pVoid) {
-    auto player = static_cast<Player *>(pVoid);
+    Player *player = static_cast<Player *>(pVoid);
     player->start_();
     return 0;//这里是坑一定要记得 return;
 }
@@ -220,7 +220,7 @@ void Player::start_() {
         }
 
         if (isStop) {
-//            usleep(2 * 1000 * 1000);
+            usleep(2 * 1000 * 1000);
             continue;
         }
         LOGD("start_");
@@ -242,6 +242,13 @@ void Player::start_() {
         AVPacket *packet = av_packet_alloc();
 
         //这一行执行完毕， packet 就有音视频数据了
+        LOGE("isPlaying %d, isStop %d", isPlaying, isStop);
+        if (!isPlaying) {
+            break;
+        }
+        if (isStop) {
+            continue;
+        }
         int ret = av_read_frame(formatContext, packet);
         /*       if (ret != 0) {
                    return;
@@ -281,7 +288,6 @@ void Player::setRenderCallback(RenderCallback renderCallback) {
 
 void Player::stop() {
 
-    LOGD("Player::stop()")
     isStop = true;
 
     if (videoChannel) {
@@ -301,9 +307,10 @@ void Player::stop() {
 }
 
 void Player::release() {
-    LOGD("Player::release() ：%s", "执行了销毁");
+    LOGD("Player ：%s", "执行了销毁");
     isPlaying = false;
-    stop();
+    // fixme 如果不睡眠, 会奔溃, 不知道原因是啥
+    usleep(2 * 1000 * 1000);
     if (videoChannel)
         videoChannel->release();
     if (audioChannel)
