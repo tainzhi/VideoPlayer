@@ -78,7 +78,7 @@ void AudioChannel::audio_decode() {
 
         if (isStop) {
             //线程休眠 10s
-//            av_usleep(2 * 1000);
+            av_usleep(2 * 1000);
             continue;
         }
 
@@ -142,7 +142,7 @@ int AudioChannel::getPCM() {
 
         if (isStop) {
             //线程休眠 10s
-//            av_usleep(2 * 1000);
+            av_usleep(2 * 1000);
             continue;
         }
 
