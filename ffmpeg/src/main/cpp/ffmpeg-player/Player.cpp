@@ -220,7 +220,7 @@ void Player::start_() {
         }
 
         if (isStop) {
-            usleep(2 * 1000 * 1000);
+            av_usleep(2 * 1000 * 1000);
             continue;
         }
         LOGD("start_");
@@ -310,7 +310,7 @@ void Player::release() {
     LOGD("Player ：%s", "执行了销毁");
     isPlaying = false;
     // fixme 如果不睡眠, 会奔溃, 不知道原因是啥
-    usleep(2 * 1000 * 1000);
+    av_usleep(0.5 * 1000 * 1000);
     if (videoChannel)
         videoChannel->release();
     if (audioChannel)
