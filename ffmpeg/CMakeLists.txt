@@ -21,6 +21,8 @@ aux_source_directory(src/main/cpp/ffmpeg-invoker SRC_FFMPEG_INVOKER)
 aux_source_directory(src/main/cpp/ffmpeg-player SRC_FFMPEG_PLAYER)
 #list(APPEND SRC ${SRC_FFMPEG_INVOKER})
 
+aux_source_directory(src/main/cpp/pusher SRC_PUSHER)
+
 # 必须先添加源文件, 再添加.so文件, 否则报错  Cannot specify link libraries for target which is not built by the project
 # 加载多个 c 源文件
 # file(GLOB native_srcs "src/main/cpp/*.c")
@@ -37,6 +39,10 @@ add_library(
 # ffmpeg player添加
 add_library(
         ffmpeg-player SHARED ${SRC_FFMPEG_PLAYER}
+)
+
+add_library(
+        pusher SHARED ${SRC_PUSHER}
 )
 
 # 设置ffmpeg库所在路径的目录
@@ -160,6 +166,34 @@ target_link_libraries(
         libswscale
 #        -Wl,--end-group
 #        Z
+
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib})
+
+target_link_libraries(
+        pusher
+
+        #        # 写了此命令不用在乎添加 ffmpeg lib 顺序问题导致应用崩溃
+        #        -Wl,--start-group
+        #        编码(最重要)
+        libavcodec
+        #        设备信息
+        libavdevice
+        #        滤镜特效处理
+        libavfilter
+        #        封装格式处理
+        libavformat
+        #        工具库(大部分库都需要该库支持)
+        libavutil
+        #        后期处理
+        libpostproc
+        #        音频采样数据格式转换库
+        libswresample
+        #        视频像素数据格式转换
+        libswscale
+        #        -Wl,--end-group
+        #        Z
 
         # Links the target library to the log library
         # included in the NDK.
