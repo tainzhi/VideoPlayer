@@ -1,0 +1,18 @@
+//
+// Created by muqing on 2020/8/13.
+// Email: qfq61@qq.com
+//
+
+#ifndef VIDEOPLAYER_AUDIOENCODERCHANNEL_H
+#define VIDEOPLAYER_AUDIOENCODERCHANNEL_H
+
+
+#define FAAC_DEFAUTE_SAMPLE_RATE 44100
+#define FAAC_DEFAULT_SAMPLE_C
+
+class AudioEncoderChannel {
+
+};
+
+
+#endif //VIDEOPLAYER_AUDIOENCODERCHANNEL_H
