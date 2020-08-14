@@ -49,8 +49,9 @@ RTMPModel::RTMPModel(PushCallback *pCallback, AudioEncoderChannel *audioEncoderC
     this->mAudioChannel = audioEncoderChannel;
     this->mVideoChannel = videoEncoderChannel;
     //设置语音视频包的监听
-    this->mVideoChannel->setVideoCallback(callback);
-    this->mAudioChannel->setAudioCallback(callback);
+    // fixme 软解码
+    // this->mVideoChannel->setVideoCallback(callback);
+    // this->mAudioChannel->setAudioCallback(callback);
     this->isMediacodec = mediacodec;
     //设置需要释放语音视频 rtmp 包
     setPacketReleaseCallback();
@@ -166,13 +167,14 @@ void RTMPModel::onConnect() {
     mPackets.setFlag(true);
     
     //通知音频。视频模块可以开始编码了
-    if (!isMediacodec) {
-        this->mAudioChannel->startEncoder();
-        this->mVideoChannel->startEncoder();
-        //保证第一个数据包是音频
-        if (mAudioChannel->getAudioTag())
-            callback(mAudioChannel->getAudioTag());
-    }
+    //fixme 软解码
+//    if (!isMediacodec) {
+//        this->mAudioChannel->startEncoder();
+//        this->mVideoChannel->startEncoder();
+//        //保证第一个数据包是音频
+//        if (mAudioChannel->getAudioTag())
+//            callback(mAudioChannel->getAudioTag());
+//    }
     
     onPush();//死循环阻塞获取推流数据
     
