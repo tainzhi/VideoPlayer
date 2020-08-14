@@ -5,7 +5,7 @@
 
 #include "RTMPModel.h"
 
-RTMPModel *rtmpModel = 0;
+RTMPModel *rtmpModel = nullptr;
 
 void *start(void *pVoid) {
     rtmpModel = static_cast<RTMPModel *>(pVoid);
