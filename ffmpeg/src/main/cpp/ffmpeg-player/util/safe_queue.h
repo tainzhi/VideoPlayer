@@ -13,9 +13,9 @@ class SafeQueue {
     // Java的回调   ===  C语言的函数指针
     typedef void (*ReleaseCallback)(T *);
 
-//    typedef void (*RTMPReleaseCallback)(T &);
+    typedef void (*RTMPReleaseCallback)(T &);
 
-    //删除视频帧的回调
+    // 删除视频帧的回调
     typedef void (*DeleteFrameCallback)(queue<T> &);
 
 private:
@@ -24,7 +24,7 @@ private:
     pthread_cond_t cond;
     int flag; // 标记队列释放工作[true=工作状态，false=非工作状态]
     ReleaseCallback releaseCallback;
-//    RTMPReleaseCallback rtmpReleaseCallback;
+    RTMPReleaseCallback rtmpReleaseCallback;
     DeleteFrameCallback delFrameCallback;
 
 public:
@@ -54,9 +54,10 @@ public:
             if (releaseCallback) {
                 releaseCallback(&value);
             }
-//            if (rtmpReleaseCallback) {
-//                rtmpReleaseCallback(value);
-//            }
+            
+            if (rtmpReleaseCallback) {
+                rtmpReleaseCallback(value);
+            }
         }
 
         pthread_mutex_unlock(&mutex); // 为了让其他线程可以进来，解锁
@@ -125,9 +126,10 @@ public:
     void setReleaseCallback(ReleaseCallback callback) {
         releaseCallback = callback;
     }
-//    void setRtmpReleaseCallback(RTMPReleaseCallback callback) {
-//        rtmpReleaseCallback = callback;
-//    }
+    
+    void setRtmpReleaseCallback(RTMPReleaseCallback callback) {
+        rtmpReleaseCallback = callback;
+    }
 
     //设置删除视频帧的回调
     void setDeleteVideoFrameCallback(DeleteFrameCallback deleteFrameCallback) {
