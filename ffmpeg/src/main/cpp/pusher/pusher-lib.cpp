@@ -10,13 +10,6 @@ Java_com_tainzhi_android_ffmpeg_PusherManager_nativeInit(JNIEnv *env, jobject th
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_tainzhi_android_ffmpeg_PusherManager_nativePushVideo(JNIEnv *env, jobject thiz,
-                                                              jobjectArray data) {
-    // TODO: implement nativePUshVideo()
-}
-
-extern "C"
-JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_PusherManager_nativeStart(JNIEnv *env, jobject thiz, jstring path) {
     // TODO: implement nativeStart()
 }
@@ -43,18 +36,23 @@ Java_com_tainzhi_android_ffmpeg_PusherManager_nativeSetAudioEncoderInfo(JNIEnv *
 }extern "C"
 JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_PusherManager_nativePushAudio(JNIEnv *env, jobject thiz,
-                                                              jobjectArray data) {
+                                                              jbyteArray data) {
     // TODO: implement nativePushAudio()
 }extern "C"
 JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_PusherManager_pushH264(JNIEnv *env, jobject thiz,
-                                                       jobjectArray h264_data, jint type,
+                                                       jbyteArray h264_data, jint type,
                                                        jint time_stamp) {
     // TODO: implement pushH264()
 }extern "C"
 JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_PusherManager_pushAACData(JNIEnv *env, jobject thiz,
-                                                          jobjectArray audio, jint length,
+                                                          jbyteArray audio, jint length,
                                                           jint time_stamp) {
     // TODO: implement pushAACData()
+}extern "C"
+JNIEXPORT void JNICALL
+Java_com_tainzhi_android_ffmpeg_PusherManager_nativePushVideo(JNIEnv *env, jobject thiz,
+                                                              jbyteArray data) {
+    // TODO: implement nativePushVideo()
 }

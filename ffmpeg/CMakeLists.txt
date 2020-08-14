@@ -7,7 +7,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -UNDEBUG")
 # 添加头文件
 include_directories(
         src/main/cpp/ffmpeg-invoker/include
+        # player headers
         src/main/cpp/ffmpeg-player
+        # pusher headers
+        src/main/cpp/pusher
         # ffmpeg headers
         src/main/jniLibs/include
         # rtmp headers
