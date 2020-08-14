@@ -32,6 +32,8 @@ public:
     RTMPModel(PushCallback *pCallback, AudioEncoderChannel *audioEncoderChannel,
               VideoEncoderChannel *videoEncoderChannel, int mediacodec);
     
+    RTMPModel(PushCallback *pCallback);
+    
     ~RTMPModel();
     
     void _onConnect(const char *url);
