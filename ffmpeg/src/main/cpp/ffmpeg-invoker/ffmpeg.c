@@ -104,9 +104,9 @@
 #include "include/ffmpeg.h"
 #include "include/cmdutils.h"
 #include "include/ffmpeg-invoker.h"
+#include "include/log.h"
 
 #include "libavutil/avassert.h"
-#include "include/android_log.h"
 
 const char program_name[] = "ffmpeg";
 const int program_birth_year = 2000;
