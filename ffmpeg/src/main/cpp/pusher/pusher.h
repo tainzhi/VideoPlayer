@@ -9,7 +9,6 @@
 #include <jni.h>
 #include "PushCallback.h"
 #include "RTMPModel.h"
-#include "../../../../../../../Library/Android/sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h"
 
 class Pusher {
 public:
