@@ -4,10 +4,10 @@
 
 extern "C" {
 #include "ffmpeg.h"
-#include "android_log.h"
 #include "ffmpeg_thread.h"
 #include "cmdutils.h"
 #include "ffmpeg_invoker.h"
+#include "invoke_log.h"
 }
 
 static JavaVM * jvm = nullptr; //java虚拟机
