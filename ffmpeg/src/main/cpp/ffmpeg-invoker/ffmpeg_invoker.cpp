@@ -1,15 +1,13 @@
 #include <jni.h>
 #include <string.h>
-#include <android/log.h>
 
 
 extern "C" {
 #include "ffmpeg.h"
+#include "android_log.h"
 #include "ffmpeg_thread.h"
-//    #include "android_log.h"
 #include "cmdutils.h"
-#include "ffmpeg-invoker.h"
-#include "include/log.h"
+#include "ffmpeg_invoker.h"
 }
 
 static JavaVM * jvm = nullptr; //java虚拟机
