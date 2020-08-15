@@ -103,8 +103,8 @@
 
 #include "include/ffmpeg.h"
 #include "include/cmdutils.h"
-#include "include/ffmpeg-invoker.h"
-#include "include/log.h"
+#include "ffmpeg_invoker.h"
+#include "android_log.h"
 
 #include "libavutil/avassert.h"
 
