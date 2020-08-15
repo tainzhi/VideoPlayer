@@ -14,7 +14,7 @@
 #include "../../ffmpeg-player/util/safe_queue.h"
 #include "AudioEncoderChannel.h"
 #include "VideoEncoderChannel.h"
-#include "log.h"
+#include "pusher_log.h"
 
 
 class RTMPModel {
