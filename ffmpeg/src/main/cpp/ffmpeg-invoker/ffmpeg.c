@@ -24,6 +24,7 @@
  */
 
 #include "include/config.h"
+#include "include/invoke_log.h"
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
@@ -104,7 +105,7 @@
 #include "include/ffmpeg.h"
 #include "include/cmdutils.h"
 #include "ffmpeg_invoker.h"
-#include "android_log.h"
+#include "invoke_log.h"
 
 #include "libavutil/avassert.h"
 
