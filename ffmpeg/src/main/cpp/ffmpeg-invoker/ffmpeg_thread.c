@@ -1,7 +1,12 @@
 #include <jni.h>
+#include <android/log.h>
 #include "libavcodec/avcodec.h"
 #include "include/ffmpeg_thread.h"
-#include "include/android_log.h"
+
+#define TAG "ffmpeg-thread"
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
 
 pthread_t ntid;
 char **argvs = NULL;
