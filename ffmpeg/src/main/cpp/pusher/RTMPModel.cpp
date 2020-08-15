@@ -90,7 +90,7 @@ void RTMPModel::onPush() {
         packet->m_nInfoField2 = rtmp->m_stream_id;
         int ret = RTMP_SendPacket(rtmp, packet, 1);
         if (!ret) {
-            LOGE("发送失败")
+            LOGE("发送失败");
             if (pushCallback) {
                 pushCallback->onError(THREAD_CHILD, RTMP_PUSHER_ERROR);
             }

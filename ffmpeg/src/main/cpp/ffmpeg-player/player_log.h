@@ -3,14 +3,14 @@
 // Email: qfq61@qq.com
 //
 
-#ifndef VIDEOPLAYER_LOG_H
-#define VIDEOPLAYER_LOG_H
+#ifndef VIDEOPLAYER_PLAYER_LOG_H
+#define VIDEOPLAYER_PLAYER_LOG_H
 
 #include <android/log.h>
 
-#define TAG "ffmpeg-player"
+#define TAG "ffmpeg_player"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
 
-#endif //VIDEOPLAYER_LOG_H
+#endif //VIDEOPLAYER_PLAYER_LOG_H

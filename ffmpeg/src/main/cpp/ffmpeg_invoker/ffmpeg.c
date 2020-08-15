@@ -23,7 +23,7 @@
  * multimedia converter based on the FFmpeg libraries
  */
 
-#include "include/config.h"
+#include "invoker_headers/config.h"
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
@@ -104,7 +104,7 @@
 #include "include/ffmpeg.h"
 #include "include/cmdutils.h"
 #include "ffmpeg_invoker.h"
-#include "invoke_log.h"
+#include "android_log.h"
 
 #include "libavutil/avassert.h"
 
