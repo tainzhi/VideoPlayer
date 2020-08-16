@@ -4,6 +4,7 @@
 //
 
 #include "RTMPModel.h"
+#define TAG "pusher/RTMPModel"
 
 RTMPModel *rtmpModel = nullptr;
 
@@ -49,8 +50,9 @@ RTMPModel::RTMPModel(PushCallback *pCallback, AudioEncoderChannel *audioEncoderC
     this->mAudioChannel = audioEncoderChannel;
     this->mVideoChannel = videoEncoderChannel;
     //设置语音视频包的监听
-    this->mVideoChannel->setVideoCallback(callback);
-    this->mAudioChannel->setAudioCallback(callback);
+    // FIXME: 2020/8/16 软解码
+    // this->mVideoChannel->setVideoCallback(callback);
+    // this->mAudioChannel->setAudioCallback(callback);
     this->isMediacodec = mediacodec;
     //设置需要释放语音视频 rtmp 包
     setPacketReleaseCallback();
@@ -82,14 +84,14 @@ void RTMPModel::onPush() {
             return;
         }
         if (!packet) {
-            LOGE("获取失败");
+            LOGE(TAG, "获取失败");
             continue;
         }
         
         packet->m_nInfoField2 = rtmp->m_stream_id;
         int ret = RTMP_SendPacket(rtmp, packet, 1);
         if (!ret) {
-            LOGE("发送失败")
+            LOGE(TAG, "发送失败")
             if (pushCallback) {
                 pushCallback->onError(THREAD_CHILD, RTMP_PUSHER_ERROR);
             }
@@ -166,13 +168,14 @@ void RTMPModel::onConnect() {
     mPackets.setFlag(true);
     
     //通知音频。视频模块可以开始编码了
-    if (!isMediacodec) {
-        this->mAudioChannel->startEncoder();
-        this->mVideoChannel->startEncoder();
-        //保证第一个数据包是音频
-        if (mAudioChannel->getAudioTag())
-            callback(mAudioChannel->getAudioTag());
-    }
+    // FIXME: 2020/8/16 软解码
+    // if (!isMediacodec) {
+    //     this->mAudioChannel->startEncoder();
+    //     this->mVideoChannel->startEncoder();
+    //     //保证第一个数据包是音频
+    //     if (mAudioChannel->getAudioTag())
+    //         callback(mAudioChannel->getAudioTag());
+    // }
     
     onPush();//死循环阻塞获取推流数据
     
@@ -197,7 +200,7 @@ void RTMPModel::release() {
         RTMP_Close(rtmp);
         RTMP_Free(rtmp);
         rtmp = 0;
-        LOGE("释放 native 资源");
+        LOGE(TAG, "释放 native 资源");
     }
     mPackets.clearQueue();
 }
