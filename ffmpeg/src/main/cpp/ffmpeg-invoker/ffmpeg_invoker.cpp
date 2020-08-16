@@ -8,7 +8,7 @@ extern "C" {
 #include "ffmpeg_thread.h"
 //    #include "android_log.h"
 #include "cmdutils.h"
-#include "ffmpeg-invoker.h"
+#include "ffmpeg_invoker.h"
 }
 
 #define TAG "ffmpeg-invoker"
