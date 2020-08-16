@@ -8,7 +8,7 @@
 #include <android/log.h>
 #include "JNICallback.h"
 #include "Player.h"
-
+#define TAG "ffmpeg_player"
 
 extern "C" {
 #include "libavutil/avutil.h"
@@ -68,7 +68,7 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_setSurfaceNative(JNIEnv *env, jobject thiz,
                                                                      jobject surface) {
-    LOGD("Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_setSurfaceNative")
+    LOGD(TAG, "Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_setSurfaceNative")
     pthread_mutex_lock(&mutex);
     if (nativeWindow) {
         ANativeWindow_release(nativeWindow);
@@ -82,7 +82,7 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_prepareNative(JNIEnv *env, jobject thiz,
                                                                   jstring dataSource) {
-    LOGD("Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_prepareNative")
+    LOGD(TAG, "Java_com_tainzhi_android_ffmpeg_FFmpegPlayerManager_prepareNative")
     auto * jniCallback = new JNICallback(javaVM, env, thiz);
     const char *data_source = env->GetStringUTFChars(dataSource, nullptr);
     player = new Player(data_source, jniCallback);
