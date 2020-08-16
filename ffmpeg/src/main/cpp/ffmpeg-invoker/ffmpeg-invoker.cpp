@@ -1,14 +1,19 @@
 #include <jni.h>
 #include <string.h>
+#include <android/log.h>
 
 
 extern "C" {
 #include "ffmpeg.h"
-#include "android_log.h"
 #include "ffmpeg_thread.h"
+//    #include "android_log.h"
 #include "cmdutils.h"
-#include "ffmpeg_invoker.h"
+#include "ffmpeg-invoker.h"
 }
+
+#define TAG "ffmpeg-invoker"
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 
 static JavaVM * jvm = nullptr; //java虚拟机
 static jobject object = nullptr;
