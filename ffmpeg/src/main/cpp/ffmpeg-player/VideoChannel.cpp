@@ -1,5 +1,5 @@
 #include "VideoChannel.h"
-
+#define TAG "ffmpeg_player/VideoChannel"
 
 
 /**
@@ -111,7 +111,7 @@ void VideoChannel::video_decode() {
 
         //如果停止播放，跳出循环，出了循环，就要释放
         if (!isPlaying) {
-            LOGD("isPlaying %d", isPlaying);
+            LOGD(TAG, "isPlaying %d", isPlaying);
             break;
         }
 
@@ -122,7 +122,7 @@ void VideoChannel::video_decode() {
         //开始取待解码的视频数据包
         ret = avcodec_send_packet(pContext, packet);
         if (ret) {
-            LOGD("ret %d", ret);
+            LOGD(TAG, "ret %d", ret);
             release();//TODO --- 第二次播放会导致解码失败 目前不知道原因
             break;//失败了 -1094995529
         }
@@ -137,7 +137,7 @@ void VideoChannel::video_decode() {
             //从新取
             continue;
         } else if (ret != 0) {
-            LOGD("ret %d", ret);
+            LOGD(TAG, "ret %d", ret);
             releaseAVFrame(&frame);//内存释放
             break;
         }
@@ -238,7 +238,7 @@ void VideoChannel::video_player() {
         //计算音频和视频的差值
         double av_time_diff = video_time - audioTime;
 
-        LOGE("av_time_diff init audioTime :%f, video：%f", this->audioChannel->audio_time,
+        LOGE(TAG, "av_time_diff init audioTime :%f, video：%f", this->audioChannel->audio_time,
              video_time);
         //说明:
         //video_time > audioTime 说明视频快，音频慢，等待音频
@@ -247,15 +247,15 @@ void VideoChannel::video_player() {
             //通过睡眠的方式灵活等待
             if (av_time_diff > 1) {
                 av_usleep((result_delay * 2) * 1000000);
-                LOGE("av_time_diff >  1 睡眠:%f", (result_delay * 2) * 1000000);
+                LOGE(TAG, "av_time_diff >  1 睡眠:%f", (result_delay * 2) * 1000000);
             } else {//说明相差不大
                 av_usleep((av_time_diff + result_delay) * 1000000);
-                LOGE("av_time_diff < 1 睡眠:%d", (av_time_diff + result_delay) * 1000000);
+                LOGE(TAG, "av_time_diff < 1 睡眠:%d", (av_time_diff + result_delay) * 1000000);
             }
         } else if (av_time_diff < 0) {
             //视频丢包处理
             this->frames.deleteVideoFrame();
-            LOGE("av_time_diff <0  睡眠:%s，丢包:%f ，剩余包: %d", "不睡面", av_time_diff, frames.queueSize());
+            LOGE(TAG, "av_time_diff <0  睡眠:%s，丢包:%f ，剩余包: %d", "不睡面", av_time_diff, frames.queueSize());
             continue;
         } else {
             //完美
@@ -298,7 +298,7 @@ void VideoChannel::setRenderCallback(RenderCallback renderCallback) {
 }
 
 void VideoChannel::release() {
-    LOGE("VideoChannel::release() 执行了销毁 av_time_diff release 睡眠 size :%d", frames.queueSize());
+    LOGE(TAG, "release() 执行了销毁 av_time_diff release 睡眠 size :%d", frames.queueSize());
     isPlaying = false;
     if (frames.queueSize() > 0) {
         frames.clearQueue();

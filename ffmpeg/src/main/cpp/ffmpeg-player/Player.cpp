@@ -1,11 +1,10 @@
 #include "Player.h"
-#include <unistd.h>
-
+#define TAG "ffmpeg_player/Player"
 
 //异步 函数指针 void* (*__start_routine)(void*) 准备工作 prepare
 void *customTaskPrepareThread(void *pVoid) {
     Player *player = static_cast<Player *>(pVoid);
-    LOGD("customTashPrepareThread-->")
+    LOGD(TAG, "customTashPrepareThread-->")
     player->prepare_();
     return 0;//这里是坑一定要记得 return;
 
@@ -55,7 +54,7 @@ void Player::prepare() {
  * 该函数是真正的解封装，是在子线程开启并调用的。
  */
 void Player::prepare_() {
-    LOGD("第一步 打开流媒体地址");
+    LOGD(TAG, "第一步 打开流媒体地址");
     //1. 打开流媒体地址(文件路径、直播地址)
     // 可以初始为NULL，如果初始为NULL，当执行avformat_open_input函数时，内部会自动申请avformat_alloc_context，这里干脆手动申请
     // 封装了媒体流的格式信息
@@ -76,7 +75,7 @@ void Player::prepare_() {
     int result = avformat_open_input(&formatContext, data_source, 0, &dictionary);
     //result -13--> 没有读写权限
     //result -99--> 第三个参数写 NULl
-    LOGD("avformat_open_input-->    %d，%s", result, data_source);
+    LOGD(TAG, "avformat_open_input-->    %d，%s", result, data_source);
     //释放字典
     av_dict_free(&dictionary);
 
@@ -91,7 +90,7 @@ void Player::prepare_() {
     }
 
     //第二步 查找媒体中的音视频流的信息
-    LOGD("第二步 查找媒体中的音视频流的信息");
+    LOGD(TAG, "第二步 查找媒体中的音视频流的信息");
     result = avformat_find_stream_info(formatContext, 0);
     if (result < 0) {
         if (pCallback) {
@@ -104,23 +103,23 @@ void Player::prepare_() {
 
     duration = formatContext->duration == 0 ? 0 : formatContext->duration / 1000000;
 
-    LOGE("进度 formatContext->duration:%f, duration=%f", formatContext->duration, duration);
+    LOGE(TAG, "进度 formatContext->duration:%f, duration=%f", formatContext->duration, duration);
     //第三步 根据流信息，流的个数，循环查找，音频流 视频流
-    LOGD("第三步 根据流信息，流的个数，循环查找，音频流 视频流");
+    LOGD(TAG, "第三步 根据流信息，流的个数，循环查找，音频流 视频流");
     //nb_streams = 流的个数
     for (int stream_index = 0; stream_index < formatContext->nb_streams; ++stream_index) {
 
         //第四步 获取媒体流 音视频
-        LOGD("第四步 获取媒体流 音视频");
+        LOGD(TAG, "第四步 获取媒体流 音视频");
         AVStream *stream = formatContext->streams[stream_index];
 
 
         //第五步 从 stream 流中获取解码这段流的参数信息，区分到底是 音频还是视频
-        LOGD("第五步 从 stream 流中获取解码这段流的参数信息，区分到底是 音频还是视频");
+        LOGD(TAG, "第五步 从 stream 流中获取解码这段流的参数信息，区分到底是 音频还是视频");
         AVCodecParameters *codecParameters = stream->codecpar;
 
         //第六步 通过流的编解码参数中的编解码 ID ,来获取当前流的解码器
-        LOGD("第六步 通过流的编解码参数中的编解码 ID ,来获取当前流的解码器");
+        LOGD(TAG, "第六步 通过流的编解码参数中的编解码 ID ,来获取当前流的解码器");
         AVCodec *codec = avcodec_find_decoder(codecParameters->codec_id);
         //有可能不支持当前解码
         //找不到解码器，重新编译 ffmpeg --enable-librtmp
@@ -130,7 +129,7 @@ void Player::prepare_() {
         }
 
         //第七步 通过拿到的解码器，获取解码器上下文
-        LOGD("第七步 通过拿到的解码器，获取解码器上下文");
+        LOGD(TAG, "第七步 通过拿到的解码器，获取解码器上下文");
         AVCodecContext *codecContext = avcodec_alloc_context3(codec);
 
 
@@ -140,7 +139,7 @@ void Player::prepare_() {
         }
 
         //第八步 给解码器上下文 设置参数
-        LOGD("第八步 给解码器上下文 设置参数");
+        LOGD(TAG, "第八步 给解码器上下文 设置参数");
         result = avcodec_parameters_to_context(codecContext, codecParameters);
         if (result < 0) {
             pCallback->onErrorAction(THREAD_CHILD, FFMPEG_CODEC_CONTEXT_PARAMETERS_FAIL);
@@ -148,7 +147,7 @@ void Player::prepare_() {
         }
 
         //第九步 打开解码器
-        LOGD("第九步 打开解码器");
+        LOGD(TAG, "第九步 打开解码器");
         result = avcodec_open2(codecContext, codec, 0);
         if (result) {
             pCallback->onErrorAction(THREAD_CHILD, FFMPEG_OPEN_DECODER_FAIL);
@@ -159,7 +158,7 @@ void Player::prepare_() {
         AVRational baseTime = stream->time_base;
 
         //第十步 从编码器参数中获取流类型 codec_type
-        LOGD("第十步 从编码器参数中获取流类型 codec_type");
+        LOGD(TAG, "第十步 从编码器参数中获取流类型 codec_type");
         if (codecParameters->codec_type == AVMEDIA_TYPE_AUDIO) {
             audioChannel = new AudioChannel(stream_index, codecContext, baseTime, pCallback);
         } else if (codecParameters->codec_type == AVMEDIA_TYPE_VIDEO) {
@@ -174,14 +173,14 @@ void Player::prepare_() {
     }//end for
 
     //第十一步 如果流中没有音视频数据
-    LOGD("第十一步 如果流中没有音视频数据");
+    LOGD(TAG, "第十一步 如果流中没有音视频数据");
     if (!audioChannel && !videoChannel) {
         pCallback->onErrorAction(THREAD_CHILD, FFMPEG_NOMEDIA);
         return;
     }
 
     //第十二步 要么有音频 要么有视频 要么音视频都有
-    LOGD("第十二步 要么有音频 要么有视频 要么音视频都有");
+    LOGD(TAG, "第十二步 要么有音频 要么有视频 要么音视频都有");
     // 准备完毕，通知Android上层开始播放
     if (this->pCallback) {
         pCallback->onPrepared(THREAD_CHILD);
@@ -215,7 +214,7 @@ void Player::start_() {
     while (isPlaying) {
 
         if (!formatContext){
-            LOGE("formatContext :%s","formatContext 已经被释放了");
+            LOGE(TAG, "formatContext :%s","formatContext 已经被释放了");
             return;
         }
 
@@ -223,7 +222,7 @@ void Player::start_() {
             av_usleep(2 * 1000 * 1000);
             continue;
         }
-        LOGD("start_");
+        LOGD(TAG, "start_");
         //内存泄漏点 1，解决方法 : 控制队列大小
         if (videoChannel && videoChannel->packages.queueSize() > 100) {
             //休眠 等待队列中的数据被消费
@@ -242,7 +241,7 @@ void Player::start_() {
         AVPacket *packet = av_packet_alloc();
 
         //这一行执行完毕， packet 就有音视频数据了
-        LOGE("isPlaying %d, isStop %d", isPlaying, isStop);
+        LOGE(TAG, "isPlaying %d, isStop %d", isPlaying, isStop);
         if (!isPlaying) {
             break;
         }
@@ -255,23 +254,23 @@ void Player::start_() {
                }*/
         if (!ret) {
             if (videoChannel && videoChannel->stream_index == packet->stream_index) {//视频包
-                LOGE("stream_index 视频 %s", "push");
+                LOGE(TAG, "stream_index 视频 %s", "push");
                 //未解码的 视频数据包 加入队列
                 videoChannel->packages.push(packet);
             } else if (audioChannel && audioChannel->stream_index == packet->stream_index) {//语音包
-                LOGE("stream_index 音频 %s", "push");
+                LOGE(TAG, "stream_index 音频 %s", "push");
                 //将语音包加入到队列中，以供解码使用
                 audioChannel->packages.push(packet);
             }
         } else if (ret == AVERROR_EOF) { //代表读取完毕了
             //TODO----
-            LOGE("stream_index 拆包完成 %s", "读取完成了");
+            LOGE(TAG, "stream_index 拆包完成 %s", "读取完成了");
             isPlaying = 0;
             stop();
             release();
             break;
         } else {
-            LOGE("stream_index 拆包 %s", "读取失败");
+            LOGE(TAG, "stream_index 拆包 %s", "读取失败");
             break;//读取失败
         }
     }//end while
@@ -307,7 +306,7 @@ void Player::stop() {
 }
 
 void Player::release() {
-    LOGD("Player ：%s", "执行了销毁");
+    LOGD(TAG, "release ：%s", "执行了销毁");
     isPlaying = false;
     // fixme 如果不睡眠, 会奔溃, 不知道原因是啥
     av_usleep(0.5 * 1000 * 1000);
