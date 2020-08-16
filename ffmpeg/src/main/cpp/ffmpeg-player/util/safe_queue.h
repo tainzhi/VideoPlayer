@@ -31,6 +31,9 @@ public:
     SafeQueue() {
         pthread_mutex_init(&mutex, 0);
         pthread_cond_init(&cond, 0);
+        rtmpReleaseCallback = nullptr;
+        releaseCallback = nullptr;
+        delFrameCallback = nullptr;
     }
 
     ~SafeQueue() {
@@ -114,9 +117,9 @@ public:
             if (releaseCallback) {
                 releaseCallback(&value);
             }
-//            if (rtmpReleaseCallback) {
-//                rtmpReleaseCallback(value);
-//            }
+            if (rtmpReleaseCallback) {
+                rtmpReleaseCallback(value);
+            }
             q.pop();
         }
 

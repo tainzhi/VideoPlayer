@@ -75,7 +75,6 @@ void JNICallback::onProgress(int thread, int progress) {
  * 析构函数：专门完成释放的工作
  */
 JNICallback::~JNICallback() {
-    LOGD("~JNICallback")
     this->javaVM = 0;
     env->DeleteGlobalRef(this->instance);//释放全局
     this->instance = 0;

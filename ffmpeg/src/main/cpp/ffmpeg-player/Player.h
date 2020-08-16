@@ -5,6 +5,7 @@
 #include "JNICallback.h"
 #include "VideoChannel.h"
 #include "AudioChannel.h"
+#include <unistd.h>
 
 extern "C" {
 #include "libavformat/avformat.h"

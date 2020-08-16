@@ -6,9 +6,12 @@
 #ifndef VIDEOPLAYER_CONSTANTS_H
 #define VIDEOPLAYER_CONSTANTS_H
 
+#include <android/log.h>
 
-//引入 log
-#include "macro.h"
+// __VA_ARGS__ 代表 ...的可变参数
+#define LOGD(TAG, ...) __android_log_print(ANDROID_LOG_DEBUG, TAG,  __VA_ARGS__);
+#define LOGE(TAG, ...) __android_log_print(ANDROID_LOG_ERROR, TAG,  __VA_ARGS__);
+#define LOGI(TAG, ...) __android_log_print(ANDROID_LOG_INFO, TAG,  __VA_ARGS__);
 
 #define RTMP_HEAD_SIZE (sizeof(RTMPPacket)+RTMP_MAX_HEADER_SIZE)
 

@@ -3,6 +3,8 @@
 #include <cstdio>
 #include "AudioChannel.h"
 
+#define TAG "ffmpeg_player/AudioChannel"
+
 AudioChannel::AudioChannel(int stream_index,
                            AVCodecContext *pContext, AVRational avRational,
                            JNICallback *jniCallback)
@@ -35,9 +37,6 @@ AudioChannel::AudioChannel(int stream_index,
                                  pContext->sample_rate, 0, 0);
     //初始化上下文
     swr_init(swr_ctx);
-
-
-    LOGE("AudioChannel---");
 }
 
 /**
@@ -85,7 +84,7 @@ void AudioChannel::audio_decode() {
         //这里有一个 bug，如果生产快，消费慢，就会造成队列数据过多容易造成 OOM,
         //解决办法：控制队列大小
         if (isPlaying && frames.queueSize() > 100) {
-//            LOGE("音频队列中的 size :%d", frames.queueSize());
+//            LOGE(TAG, "音频队列中的 size :%d", frames.queueSize());
             //线程休眠 10s
             av_usleep(10 * 1000);
             continue;
@@ -351,7 +350,7 @@ void AudioChannel::start() { //设置正在播放的标志
  * 释放动作
  */
 void AudioChannel::release() {
-    LOGE("AudioChannel ：%s", "执行了销毁");
+    LOGE(TAG, "AudioChannel ：%s", "执行了销毁");
     //5. 设置暂停播放标志
     isPlaying = false;
     isStop = true;
