@@ -5,7 +5,7 @@
 static int use_log_report = 0;
 
 
-#define FF_LOG_TAG     "FFmpeg_Invoker"
+#define FF_LOG_TAG     "ffmpeg_invoker"
 
 
 #define FF_LOG_UNKNOWN        ANDROID_LOG_UNKNOWN
