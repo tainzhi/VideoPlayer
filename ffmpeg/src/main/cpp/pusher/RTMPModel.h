@@ -14,7 +14,6 @@
 #include "../../ffmpeg-player/util/safe_queue.h"
 #include "AudioEncoderChannel.h"
 #include "VideoEncoderChannel.h"
-#include "pusher_log.h"
 
 
 class RTMPModel {
@@ -31,8 +30,6 @@ public:
     
     RTMPModel(PushCallback *pCallback, AudioEncoderChannel *audioEncoderChannel,
               VideoEncoderChannel *videoEncoderChannel, int mediacodec);
-    
-    RTMPModel(PushCallback *pCallback);
     
     ~RTMPModel();
     
