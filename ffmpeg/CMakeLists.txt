@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -UNDEBUG")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 #set(CMAKE_C_STANDARD 99)
 
 # 添加头文件
@@ -32,7 +31,7 @@ aux_source_directory(src/main/cpp/pusher SRC_PUSHER)
 # 使用 ${native_srcs}
 add_library(
         # Specifies the name of the library.
-        ffmpeg-invoke
+        ffmpeg-invoker
         # Sets the library as a shared library.
         # STATIC 静态库, 比如 livavcodec.a
         SHARED
@@ -118,7 +117,6 @@ find_library( # Sets the name of the path variable.
 target_link_libraries(
         #        链接ffmpeg invoker
         ffmpeg-player
-        librtmp
         #        编码(最重要)
         libavcodec
         #        设备信息
@@ -144,60 +142,30 @@ target_link_libraries(
         # included in the NDK.
         ${log-lib})
 
-# Include libraries needed for native-codec-jni lib
 target_link_libraries(
-#        链接ffmpeg invoker
-        ffmpeg-invoke
+        ffmpeg-invoker
 
-#        # 写了此命令不用在乎添加 ffmpeg lib 顺序问题导致应用崩溃
-#        -Wl,--start-group
-#        编码(最重要)
         libavcodec
-#        设备信息
         libavdevice
-#        滤镜特效处理
         libavfilter
-#        封装格式处理
         libavformat
-#        工具库(大部分库都需要该库支持)
         libavutil
-#        后期处理
         libpostproc
-#        音频采样数据格式转换库
         libswresample
-#        视频像素数据格式转换
         libswscale
-#        -Wl,--end-group
-#        Z
-
-        # Links the target library to the log library
-        # included in the NDK.
         ${log-lib})
 
 target_link_libraries(
         pusher
 
-        #        # 写了此命令不用在乎添加 ffmpeg lib 顺序问题导致应用崩溃
-        #        -Wl,--start-group
-        #        编码(最重要)
-        libavcodec
-        #        设备信息
-        libavdevice
-        #        滤镜特效处理
-        libavfilter
-        #        封装格式处理
-        libavformat
-        #        工具库(大部分库都需要该库支持)
-        libavutil
-        #        后期处理
-        libpostproc
-        #        音频采样数据格式转换库
-        libswresample
-        #        视频像素数据格式转换
-        libswscale
-        #        -Wl,--end-group
-        #        Z
+        librtmp
 
-        # Links the target library to the log library
-        # included in the NDK.
+        libavcodec
+        libavdevice
+        libavfilter
+        libavformat
+        libavutil
+        libpostproc
+        libswresample
+        libswscale
         ${log-lib})
