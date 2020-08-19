@@ -25,6 +25,11 @@
 
 这是一个视频播放器，又不仅仅是一个播放器。它不仅能观看本地视频，还能看斗鱼直播， 能看央视和各大地方卫士，能看美剧和电影。许多功能正在紧张的开发中。。。敬请期待
 
+怎么使用
+```
+git clone --recursive https://github.com/tainzhi/VideoPlayer
+```
+
 ## 测试驱动开发
 - 先完成功能模块: 读取卫视列表到database, test成功
 - SurfaceView
