@@ -38,13 +38,13 @@ android {
 
 dependencies {
     implementation(Libs.Kotlin.stdlib)
-    // FIXME: 2020/6/9 替换成Libs.dependeny
     implementation(Libs.jsoup)
     implementation(Libs.Google.gson)
-    implementation("com.android.volley:volley:1.1.1")
     implementation(Libs.AndroidX.appcompat)
 
-    implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
+    // FIXME: 2020/6/9 替换成Libs.dependeny
+    // implementation("com.android.volley:volley:1.1.1")
+    // implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖

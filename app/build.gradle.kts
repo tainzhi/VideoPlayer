@@ -145,8 +145,6 @@ dependencies {
     implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     kapt(Libs.AndroidX.Room.compiler)
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.Paging.runtimeKtx)
