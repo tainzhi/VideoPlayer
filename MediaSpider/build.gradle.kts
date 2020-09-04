@@ -41,10 +41,7 @@ dependencies {
     implementation(Libs.jsoup)
     implementation(Libs.Google.gson)
     implementation(Libs.AndroidX.appcompat)
-
-    // FIXME: 2020/6/9 替换成Libs.dependeny
-    // implementation("com.android.volley:volley:1.1.1")
-    // implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
+    implementation(Libs.volley)
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖
