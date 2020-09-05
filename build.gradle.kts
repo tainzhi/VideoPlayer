@@ -1,5 +1,5 @@
 buildscript {
-    val kotlin_version by extra("1.3.72")
+    val kotlinVersion by extra("1.3.72")
     repositories {
         maven { setUrl("https://maven.aliyun.com/repository/public/") }
         maven { setUrl("https://maven.aliyun.com/repository/jcenter/")}
@@ -34,6 +34,6 @@ buildscript {
         delete(rootProject.buildDir)
     }
     dependencies {
-        "classpath"("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        "classpath"("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }

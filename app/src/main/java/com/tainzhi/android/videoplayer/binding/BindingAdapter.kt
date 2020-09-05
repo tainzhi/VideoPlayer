@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
@@ -46,18 +47,18 @@ fun bindVideoThumbnail(
         width: Int? = null,
         height: Int? = null
 ) {
-    var thumbnail: Bitmap? = null
+    lateinit var thumbnail: Bitmap
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        thumbnail =
+                App.CONTEXT.contentResolver.loadThumbnail(
+                        videoUri, Size(320, 240), null)
+    } else {
+        thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
+                BitmapFactory.Options())
+    }
     // TODO: 2020/7/9 小米9 android10上file not found exception
-    // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-    //     thumbnail =
-    //             App.CONTEXT.contentResolver.loadThumbnail(
-    //                     videoUri, Size(320, 240), null)
-    // } else {
-    //     thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
-    //             BitmapFactory.Options())
-    // }
-    thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
-            BitmapFactory.Options())
+    // thumbnail = MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver, ContentUris.parseId(videoUri), MediaStore.Images.Thumbnails.MICRO_KIND,
+    //         BitmapFactory.Options())
     val options = RequestOptions()
     placeHolder?.let {options.placeholder(placeHolder)}
     cornerRadius?.let { options.transform(RoundedCorners(it)) }
