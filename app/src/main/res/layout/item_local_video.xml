@@ -57,6 +57,7 @@
 			android:layout_marginStart="@dimen/margin_normal"
 			android:layout_marginTop="12dp"
 			android:background="@drawable/bg_video_thumbnail"
+			android:scaleType="fitCenter"
 			app:layout_constraintDimensionRatio="w, 35:20"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
