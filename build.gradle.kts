@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion by extra("1.3.72")
+    val kotlinVersion by extra("1.4.0")
     repositories {
         maven { setUrl("https://maven.aliyun.com/repository/public/") }
         maven { setUrl("https://maven.aliyun.com/repository/jcenter/")}
