@@ -23,11 +23,11 @@ class DanmuView @JvmOverloads constructor(
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
     var datas: List<DanmuBean> = arrayListOf()
-    val widthPixels = resources.displayMetrics.widthPixels
-    val heightPixels = resources.displayMetrics.heightPixels
-    var curPos = 0
+    private val widthPixels = resources.displayMetrics.widthPixels
+    private val heightPixels = resources.displayMetrics.heightPixels
+    private var curPos = 0
 
-    val addHandler = @SuppressLint("HandlerLeak")
+    private val addHandler = @SuppressLint("HandlerLeak")
     object: Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
