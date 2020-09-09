@@ -7,7 +7,7 @@ package com.tanzhi.android.danmu.advancedanmu.view
  * @description:
  **/
 
-interface IDanMu {
+interface IDanmu {
     fun hasCanTouchDanmus(): Boolean
 
 }

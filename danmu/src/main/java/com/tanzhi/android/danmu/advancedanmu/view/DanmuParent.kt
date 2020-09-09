@@ -19,8 +19,8 @@ class DanmuParent @JvmOverloads constructor(
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         for (i in 0 until childCount) {
             val childView = getChildAt(i)
-            if (childView is IDanMu) {
-                if ((childView as IDanMu).hasCanTouchDanmus()) {
+            if (childView is IDanmu) {
+                if ((childView as IDanmu).hasCanTouchDanmus()) {
                     childView.bringToFront()
                     childView.parent.requestDisallowInterceptTouchEvent(true)
                 } else {
