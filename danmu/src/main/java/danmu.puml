@@ -1,0 +1,9 @@
+@startuml
+DanmuView -> DanmuController: addDanmuView()
+DanmuController -> DanmuPoolManager: addDanmuView()
+DanmuPoolManager -> DanmuProducer: addDanmuView()
+DanmuProducer -> DanmuProducerPool: produce()
+DanmuProducerPool -> DanmuPainter: exeecute()
+
+
+@enduml
