@@ -43,7 +43,9 @@ class DanmuModel: OnDanmuViewTouchListener {
     var textSize = 0f
     var textColor = 0
     var textMarginLeft = 0
+
     var textBackground: Drawable? = null
+    var textBackgroundMarginLeft = 0
     var textBackgroundPadding: Rect? = null
 
     var startPosition = Point(-1, -1)
