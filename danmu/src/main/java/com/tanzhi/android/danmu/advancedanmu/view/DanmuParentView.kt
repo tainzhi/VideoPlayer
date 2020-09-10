@@ -13,7 +13,7 @@ import android.widget.RelativeLayout
  * @description:
  **/
 
-class DanmuParent @JvmOverloads constructor(
+class DanmuParentView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {

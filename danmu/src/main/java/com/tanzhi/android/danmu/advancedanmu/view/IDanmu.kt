@@ -1,5 +1,7 @@
 package com.tanzhi.android.danmu.advancedanmu.view
 
+import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+
 /**
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
@@ -8,6 +10,13 @@ package com.tanzhi.android.danmu.advancedanmu.view
  **/
 
 interface IDanmu {
+    fun add(danmuModel: DanmuModel)
+    fun add(index: Int, danmuModel: DanmuModel)
+    fun jumpQueue(danmuViews: List<DanmuModel>)
+    fun lockDraw()
+    fun forceSleep()
+    fun hideAllDanmuView(hideAll: Boolean)
+    fun hideNormalDanmu(hide: Boolean)
     fun hasCanTouchDanmus(): Boolean
 
 }

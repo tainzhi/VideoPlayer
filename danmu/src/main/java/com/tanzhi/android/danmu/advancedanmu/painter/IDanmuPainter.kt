@@ -11,14 +11,13 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
  * @description:
  **/
 
-interface IDanmuPainter {
-    fun execute(canvas: Canvas, danmuModel: DanmuModel, danmuChannel: DanmuChannel)
+abstract class IDanmuPainter {
+    abstract fun execute(canvas: Canvas, danmuModel: DanmuModel, danmuChannel: DanmuChannel)
 
-    fun requestLayout()
+    abstract fun requestLayout()
 
-    fun setAlpha(alpha: Int)
+    var hide: Boolean = false
+    var hideAll: Boolean = false
 
-    fun hideNormal(hide: Boolean)
-
-    fun hideAll(hideAll: Boolean)
+    var alpha = 0f
 }
