@@ -1,13 +1,11 @@
-package com.tanzhi.android.danmu
+package com.tanzhi.android.danmu.simpledanmu
 
 import android.content.Context
-import android.util.AttributeSet
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import org.w3c.dom.Text
+import com.tanzhi.android.danmu.R
 import kotlin.random.Random
 
 /**

@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.util.Size
 import com.tanzhi.android.danmu.advancedanmu.view.OnDanmuViewTouchListener
 
 /**
@@ -23,13 +22,15 @@ class DanmuModel: OnDanmuViewTouchListener {
 
     // user avatar
     var avatar: Bitmap? = null
-    var avatarSize: Size? = null
+    var avatarWidth = 0
+    var avatarHeight = 0
     // 用户图像描边(默认白色描边)
     var avatarStrokes = true
 
     // 用户等级标签
     var levelBitmap: Bitmap? = null
-    var levelBitmapSize: Size? = null
+    var levelBitmapWidth = 0
+    var levelBitmapHeight = 0
     var levelBitmapMarginLeft = 0
     var levelBitmapMarginRight = 0
 
@@ -46,11 +47,12 @@ class DanmuModel: OnDanmuViewTouchListener {
 
     var textBackground: Drawable? = null
     var textBackgroundMarginLeft = 0
-    var textBackgroundPadding: Rect? = null
+    var textBackgroundPadding = Rect(0, 0, 0, 0)
 
     var startPosition = Point(-1, -1)
 
-    var size: Size? = null
+    var width = 0
+    var height = 0
     var enableTouch = true
     var channelIndex = 0
     var isMoving = true
