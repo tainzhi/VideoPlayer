@@ -16,7 +16,7 @@ interface OnDanmuViewTouchListener {
 }
 
 interface OnDanmuTouchCallBackListener {
-    fun callBack(danmuModel: DanmuModel)
+    fun callBack(DanmuModel: DanmuModel)
 }
 
 interface OnDanmuParentViewTouchCallbackListener {

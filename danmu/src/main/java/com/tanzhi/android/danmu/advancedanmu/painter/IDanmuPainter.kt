@@ -12,7 +12,7 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
  **/
 
 abstract class IDanmuPainter {
-    abstract fun execute(canvas: Canvas, danmuModel: DanmuModel, danmuChannel: DanmuChannel)
+    abstract fun execute(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel)
 
     abstract fun requestLayout()
 

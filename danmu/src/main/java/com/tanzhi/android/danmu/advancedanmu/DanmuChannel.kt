@@ -14,7 +14,7 @@ class DanmuChannel {
     var topY = 0
     var space = 60
 
-    fun dispatch(danmuModel: DanmuModel) {
+    fun dispatch(DanmuModel: DanmuModel) {
         // TODO: 2020/9/10
     }
 }

@@ -1,4 +1,4 @@
-package com.tanzhi.android.danmu
+package com.tanzhi.android.danmu.simpledanmu
 
 import android.annotation.SuppressLint
 import android.content.Context

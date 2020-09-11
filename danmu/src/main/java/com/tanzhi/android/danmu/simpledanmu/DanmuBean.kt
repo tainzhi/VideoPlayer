@@ -1,4 +1,4 @@
-package com.tanzhi.android.danmu
+package com.tanzhi.android.danmu.simpledanmu
 
 import java.io.Serializable
 
