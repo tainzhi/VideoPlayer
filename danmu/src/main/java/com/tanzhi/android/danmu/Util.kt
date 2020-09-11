@@ -1,5 +1,10 @@
 package com.tanzhi.android.danmu
 
+import android.app.Activity
+import android.content.Context
+import android.util.DisplayMetrics
+import android.util.TypedValue
+import com.tanzhi.android.danmu.simpledanmu.DanmuBean
 import kotlin.collections.ArrayList
 
 /**
@@ -8,7 +13,55 @@ import kotlin.collections.ArrayList
  * @date:        2020/7/12 15:49
  * @description:
  **/
- 
+
+inline fun <reified T> Activity.dpToPx(value: Int): T {
+    val result = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            value.toFloat(), this.resources.displayMetrics)
+
+    return when (T::class) {
+        Float::class -> result as T
+        Int::class -> result.toInt() as T
+        else -> throw IllegalStateException("Type not supported")
+    }
+}
+
+inline fun <reified T> Context.dpToPx(value: Int): T {
+    val result = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            value.toFloat(), this.resources.displayMetrics)
+
+    return when (T::class) {
+        Float::class -> result as T
+        Int::class -> result.toInt() as T
+        else -> throw IllegalStateException("Type not supported")
+    }
+}
+
+inline fun <reified T> Activity.spToPx(value: Int): T {
+    val result = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            value.toFloat(), this.resources.displayMetrics)
+
+    return when (T::class) {
+        Float::class -> result as T
+        Int::class -> result.toInt() as T
+        else -> throw IllegalStateException("Type not supported")
+    }
+}
+
+fun Activity.screenWidth(): Int {
+    val dm = DisplayMetrics()
+    this.windowManager.defaultDisplay.getMetrics(dm)
+    return dm.widthPixels
+}
+
+fun Activity.screenHeight(): Int {
+    val dm = DisplayMetrics()
+    this.windowManager.defaultDisplay.getMetrics(dm)
+    return dm.heightPixels
+}
+
 object Util {
     fun loadData() : ArrayList<DanmuBean> {
         val datas = ArrayList<DanmuBean>()

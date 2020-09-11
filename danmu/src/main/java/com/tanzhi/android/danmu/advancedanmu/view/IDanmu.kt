@@ -10,8 +10,8 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
  **/
 
 interface IDanmu {
-    fun add(danmuModel: DanmuModel)
-    fun add(index: Int, danmuModel: DanmuModel)
+    fun add(DanmuModel: DanmuModel)
+    fun add(index: Int, DanmuModel: DanmuModel)
     fun jumpQueue(danmuViews: List<DanmuModel>)
     fun lockDraw()
     fun forceSleep()

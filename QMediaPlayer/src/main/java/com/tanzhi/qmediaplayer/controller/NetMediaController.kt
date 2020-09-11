@@ -9,7 +9,7 @@ import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.Group
-import com.tanzhi.android.danmu.DanmuView
+import com.tanzhi.android.danmu.simpledanmu.DanmuView
 import com.tanzhi.qmediaplayer.*
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.floatwindow.FloatWindow

@@ -1,4 +1,4 @@
-package com.tanzhi.android.danmu.advancedanmu
+package com.tanzhi.android.danmu.advancedanmu.control
 
 /**
  * @author:      tainzhi
