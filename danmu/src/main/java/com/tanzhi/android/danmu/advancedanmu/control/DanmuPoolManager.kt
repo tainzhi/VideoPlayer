@@ -26,7 +26,7 @@ class DanmuPoolManager(context: Context, danmuView: IDanmu) {
 
     }
 
-    fun addDanmuView(index: Int, danmuView: DanmuModel) {
+    fun adddanmuView(index: Int, danmuView: DanmuModel) {
 
     }
 

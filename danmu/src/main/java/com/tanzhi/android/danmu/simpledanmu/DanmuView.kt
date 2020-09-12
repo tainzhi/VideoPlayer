@@ -18,7 +18,7 @@ import kotlin.random.Random
  * @description:
  **/
 
-class DanmuView @JvmOverloads constructor(
+class danmuView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
