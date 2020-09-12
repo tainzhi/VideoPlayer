@@ -15,7 +15,7 @@ interface IDanmu {
     fun jumpQueue(danmuViews: List<DanmuModel>)
     fun lockDraw()
     fun forceSleep()
-    fun hideAllDanmuView(hideAll: Boolean)
+    fun hideAlldanmuView(hideAll: Boolean)
     fun hideNormalDanmu(hide: Boolean)
     fun hasCanTouchDanmus(): Boolean
 

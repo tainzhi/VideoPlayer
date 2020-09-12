@@ -9,7 +9,7 @@ import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.Group
-import com.tanzhi.android.danmu.simpledanmu.DanmuView
+import com.tanzhi.android.danmu.simpledanmu.danmuView
 import com.tanzhi.qmediaplayer.*
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.floatwindow.FloatWindow
@@ -132,7 +132,7 @@ class NetMediaController(val context: Context) : IController(context) {
             (it as ImageButton).setImageResource(if (isDanmuOn) R.drawable.ic_danmu_on else R.drawable.ic_danmu_off)
             if (!this::danmuView.isInitialized) {
                 danmuLayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 700)
-                danmuView = DanmuView(context)
+                danmuView = danmuView(context)
             }
             if (isDanmuOn) {
                 parent.addView(danmuView, danmuLayoutParams)
@@ -144,7 +144,7 @@ class NetMediaController(val context: Context) : IController(context) {
         }
     }
 
-    private lateinit var danmuView: DanmuView
+    private lateinit var danmuView: danmuView
     private lateinit var danmuLayoutParams: ViewGroup.LayoutParams
 
     private fun doPlayPause() {

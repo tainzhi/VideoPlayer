@@ -31,35 +31,35 @@ class DanMuHelper(val context: Context) {
     fun release() {
     }
 
-    fun add(danMuViewParent: IDanmu) {
-        danmuList.add(WeakReference<IDanmu>(danMuViewParent))
+    fun add(danmuModelParent: IDanmu) {
+        danmuList.add(WeakReference<IDanmu>(danmuModelParent))
     }
 
     fun addDanmu(danmuEntity: DanmuEntity, broadcast: Boolean) {
-            var danMuViewParent: WeakReference<IDanmu?> = danmuList!![0]
+            var danmuModelParent: WeakReference<IDanmu?> = danmuList!![0]
             if (!broadcast) {
-                danMuViewParent = danmuList!![1]
+                danmuModelParent = danmuList!![1]
             }
-            val danMuView: DanmuModel = createDanMuView(danmuEntity)
-            if (danMuViewParent != null && danMuView != null && danMuViewParent.get() != null) {
-                danMuViewParent.get().add(danMuView)
+            val danmuModel: DanmuModel = createDanmuModel(danmuEntity)
+            if (danmuModelParent != null && danmuModel != null && danmuModelParent.get() != null) {
+                danmuModelParent.get().add(danmuModel)
             }
     }
 
-    private fun createDanMuView(entity: DanmuEntity): DanmuModel {
-        val danMuView = DanmuModel().apply {
+    private fun createDanmuModel(entity: DanmuEntity): DanmuModel {
+        val danmuModel = DanmuModel().apply {
             displayType = DanmuModel.RIGHT_TO_LEFT
             priority = DanmuModel.PRIORITY_NORMAL
             marginLeft = context.dpToPx(30)
         }
-        danMuView.setDisplayType(DanmuModel.RIGHT_TO_LEFT)
-        danMuView.setPriority(DanmuModel.NORMAL)
-        danMuView.marginLeft = DimensionUtil.dpToPx(mContext, 30)
+        danmuModel.displayType = DanmuModel.RIGHT_TO_LEFT
+        danmuModel.priority = DanmuModel.PRIORITY_NORMAL
+        danmuModel.marginLeft = DimensionUtil.dpToPx(mContext, 30)
         if (entity.getType() === DanmakuEntity.DANMAKU_TYPE_USERCHAT) {
             // 图像
             val avatarSize: Int = DimensionUtil.dpToPx(mContext, 30)
-            danMuView.avatarWidth = avatarSize
-            danMuView.avatarHeight = avatarSize
+            danmuModel.avatarWidth = avatarSize
+            danmuModel.avatarHeight = avatarSize
             val avatarImageUrl: String = entity.getAvatar()
             Phoenix.with(mContext)
                     .setUrl(avatarImageUrl)
@@ -67,7 +67,7 @@ class DanMuHelper(val context: Context) {
                     .setHeight(avatarSize)
                     .setResult(object : IResult<Bitmap?>() {
                         fun onResult(bitmap: Bitmap?) {
-                            danMuView.avatar = CircleBitmapTransform.transform(bitmap)
+                            danmuModel.avatar = CircleBitmapTransform.transform(bitmap)
                         }
                     })
                     .load()
@@ -76,14 +76,14 @@ class DanMuHelper(val context: Context) {
             val level: Int = entity.getLevel()
             val levelResId = getLevelResId(level)
             val drawable: Drawable = ContextCompat.getDrawable(mContext, levelResId)
-            danMuView.levelBitmap = drawable2Bitmap(drawable)
-            danMuView.levelBitmapWidth = DimensionUtil.dpToPx(mContext, 33)
-            danMuView.levelBitmapHeight = DimensionUtil.dpToPx(mContext, 16)
-            danMuView.levelMarginLeft = DimensionUtil.dpToPx(mContext, 5)
+            danmuModel.levelBitmap = drawable2Bitmap(drawable)
+            danmuModel.levelBitmapWidth = DimensionUtil.dpToPx(mContext, 33)
+            danmuModel.levelBitmapHeight = DimensionUtil.dpToPx(mContext, 16)
+            danmuModel.levelMarginLeft = DimensionUtil.dpToPx(mContext, 5)
             if (level > 0 && level < 100) {
-                danMuView.levelText = level.toString()
-                danMuView.levelTextColor = ContextCompat.getColor(mContext, R.color.white)
-                danMuView.levelTextSize = DimensionUtil.spToPx(mContext, 14)
+                danmuModel.levelText = level.toString()
+                danmuModel.levelTextColor = ContextCompat.getColor(mContext, R.color.white)
+                danmuModel.levelTextSize = DimensionUtil.spToPx(mContext, 14)
             }
 
             // 显示的文本内容
@@ -96,41 +96,41 @@ class DanMuHelper(val context: Context) {
                     name.length,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             MLog.i("spannableString = $spannableString")
-            danMuView.textSize = DimensionUtil.spToPx(mContext, 14)
-            danMuView.textColor = ContextCompat.getColor(mContext, R.color.light_green)
-            danMuView.textMarginLeft = DimensionUtil.dpToPx(mContext, 5)
-            danMuView.text = spannableString
+            danmuModel.textSize = DimensionUtil.spToPx(mContext, 14)
+            danmuModel.textColor = ContextCompat.getColor(mContext, R.color.light_green)
+            danmuModel.textMarginLeft = DimensionUtil.dpToPx(mContext, 5)
+            danmuModel.text = spannableString
 
             // 弹幕文本背景
-            danMuView.textBackground = ContextCompat.getDrawable(mContext, R.drawable.corners_danmu)
-            danMuView.textBackgroundMarginLeft = DimensionUtil.dpToPx(mContext, 15)
-            danMuView.textBackgroundPaddingTop = DimensionUtil.dpToPx(mContext, 3)
-            danMuView.textBackgroundPaddingBottom = DimensionUtil.dpToPx(mContext, 3)
-            danMuView.textBackgroundPaddingRight = DimensionUtil.dpToPx(mContext, 15)
-            danMuView.enableTouch(true)
-            danMuView.setOnTouchCallBackListener(object : OnDanMuTouchCallBackListener() {
-                fun callBack(danMuView: DanmuModel?) {}
+            danmuModel.textBackground = ContextCompat.getDrawable(mContext, R.drawable.corners_danmu)
+            danmuModel.textBackgroundMarginLeft = DimensionUtil.dpToPx(mContext, 15)
+            danmuModel.textBackgroundPaddingTop = DimensionUtil.dpToPx(mContext, 3)
+            danmuModel.textBackgroundPaddingBottom = DimensionUtil.dpToPx(mContext, 3)
+            danmuModel.textBackgroundPaddingRight = DimensionUtil.dpToPx(mContext, 15)
+            danmuModel.enableTouch(true)
+            danmuModel.setOnTouchCallBackListener(object : OnDanMuTouchCallBackListener() {
+                fun callBack(danmuModel: DanmuModel?) {}
             })
         } else {
             // 显示的文本内容
-            danMuView.textSize = DimensionUtil.spToPx(mContext, 14)
-            danMuView.textColor = ContextCompat.getColor(mContext, R.color.light_green)
-            danMuView.textMarginLeft = DimensionUtil.dpToPx(mContext, 5)
+            danmuModel.textSize = DimensionUtil.spToPx(mContext, 14)
+            danmuModel.textColor = ContextCompat.getColor(mContext, R.color.light_green)
+            danmuModel.textMarginLeft = DimensionUtil.dpToPx(mContext, 5)
             if (entity.getRichText() != null) {
-                danMuView.text = RichTextParse.parse(mContext, entity.getRichText(), DimensionUtil.spToPx(mContext, 18), false)
+                danmuModel.text = RichTextParse.parse(mContext, entity.getRichText(), DimensionUtil.spToPx(mContext, 18), false)
             } else {
-                danMuView.text = entity.getText()
+                danmuModel.text = entity.getText()
             }
 
             // 弹幕文本背景
-            danMuView.textBackground = ContextCompat.getDrawable(mContext, R.drawable.corners_danmu)
-            danMuView.textBackgroundMarginLeft = DimensionUtil.dpToPx(mContext, 15)
-            danMuView.textBackgroundPaddingTop = DimensionUtil.dpToPx(mContext, 3)
-            danMuView.textBackgroundPaddingBottom = DimensionUtil.dpToPx(mContext, 3)
-            danMuView.textBackgroundPaddingRight = DimensionUtil.dpToPx(mContext, 15)
-            danMuView.enableTouch(false)
+            danmuModel.textBackground = ContextCompat.getDrawable(mContext, R.drawable.corners_danmu)
+            danmuModel.textBackgroundMarginLeft = DimensionUtil.dpToPx(mContext, 15)
+            danmuModel.textBackgroundPaddingTop = DimensionUtil.dpToPx(mContext, 3)
+            danmuModel.textBackgroundPaddingBottom = DimensionUtil.dpToPx(mContext, 3)
+            danmuModel.textBackgroundPaddingRight = DimensionUtil.dpToPx(mContext, 15)
+            danmuModel.enableTouch(false)
         }
-        return danMuView
+        return danmuModel
     }
 
     /**
