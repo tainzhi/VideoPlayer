@@ -16,12 +16,12 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
  * @description:
  **/
 
-class DanmuView @JvmOverloads constructor(
+class danmuView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr), IDanmu {
 
     private val danmuController = DanmuController(context, this)
-    private val onDanmuViewTouchListeners = mutableListOf<OnDanmuViewTouchListener>()
+    private val ondanmuViewTouchListeners = mutableListOf<OndanmuViewTouchListener>()
     private val onDanmuParentViewTouchCallbackListener: OnDanmuParentViewTouchCallbackListener? = null
 
     private var drawFinished = false
@@ -35,7 +35,7 @@ class DanmuView @JvmOverloads constructor(
 
     override fun add(DanmuModel: DanmuModel) {
         DanmuModel.isMoving = true
-        danmuController.addDanmuView(-1, DanmuModel)
+        danmuController.adddanmuView(-1, DanmuModel)
     }
 
     override fun add(index: Int, DanmuModel: DanmuModel) {
@@ -69,7 +69,7 @@ class DanmuView @JvmOverloads constructor(
     override fun forceSleep() {
     }
 
-    override fun hideAllDanmuView(hideAll: Boolean) {
+    override fun hideAlldanmuView(hideAll: Boolean) {
     }
 
     override fun hideNormalDanmu(hide: Boolean) {
@@ -95,6 +95,6 @@ class DanmuView @JvmOverloads constructor(
     }
 
     companion object {
-        const val TAG = "DanmuView"
+        const val TAG = "danmuView"
     }
 }
