@@ -54,7 +54,7 @@ class DanMuHelper(val context: Context) {
         }
         danmuModel.displayType = DanmuModel.RIGHT_TO_LEFT
         danmuModel.priority = DanmuModel.PRIORITY_NORMAL
-        danmuModel.marginLeft = DimensionUtil.dpToPx(mContext, 30)
+        danmuModel.marginLeft = context.dpToPx(30)
         if (entity.getType() === DanmakuEntity.DANMAKU_TYPE_USERCHAT) {
             // 图像
             val avatarSize: Int = DimensionUtil.dpToPx(mContext, 30)
