@@ -21,7 +21,7 @@ class danmuView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr), IDanmu {
 
     private val danmuController = DanmuController(context, this)
-    private val ondanmuViewTouchListeners = mutableListOf<OndanmuViewTouchListener>()
+    // private val ondanmuViewTouchListeners = mutableListOf<OndanmuViewTouchListener>()
     private val onDanmuParentViewTouchCallbackListener: OnDanmuParentViewTouchCallbackListener? = null
 
     private var drawFinished = false
@@ -29,7 +29,7 @@ class danmuView @JvmOverloads constructor(
     private val lock = Object()
 
     fun prepare() {
-        danmuController.setSpeedController()
+        // danmuController.setSpeedController()
         danmuController.prepare()
     }
 

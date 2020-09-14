@@ -12,13 +12,14 @@ import kotlinx.android.parcel.Parcelize
  **/
  
 sealed class DanmuEntity
-@SuppressLint("ParcelCreator")
-@Parcelize
-data class DanmuSystem(val avator: String, val name: String, val userId: String, val level: Int, val role: Int): DanmuEntity(), Parcelable
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class DanmuUser(val avator: String, val name: String, val userId: String, val level: Int, val role: Int): DanmuEntity(), Parcelable
+data class DanmuUser(val avator: String, val name: String, val userId: String, val level: Int, val role: Int, val text: String, val richText: List<RichMessage>?): DanmuEntity(), Parcelable
+
+@SuppressLint("ParcelCreator")
+@Parcelize
+data class DanmuSystem(val avator: String, val name: String, val userId: String, val level: Int, val role: Int, val text: String, val richText: List<RichMessage>?): DanmuEntity(), Parcelable
 
 
 @SuppressLint("ParcelCreator")

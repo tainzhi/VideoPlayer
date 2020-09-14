@@ -11,12 +11,15 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.tanzhi.android.danmu.R
 import com.tanzhi.android.danmu.advancedanmu.model.DanmuEntity
+import com.tanzhi.android.danmu.advancedanmu.model.DanmuSystem
+import com.tanzhi.android.danmu.advancedanmu.model.DanmuUser
 import com.tanzhi.android.danmu.advancedanmu.view.IDanmu
 import com.tanzhi.android.danmu.dpToPx
+import com.tanzhi.android.danmu.spToPx
 import java.lang.ref.WeakReference
-import java.util.*
 
 /**
  * @author:      tainzhi
@@ -26,132 +29,101 @@ import java.util.*
  * 建议凡是弹幕中涉及到的图片，大小控制在50kb以内，尺寸控制在100x100以内（单位像素）
  **/
 
-class DanMuHelper(val context: Context) {
-    private val danmuList =  mutableListOf<WeakReference<IDanmu>>()
+class DanMuHelper(val context: Context, private val danmuView: IDanmu) {
+    private val danmuViewReference = WeakReference<IDanmu>(danmuView)
     fun release() {
     }
-
-    fun add(danmuModelParent: IDanmu) {
-        danmuList.add(WeakReference<IDanmu>(danmuModelParent))
-    }
-
+    
     fun addDanmu(danmuEntity: DanmuEntity, broadcast: Boolean) {
-            var danmuModelParent: WeakReference<IDanmu?> = danmuList!![0]
-            if (!broadcast) {
-                danmuModelParent = danmuList!![1]
-            }
-            val danmuModel: DanmuModel = createDanmuModel(danmuEntity)
-            if (danmuModelParent != null && danmuModel != null && danmuModelParent.get() != null) {
-                danmuModelParent.get().add(danmuModel)
-            }
+        val danmuModel: DanmuModel = createDanmuModel(danmuEntity)
+        danmuViewReference.get()?.add(danmuModel)
     }
-
-    private fun createDanmuModel(entity: DanmuEntity): DanmuModel {
-        val danmuModel = DanmuModel().apply {
-            displayType = DanmuModel.RIGHT_TO_LEFT
-            priority = DanmuModel.PRIORITY_NORMAL
-            marginLeft = context.dpToPx(30)
-        }
-        danmuModel.displayType = DanmuModel.RIGHT_TO_LEFT
-        danmuModel.priority = DanmuModel.PRIORITY_NORMAL
-        danmuModel.marginLeft = context.dpToPx(30)
-        if (entity.getType() === DanmakuEntity.DANMAKU_TYPE_USERCHAT) {
-            // 图像
-            val avatarSize: Int = DimensionUtil.dpToPx(mContext, 30)
-            danmuModel.avatarWidth = avatarSize
-            danmuModel.avatarHeight = avatarSize
-            val avatarImageUrl: String = entity.getAvatar()
-            Phoenix.with(mContext)
-                    .setUrl(avatarImageUrl)
-                    .setWidth(avatarSize)
-                    .setHeight(avatarSize)
-                    .setResult(object : IResult<Bitmap?>() {
-                        fun onResult(bitmap: Bitmap?) {
-                            danmuModel.avatar = CircleBitmapTransform.transform(bitmap)
-                        }
-                    })
-                    .load()
-
-            // 等级
-            val level: Int = entity.getLevel()
-            val levelResId = getLevelResId(level)
-            val drawable: Drawable = ContextCompat.getDrawable(mContext, levelResId)
-            danmuModel.levelBitmap = drawable2Bitmap(drawable)
-            danmuModel.levelBitmapWidth = DimensionUtil.dpToPx(mContext, 33)
-            danmuModel.levelBitmapHeight = DimensionUtil.dpToPx(mContext, 16)
-            danmuModel.levelMarginLeft = DimensionUtil.dpToPx(mContext, 5)
-            if (level > 0 && level < 100) {
-                danmuModel.levelText = level.toString()
-                danmuModel.levelTextColor = ContextCompat.getColor(mContext, R.color.white)
-                danmuModel.levelTextSize = DimensionUtil.spToPx(mContext, 14)
+    
+    private fun createDanmuModel(entity: DanmuEntity): DanmuModel = DanmuModel().apply {
+        displayType = DanmuModel.RIGHT_TO_LEFT
+        priority = DanmuModel.PRIORITY_NORMAL
+        marginLeft = context.dpToPx(30)
+        
+        when (entity) {
+            is DanmuUser -> {
+                val avatarSize = context.dpToPx<Int>(30)
+                avatarWidth = 30
+                avatarHeight = 30
+                avatar = Glide.with(context)
+                    .asBitmap()
+                    .load(entity.avator)
+                    .override(avatarWidth, avatarHeight)
+                    .circleCrop()
+                    .submit()
+                    .get()
+                val drawable = ContextCompat.getDrawable(context, getLevelResId(entity.level))
+                levelBitmap = drawable2Bitmap(drawable)
+                levelBitmapWidth = context.dpToPx(33)
+                levelBitmapHeight = context.dpToPx(16)
+                levelBitmapMarginLeft = context.dpToPx(5)
+        
+                levelText = entity.level.toString()
+                levelTextColor = ContextCompat.getColor(context, android.R.color.white)
+                levelTextSize = context.spToPx(14)
+        
+                val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
+                    setSpan(
+                        ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
+                        0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                text = spannableString
+                enableTouch = true
             }
-
-            // 显示的文本内容
-            val name: String = entity.getName().toString() + "："
-            val content: String = entity.getText()
-            val spannableString = SpannableString(name + content)
-            spannableString.setSpan(
-                    ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.white)),
-                    0,
-                    name.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            MLog.i("spannableString = $spannableString")
-            danmuModel.textSize = DimensionUtil.spToPx(mContext, 14)
-            danmuModel.textColor = ContextCompat.getColor(mContext, R.color.light_green)
-            danmuModel.textMarginLeft = DimensionUtil.dpToPx(mContext, 5)
-            danmuModel.text = spannableString
-
-            // 弹幕文本背景
-            danmuModel.textBackground = ContextCompat.getDrawable(mContext, R.drawable.corners_danmu)
-            danmuModel.textBackgroundMarginLeft = DimensionUtil.dpToPx(mContext, 15)
-            danmuModel.textBackgroundPaddingTop = DimensionUtil.dpToPx(mContext, 3)
-            danmuModel.textBackgroundPaddingBottom = DimensionUtil.dpToPx(mContext, 3)
-            danmuModel.textBackgroundPaddingRight = DimensionUtil.dpToPx(mContext, 15)
-            danmuModel.enableTouch(true)
-            danmuModel.setOnTouchCallBackListener(object : OnDanMuTouchCallBackListener() {
-                fun callBack(danmuModel: DanmuModel?) {}
-            })
-        } else {
-            // 显示的文本内容
-            danmuModel.textSize = DimensionUtil.spToPx(mContext, 14)
-            danmuModel.textColor = ContextCompat.getColor(mContext, R.color.light_green)
-            danmuModel.textMarginLeft = DimensionUtil.dpToPx(mContext, 5)
-            if (entity.getRichText() != null) {
-                danmuModel.text = RichTextParse.parse(mContext, entity.getRichText(), DimensionUtil.spToPx(mContext, 18), false)
-            } else {
-                danmuModel.text = entity.getText()
+            is DanmuSystem -> {
+                val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
+                    setSpan(
+                        ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
+                        0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                text = spannableString
+                enableTouch = false
             }
-
-            // 弹幕文本背景
-            danmuModel.textBackground = ContextCompat.getDrawable(mContext, R.drawable.corners_danmu)
-            danmuModel.textBackgroundMarginLeft = DimensionUtil.dpToPx(mContext, 15)
-            danmuModel.textBackgroundPaddingTop = DimensionUtil.dpToPx(mContext, 3)
-            danmuModel.textBackgroundPaddingBottom = DimensionUtil.dpToPx(mContext, 3)
-            danmuModel.textBackgroundPaddingRight = DimensionUtil.dpToPx(mContext, 15)
-            danmuModel.enableTouch(false)
         }
-        return danmuModel
+        
+        
+        textSize = context.spToPx(14)
+        textColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
+        textMarginLeft = context.dpToPx(5)
+        
+        textBackground = ContextCompat.getDrawable(context, R.drawable.corners_danmu)
+        textBackgroundPadding.set(
+            context.dpToPx(15),
+            context.dpToPx(3),
+            context.dpToPx(15),
+            context.dpToPx(3),
+        )
+        
     }
-
+    
     /**
      * Drawable转换成Bitmap
      *
      * @param drawable
      * @return
      */
-    private fun drawable2Bitmap(drawable: Drawable): Bitmap? {
+    private fun drawable2Bitmap(drawable: Drawable?): Bitmap? {
         return if (drawable is BitmapDrawable) {
             // 转换成Bitmap
             drawable.bitmap
         } else if (drawable is NinePatchDrawable) {
             // .9图片转换成Bitmap
             val bitmap = Bitmap.createBitmap(
-                    drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicHeight(),
-                    if (drawable.getOpacity() != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565)
+                drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(),
+                if (drawable.getOpacity() != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+            )
             val canvas = Canvas(bitmap)
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicHeight())
+            drawable.setBounds(
+                0, 0, drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight()
+            )
             drawable.draw(canvas)
             bitmap
         } else {

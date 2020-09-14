@@ -36,5 +36,5 @@ android {
 dependencies {
     api(Libs.Kotlin.stdlib)
     api(Libs.AndroidX.appcompat)
-
+    api(Libs.Glide.glide)
 }
