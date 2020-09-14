@@ -61,15 +61,14 @@ class DanmuModel: OnDanmuViewTouchListener {
     var attached = false
     var priority = PRIORITY_NORMAL
     var isMeasured = false
-    var ondanmuViewTouchListener: OndanmuViewTouchListener? = null
+    // var ondanmuViewTouchListener: OndanmuViewTouchListener? = null
     var speed = 0f
 
     override fun onTouch(x: Float, y: Float): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 
     override fun release() {
-        TODO("Not yet implemented")
     }
 
 

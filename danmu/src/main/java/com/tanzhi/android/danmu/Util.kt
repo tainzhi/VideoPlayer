@@ -50,6 +50,18 @@ inline fun <reified T> Activity.spToPx(value: Int): T {
     }
 }
 
+inline fun <reified T> Context.spToPx(value: Int): T {
+    val result = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP,
+        value.toFloat(), this.resources.displayMetrics)
+    
+    return when (T::class) {
+        Float::class -> result as T
+        Int::class -> result.toInt() as T
+        else -> throw IllegalStateException("Type not supported")
+    }
+}
+
 fun Activity.screenWidth(): Int {
     val dm = DisplayMetrics()
     this.windowManager.defaultDisplay.getMetrics(dm)
