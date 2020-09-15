@@ -1,7 +1,10 @@
 package com.tanzhi.android.danmu.advancedanmu.control
 
 import android.content.Context
+import com.tanzhi.android.danmu.advancedanmu.DanmuChannel
 import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.control.dispatch.DanmuDispatcher
+import com.tanzhi.android.danmu.dpToPx
 import java.util.concurrent.locks.ReentrantLock
 
 /**
@@ -19,6 +22,8 @@ class DanmuProducedPool(context: Context) {
     
     private val reentrantLock = ReentrantLock()
     private val applicationContext = context.applicationContext
+    private val dispatcher = DanmuDispatcher(context)
+    private var danmuChannels: Array<DanmuChannel>? = null
     
     @Volatile
     var mixedDanmuPendingQueue = mutableListOf<DanmuModel>()
@@ -38,12 +43,39 @@ class DanmuProducedPool(context: Context) {
         }
     }
     
+    @Synchronized
+    fun dispatch(): List<DanmuModel>? {
+        if (fastDanmuPendingQueue.isEmpty() && mixedDanmuPendingQueue.isEmpty()) return null
+        val danmuViews = if (fastDanmuPendingQueue.size > 0) fastDanmuPendingQueue else mixedDanmuPendingQueue
+        val validateDanmuViews = mutableListOf<DanmuModel>()
+        val dispatchCount = if (danmuViews.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmuViews.size
+        for (i in 0 until dispatchCount) {
+            dispatcher.dispatch(danmuViews[i], danmuChannels!!)
+            validateDanmuViews.add(danmuViews[i])
+        }
+        danmuViews.drop(dispatchCount)
+        if (validateDanmuViews.size > 0) return validateDanmuViews else return null
+    }
+    
     fun jumpQueue(danmus: List<DanmuModel>) {
         reentrantLock.lock()
         try {
             fastDanmuPendingQueue.addAll(danmus)
         } finally {
             reentrantLock.unlock()
+        }
+    }
+    
+    fun divide(width: Int, height: Int) {
+        val singleHeight = applicationContext.dpToPx<Int>(DEFAULT_SIGNAL_CHANNEL_HEIGHT)
+        val count = height / singleHeight
+        danmuChannels = Array<DanmuChannel>(count){ DanmuChannel() }
+        for (i in 0 until count) {
+            danmuChannels!![i].run {
+                this.width = width
+                this.height = singleHeight
+                this.topY = i * singleHeight
+            }
         }
     }
     
