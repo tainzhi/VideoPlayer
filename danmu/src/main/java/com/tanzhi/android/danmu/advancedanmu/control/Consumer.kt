@@ -7,6 +7,6 @@ package com.tanzhi.android.danmu.advancedanmu.control
  * @description:
  **/
 
-class DanmuConsumer: Thread() {
+class Consumer: Thread() {
 
 }
