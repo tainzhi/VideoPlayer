@@ -7,7 +7,7 @@ import android.graphics.Rect
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
-import com.tanzhi.android.danmu.advancedanmu.DanmuChannel
+import com.tanzhi.android.danmu.advancedanmu.Channel
 import com.tanzhi.android.danmu.advancedanmu.DanmuModel
 
 /**
@@ -27,84 +27,84 @@ open class DanmuPainter: IDanmuPainter() {
         val rect = Rect()
     }
 
-    protected fun layout(DanmuModel: DanmuModel, danmuChannel: DanmuChannel) { }
+    open fun layout(danmuModel: DanmuModel, channel: Channel) { }
 
-    private fun onLayout(DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        if (DanmuModel.isMoving) {
-            layout(DanmuModel, danmuChannel)
+    private fun onLayout(danmuModel: DanmuModel, channel: Channel) {
+        if (danmuModel.isMoving) {
+            layout(danmuModel, channel)
         }
     }
 
-    protected fun draw(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        DanmuModel.run {
-            text?.let { drawText(canvas, DanmuModel, danmuChannel) }
-            textBackground?.let { drawTextBackground(canvas, DanmuModel, danmuChannel) }
-            avatar?.let { drawAvatar(canvas, DanmuModel, danmuChannel) }
-            avatarStrokes?.let { drawTextAvatarStrokes(canvas, DanmuModel, danmuChannel) }
-            levelBitmapSize?.let { drawLevel(canvas, DanmuModel, danmuChannel) }
-            levelText?.let { drawLevelText(canvas, DanmuModel, danmuChannel) }
+    protected fun draw(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        danmuModel.run {
+            text?.let { drawText(canvas, danmuModel, channel) }
+            textBackground?.let { drawTextBackground(canvas, danmuModel, channel) }
+            avatar?.let { drawAvatar(canvas, danmuModel, channel) }
+            avatarStrokes?.let { drawTextAvatarStrokes(canvas, danmuModel, channel) }
+            levelBitmap?.let { drawLevel(canvas, danmuModel, channel) }
+            levelText?.let { drawLevelText(canvas, danmuModel, channel) }
         }
 
     }
 
-    protected fun drawAvatar(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        val top = DanmuModel.startPosition.x + DanmuModel.size!!.height / 2 -
-                DanmuModel.avatarSize!!.height / 2
-        val x = DanmuModel.startPosition.x + DanmuModel.marginLeft
+    protected fun drawAvatar(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        val top = danmuModel.position.x + danmuModel.height / 2 -
+                danmuModel.avatarHeight / 2
+        val x = danmuModel.position.x + danmuModel.marginLeft
         rect.set(x, top,
-                (x + DanmuModel.avatarSize!!.width),
-                top + DanmuModel.avatarSize!!.height
+                (x + danmuModel.avatarWidth),
+                top + danmuModel.avatarHeight
         )
-        canvas.drawBitmap(DanmuModel.avatar!!, null, rect, paint)
+        canvas.drawBitmap(danmuModel.avatar!!, null, rect, paint)
     }
 
 
-    protected fun drawTextAvatarStrokes(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        val x = DanmuModel.startPosition.x + DanmuModel.marginLeft + DanmuModel.avatarSize!!.width / 2
-        val top = DanmuModel.startPosition.y + danmuChannel.height / 2
+    protected fun drawTextAvatarStrokes(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        val x = danmuModel.position.x + danmuModel.marginLeft + danmuModel.avatarWidth / 2
+        val top = danmuModel.position.y + channel.height / 2
 
         paint.color = Color.WHITE
         paint.style = Paint.Style.STROKE
-        canvas.drawCircle(x.toFloat(), top.toFloat(), (DanmuModel.avatarSize!!.height / 2).toFloat(), paint)
+        canvas.drawCircle(x.toFloat(), top.toFloat(), (danmuModel.avatarHeight / 2).toFloat(), paint)
     }
 
-    protected fun drawLevel(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        val top = DanmuModel.startPosition.y + danmuChannel.height / 2 - DanmuModel.levelBitmapSize!!.height / 2
-        val x = DanmuModel.startPosition.x +
-                DanmuModel.marginLeft +
-                DanmuModel.avatarSize!!.width +
-                DanmuModel.levelBitmapMarginLeft
+    protected fun drawLevel(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        val top = danmuModel.position.y + channel.height / 2 - danmuModel.levelBitmapHeight / 2
+        val x = danmuModel.position.x +
+                danmuModel.marginLeft +
+                danmuModel.avatarWidth +
+                danmuModel.levelBitmapMarginLeft
         rect.set(x, top,
-                x + DanmuModel.levelBitmapSize!!.width,
-                top + DanmuModel.levelBitmapSize!!.height
+                x + danmuModel.levelBitmapWidth,
+                top + danmuModel.levelBitmapHeight
         )
-        canvas.drawBitmap(DanmuModel.levelBitmap!!, null, rect, paint)
+        canvas.drawBitmap(danmuModel.levelBitmap!!, null, rect, paint)
     }
 
-    protected fun drawLevelText(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        val levelText = DanmuModel.levelText ?: return
+    protected fun drawLevelText(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        val levelText = danmuModel.levelText ?: return
         paint.run {
-            textSize = DanmuModel.levelTextSize
-            color = DanmuModel.levelTextColor
+            textSize = danmuModel.levelTextSize
+            color = danmuModel.levelTextColor
             style = Paint.Style.FILL
         }
-        val top = DanmuModel.startPosition?.y +
-                DanmuModel.size!!.height / 2 -
+        val top = danmuModel.position?.y +
+                danmuModel.height / 2 -
                 paint.ascent() / 2 -
                 paint.descent() / 2
-        val x = DanmuModel.startPosition.x +
-                DanmuModel.marginLeft +
-                DanmuModel.avatarSize!!.width +
-                DanmuModel.levelBitmapMarginLeft +
-                DanmuModel.levelBitmapSize!!.width / 2
+        val x = danmuModel.position.x +
+                danmuModel.marginLeft +
+                danmuModel.avatarWidth +
+                danmuModel.levelBitmapMarginLeft +
+                danmuModel.levelBitmapWidth / 2
         canvas.drawText(levelText as String, x.toFloat(), top, paint)
     }
 
-    protected fun drawText(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        val text = DanmuModel.text ?: return
+    protected fun drawText(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        val text = danmuModel.text ?: return
         paint.run {
-            textSize = DanmuModel.textSize
-            color = DanmuModel.textColor
+            textSize = danmuModel.textSize
+            color = danmuModel.textColor
             style = Paint.Style.FILL
         }
         val staticLayout = StaticLayout.Builder.obtain(
@@ -113,22 +113,22 @@ open class DanmuPainter: IDanmuPainter() {
                 .setIncludePad(true)
                 .setAlignment(Layout.Alignment.ALIGN_NORMAL)
                 .build()
-        val top = DanmuModel.startPosition.y +
-                danmuChannel.height / 2 -
+        val top = danmuModel.position.y +
+                channel.height / 2 -
                 staticLayout.height / 2
-        val x = DanmuModel.startPosition.x +
-                DanmuModel.marginLeft +
-                DanmuModel.avatarSize!!.width +
-                DanmuModel.levelBitmapMarginLeft +
-                DanmuModel.textMarginLeft
+        val x = danmuModel.position.x +
+                danmuModel.marginLeft +
+                danmuModel.avatarWidth +
+                danmuModel.levelBitmapMarginLeft +
+                danmuModel.textMarginLeft
         canvas.save()
         canvas.translate(x.toFloat(), top.toFloat())
         staticLayout.draw(canvas)
         canvas.restore()
     }
 
-    protected fun drawTextBackground(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        val text = DanmuModel.text ?: return
+    protected fun drawTextBackground(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        val text = danmuModel.text ?: return
         val staticLayout = StaticLayout.Builder.obtain(
                 text, 0, text.length, paint, StaticLayout.getDesiredWidth(text, paint).toInt())
                 .setLineSpacing(0f, 1f)
@@ -141,38 +141,38 @@ open class DanmuPainter: IDanmuPainter() {
         //         Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true)
         //
         // )
-        val textBackgroundHeight = staticLayout.height + DanmuModel.textBackgroundPadding!!.top + DanmuModel.textBackgroundPadding!!.bottom
-        val top = DanmuModel.startPosition.y + (danmuChannel.height - textBackgroundHeight) / 2
-        val x = DanmuModel.startPosition.x +
-                DanmuModel.marginLeft +
-                DanmuModel.avatarSize!!.width -
-                DanmuModel.textBackgroundMarginLeft
+        val textBackgroundHeight = staticLayout.height + danmuModel.textBackgroundPadding!!.top + danmuModel.textBackgroundPadding!!.bottom
+        val top = danmuModel.position.y + (channel.height - textBackgroundHeight) / 2
+        val x = danmuModel.position.x +
+                danmuModel.marginLeft +
+                danmuModel.avatarWidth -
+                danmuModel.textBackgroundMarginLeft
         rect.set(x,
                 top,
-                (x + DanmuModel.levelBitmapMarginLeft +
-                        DanmuModel.levelBitmapSize!!.width +
-                        DanmuModel.textMarginLeft +
-                        DanmuModel.textBackgroundMarginLeft +
+                (x + danmuModel.levelBitmapMarginLeft +
+                        danmuModel.levelBitmapWidth +
+                        danmuModel.textMarginLeft +
+                        danmuModel.textBackgroundMarginLeft +
                         staticLayout.width +
-                        DanmuModel.textBackgroundPadding!!.right),
+                        danmuModel.textBackgroundPadding!!.right),
                 top + textBackgroundHeight)
 
-        DanmuModel.textBackground?.bounds = rect
-        DanmuModel.textBackground?.draw(canvas)
+        danmuModel.textBackground?.bounds = rect
+        danmuModel.textBackground?.draw(canvas)
     }
 
-    override fun execute(canvas: Canvas, DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        if (DanmuModel.speed == 0f) {
-            DanmuModel.isAlive = false
+    override fun execute(canvas: Canvas, danmuModel: DanmuModel, channel: Channel) {
+        if (danmuModel.speed == 0f) {
+            danmuModel.isAlive = false
         }
-        onLayout(DanmuModel, danmuChannel)
+        onLayout(danmuModel, channel)
         if (hideAll) return
         // 只隐藏用户级别的弹幕
         // 系统级弹幕不隐藏
-        if (DanmuModel.priority == DanmuModel.PRIORITY_NORMAL && hide) {
+        if (danmuModel.priority == DanmuModel.PRIORITY_NORMAL && hide) {
             return
         }
-        draw(canvas, DanmuModel, danmuChannel)
+        draw(canvas, danmuModel, channel)
     }
 
     override fun requestLayout() {
