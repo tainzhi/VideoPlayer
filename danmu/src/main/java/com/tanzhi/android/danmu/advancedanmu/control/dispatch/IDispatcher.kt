@@ -1,6 +1,6 @@
 package com.tanzhi.android.danmu.advancedanmu.control.dispatch
 
-import com.tanzhi.android.danmu.advancedanmu.DanmuChannel
+import com.tanzhi.android.danmu.advancedanmu.Channel
 import com.tanzhi.android.danmu.advancedanmu.DanmuModel
 
 /**
@@ -11,5 +11,5 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
  **/
 
 interface IDispatcher {
-    fun dispatch(DanmuModel: DanmuModel, danmuChannels: Array<DanmuChannel>)
+    fun dispatch(DanmuModel: DanmuModel, channels: Array<Channel>)
 }

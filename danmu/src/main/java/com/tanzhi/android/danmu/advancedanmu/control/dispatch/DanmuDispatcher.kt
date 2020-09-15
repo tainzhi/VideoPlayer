@@ -5,7 +5,7 @@ import android.graphics.Paint
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
-import com.tanzhi.android.danmu.advancedanmu.DanmuChannel
+import com.tanzhi.android.danmu.advancedanmu.Channel
 import com.tanzhi.android.danmu.advancedanmu.DanmuModel
 import kotlin.random.Random
 
@@ -23,18 +23,18 @@ class DanmuDispatcher(context: Context) : IDispatcher {
         strokeWidth = 3.5f
     }
 
-    override fun dispatch(DanmuModel: DanmuModel, danmuChannels: Array<DanmuChannel>) {
-        if (!DanmuModel.attached) {
-            val index = Random.nextInt(danmuChannels.size)
-            val danmuChannel = danmuChannels[index]
-            measure(DanmuModel, danmuChannel)
+    override fun dispatch(danmuModel: DanmuModel, channels: Array<Channel>) {
+        if (!danmuModel.attached) {
+            val index = Random.nextInt(channels.size)
+            val danmuChannel = channels[index]
+            measure(danmuModel, danmuChannel)
         }
 
     }
 
-    private fun measure(DanmuModel: DanmuModel, danmuChannel: DanmuChannel) {
-        val text = DanmuModel.text ?: return
-        textPaint.textSize = DanmuModel.textSize
+    private fun measure(danmuModel: DanmuModel, channel: Channel) {
+        val text = danmuModel.text ?: return
+        textPaint.textSize = danmuModel.textSize
 
         val staticLayout = StaticLayout.Builder.obtain(
                 text, 0, text.length, textPaint, StaticLayout.getDesiredWidth(text, textPaint).toInt())
@@ -42,33 +42,33 @@ class DanmuDispatcher(context: Context) : IDispatcher {
                 .setIncludePad(true)
                 .setAlignment(Layout.Alignment.ALIGN_NORMAL)
                 .build()
-        val textWidth = DanmuModel.startPosition.x +
-                DanmuModel.marginLeft +
-                DanmuModel.avatarWidth +
-                DanmuModel.levelBitmapMarginLeft +
-                DanmuModel.levelBitmapWidth +
-                DanmuModel.textMarginLeft +
+        val textWidth = danmuModel.position.x +
+                danmuModel.marginLeft +
+                danmuModel.avatarWidth +
+                danmuModel.levelBitmapMarginLeft +
+                danmuModel.levelBitmapWidth +
+                danmuModel.textMarginLeft +
                 staticLayout.width +
-                DanmuModel.textBackgroundPadding.right
-        DanmuModel.width = textWidth
+                danmuModel.textBackgroundPadding.right
+        danmuModel.width = textWidth
 
         val textHeight = staticLayout.height +
-                DanmuModel.textBackgroundPadding.top +
-                DanmuModel.textBackgroundPadding.bottom
+                danmuModel.textBackgroundPadding.top +
+                danmuModel.textBackgroundPadding.bottom
 
-        if (DanmuModel.avatar != null && DanmuModel.avatarHeight > textHeight) {
-            DanmuModel.height = DanmuModel.startPosition.y + DanmuModel.avatarHeight
+        if (danmuModel.avatar != null && danmuModel.avatarHeight > textHeight) {
+            danmuModel.height = danmuModel.position.y + danmuModel.avatarHeight
         } else {
-            DanmuModel.height = DanmuModel.startPosition.y + textHeight
+            danmuModel.height = danmuModel.position.y + textHeight
         }
-        if (DanmuModel.displayType == DanmuModel.RIGHT_TO_LEFT) {
-            DanmuModel.startPosition.x = DanmuModel.width
+        if (danmuModel.displayType == DanmuModel.RIGHT_TO_LEFT) {
+            danmuModel.position.x = danmuModel.width
         } else {
-            DanmuModel.startPosition.x = -DanmuModel.width
+            danmuModel.position.x = -danmuModel.width
         }
 
-        DanmuModel.isMeasured = true
-        DanmuModel.startPosition.y = danmuChannel.topY
-        DanmuModel.isAlive = true
+        danmuModel.isMeasured = true
+        danmuModel.position.y = channel.topY
+        danmuModel.isAlive = true
     }
 }
