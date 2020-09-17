@@ -46,4 +46,8 @@ class ConsumedPool(context: Context) {
             u.hideAll = hide
         }
     }
+
+    fun divice(widht: Int, height: Int) {
+
+    }
 }
