@@ -16,7 +16,7 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
  * @description:
  **/
 
-class danmuView @JvmOverloads constructor(
+class DanmuView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr), IDanmu {
 
@@ -76,6 +76,7 @@ class danmuView @JvmOverloads constructor(
     }
 
     override fun hasCanTouchDanmus(): Boolean {
+        return true
     }
 
     override fun onDraw(canvas: Canvas) {

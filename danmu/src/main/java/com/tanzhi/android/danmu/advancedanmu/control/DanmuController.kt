@@ -29,7 +29,7 @@ class DanmuController(context: Context, danmuView: IDanmu) {
     }
 
     fun adddanmuView(index: Int, DanmuModel: DanmuModel) {
-        danmuPoolManager.adddanmuView(index, DanmuModel)
+        danmuPoolManager.addDanmuView(index, DanmuModel)
     }
 
     fun jumpQueue(DanmuModels: List<DanmuModel>) {

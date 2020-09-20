@@ -15,39 +15,59 @@ import com.tanzhi.android.danmu.advancedanmu.view.IDanmu
  * @description:
  **/
 
-class DanmuPoolManager(context: Context, danmuView: IDanmu) {
+class DanmuPoolManager(val context: Context, val danmuView: IDanmu) {
 
-    private val danmuProducer = Producer()
     private val danmuProducerPool = ProducedPool(context)
-    private val danmuConsumer = Consumer()
     private val danmuConsumedPool = ConsumedPool(context)
+    private val danmuProducer = Producer(danmuProducerPool, danmuConsumedPool)
+    private val danmuConsumer = Consumer(danmuConsumedPool, danmuView)
+
+    var isStart = false
 
     fun setSpeedController(speedController: ISpeedController) {
 
     }
 
-    fun adddanmuView(index: Int, danmuView: DanmuModel) {
+    fun divide(width: Int, height: Int) {
+        danmuProducerPool.divide(width, height)
+        danmuConsumedPool.divide(width, height)
+    }
 
+    fun addDanmuView(index: Int, danmuView: DanmuModel) {
+        danmuProducer.produce(index, danmuView)
     }
 
 
-    fun start() {}
+    fun start() {
+        if (!isStart) {
+            isStart = false
+            danmuProducer.start()
+            danmuConsumer.start()
+        }
+    }
 
     fun jumpQueue(danmuViews: List<DanmuModel>){
-
+        danmuProducer.jumpQueue(danmuViews)
     }
 
-    fun divide(width: Int, height: Int){}
+    fun setDispatcher(dispatcher: IDispatcher){
+        danmuProducerPool.dispatcher = dispatcher
+    }
 
-    fun setDispatcher(dispatcher: IDispatcher){}
+    fun addPainter(danmuPainter: DanmuPainter, key: Int) {
+        danmuConsumedPool.addPainter(danmuPainter, key)
+    }
 
-    fun addPainter(danmuPainter: DanmuPainter, key: Int) {}
-
-    fun drawDanmus(canvas: Canvas) {}
+    fun drawDanmus(canvas: Canvas) {
+        danmuConsumer.consume(canvas)
+    }
 
     fun hide(hide: Boolean){}
 
     fun hideAll(hideAll: Boolean) {}
 
+    fun release() {
+        isStart = false
+    }
 
 }

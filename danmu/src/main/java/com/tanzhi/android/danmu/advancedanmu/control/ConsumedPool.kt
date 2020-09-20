@@ -57,6 +57,15 @@ class ConsumedPool(val context: Context) {
         }
     }
 
+    fun isDrawnQueueEmpty(): Boolean =
+        if (mixedDanmuViewQueue.isEmpty()) {
+            isDrawing = false
+            true
+        } else {
+            false
+        }
+
+
     fun put(danmuModels: List<DanmuModel>) {
         mixedDanmuViewQueue.addAll(danmuModels)
     }
