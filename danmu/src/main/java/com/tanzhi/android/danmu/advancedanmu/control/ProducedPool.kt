@@ -4,6 +4,7 @@ import android.content.Context
 import com.tanzhi.android.danmu.advancedanmu.Channel
 import com.tanzhi.android.danmu.advancedanmu.DanmuModel
 import com.tanzhi.android.danmu.advancedanmu.control.dispatch.DanmuDispatcher
+import com.tanzhi.android.danmu.advancedanmu.control.dispatch.IDispatcher
 import com.tanzhi.android.danmu.dpToPx
 import java.util.concurrent.locks.ReentrantLock
 
@@ -21,7 +22,7 @@ class ProducedPool(val context: Context) {
     }
     
     private val reentrantLock = ReentrantLock()
-    private val dispatcher = DanmuDispatcher(context)
+    var dispatcher: IDispatcher = DanmuDispatcher(context)
     private var channels: Array<Channel>? = null
     
     @Volatile
