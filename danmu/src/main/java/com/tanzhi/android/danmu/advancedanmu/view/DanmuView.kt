@@ -6,8 +6,8 @@ import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import com.tanzhi.android.danmu.advancedanmu.control.DanmuController
 import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.control.Controller
 
 /**
  * @author:      tainzhi
@@ -19,10 +19,12 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
 class DanmuView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr), IDanmu {
-
-    private val danmuController = DanmuController(context, this)
+    
+    private val danmuController = Controller(context, this)
+    
     // private val ondanmuViewTouchListeners = mutableListOf<OndanmuViewTouchListener>()
-    private val onDanmuParentViewTouchCallbackListener: OnDanmuParentViewTouchCallbackListener? = null
+    private val onDanmuParentViewTouchCallbackListener: OnDanmuParentViewTouchCallbackListener? =
+        null
 
     private var drawFinished = false
 
