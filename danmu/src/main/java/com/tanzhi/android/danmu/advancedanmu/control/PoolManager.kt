@@ -15,15 +15,15 @@ import com.tanzhi.android.danmu.advancedanmu.view.IDanmu
  * @description:
  **/
 
-class DanmuPoolManager(val context: Context, val danmuView: IDanmu) {
-
+class PoolManager(val context: Context, val danmuView: IDanmu) {
+    
     private val danmuProducerPool = ProducedPool(context)
     private val danmuConsumedPool = ConsumedPool(context)
     private val danmuProducer = Producer(danmuProducerPool, danmuConsumedPool)
     private val danmuConsumer = Consumer(danmuConsumedPool, danmuView)
-
+    
     var isStart = false
-
+    
     fun setSpeedController(speedController: ISpeedController) {
 
     }

@@ -6,6 +6,7 @@ import com.tanzhi.android.danmu.advancedanmu.Channel
 import com.tanzhi.android.danmu.advancedanmu.DanmuModel
 import com.tanzhi.android.danmu.advancedanmu.control.speed.ISpeedController
 import com.tanzhi.android.danmu.advancedanmu.painter.DanmuPainter
+import com.tanzhi.android.danmu.advancedanmu.painter.IDanmuPainter
 import com.tanzhi.android.danmu.advancedanmu.painter.L2RPainter
 import com.tanzhi.android.danmu.advancedanmu.painter.R2LPainter
 import com.tanzhi.android.danmu.dpToPx
@@ -23,16 +24,20 @@ class ConsumedPool(val context: Context) {
         const val MAX_COUNT_IN_SCREEN = 30
         const val DEFAULT_SIGNAL_CHANNEL_HEIGHT = 40
     }
-    val danmuPainterMap = hashMapOf<Int, DanmuPainter>()
+    
+    val danmuPainterMap = hashMapOf<Int, IDanmuPainter>()
+    
     @Volatile
     var mixedDanmuViewQueue = arrayListOf<DanmuModel>()
-
+    
     var speedController: ISpeedController? = null
-
+    
+    private val danmuChannels = arrayOf<Channel>()
+    
     private var channels: Array<Channel>? = null
-
+    
     private var isDrawing: Boolean = false
-
+    
     init {
         danmuPainterMap[DanmuModel.LEFT_TO_RIGHT] = L2RPainter()
         danmuPainterMap[DanmuModel.RIGHT_TO_LEFT] = R2LPainter()
@@ -82,17 +87,34 @@ class ConsumedPool(val context: Context) {
         for (i in 0 until maxCount) {
             val danmuModel = danmuModels[i]
             if (danmuModel.isAlive) {
-                // TODO: 2020/9/18 为什么i-- 
-            } else
-                i--
+                val painter = getPainter(danmuModel)
+                val channel = danmuChannels[danmuModel.channelIndex]
+                channel.dispatch(danmuModel)
+                if (danmuModel.attached) {
+                    performDraw(danmuModel, painter, canvas, channel)
+                }
+            }
         }
+        danmuModels.drop(maxCount)
         isDrawing = false
     }
-
+    
+    private fun getPainter(danmuModel: DanmuModel): IDanmuPainter =
+        danmuPainterMap[danmuModel.displayType]!!
+    
+    private fun performDraw(
+        danmuModel: DanmuModel,
+        danmuPainter: IDanmuPainter,
+        canvas: Canvas,
+        channel: Channel
+    ) {
+        danmuPainter.execute(canvas, danmuModel, channel)
+    }
+    
     fun divide(width: Int, height: Int) {
         val singleHeight = context.dpToPx<Int>(DEFAULT_SIGNAL_CHANNEL_HEIGHT)
         val count = height / singleHeight
-        channels = Array<Channel>(count){ Channel() }
+        channels = Array<Channel>(count) { Channel() }
         for (i in 0 until count) {
             channels!![i].run {
                 this.width = width
