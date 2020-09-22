@@ -1,6 +1,7 @@
 package com.tainzhi.android.danmu.advancedanmu.control
 
 import android.content.Context
+import android.util.Log
 import com.tainzhi.android.danmu.advancedanmu.Channel
 import com.tainzhi.android.danmu.advancedanmu.Danmu
 import com.tainzhi.android.danmu.advancedanmu.control.dispatch.IDispatcher
@@ -16,6 +17,7 @@ import java.util.concurrent.locks.ReentrantLock
 
 class ProducedPool(val context: Context) {
     companion object {
+        const val TAG = "Danmu.ProducedPool"
         const val MAX_COUNT_IN_SCREEN = 30
         const val DEFAULT_SIGNAL_CHANNEL_HEIGHT = 40
     }
@@ -31,6 +33,7 @@ class ProducedPool(val context: Context) {
     var fastDanmuPendingQueue = mutableListOf<Danmu>()
     
     fun addDanmu(index: Int, danmu: Danmu) {
+        Log.d(TAG, "addDanmu")
         reentrantLock.lock()
         try {
             if (index > -1) {
@@ -43,19 +46,25 @@ class ProducedPool(val context: Context) {
         }
     }
     
+    @ExperimentalStdlibApi
     @Synchronized
     fun dispatch(): List<Danmu>? {
+        Log.d(TAG, "dispatch")
         if (fastDanmuPendingQueue.isEmpty() && mixedDanmuPendingQueue.isEmpty()) return null
         val danmus =
             if (fastDanmuPendingQueue.size > 0) fastDanmuPendingQueue else mixedDanmuPendingQueue
         val validateDanmuViews = mutableListOf<Danmu>()
-        val dispatchCount =
+        var dispatchCount =
             if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
-        for (i in 0 until dispatchCount) {
-            dispatcher?.dispatch(danmus[i], channels!!)
-            validateDanmuViews.add(danmus[i])
+        danmus.forEachIndexed loop@{ index, danmu ->
+           if (index >= dispatchCount) return@loop
+            dispatcher?.dispatch(danmu, channels!!)
+            validateDanmuViews.add(danmu)
         }
-        danmus.drop(dispatchCount)
+        while(dispatchCount > 0) {
+            danmus.removeFirst()
+            dispatchCount--
+        }
         if (validateDanmuViews.size > 0) return validateDanmuViews else return null
     }
     

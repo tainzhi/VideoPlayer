@@ -52,6 +52,7 @@ class DanmuContainerView @JvmOverloads constructor(
     
     @SuppressLint("ObsoleteSdkInt")
     override fun lockDraw() {
+        Log.d(TAG, "lockDraw()")
         if (!danmuController.isChannelCreated) return
         synchronized(lock) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -101,6 +102,6 @@ class DanmuContainerView @JvmOverloads constructor(
     }
 
     companion object {
-        const val TAG = "danmuContainerView"
+        const val TAG = "DanmuContainerView"
     }
 }
