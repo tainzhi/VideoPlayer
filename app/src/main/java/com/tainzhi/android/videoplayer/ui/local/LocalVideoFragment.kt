@@ -3,7 +3,6 @@ package com.tainzhi.android.videoplayer.ui.local
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +11,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
-import com.tainzhi.android.ffmpeg.FFmpegInvoker
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
@@ -80,7 +78,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
 
     override fun startObserve() {
         mViewModel.apply {
-            localVideoList.observe(viewLifecycleOwner, Observer { it ->
+            localVideoList.observe(viewLifecycleOwner, Observer {
                 localVideoAdapter.setList(it)
             })
             // 在Android10+上,获取删除权限
