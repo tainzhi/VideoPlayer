@@ -1,6 +1,5 @@
 package com.tainzhi.android.danmu.advancedanmu.control.dispatch
 
-import android.content.Context
 import android.graphics.Paint
 import android.text.Layout
 import android.text.StaticLayout
@@ -13,16 +12,16 @@ import kotlin.random.Random
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/9/11 13:33
- * @description:
+ * @description: 确定每个Danmu的绘制位置
  **/
 
-class DanmuDispatcher(context: Context) : IDispatcher {
-    
+class DanmuDispatcher() : IDispatcher {
+
     private val textPaint = TextPaint().apply {
         flags = Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG
         strokeWidth = 3.5f
     }
-    
+
     override fun dispatch(danmu: Danmu, channels: Array<Channel>) {
         if (!danmu.attached) {
             val index = Random.nextInt(channels.size)
