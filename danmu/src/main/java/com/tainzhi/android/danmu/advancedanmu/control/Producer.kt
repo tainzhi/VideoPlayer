@@ -3,7 +3,7 @@ package com.tainzhi.android.danmu.advancedanmu.control
 import android.os.Handler
 import android.os.Message
 import com.tainzhi.android.danmu.advancedanmu.Danmu
-import com.tainzhi.android.danmu.advancedanmu.control.ProducerHandler.Companion.SIGNAL_CONSUMED_DANMU
+import com.tainzhi.android.danmu.advancedanmu.control.Producer.ProducerHandler.Companion.SIGNAL_CONSUMED_DANMU
 
 /**
  * @author:      tainzhi
@@ -38,43 +38,45 @@ class Producer(val producedPool: ProducedPool, val consumedPool: ConsumedPool) {
         }
         
     }
-}
 
-class ProducerHandler(private val producer: Producer) : Handler() {
-    companion object {
+    class ProducerHandler(private val producer: Producer) : Handler() {
+        companion object {
 
-        const val SLEEP_TIME = 100L
-        const val SIGNAL_CONSUMED_DANMU = 1
-        const val SIGNAL_ADD_DANMU = 2
-    }
+            const val TAG = "Danmu.Producer/ProducerHandler"
+            const val SLEEP_TIME = 100L
+            const val SIGNAL_CONSUMED_DANMU = 1
+            const val SIGNAL_ADD_DANMU = 2
+        }
 
-    init {
-        obtainMessage(SIGNAL_CONSUMED_DANMU).sendToTarget()
-    }
+        init {
+            obtainMessage(SIGNAL_CONSUMED_DANMU).sendToTarget()
+        }
 
-    override fun handleMessage(msg: Message) {
-        super.handleMessage(msg)
-        when (msg.what) {
-            SIGNAL_CONSUMED_DANMU -> {
-                // 定时每100ms取出ProducedPool中缓存的Danmu发送到 ConsumedPool
-                producer.producedPool.dispatch()?.let { it ->
-                    producer.consumedPool.put(it)
+        @ExperimentalStdlibApi
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                SIGNAL_CONSUMED_DANMU -> {
+                    // 定时每100ms取出ProducedPool中缓存的Danmu发送到 ConsumedPool
+                    producer.producedPool.dispatch()?.let { it ->
+                        producer.consumedPool.put(it)
+                    }
+                    val message = obtainMessage().apply { what = SIGNAL_CONSUMED_DANMU }
+                    sendMessageDelayed(message, SLEEP_TIME)
                 }
-                val message = obtainMessage().apply { what = 1 }
-                sendMessageDelayed(message, SLEEP_TIME)
+                SIGNAL_ADD_DANMU -> {
+                    // 新的弹幕添加到ProducedPool, 缓存起来
+                    val producerMessage = msg.obj as ProduceMessage
+                    producer.producedPool.addDanmu(producerMessage.index, producerMessage.danmu)
+                }
             }
-            SIGNAL_ADD_DANMU -> {
-                // 新的弹幕添加到ProducedPool, 缓存起来
-                val producerMessage = msg.obj as ProduceMessage
-                producer.producedPool.addDanmu(producerMessage.index, producerMessage.danmu)
-            }
+        }
+
+        fun release() {
+            producer.producedPool.clear()
         }
     }
 
-    fun release() {
-        producer.producedPool.clear()
-    }
+    data class ProduceMessage(var index: Int, val danmu: Danmu)
 }
-
-data class ProduceMessage(var index: Int, val danmu: Danmu)
 

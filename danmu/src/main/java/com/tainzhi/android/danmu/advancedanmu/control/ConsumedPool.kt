@@ -2,6 +2,7 @@ package com.tainzhi.android.danmu.advancedanmu.control
 
 import android.content.Context
 import android.graphics.Canvas
+import android.util.Log
 import com.tainzhi.android.danmu.advancedanmu.Channel
 import com.tainzhi.android.danmu.advancedanmu.Danmu
 import com.tainzhi.android.danmu.advancedanmu.control.speed.ISpeedController
@@ -21,6 +22,7 @@ import com.tainzhi.android.danmu.dpToPx
 class ConsumedPool(val context: Context) {
     
     companion object {
+        const val TAG = "Danmu.ConsumedPool"
         const val MAX_COUNT_IN_SCREEN = 30
         const val DEFAULT_SIGNAL_CHANNEL_HEIGHT = 40
     }
@@ -70,6 +72,7 @@ class ConsumedPool(val context: Context) {
     
     
     fun put(danmus: List<Danmu>) {
+        Log.d(TAG, "put(), danmus.size=${danmus.size}")
         mixedDanmuViewQueue.addAll(danmus)
     }
     
@@ -78,12 +81,13 @@ class ConsumedPool(val context: Context) {
     }
     
     @Synchronized
-    private fun drawEveryElement(danmus: List<Danmu>, canvas: Canvas) {
+    private fun drawEveryElement(danmus: ArrayList<Danmu>, canvas: Canvas) {
+        Log.d(TAG, "drawEveryElement, danmu.size=${danmus.size}")
         isDrawing = true
         if (danmus.isNullOrEmpty()) return
-        val maxCount = if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
-        for (i in 0 until maxCount) {
-            val danmu = danmus[i]
+        var maxCount = if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
+        danmus.forEachIndexed loop@{ index, danmu ->
+            if (index >= maxCount) return@loop
             if (danmu.isAlive) {
                 val painter = getPainter(danmu)
                 val channel = channels?.get(danmu.channelIndex) ?: return
@@ -91,9 +95,15 @@ class ConsumedPool(val context: Context) {
                 if (danmu.attached) {
                     performDraw(danmu, painter, canvas, channel)
                 }
+            } else {
+                danmu.isDeprecated = true
             }
         }
-        danmus.drop(maxCount)
+        // 已经失效的Danmu, 移除ConsumedPool
+        danmus.forEach {
+            if (it.isDeprecated) danmus.remove(it)
+        }
+        Log.d(TAG, "drawEveryElement, after, danmu.size=${danmus.size}")
         isDrawing = false
     }
     
