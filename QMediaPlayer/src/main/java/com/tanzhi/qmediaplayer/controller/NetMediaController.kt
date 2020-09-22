@@ -6,11 +6,21 @@ import android.graphics.Bitmap
 import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
-import android.view.*
-import android.widget.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.constraintlayout.widget.Group
-import com.tanzhi.android.danmu.simpledanmu.danmuView
-import com.tanzhi.qmediaplayer.*
+import com.tanzhi.android.danmu.simpledanmu.DanmuView
+import com.tanzhi.qmediaplayer.R
+import com.tanzhi.qmediaplayer.Util
 import com.tanzhi.qmediaplayer.VideoView
 import com.tanzhi.qmediaplayer.floatwindow.FloatWindow
 import com.tanzhi.qmediaplayer.render.IRenderView
@@ -132,7 +142,7 @@ class NetMediaController(val context: Context) : IController(context) {
             (it as ImageButton).setImageResource(if (isDanmuOn) R.drawable.ic_danmu_on else R.drawable.ic_danmu_off)
             if (!this::danmuView.isInitialized) {
                 danmuLayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 700)
-                danmuView = danmuView(context)
+                danmuView = DanmuView(context)
             }
             if (isDanmuOn) {
                 parent.addView(danmuView, danmuLayoutParams)
@@ -144,7 +154,7 @@ class NetMediaController(val context: Context) : IController(context) {
         }
     }
 
-    private lateinit var danmuView: danmuView
+    private lateinit var danmuView: DanmuView
     private lateinit var danmuLayoutParams: ViewGroup.LayoutParams
 
     private fun doPlayPause() {
