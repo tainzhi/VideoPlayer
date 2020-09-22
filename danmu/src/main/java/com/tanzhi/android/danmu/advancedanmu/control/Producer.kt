@@ -2,7 +2,7 @@ package com.tanzhi.android.danmu.advancedanmu.control
 
 import android.os.Handler
 import android.os.Message
-import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.Danmu
 
 /**
  * @author:      tainzhi
@@ -16,24 +16,26 @@ class Producer(val producedPool: ProducedPool, val consumedPool: ConsumedPool) {
     fun start() {
         producerHandler = ProducerHandler(this)
     }
-
-    fun produce(index: Int, danmuModel: DanmuModel) {
-        val produceMessage = ProduceMessage(index, danmuModel)
+    
+    fun produce(index: Int, danmu: Danmu) {
+        val produceMessage = ProduceMessage(index, danmu)
         val message = producerHandler.obtainMessage().apply {
             obj = produceMessage
             what = 2
         }
         producerHandler.sendMessage(message)
     }
-
-    fun jumpQueue(danmuModels: List<DanmuModel>) { producedPool.jumpQueue(danmuModels)}
-
+    
+    fun jumpQueue(danmus: List<Danmu>) {
+        producedPool.jumpQueue(danmus)
+    }
+    
     fun release() {
         producerHandler.run {
             removeMessages(1)
             release()
         }
-
+        
     }
 }
 
@@ -57,7 +59,7 @@ class ProducerHandler(val producer: Producer): Handler() {
             }
             2 -> {
                 val producerMessage = msg.obj as ProduceMessage
-                producer.producedPool.addDanmu(producerMessage.index, producerMessage.danmuModel)
+                producer.producedPool.addDanmu(producerMessage.index, producerMessage.danmu)
             }
         }
     }
@@ -67,5 +69,5 @@ class ProducerHandler(val producer: Producer): Handler() {
     }
 }
 
-data class ProduceMessage(var index: Int, val danmuModel: DanmuModel)
+data class ProduceMessage(var index: Int, val danmu: Danmu)
 

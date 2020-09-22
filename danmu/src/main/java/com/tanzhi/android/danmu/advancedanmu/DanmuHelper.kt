@@ -16,7 +16,7 @@ import com.tanzhi.android.danmu.R
 import com.tanzhi.android.danmu.advancedanmu.model.DanmuEntity
 import com.tanzhi.android.danmu.advancedanmu.model.DanmuSystem
 import com.tanzhi.android.danmu.advancedanmu.model.DanmuUser
-import com.tanzhi.android.danmu.advancedanmu.view.IDanmu
+import com.tanzhi.android.danmu.advancedanmu.view.IDanmuContainer
 import com.tanzhi.android.danmu.dpToPx
 import com.tanzhi.android.danmu.spToPx
 import java.lang.ref.WeakReference
@@ -29,19 +29,19 @@ import java.lang.ref.WeakReference
  * 建议凡是弹幕中涉及到的图片，大小控制在50kb以内，尺寸控制在100x100以内（单位像素）
  **/
 
-class DanMuHelper(val context: Context, private val danmuView: IDanmu) {
-    private val danmuViewReference = WeakReference<IDanmu>(danmuView)
+class DanMuHelper(val context: Context, private val danmuContainerView: IDanmuContainer) {
+    private val danmuReference = WeakReference<IDanmuContainer>(danmuContainerView)
     fun release() {
     }
     
     fun addDanmu(danmuEntity: DanmuEntity, broadcast: Boolean) {
-        val danmuModel: DanmuModel = createDanmuModel(danmuEntity)
-        danmuViewReference.get()?.add(danmuModel)
+        val danmu: Danmu = createDanmu(danmuEntity)
+        danmuReference.get()?.add(danmu)
     }
     
-    private fun createDanmuModel(entity: DanmuEntity): DanmuModel = DanmuModel().apply {
-        displayType = DanmuModel.RIGHT_TO_LEFT
-        priority = DanmuModel.PRIORITY_NORMAL
+    private fun createDanmu(entity: DanmuEntity): Danmu = Danmu().apply {
+        displayType = Danmu.RIGHT_TO_LEFT
+        priority = Danmu.PRIORITY_NORMAL
         marginLeft = context.dpToPx(30)
         
         when (entity) {

@@ -1,6 +1,6 @@
 package com.tanzhi.android.danmu.advancedanmu.view
 
-import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.Danmu
 
 /**
  * @author:      tainzhi
@@ -16,7 +16,7 @@ interface OnDanmuViewTouchListener {
 }
 
 interface OnDanmuTouchCallBackListener {
-    fun callBack(DanmuModel: DanmuModel)
+    fun callBack(danmu: Danmu)
 }
 
 interface OnDanmuParentViewTouchCallbackListener {
