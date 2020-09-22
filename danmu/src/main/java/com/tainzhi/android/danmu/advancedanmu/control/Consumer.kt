@@ -14,15 +14,17 @@ import java.util.concurrent.locks.ReentrantLock
 
 class Consumer(private val consumedPool: ConsumedPool, danmuContainerView: IDanmuContainer) :
     Thread() {
+
     companion object {
+
         const val SLEEP_TIME = 100L
     }
-    
+
     var forceSleep = false
     var isStart = true
-    
+
     @Volatile
-    lateinit var danmuContainerViewReference: WeakReference<IDanmuContainer>
+    var danmuContainerViewReference = WeakReference<IDanmuContainer>(danmuContainerView)
     private val lock = ReentrantLock()
 
     fun consume(canvas: Canvas) {

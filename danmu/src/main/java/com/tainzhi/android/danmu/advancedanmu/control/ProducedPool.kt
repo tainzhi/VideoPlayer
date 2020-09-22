@@ -3,7 +3,6 @@ package com.tainzhi.android.danmu.advancedanmu.control
 import android.content.Context
 import com.tainzhi.android.danmu.advancedanmu.Channel
 import com.tainzhi.android.danmu.advancedanmu.Danmu
-import com.tainzhi.android.danmu.advancedanmu.control.dispatch.DanmuDispatcher
 import com.tainzhi.android.danmu.advancedanmu.control.dispatch.IDispatcher
 import com.tainzhi.android.danmu.dpToPx
 import java.util.concurrent.locks.ReentrantLock
@@ -22,7 +21,7 @@ class ProducedPool(val context: Context) {
     }
     
     private val reentrantLock = ReentrantLock()
-    var dispatcher: IDispatcher = DanmuDispatcher(context)
+    var dispatcher: IDispatcher? = null
     private var channels: Array<Channel>? = null
     
     @Volatile
@@ -53,7 +52,7 @@ class ProducedPool(val context: Context) {
         val dispatchCount =
             if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
         for (i in 0 until dispatchCount) {
-            dispatcher.dispatch(danmus[i], channels!!)
+            dispatcher?.dispatch(danmus[i], channels!!)
             validateDanmuViews.add(danmus[i])
         }
         danmus.drop(dispatchCount)

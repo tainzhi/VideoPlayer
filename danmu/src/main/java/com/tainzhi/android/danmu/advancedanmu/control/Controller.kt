@@ -16,7 +16,7 @@ import com.tainzhi.android.danmu.advancedanmu.view.IDanmuContainer
 
 class Controller(context: Context, danmuContainerView: IDanmuContainer) {
     private val danmuPoolManager = PoolManager(context, danmuContainerView)
-    private val danmuDispatcher = DanmuDispatcher(context)
+    private val danmuDispatcher = DanmuDispatcher()
     private val speedController = RandomSpeedController()
     var isChannelCreated = false
     
@@ -37,7 +37,7 @@ class Controller(context: Context, danmuContainerView: IDanmuContainer) {
     }
     
     fun initChannels(canvas: Canvas) {
-        if (isChannelCreated) {
+        if (!isChannelCreated) {
             speedController.width = canvas.width
             danmuPoolManager.run {
                 setSpeedController(speedController)
