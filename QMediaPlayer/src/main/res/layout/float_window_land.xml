@@ -5,13 +5,15 @@
 	android:layout_width="match_parent"
 	tools:layout_height="90dp"
 	tools:layout_width="160dp"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	>
 	
-	<com.tanzhi.qmediaplayer.VideoView
+	<com.tainzhi.qmediaplayer.VideoView
 		android:background="@android:color/black"
 		android:id="@+id/floatWindowVideoView"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+		android:layout_height="match_parent"
+		/>
 	
 	<ImageButton
 		android:id="@+id/floatWindowCloseBtn"

@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.databinding.ItemDouyuRoomBinding
-import com.tanzhi.qmediaplayer.dp
+import com.tainzhi.qmediaplayer.dp
 
 /**
  * @author:      tainzhi

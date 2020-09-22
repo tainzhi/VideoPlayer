@@ -10,11 +10,10 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
-import com.tanzhi.qmediaplayer.AutoFullScreenListener
-import com.tanzhi.qmediaplayer.Constant
-import com.tanzhi.qmediaplayer.controller.MediaController
-import com.tanzhi.qmediaplayer.VideoView
-import com.tanzhi.qmediaplayer.controller.NetMediaController
+import com.tainzhi.qmediaplayer.AutoFullScreenListener
+import com.tainzhi.qmediaplayer.Constant
+import com.tainzhi.qmediaplayer.VideoView
+import com.tainzhi.qmediaplayer.controller.NetMediaController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
