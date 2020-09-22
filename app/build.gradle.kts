@@ -130,6 +130,7 @@ dependencies {
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
     implementation(project(":ffmpeg"))
+    implementation(project(":danmu"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.AndroidX.appcompat)
@@ -145,8 +146,6 @@ dependencies {
     implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.1")
     kapt(Libs.AndroidX.Room.compiler)
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.Paging.runtimeKtx)
