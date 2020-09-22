@@ -1,7 +1,7 @@
 package com.tanzhi.android.danmu.advancedanmu.painter
 
 import com.tanzhi.android.danmu.advancedanmu.Channel
-import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.Danmu
 
 /**
  * @author:      tainzhi
@@ -11,11 +11,11 @@ import com.tanzhi.android.danmu.advancedanmu.DanmuModel
  **/
 
 class L2RPainter: DanmuPainter() {
-    override fun layout(danmuModel: DanmuModel, channel: Channel) {
-        if (danmuModel.position.x >= (channel.width + danmuModel.width)) {
-            danmuModel.isAlive = false
+    override fun layout(danmu: Danmu, channel: Channel) {
+        if (danmu.position.x >= (channel.width + danmu.width)) {
+            danmu.isAlive = false
             return
         }
-        danmuModel.position.x = danmuModel.position.x + (danmuModel.speed * ( 1 + 0.5f)).toInt()
+        danmu.position.x = danmu.position.x + (danmu.speed * (1 + 0.5f)).toInt()
     }
 }

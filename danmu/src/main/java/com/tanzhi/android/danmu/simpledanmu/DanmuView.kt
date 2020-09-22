@@ -18,22 +18,22 @@ import kotlin.random.Random
  * @description:
  **/
 
-class danmuView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+class DanmuView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
-
+    
     var datas: List<DanmuBean> = arrayListOf()
     private val widthPixels = resources.displayMetrics.widthPixels
     private val heightPixels = resources.displayMetrics.heightPixels
     private var curPos = 0
-
+    
     private val addHandler = @SuppressLint("HandlerLeak")
-    object: Handler() {
+    object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-
+            
             addTextView()
-
+            
             val randomDelay = Random.nextLong(300) + 400
             sendEmptyMessageDelayed(0, randomDelay)
         }
