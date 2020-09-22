@@ -15,15 +15,15 @@ class Channel {
     var topY = 0
     var space = 60
     
-    var r2lReferenceView: DanmuModel? = null
-    var l2rReferenceView: DanmuModel? = null
+    var r2lReferenceView: Danmu? = null
+    var l2rReferenceView: Danmu? = null
     
-    fun dispatch(danMuView: DanmuModel) {
+    fun dispatch(danMuView: Danmu) {
         if (danMuView.attached) {
             return
         }
         danMuView.speed = speed
-        if (danMuView.displayType == DanmuModel.RIGHT_TO_LEFT) {
+        if (danMuView.displayType == Danmu.RIGHT_TO_LEFT) {
             var deltaX = 0
             if (r2lReferenceView != null) {
                 deltaX = (width - r2lReferenceView!!.position.x - r2lReferenceView!!.width)
@@ -32,7 +32,7 @@ class Channel {
                 danMuView.attached = true
                 r2lReferenceView = danMuView
             }
-        } else if (danMuView.displayType == DanmuModel.LEFT_TO_RIGHT) {
+        } else if (danMuView.displayType == Danmu.LEFT_TO_RIGHT) {
             var mDeltaX = 0
             if (l2rReferenceView != null) {
                 mDeltaX = l2rReferenceView!!.position.x

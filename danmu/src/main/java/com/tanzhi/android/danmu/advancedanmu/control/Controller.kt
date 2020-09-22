@@ -2,10 +2,10 @@ package com.tanzhi.android.danmu.advancedanmu.control
 
 import android.content.Context
 import android.graphics.Canvas
-import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.Danmu
 import com.tanzhi.android.danmu.advancedanmu.control.dispatch.DanmuDispatcher
 import com.tanzhi.android.danmu.advancedanmu.control.speed.RandomSpeedController
-import com.tanzhi.android.danmu.advancedanmu.view.IDanmu
+import com.tanzhi.android.danmu.advancedanmu.view.IDanmuContainer
 
 /**
  * @author:      tainzhi
@@ -14,8 +14,8 @@ import com.tanzhi.android.danmu.advancedanmu.view.IDanmu
  * @description:
  **/
 
-class Controller(context: Context, danmuView: IDanmu) {
-    private val danmuPoolManager = PoolManager(context, danmuView)
+class Controller(context: Context, danmuContainerView: IDanmuContainer) {
+    private val danmuPoolManager = PoolManager(context, danmuContainerView)
     private val danmuDispatcher = DanmuDispatcher(context)
     private val speedController = RandomSpeedController()
     var isChannelCreated = false
@@ -27,15 +27,15 @@ class Controller(context: Context, danmuView: IDanmu) {
     fun prepare() {
         danmuPoolManager.start()
     }
-
-    fun adddanmuView(index: Int, DanmuModel: DanmuModel) {
-        danmuPoolManager.addDanmuView(index, DanmuModel)
+    
+    fun addDanmu(index: Int, danmu: Danmu) {
+        danmuPoolManager.addDanmu(index, danmu)
     }
-
-    fun jumpQueue(DanmuModels: List<DanmuModel>) {
-        danmuPoolManager.jumpQueue(DanmuModels)
+    
+    fun jumpQueue(danmus: List<Danmu>) {
+        danmuPoolManager.jumpQueue(danmus)
     }
-
+    
     fun initChannels(canvas: Canvas) {
         if (isChannelCreated) {
             speedController.width = canvas.width

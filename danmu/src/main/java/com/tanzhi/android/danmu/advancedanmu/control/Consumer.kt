@@ -1,7 +1,7 @@
 package com.tanzhi.android.danmu.advancedanmu.control
 
 import android.graphics.Canvas
-import com.tanzhi.android.danmu.advancedanmu.view.IDanmu
+import com.tanzhi.android.danmu.advancedanmu.view.IDanmuContainer
 import java.lang.ref.WeakReference
 import java.util.concurrent.locks.ReentrantLock
 
@@ -12,16 +12,17 @@ import java.util.concurrent.locks.ReentrantLock
  * @description:
  **/
 
-class Consumer(private val consumedPool: ConsumedPool, danmuView: IDanmu) : Thread() {
+class Consumer(private val consumedPool: ConsumedPool, danmuContainerView: IDanmuContainer) :
+    Thread() {
     companion object {
         const val SLEEP_TIME = 100L
     }
-
+    
     var forceSleep = false
     var isStart = true
-
+    
     @Volatile
-    lateinit var danmuViewReference: WeakReference<IDanmu>
+    lateinit var danmuContainerViewReference: WeakReference<IDanmuContainer>
     private val lock = ReentrantLock()
 
     fun consume(canvas: Canvas) {
@@ -29,7 +30,7 @@ class Consumer(private val consumedPool: ConsumedPool, danmuView: IDanmu) : Thre
     }
 
     fun release() {
-        danmuViewReference.clear()
+        danmuContainerViewReference.clear()
         isStart = false
         interrupt()
     }
@@ -39,14 +40,14 @@ class Consumer(private val consumedPool: ConsumedPool, danmuView: IDanmu) : Thre
         while(isStart) {
             if (consumedPool.isDrawnQueueEmpty() or forceSleep) {
                 try {
-                    Thread.sleep(SLEEP_TIME)
+                    sleep(SLEEP_TIME)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
             } else {
                 lock.lock()
                 try {
-                    danmuViewReference.get()?.lockDraw()
+                    danmuContainerViewReference.get()?.lockDraw()
                 } finally {
                     lock.unlock()
                 }

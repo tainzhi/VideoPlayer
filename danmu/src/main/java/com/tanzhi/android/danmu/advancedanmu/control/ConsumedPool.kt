@@ -3,7 +3,7 @@ package com.tanzhi.android.danmu.advancedanmu.control
 import android.content.Context
 import android.graphics.Canvas
 import com.tanzhi.android.danmu.advancedanmu.Channel
-import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.Danmu
 import com.tanzhi.android.danmu.advancedanmu.control.speed.ISpeedController
 import com.tanzhi.android.danmu.advancedanmu.painter.DanmuPainter
 import com.tanzhi.android.danmu.advancedanmu.painter.IDanmuPainter
@@ -28,7 +28,7 @@ class ConsumedPool(val context: Context) {
     val danmuPainterMap = hashMapOf<Int, IDanmuPainter>()
     
     @Volatile
-    var mixedDanmuViewQueue = arrayListOf<DanmuModel>()
+    var mixedDanmuViewQueue = arrayListOf<Danmu>()
     
     var speedController: ISpeedController? = null
     
@@ -39,8 +39,8 @@ class ConsumedPool(val context: Context) {
     private var isDrawing: Boolean = false
     
     init {
-        danmuPainterMap[DanmuModel.LEFT_TO_RIGHT] = L2RPainter()
-        danmuPainterMap[DanmuModel.RIGHT_TO_LEFT] = R2LPainter()
+        danmuPainterMap[Danmu.LEFT_TO_RIGHT] = L2RPainter()
+        danmuPainterMap[Danmu.RIGHT_TO_LEFT] = R2LPainter()
         hide(false)
     }
 
@@ -61,7 +61,7 @@ class ConsumedPool(val context: Context) {
             u.hideAll = hide
         }
     }
-
+    
     fun isDrawnQueueEmpty(): Boolean =
         if (mixedDanmuViewQueue.isEmpty()) {
             isDrawing = false
@@ -69,46 +69,46 @@ class ConsumedPool(val context: Context) {
         } else {
             false
         }
-
-
-    fun put(danmuModels: List<DanmuModel>) {
-        mixedDanmuViewQueue.addAll(danmuModels)
+    
+    
+    fun put(danmus: List<Danmu>) {
+        mixedDanmuViewQueue.addAll(danmus)
     }
-
+    
     fun draw(canvas: Canvas) {
         drawEveryElement(mixedDanmuViewQueue, canvas)
     }
-
+    
     @Synchronized
-    private fun drawEveryElement(danmuModels: List<DanmuModel>, canvas: Canvas) {
+    private fun drawEveryElement(danmus: List<Danmu>, canvas: Canvas) {
         isDrawing = true
-        if (danmuModels.isNullOrEmpty()) return
-        val maxCount = if (danmuModels.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmuModels.size
+        if (danmus.isNullOrEmpty()) return
+        val maxCount = if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
         for (i in 0 until maxCount) {
-            val danmuModel = danmuModels[i]
-            if (danmuModel.isAlive) {
-                val painter = getPainter(danmuModel)
-                val channel = danmuChannels[danmuModel.channelIndex]
-                channel.dispatch(danmuModel)
-                if (danmuModel.attached) {
-                    performDraw(danmuModel, painter, canvas, channel)
+            val danmu = danmus[i]
+            if (danmu.isAlive) {
+                val painter = getPainter(danmu)
+                val channel = danmuChannels[danmu.channelIndex]
+                channel.dispatch(danmu)
+                if (danmu.attached) {
+                    performDraw(danmu, painter, canvas, channel)
                 }
             }
         }
-        danmuModels.drop(maxCount)
+        danmus.drop(maxCount)
         isDrawing = false
     }
     
-    private fun getPainter(danmuModel: DanmuModel): IDanmuPainter =
-        danmuPainterMap[danmuModel.displayType]!!
+    private fun getPainter(danmu: Danmu): IDanmuPainter =
+        danmuPainterMap[danmu.displayType]!!
     
     private fun performDraw(
-        danmuModel: DanmuModel,
+        danmu: Danmu,
         danmuPainter: IDanmuPainter,
         canvas: Canvas,
         channel: Channel
     ) {
-        danmuPainter.execute(canvas, danmuModel, channel)
+        danmuPainter.execute(canvas, danmu, channel)
     }
     
     fun divide(width: Int, height: Int) {

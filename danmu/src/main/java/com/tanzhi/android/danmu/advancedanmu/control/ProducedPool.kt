@@ -2,7 +2,7 @@ package com.tanzhi.android.danmu.advancedanmu.control
 
 import android.content.Context
 import com.tanzhi.android.danmu.advancedanmu.Channel
-import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.Danmu
 import com.tanzhi.android.danmu.advancedanmu.control.dispatch.DanmuDispatcher
 import com.tanzhi.android.danmu.advancedanmu.control.dispatch.IDispatcher
 import com.tanzhi.android.danmu.dpToPx
@@ -26,11 +26,12 @@ class ProducedPool(val context: Context) {
     private var channels: Array<Channel>? = null
     
     @Volatile
-    var mixedDanmuPendingQueue = mutableListOf<DanmuModel>()
-    @Volatile
-    var fastDanmuPendingQueue = mutableListOf<DanmuModel>()
+    var mixedDanmuPendingQueue = mutableListOf<Danmu>()
     
-    fun addDanmu(index: Int, danmu: DanmuModel) {
+    @Volatile
+    var fastDanmuPendingQueue = mutableListOf<Danmu>()
+    
+    fun addDanmu(index: Int, danmu: Danmu) {
         reentrantLock.lock()
         try {
             if (index > -1) {
@@ -44,20 +45,22 @@ class ProducedPool(val context: Context) {
     }
     
     @Synchronized
-    fun dispatch(): List<DanmuModel>? {
+    fun dispatch(): List<Danmu>? {
         if (fastDanmuPendingQueue.isEmpty() && mixedDanmuPendingQueue.isEmpty()) return null
-        val danmuViews = if (fastDanmuPendingQueue.size > 0) fastDanmuPendingQueue else mixedDanmuPendingQueue
-        val validateDanmuViews = mutableListOf<DanmuModel>()
-        val dispatchCount = if (danmuViews.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmuViews.size
+        val danmus =
+            if (fastDanmuPendingQueue.size > 0) fastDanmuPendingQueue else mixedDanmuPendingQueue
+        val validateDanmuViews = mutableListOf<Danmu>()
+        val dispatchCount =
+            if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
         for (i in 0 until dispatchCount) {
-            dispatcher.dispatch(danmuViews[i], channels!!)
-            validateDanmuViews.add(danmuViews[i])
+            dispatcher.dispatch(danmus[i], channels!!)
+            validateDanmuViews.add(danmus[i])
         }
-        danmuViews.drop(dispatchCount)
+        danmus.drop(dispatchCount)
         if (validateDanmuViews.size > 0) return validateDanmuViews else return null
     }
     
-    fun jumpQueue(danmus: List<DanmuModel>) {
+    fun jumpQueue(danmus: List<Danmu>) {
         reentrantLock.lock()
         try {
             fastDanmuPendingQueue.addAll(danmus)

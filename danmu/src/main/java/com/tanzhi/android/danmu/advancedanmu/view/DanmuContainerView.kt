@@ -1,12 +1,13 @@
 package com.tanzhi.android.danmu.advancedanmu.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import com.tanzhi.android.danmu.advancedanmu.DanmuModel
+import com.tanzhi.android.danmu.advancedanmu.Danmu
 import com.tanzhi.android.danmu.advancedanmu.control.Controller
 
 /**
@@ -16,39 +17,39 @@ import com.tanzhi.android.danmu.advancedanmu.control.Controller
  * @description:
  **/
 
-class DanmuView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr), IDanmu {
+class DanmuContainerView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr), IDanmuContainer {
     
     private val danmuController = Controller(context, this)
     
-    // private val ondanmuViewTouchListeners = mutableListOf<OndanmuViewTouchListener>()
+    // private val ondanmuTouchListeners = mutableListOf<OndanmuTouchListener>()
     private val onDanmuParentViewTouchCallbackListener: OnDanmuParentViewTouchCallbackListener? =
         null
-
+    
     private var drawFinished = false
-
+    
     private val lock = Object()
-
+    
     fun prepare() {
         // danmuController.setSpeedController()
         danmuController.prepare()
     }
-
-    override fun add(DanmuModel: DanmuModel) {
-        DanmuModel.isMoving = true
-        danmuController.adddanmuView(-1, DanmuModel)
+    
+    override fun add(danmu: Danmu) {
+        danmu.isMoving = true
+        danmuController.addDanmu(-1, danmu)
     }
-
-    override fun add(index: Int, DanmuModel: DanmuModel) {
+    
+    override fun add(index: Int, danmu: Danmu) {
+    }
+    
+    
+    override fun jumpQueue(danmus: List<Danmu>) {
         TODO("Not yet implemented")
     }
-
-
-    override fun jumpQueue(danmuViews: List<DanmuModel>) {
-        TODO("Not yet implemented")
-    }
-
+    
+    @SuppressLint("ObsoleteSdkInt")
     override fun lockDraw() {
         if (!danmuController.isChannelCreated) return
         synchronized(lock) {
@@ -61,26 +62,27 @@ class DanmuView @JvmOverloads constructor(
                 try {
                     lock.wait()
                 } catch (e: InterruptedException) {
-                    Log.e(TAG, e.message)
+                    Log.e(TAG, e.message ?: "draw danmu encounter error")
                 }
             }
             drawFinished = false
         }
     }
-
+    
     override fun forceSleep() {
     }
-
-    override fun hideAlldanmuView(hideAll: Boolean) {
+    
+    override fun hideAllDanmu(hideAll: Boolean) {
+        TODO("Not yet implemented")
     }
-
+    
     override fun hideNormalDanmu(hide: Boolean) {
     }
-
-    override fun hasCanTouchDanmus(): Boolean {
-        return true
+    
+    override fun hasCanTouchDanmu(): Boolean {
+        TODO("Not yet implemented")
     }
-
+    
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         danmuController.run {
@@ -98,6 +100,6 @@ class DanmuView @JvmOverloads constructor(
     }
 
     companion object {
-        const val TAG = "danmuView"
+        const val TAG = "danmuContainerView"
     }
 }
