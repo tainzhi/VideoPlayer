@@ -3,7 +3,7 @@ package com.tainzhi.android.videoplayer.repository
 import com.tainzhi.android.common.base.BaseRepository
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.db.TvDao
-import com.tanzhi.mediaspider.TVSpider
+import com.tainzhi.mediaspider.TVSpider
 
 /**
  * @author:      tainzhi

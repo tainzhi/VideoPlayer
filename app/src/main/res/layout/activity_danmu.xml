@@ -7,7 +7,7 @@
 	tools:context="com.tainzhi.android.videoplayer.ui.DanmuActivity"
 	>
 	
-	<com.tanzhi.android.danmu.advancedanmu.view.DanmuContainerView
+	<com.tainzhi.android.danmu.advancedanmu.view.DanmuContainerView
 		android:id="@+id/danmuContainerView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"

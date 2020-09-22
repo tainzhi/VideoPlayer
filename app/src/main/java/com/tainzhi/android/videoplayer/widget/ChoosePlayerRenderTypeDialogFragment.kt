@@ -7,7 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
-import com.tanzhi.qmediaplayer.Constant
+import com.tainzhi.qmediaplayer.Constant
 import org.koin.android.ext.android.inject
 
 /**

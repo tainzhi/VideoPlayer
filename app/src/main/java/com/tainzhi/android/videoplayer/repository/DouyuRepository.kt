@@ -5,7 +5,7 @@ import com.tainzhi.android.common.base.Result
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.network.VideoClient
-import com.tanzhi.mediaspider.DouyuSpider
+import com.tainzhi.mediaspider.DouyuSpider
 
 /**
  * @author:      tainzhi
