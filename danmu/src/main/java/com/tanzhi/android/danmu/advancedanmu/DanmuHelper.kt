@@ -97,7 +97,7 @@ class DanMuHelper(val context: Context, private val danmuView: IDanmu) {
             context.dpToPx(15),
             context.dpToPx(3),
             context.dpToPx(15),
-            context.dpToPx(3),
+            context.dpToPx(3)
         )
         
     }
