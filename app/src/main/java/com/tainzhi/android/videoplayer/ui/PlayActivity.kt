@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.smarx.notchlib.NotchScreenManager
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
-import com.tanzhi.qmediaplayer.AutoFullScreenListener
-import com.tanzhi.qmediaplayer.controller.MediaController
-import com.tanzhi.qmediaplayer.VideoView
-import com.tanzhi.qmediaplayer.render.glrender.effect.NoEffect
+import com.tainzhi.qmediaplayer.AutoFullScreenListener
+import com.tainzhi.qmediaplayer.VideoView
+import com.tainzhi.qmediaplayer.controller.MediaController
+import com.tainzhi.qmediaplayer.render.glrender.effect.NoEffect
 import org.koin.android.ext.android.inject
 
 class PlayActivity : AppCompatActivity() {

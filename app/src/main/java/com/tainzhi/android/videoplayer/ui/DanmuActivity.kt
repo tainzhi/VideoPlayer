@@ -2,9 +2,9 @@ package com.tainzhi.android.videoplayer.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.tainzhi.android.danmu.advancedanmu.DanMuHelper
+import com.tainzhi.android.danmu.advancedanmu.model.DanmuEntity
 import com.tainzhi.android.videoplayer.R
-import com.tanzhi.android.danmu.advancedanmu.DanMuHelper
-import com.tanzhi.android.danmu.advancedanmu.model.DanmuEntity
 import kotlinx.android.synthetic.main.activity_danmu.addDanmuBtn
 import kotlinx.android.synthetic.main.activity_danmu.danmuContainerView
 import kotlinx.android.synthetic.main.activity_danmu.hideDanmuBtn

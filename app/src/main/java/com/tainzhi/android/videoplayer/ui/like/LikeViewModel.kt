@@ -2,11 +2,8 @@ package com.tainzhi.android.videoplayer.ui.like
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.common.base.ui.BaseViewModel
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
-import com.tanzhi.qmediaplayer.Constant
 
 /**
  * @author:      tainzhi
