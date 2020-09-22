@@ -32,8 +32,6 @@ class ConsumedPool(val context: Context) {
     
     var speedController: ISpeedController? = null
     
-    private val danmuChannels = arrayOf<Channel>()
-    
     private var channels: Array<Channel>? = null
     
     private var isDrawing: Boolean = false
@@ -88,7 +86,7 @@ class ConsumedPool(val context: Context) {
             val danmu = danmus[i]
             if (danmu.isAlive) {
                 val painter = getPainter(danmu)
-                val channel = danmuChannels[danmu.channelIndex]
+                val channel = channels?.get(danmu.channelIndex) ?: return
                 channel.dispatch(danmu)
                 if (danmu.attached) {
                     performDraw(danmu, painter, canvas, channel)

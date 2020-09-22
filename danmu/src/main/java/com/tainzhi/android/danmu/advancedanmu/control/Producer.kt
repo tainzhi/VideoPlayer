@@ -3,6 +3,7 @@ package com.tainzhi.android.danmu.advancedanmu.control
 import android.os.Handler
 import android.os.Message
 import com.tainzhi.android.danmu.advancedanmu.Danmu
+import com.tainzhi.android.danmu.advancedanmu.control.ProducerHandler.Companion.SIGNAL_CONSUMED_DANMU
 
 /**
  * @author:      tainzhi
@@ -21,7 +22,7 @@ class Producer(val producedPool: ProducedPool, val consumedPool: ConsumedPool) {
         val produceMessage = ProduceMessage(index, danmu)
         val message = producerHandler.obtainMessage().apply {
             obj = produceMessage
-            what = 2
+            what = ProducerHandler.SIGNAL_ADD_DANMU
         }
         producerHandler.sendMessage(message)
     }
@@ -32,32 +33,38 @@ class Producer(val producedPool: ProducedPool, val consumedPool: ConsumedPool) {
     
     fun release() {
         producerHandler.run {
-            removeMessages(1)
+            removeMessages(SIGNAL_CONSUMED_DANMU)
             release()
         }
         
     }
 }
 
-class ProducerHandler(val producer: Producer): Handler() {
+class ProducerHandler(private val producer: Producer) : Handler() {
     companion object {
+
         const val SLEEP_TIME = 100L
+        const val SIGNAL_CONSUMED_DANMU = 1
+        const val SIGNAL_ADD_DANMU = 2
     }
+
     init {
-        obtainMessage(1).sendToTarget()
+        obtainMessage(SIGNAL_CONSUMED_DANMU).sendToTarget()
     }
 
     override fun handleMessage(msg: Message) {
         super.handleMessage(msg)
-        when(msg.what) {
-            1 -> {
-                producer.producedPool.dispatch()?.let {it ->
+        when (msg.what) {
+            SIGNAL_CONSUMED_DANMU -> {
+                // 定时每100ms取出ProducedPool中缓存的Danmu发送到 ConsumedPool
+                producer.producedPool.dispatch()?.let { it ->
                     producer.consumedPool.put(it)
                 }
                 val message = obtainMessage().apply { what = 1 }
                 sendMessageDelayed(message, SLEEP_TIME)
             }
-            2 -> {
+            SIGNAL_ADD_DANMU -> {
+                // 新的弹幕添加到ProducedPool, 缓存起来
                 val producerMessage = msg.obj as ProduceMessage
                 producer.producedPool.addDanmu(producerMessage.index, producerMessage.danmu)
             }
