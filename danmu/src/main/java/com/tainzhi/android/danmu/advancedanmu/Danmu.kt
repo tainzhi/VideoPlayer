@@ -58,6 +58,7 @@ class Danmu : OnDanmuViewTouchListener {
     var channelIndex = 0
     var isMoving = true
     var isAlive = true
+    var isDeprecated = false
     var displayType = 0
     var attached = false
     var priority = PRIORITY_NORMAL
