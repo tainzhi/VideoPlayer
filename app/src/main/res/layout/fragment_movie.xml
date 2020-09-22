@@ -1,28 +1,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		>
 	
 	<Button
-		android:id="@+id/ffmpegPlayerHlv"
-		android:layout_width="wrap_content"
-		android:layout_height="50dp"
-		android:text="ffmpeg play hlv"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintVertical_chainStyle="packed"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintBottom_toTopOf="@id/ffmpegPlayerRtmp"
+			android:id="@+id/ffmpegPlayerHlv"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
+			android:text="ffmpeg play hlv"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintVertical_chainStyle="packed"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintBottom_toTopOf="@id/ffmpegPlayerRtmp"
 		app:layout_constraintTop_toTopOf="parent" />
 	
 	<Button
-		android:id="@+id/ffmpegPlayerRtmp"
-		android:layout_width="wrap_content"
-		android:layout_height="50dp"
-		android:text="ffmpeg play rtmp"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/ffmpegPlayerHlv" />
+			android:id="@+id/ffmpegPlayerRtmp"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
+			android:text="ffmpeg play rtmp"
+			app:layout_constraintBottom_toTopOf="@id/danmuBtn"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/ffmpegPlayerHlv"
+			/>
+
+	<Button
+			android:id="@+id/danmuBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
+			android:text="播放弹幕"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/ffmpegPlayerRtmp"
+			/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
