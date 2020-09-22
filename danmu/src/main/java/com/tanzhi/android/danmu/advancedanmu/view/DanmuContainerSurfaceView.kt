@@ -29,11 +29,7 @@ class DanmuContainerSurfaceView @JvmOverloads constructor(
     }
     
     private fun prepare(canvas: Canvas) {
-        controller.run {
-            prepare()
-            initChannels(canvas)
-        }
-        
+
     }
     
     private fun addDanmu(index: Int, danmu: Danmu) {

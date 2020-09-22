@@ -40,7 +40,7 @@ class PoolManager(val context: Context, val danmuContainerView: IDanmuContainer)
     
     fun start() {
         if (!isStart) {
-            isStart = false
+            isStart = true
             danmuProducer.start()
             danmuConsumer.start()
         }

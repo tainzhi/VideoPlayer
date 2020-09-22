@@ -21,7 +21,7 @@ class DanmuItemView( context: Context, danmuBean: DanmuBean) : LinearLayout(cont
         val view = inflate(context, R.layout.danmu_item, null)
         addView(view)
 
-        view.findViewById<ImageView>(R.id.avator).setImageResource(danmuBean.avatorId)
+        view.findViewById<ImageView>(R.id.avatar).setImageResource(danmuBean.avatarId)
         view.findViewById<TextView>(R.id.tv_name).text = danmuBean.userName
         view.findViewById<TextView>(R.id.tv_content).text = danmuBean.content
     }
