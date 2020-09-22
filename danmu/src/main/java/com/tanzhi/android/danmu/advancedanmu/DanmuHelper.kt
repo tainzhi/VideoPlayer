@@ -12,10 +12,12 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.tanzhi.android.danmu.R
 import com.tanzhi.android.danmu.advancedanmu.model.DanmuEntity
-import com.tanzhi.android.danmu.advancedanmu.model.DanmuSystem
-import com.tanzhi.android.danmu.advancedanmu.model.DanmuUser
 import com.tanzhi.android.danmu.advancedanmu.view.IDanmuContainer
 import com.tanzhi.android.danmu.dpToPx
 import com.tanzhi.android.danmu.spToPx
@@ -29,77 +31,80 @@ import java.lang.ref.WeakReference
  * 建议凡是弹幕中涉及到的图片，大小控制在50kb以内，尺寸控制在100x100以内（单位像素）
  **/
 
-class DanMuHelper(val context: Context, private val danmuContainerView: IDanmuContainer) {
+class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
     private val danmuReference = WeakReference<IDanmuContainer>(danmuContainerView)
     fun release() {
     }
-    
-    fun addDanmu(danmuEntity: DanmuEntity, broadcast: Boolean) {
+
+    fun addDanmu(danmuEntity: DanmuEntity) {
         val danmu: Danmu = createDanmu(danmuEntity)
         danmuReference.get()?.add(danmu)
     }
-    
+
+    fun hideAllDanmu() {
+        danmuReference.get()?.hideAllDanmu(true)
+    }
+
     private fun createDanmu(entity: DanmuEntity): Danmu = Danmu().apply {
         displayType = Danmu.RIGHT_TO_LEFT
         priority = Danmu.PRIORITY_NORMAL
         marginLeft = context.dpToPx(30)
-        
-        when (entity) {
-            is DanmuUser -> {
-                val avatarSize = context.dpToPx<Int>(30)
-                avatarWidth = 30
-                avatarHeight = 30
-                avatar = Glide.with(context)
-                    .asBitmap()
-                    .load(entity.avator)
-                    .override(avatarWidth, avatarHeight)
-                    .circleCrop()
-                    .submit()
-                    .get()
-                val drawable = ContextCompat.getDrawable(context, getLevelResId(entity.level))
-                levelBitmap = drawable2Bitmap(drawable)
-                levelBitmapWidth = context.dpToPx(33)
-                levelBitmapHeight = context.dpToPx(16)
-                levelBitmapMarginLeft = context.dpToPx(5)
-        
-                levelText = entity.level.toString()
-                levelTextColor = ContextCompat.getColor(context, android.R.color.white)
-                levelTextSize = context.spToPx(14)
-        
-                val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
-                    setSpan(
-                        ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
-                        0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                text = spannableString
-                enableTouch = true
-            }
-            is DanmuSystem -> {
-                val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
-                    setSpan(
-                        ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
-                        0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                text = spannableString
-                enableTouch = false
-            }
+
+        val avatarSize = context.dpToPx<Int>(30)
+        avatarWidth = 30
+        avatarHeight = 30
+        // avatar = Glide.with(context)
+        //         .asBitmap()
+        //         .load(entity.avatar)
+        //         .override(avatarWidth, avatarHeight)
+        //         .circleCrop()
+        //         .submit()
+        //         .get()
+        Glide.with(context)
+                .asBitmap()
+                .load(entity.avatar)
+                .listener(object : RequestListener<Bitmap> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        avatar = resource
+                        return false
+                    }
+                })
+        val drawable = ContextCompat.getDrawable(context, getLevelResId(entity.level))
+        levelBitmap = drawable2Bitmap(drawable)
+        levelBitmapWidth = context.dpToPx(33)
+        levelBitmapHeight = context.dpToPx(16)
+        levelBitmapMarginLeft = context.dpToPx(5)
+
+        levelText = entity.level.toString()
+        levelTextColor = ContextCompat.getColor(context, android.R.color.white)
+        levelTextSize = context.spToPx(14)
+
+        val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
+            setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
+                    0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
-        
-        
+        text = spannableString
         textSize = context.spToPx(14)
         textColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
         textMarginLeft = context.dpToPx(5)
-        
+
         textBackground = ContextCompat.getDrawable(context, R.drawable.corners_danmu)
         textBackgroundPadding.set(
-            context.dpToPx(15),
-            context.dpToPx(3),
-            context.dpToPx(15),
-            context.dpToPx(3)
+                context.dpToPx(15),
+                context.dpToPx(3),
+                context.dpToPx(15),
+                context.dpToPx(3)
         )
-        
+
+        enableTouch = true
+
+
     }
     
     /**

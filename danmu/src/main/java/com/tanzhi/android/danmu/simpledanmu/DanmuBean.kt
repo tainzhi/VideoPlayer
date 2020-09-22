@@ -11,7 +11,7 @@ import java.io.Serializable
  
 data class DanmuBean(
         val id: Int,
-        val avatorId: Int,
+        val avatarId: Int,
         val userName: String,
         val content: String
 ): Serializable

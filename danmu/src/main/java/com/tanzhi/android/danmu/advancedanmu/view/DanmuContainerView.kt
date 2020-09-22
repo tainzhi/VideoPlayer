@@ -20,27 +20,28 @@ import com.tanzhi.android.danmu.advancedanmu.control.Controller
 class DanmuContainerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr), IDanmuContainer {
-    
+
     private val danmuController = Controller(context, this)
-    
+
     // private val ondanmuTouchListeners = mutableListOf<OndanmuTouchListener>()
     private val onDanmuParentViewTouchCallbackListener: OnDanmuParentViewTouchCallbackListener? =
-        null
-    
+            null
+
     private var drawFinished = false
-    
+
     private val lock = Object()
-    
-    fun prepare() {
-        // danmuController.setSpeedController()
+
+
+    init {
         danmuController.prepare()
+
     }
-    
+
     override fun add(danmu: Danmu) {
         danmu.isMoving = true
         danmuController.addDanmu(-1, danmu)
     }
-    
+
     override fun add(index: Int, danmu: Danmu) {
     }
     
