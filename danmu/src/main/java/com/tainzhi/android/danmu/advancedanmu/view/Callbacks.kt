@@ -9,7 +9,8 @@ import com.tainzhi.android.danmu.advancedanmu.Danmu
  * @description:
  **/
 
-interface OnDanmuViewTouchListener {
+interface OnDanmuwTouchListener {
+
     fun onTouch(x: Float, y: Float): Boolean
 
     fun release()
