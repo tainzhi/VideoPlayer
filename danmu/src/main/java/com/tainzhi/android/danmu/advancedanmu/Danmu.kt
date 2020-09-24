@@ -4,7 +4,9 @@ import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import com.tainzhi.android.danmu.advancedanmu.view.OnDanmuViewTouchListener
+import com.tainzhi.android.danmu.advancedanmu.view.OnDanmuTouchListener
+import com.tainzhi.android.danmu.dp
+import com.tainzhi.android.danmu.sp
 
 /**
  * @author:      tainzhi
@@ -13,42 +15,42 @@ import com.tainzhi.android.danmu.advancedanmu.view.OnDanmuViewTouchListener
  * @description:
  **/
 
-class Danmu : OnDanmuViewTouchListener {
+class Danmu : OnDanmuTouchListener {
     
     var paddingLeft = 0
     var paddingRight = 0
-    var marginLeft = 0
+    var marginLeft = 30.dp()
     var marginRight = 0
     
     // user avatar
     var avatar: Bitmap? = null
-    var avatarWidth = 0
-    var avatarHeight = 0
+    var avatarWidth = 30.dp()
+    var avatarHeight = 30.dp()
     
     // 用户图像描边(默认白色描边)
     var avatarStrokes = true
 
     // 用户等级标签
     var levelBitmap: Bitmap? = null
-    var levelBitmapWidth = 0
-    var levelBitmapHeight = 0
-    var levelBitmapMarginLeft = 0
+    var levelBitmapWidth = 33.dp()
+    var levelBitmapHeight = 16.dp()
+    var levelBitmapMarginLeft = 5.dp()
     var levelBitmapMarginRight = 0
 
     // 用户等级标签文本
     var levelText: CharSequence? = null
-    var levelTextSize = 0f
+    var levelTextSize = 14f.sp()
     var levelTextColor = 0
 
     // 弹幕文本
     var text: CharSequence? = null
-    var textSize = 0f
+    var textSize = 14f.sp()
     var textColor = 0
-    var textMarginLeft = 0
+    var textMarginLeft = 5.dp()
 
     var textBackground: Drawable? = null
     var textBackgroundMarginLeft = 0
-    var textBackgroundPadding = Rect(0, 0, 0, 0)
+    var textBackgroundPadding = Rect(15.dp(), 3.dp(), 15.dp(), 3.dp())
 
     var position = Point(-1, -1)
     
