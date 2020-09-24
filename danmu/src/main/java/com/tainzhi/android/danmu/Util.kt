@@ -2,6 +2,7 @@ package com.tainzhi.android.danmu
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import com.tainzhi.android.danmu.simpledanmu.DanmuBean
@@ -59,6 +60,21 @@ inline fun <reified T> Context.spToPx(value: Int): T {
         Int::class -> result.toInt() as T
         else -> throw IllegalStateException("Type not supported")
     }
+}
+
+// dp转px
+fun Int.dp():Int{
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+}
+
+// dp转px
+fun Float.dp():Float{
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,this, Resources.getSystem().displayMetrics)
+}
+
+// sp转px
+fun Float.sp():Float{
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,this, Resources.getSystem().displayMetrics)
 }
 
 fun Activity.screenWidth(): Int {
