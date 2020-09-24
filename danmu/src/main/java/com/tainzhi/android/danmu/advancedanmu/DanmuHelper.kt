@@ -48,11 +48,7 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
     private fun createDanmu(entity: DanmuEntity): Danmu = Danmu().apply {
         displayType = Danmu.RIGHT_TO_LEFT
         priority = Danmu.PRIORITY_NORMAL
-        marginLeft = context.dpToPx(30)
 
-        val avatarSize = context.dpToPx<Int>(30)
-        avatarWidth = 30
-        avatarHeight = 30
         // avatar = Glide.with(context)
         //         .asBitmap()
         //         .load(entity.avatar)
@@ -63,6 +59,8 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         Glide.with(context)
                 .asBitmap()
                 .load(entity.avatar)
+                .override(avatarWidth, avatarHeight)
+                .circleCrop()
                 .listener(object : RequestListener<Bitmap> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                         return false
@@ -75,13 +73,9 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
                 })
         val drawable = ContextCompat.getDrawable(context, getLevelResId(entity.level))
         levelBitmap = drawable2Bitmap(drawable)
-        levelBitmapWidth = context.dpToPx(33)
-        levelBitmapHeight = context.dpToPx(16)
-        levelBitmapMarginLeft = context.dpToPx(5)
 
         levelText = entity.level.toString()
         levelTextColor = ContextCompat.getColor(context, android.R.color.white)
-        levelTextSize = context.spToPx(14)
 
         val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
             setSpan(
@@ -90,17 +84,9 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
             )
         }
         text = spannableString
-        textSize = context.spToPx(14)
         textColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
-        textMarginLeft = context.dpToPx(5)
 
         textBackground = ContextCompat.getDrawable(context, R.drawable.corners_danmu)
-        textBackgroundPadding.set(
-                context.dpToPx(15),
-                context.dpToPx(3),
-                context.dpToPx(15),
-                context.dpToPx(3)
-        )
 
         enableTouch = true
 
