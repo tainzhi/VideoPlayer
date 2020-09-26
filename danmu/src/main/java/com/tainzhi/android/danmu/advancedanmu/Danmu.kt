@@ -66,7 +66,6 @@ class Danmu : OnDanmuTouchListener {
     var priority = PRIORITY_NORMAL
     var isMeasured = false
     
-    // var ondanmuTouchListener: OndanmuTouchListener? = null
     var speed = 0f
     
     override fun onTouch(x: Float, y: Float): Boolean {
