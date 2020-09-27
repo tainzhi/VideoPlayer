@@ -80,6 +80,7 @@ class Danmu : OnDanmuTouchListener {
         const val RIGHT_TO_LEFT = 1
         const val LEFT_TO_RIGHT = 2
 
+
         const val PRIORITY_SYSTEM = 100
         const val PRIORITY_NORMAL = 50
     }

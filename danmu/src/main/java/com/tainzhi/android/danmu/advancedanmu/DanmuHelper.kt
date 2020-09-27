@@ -49,6 +49,7 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         displayType = Danmu.RIGHT_TO_LEFT
         priority = Danmu.PRIORITY_NORMAL
 
+
         // avatar = Glide.with(context)
         //         .asBitmap()
         //         .load(entity.avatar)
