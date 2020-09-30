@@ -1,6 +1,7 @@
 package com.tainzhi.android.videoplayer.ui
 
 import android.os.Bundle
+import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -8,7 +9,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.R
@@ -16,10 +16,11 @@ import com.tainzhi.android.videoplayer.databinding.ActivityMainBinding
 import com.tainzhi.android.videoplayer.util.setupWithNavController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-
 class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>() {
 
     private var currentNavController: LiveData<NavController>? = null
+
+    private val sparseArray = SparseArray<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

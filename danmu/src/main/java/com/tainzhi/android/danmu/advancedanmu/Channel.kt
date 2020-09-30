@@ -8,7 +8,6 @@ package com.tainzhi.android.danmu.advancedanmu
  **/
 
 class Channel {
-    
     var speed = 3f
     var width = 0
     var height = 0
