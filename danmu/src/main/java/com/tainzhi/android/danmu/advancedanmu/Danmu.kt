@@ -16,17 +16,17 @@ import com.tainzhi.android.danmu.sp
  **/
 
 class Danmu : OnDanmuTouchListener {
-    
+
     var paddingLeft = 0
     var paddingRight = 0
     var marginLeft = 30.dp()
     var marginRight = 0
-    
+
     // user avatar
     var avatar: Bitmap? = null
     var avatarWidth = 30.dp()
     var avatarHeight = 30.dp()
-    
+
     // 用户图像描边(默认白色描边)
     var avatarStrokes = true
 
@@ -53,7 +53,7 @@ class Danmu : OnDanmuTouchListener {
     var textBackgroundPadding = Rect(15.dp(), 3.dp(), 15.dp(), 3.dp())
 
     var position = Point(-1, -1)
-    
+
     var width = 0
     var height = 0
     var enableTouch = true
@@ -65,18 +65,18 @@ class Danmu : OnDanmuTouchListener {
     var attached = false
     var priority = PRIORITY_NORMAL
     var isMeasured = false
-    
+
     var speed = 0f
-    
+
     override fun onTouch(x: Float, y: Float): Boolean {
         return false
     }
-    
+
     override fun release() {
     }
 
-
     companion object {
+
         const val RIGHT_TO_LEFT = 1
         const val LEFT_TO_RIGHT = 2
 
