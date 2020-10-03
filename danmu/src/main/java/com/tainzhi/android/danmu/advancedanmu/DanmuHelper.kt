@@ -19,8 +19,6 @@ import com.bumptech.glide.request.target.Target
 import com.tainzhi.android.danmu.R
 import com.tainzhi.android.danmu.advancedanmu.model.DanmuEntity
 import com.tainzhi.android.danmu.advancedanmu.view.IDanmuContainer
-import com.tainzhi.android.danmu.dpToPx
-import com.tainzhi.android.danmu.spToPx
 import java.lang.ref.WeakReference
 
 /**
@@ -89,10 +87,8 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         textBackground = ContextCompat.getDrawable(context, R.drawable.corners_danmu)
 
         enableTouch = true
-
-
     }
-    
+
     /**
      * Drawable转换成Bitmap
      *
@@ -106,14 +102,14 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         } else if (drawable is NinePatchDrawable) {
             // .9图片转换成Bitmap
             val bitmap = Bitmap.createBitmap(
-                drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(),
-                if (drawable.getOpacity() != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+                    drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight(),
+                    if (drawable.getOpacity() != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
             )
             val canvas = Canvas(bitmap)
             drawable.setBounds(
-                0, 0, drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight()
+                    0, 0, drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight()
             )
             drawable.draw(canvas)
             bitmap
@@ -127,13 +123,13 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
      *
      * @param level level=100表示主播
      */
-    private fun getLevelResId(level: Int)= when (level) {
-            in 0..5 -> R.drawable.icon_level_stage_zero
-            in 6..10 -> R.drawable.icon_level_stage_two
-            in 11..15 -> R.drawable.icon_level_stage_three
-            in 16..20 -> R.drawable.icon_level_stage_four
-            in 21..25 -> R.drawable.icon_level_stage_five
-            in 26..30 -> R.drawable.icon_level_stage_six
-            else -> R.drawable.icon_level_stage_six
-        }
+    private fun getLevelResId(level: Int) = when (level) {
+        in 0..5 -> R.drawable.icon_level_stage_zero
+        in 6..10 -> R.drawable.icon_level_stage_two
+        in 11..15 -> R.drawable.icon_level_stage_three
+        in 16..20 -> R.drawable.icon_level_stage_four
+        in 21..25 -> R.drawable.icon_level_stage_five
+        in 26..30 -> R.drawable.icon_level_stage_six
+        else -> R.drawable.icon_level_stage_six
+    }
 }
