@@ -85,9 +85,9 @@ class ConsumedPool(val context: Context) {
         Log.d(TAG, "drawEveryElement, danmu.size=${danmus.size}")
         isDrawing = true
         if (danmus.isNullOrEmpty()) return
-        var maxCount = if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
-        danmus.forEachIndexed loop@{ index, danmu ->
-            if (index >= maxCount) return@loop
+        var index = 0
+        while (index < if (danmus.size > MAX_COUNT_IN_SCREEN ) MAX_COUNT_IN_SCREEN else danmus.size) {
+            val danmu = danmus[index]
             if (danmu.isAlive) {
                 val painter = getPainter(danmu)
                 val channel = channels?.get(danmu.channelIndex) ?: return
@@ -95,15 +95,12 @@ class ConsumedPool(val context: Context) {
                 if (danmu.attached) {
                     performDraw(danmu, painter, canvas, channel)
                 }
+                index++
             } else {
-                danmu.isDeprecated = true
+                // 已经失效的Danmu, 移除ConsumedPool
+                danmus.removeAt(index)
             }
         }
-        // 已经失效的Danmu, 移除ConsumedPool
-        danmus.forEach {
-            if (it.isDeprecated) danmus.remove(it)
-        }
-        Log.d(TAG, "drawEveryElement, after, danmu.size=${danmus.size}")
         isDrawing = false
     }
     
