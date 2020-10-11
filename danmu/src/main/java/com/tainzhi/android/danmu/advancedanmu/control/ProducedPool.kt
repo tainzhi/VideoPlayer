@@ -65,7 +65,7 @@ class ProducedPool(val context: Context) {
             danmus.removeFirst()
             dispatchCount--
         }
-        if (validateDanmuViews.size > 0) return validateDanmuViews else return null
+        return if (validateDanmuViews.size > 0) validateDanmuViews else null
     }
     
     fun jumpQueue(danmus: List<Danmu>) {
