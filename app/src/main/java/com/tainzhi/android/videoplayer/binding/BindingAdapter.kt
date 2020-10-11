@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.util.Size
 import android.view.View
 import android.widget.ImageView
@@ -16,16 +16,11 @@ import android.widget.TextView
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsService
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.target.ImageViewTarget
-import com.bumptech.glide.request.target.ViewTarget
-import com.google.android.material.tabs.TabLayout
 import com.tainzhi.android.common.util.FormatUtil.formatMediaDuration
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.R
@@ -55,18 +50,23 @@ fun bindVideoThumbnail(
         height: Int? = null
 ) {
     val thumbnail: Bitmap? =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                App.CONTEXT.contentResolver.loadThumbnail(
-                        videoUri, Size(320, 240), null)
-            } else {
-                // val file = videoUri.toFile()
-                // android 29 才能使用
-                // ThumbnailUtils.createVideoThumbnail(videoUri.toFile(), Size(320, 240), null)
-                MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver,
-                        ContentUris.parseId(videoUri),
-                        MediaStore.Images.Thumbnails.MINI_KIND,
-                        BitmapFactory.Options().apply { inSampleSize = 4 })
-            }
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    App.CONTEXT.contentResolver.loadThumbnail(
+                            videoUri, Size(320, 240), null)
+                } else {
+                    // val file = videoUri.toFile()
+                    // android 29 才能使用
+                    // ThumbnailUtils.createVideoThumbnail(videoUri.toFile(), Size(320, 240), null)
+                    MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver,
+                            ContentUris.parseId(videoUri),
+                            MediaStore.Images.Thumbnails.MINI_KIND,
+                            BitmapFactory.Options().apply { inSampleSize = 4 })
+                }
+            } catch (e: Exception) {
+                Log.e("BindingAdapter", "${videoUri.path}, ${e.message}")
+                null
+            } ?: return
     val options = RequestOptions()
     placeHolder?.let { options.placeholder(placeHolder) }
     cornerRadius?.let { options.transform(RoundedCorners(it)) }
