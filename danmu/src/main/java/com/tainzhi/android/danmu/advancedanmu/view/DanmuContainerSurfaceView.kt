@@ -14,7 +14,7 @@ import com.tainzhi.android.danmu.advancedanmu.control.Controller
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/9/22 11:03
- * @description:
+ * @description: 使用SurfaceView绘制每一条Danmu
  **/
 
 class DanmuContainerSurfaceView @JvmOverloads constructor(

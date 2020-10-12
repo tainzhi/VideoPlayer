@@ -14,7 +14,7 @@ import com.tainzhi.android.danmu.advancedanmu.control.Controller
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/9/10 19:47
- * @description:
+ * @description: 使用View绘制每一条Danmu
  **/
 
 class DanmuContainerView @JvmOverloads constructor(
@@ -22,10 +22,6 @@ class DanmuContainerView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr), IDanmuContainer {
 
     private val danmuController = Controller(context, this)
-
-    // private val ondanmuTouchListeners = mutableListOf<OndanmuTouchListener>()
-    private val onDanmuParentViewTouchCallbackListener: OnDanmuParentViewTouchCallbackListener? =
-            null
 
     private var drawFinished = false
 
@@ -47,12 +43,11 @@ class DanmuContainerView @JvmOverloads constructor(
     
     
     override fun jumpQueue(danmus: List<Danmu>) {
-        TODO("Not yet implemented")
     }
     
     @SuppressLint("ObsoleteSdkInt")
     override fun lockDraw() {
-        Log.d(TAG, "lockDraw()")
+        // Log.d(TAG, "lockDraw()")
         if (!danmuController.isChannelCreated) return
         synchronized(lock) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -75,14 +70,13 @@ class DanmuContainerView @JvmOverloads constructor(
     }
     
     override fun hideAllDanmu(hideAll: Boolean) {
-        TODO("Not yet implemented")
     }
     
     override fun hideNormalDanmu(hide: Boolean) {
     }
     
     override fun hasCanTouchDanmu(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
     
     override fun onDraw(canvas: Canvas) {

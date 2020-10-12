@@ -49,7 +49,6 @@ class ProducedPool(val context: Context) {
     @ExperimentalStdlibApi
     @Synchronized
     fun dispatch(): List<Danmu>? {
-        Log.d(TAG, "dispatch")
         if (fastDanmuPendingQueue.isEmpty() && mixedDanmuPendingQueue.isEmpty()) return null
         val danmus =
             if (fastDanmuPendingQueue.size > 0) fastDanmuPendingQueue else mixedDanmuPendingQueue
@@ -57,13 +56,16 @@ class ProducedPool(val context: Context) {
         var dispatchCount =
             if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size
         danmus.forEachIndexed loop@{ index, danmu ->
-           if (index >= dispatchCount) return@loop
+            if (index >= dispatchCount) return@loop
             dispatcher?.dispatch(danmu, channels!!)
             validateDanmuViews.add(danmu)
         }
-        while(dispatchCount > 0) {
+        while (dispatchCount > 0) {
             danmus.removeFirst()
             dispatchCount--
+        }
+        if (validateDanmuViews.size > 0) {
+            Log.d(TAG, "dispatch ${validateDanmuViews.size} Danmu")
         }
         return if (validateDanmuViews.size > 0) validateDanmuViews else null
     }
