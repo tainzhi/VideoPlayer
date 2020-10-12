@@ -3,9 +3,9 @@ package com.tainzhi.android.danmu.advancedanmu.control
 import android.content.Context
 import android.util.Log
 import com.tainzhi.android.danmu.advancedanmu.Channel
+import com.tainzhi.android.danmu.advancedanmu.Channel.Companion.MAX_COUNT_IN_SCREEN
 import com.tainzhi.android.danmu.advancedanmu.Danmu
 import com.tainzhi.android.danmu.advancedanmu.control.dispatch.IDispatcher
-import com.tainzhi.android.danmu.dpToPx
 import java.util.concurrent.locks.ReentrantLock
 
 /**
@@ -18,8 +18,6 @@ import java.util.concurrent.locks.ReentrantLock
 class ProducedPool(val context: Context) {
     companion object {
         const val TAG = "Danmu.ProducedPool"
-        const val MAX_COUNT_IN_SCREEN = 30
-        const val DEFAULT_SIGNAL_CHANNEL_HEIGHT = 40
     }
     
     private val reentrantLock = ReentrantLock()
@@ -80,16 +78,7 @@ class ProducedPool(val context: Context) {
     }
     
     fun divide(width: Int, height: Int) {
-        val singleHeight = context.dpToPx<Int>(DEFAULT_SIGNAL_CHANNEL_HEIGHT)
-        val count = height / singleHeight
-        channels = Array<Channel>(count){ Channel() }
-        for (i in 0 until count) {
-            channels!![i].run {
-                this.width = width
-                this.height = singleHeight
-                this.topY = i * singleHeight
-            }
-        }
+        channels = Channel.createChannels(width, height)
     }
     
     fun clear() {
