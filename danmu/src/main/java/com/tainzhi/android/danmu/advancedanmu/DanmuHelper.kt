@@ -3,10 +3,10 @@ package com.tainzhi.android.danmu.advancedanmu
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.NinePatchDrawable
+import android.graphics.drawable.VectorDrawable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -47,38 +47,58 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         displayType = Danmu.RIGHT_TO_LEFT
         priority = Danmu.PRIORITY_NORMAL
 
+        // 不能用这个get方法: 因为
+        // java.lang.IllegalArgumentException: You must call this method on a background thread
+        //
         // avatar = Glide.with(context)
         //         .asBitmap()
-        //         .load(entity.avatar)
         //         .override(avatarWidth, avatarHeight)
         //         .circleCrop()
+        //     .load(entity.avatar)
         //         .submit()
         //         .get()
         Glide.with(context)
-                .asBitmap()
-                .load(entity.avatar)
-                .override(avatarWidth, avatarHeight)
-                .circleCrop()
-                .listener(object : RequestListener<Bitmap> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
-                        return false
-                    }
+            .asBitmap()
+            .load(entity.avatar)
+            .override(avatarWidth, avatarHeight)
+            .circleCrop()
+            .listener(object : RequestListener<Bitmap> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    avatar = drawable2Bitmap(
+                        ContextCompat.getDrawable(context, R.drawable.ic_default_avatar)
+                    )
+                    return false
+                }
 
-                    override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        avatar = resource
-                        return false
-                    }
-                })
+                override fun onResourceReady(
+                    resource: Bitmap?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    avatar = resource
+                    return false
+                }
+            })
+            .submit()
+
         val drawable = ContextCompat.getDrawable(context, getLevelResId(entity.level))
         levelBitmap = drawable2Bitmap(drawable)
 
         levelText = entity.level.toString()
         levelTextColor = ContextCompat.getColor(context, android.R.color.white)
 
+        // 弹幕内容 = 用户name + 弹幕内容
         val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
             setSpan(
-                    ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
-                    0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
+                0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
         text = spannableString
@@ -95,26 +115,27 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
      * @param drawable
      * @return
      */
-    private fun drawable2Bitmap(drawable: Drawable?): Bitmap? {
-        return if (drawable is BitmapDrawable) {
-            // 转换成Bitmap
-            drawable.bitmap
-        } else if (drawable is NinePatchDrawable) {
-            // .9图片转换成Bitmap
-            val bitmap = Bitmap.createBitmap(
+    private fun drawable2Bitmap(drawable: Drawable?): Bitmap {
+        return when (drawable) {
+            is BitmapDrawable -> drawable.bitmap
+            is NinePatchDrawable,
+            is VectorDrawable -> {
+                // .9图片转换成Bitmap
+                val bitmap = Bitmap.createBitmap(
                     drawable.getIntrinsicWidth(),
                     drawable.getIntrinsicHeight(),
-                    if (drawable.getOpacity() != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
-            )
-            val canvas = Canvas(bitmap)
-            drawable.setBounds(
-                    0, 0, drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicHeight()
-            )
-            drawable.draw(canvas)
-            bitmap
-        } else {
-            null
+                    Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(bitmap)
+                drawable.setBounds(
+                    0, 0, canvas.width, canvas.height
+                )
+                drawable.draw(canvas)
+                bitmap
+            }
+            else -> {
+                (drawable as BitmapDrawable).bitmap
+            }
         }
     }
 
