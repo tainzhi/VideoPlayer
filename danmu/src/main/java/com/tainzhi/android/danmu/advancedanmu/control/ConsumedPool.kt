@@ -4,13 +4,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.Log
 import com.tainzhi.android.danmu.advancedanmu.Channel
+import com.tainzhi.android.danmu.advancedanmu.Channel.Companion.MAX_COUNT_IN_SCREEN
 import com.tainzhi.android.danmu.advancedanmu.Danmu
 import com.tainzhi.android.danmu.advancedanmu.control.speed.ISpeedController
 import com.tainzhi.android.danmu.advancedanmu.painter.DanmuPainter
 import com.tainzhi.android.danmu.advancedanmu.painter.IDanmuPainter
 import com.tainzhi.android.danmu.advancedanmu.painter.L2RPainter
 import com.tainzhi.android.danmu.advancedanmu.painter.R2LPainter
-import com.tainzhi.android.danmu.dpToPx
 
 /**
  * @author:      tainzhi
@@ -23,8 +23,6 @@ class ConsumedPool(val context: Context) {
     
     companion object {
         const val TAG = "Danmu.ConsumedPool"
-        const val MAX_COUNT_IN_SCREEN = 30
-        const val DEFAULT_SIGNAL_CHANNEL_HEIGHT = 40
     }
     
     val danmuPainterMap = hashMapOf<Int, IDanmuPainter>()
@@ -85,7 +83,7 @@ class ConsumedPool(val context: Context) {
         isDrawing = true
         if (danmus.isNullOrEmpty()) return
         var index = 0
-        while (index < if (danmus.size > MAX_COUNT_IN_SCREEN ) MAX_COUNT_IN_SCREEN else danmus.size) {
+        while (index < if (danmus.size > MAX_COUNT_IN_SCREEN) MAX_COUNT_IN_SCREEN else danmus.size) {
             val danmu = danmus[index]
             if (danmu.isAlive) {
                 val painter = getPainter(danmu)
@@ -117,15 +115,6 @@ class ConsumedPool(val context: Context) {
     }
     
     fun divide(width: Int, height: Int) {
-        val singleHeight = context.dpToPx<Int>(DEFAULT_SIGNAL_CHANNEL_HEIGHT)
-        val count = height / singleHeight
-        channels = Array<Channel>(count) { Channel() }
-        for (i in 0 until count) {
-            channels!![i].run {
-                this.width = width
-                this.height = singleHeight
-                this.topY = i * singleHeight
-            }
-        }
+        channels = Channel.createChannels(width, height)
     }
 }
