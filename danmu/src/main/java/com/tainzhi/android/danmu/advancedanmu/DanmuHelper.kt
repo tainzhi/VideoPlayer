@@ -2,12 +2,9 @@ package com.tainzhi.android.danmu.advancedanmu
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.NinePatchDrawable
-import android.graphics.drawable.VectorDrawable
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -66,9 +63,7 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
                     target: Target<Bitmap>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    avatar = drawable2Bitmap(
-                        ContextCompat.getDrawable(context, R.drawable.ic_default_avatar)
-                    )
+                    avatar = AppCompatResources.getDrawable(context, R.drawable.ic_default_avatar)?.toBitmap()
                     return false
                 }
 
@@ -85,8 +80,7 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
             })
             .submit()
 
-        val drawable = ContextCompat.getDrawable(context, getLevelResId(entity.level))
-        levelBitmap = drawable2Bitmap(drawable)
+        levelBitmap = AppCompatResources.getDrawable(context, getLevelResId(entity.level))?.toBitmap()
 
         levelText = entity.level.toString()
         levelTextColor = ContextCompat.getColor(context, android.R.color.white)
@@ -105,36 +99,6 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         textBackground = ContextCompat.getDrawable(context, R.drawable.corners_danmu)
 
         enableTouch = true
-    }
-
-    /**
-     * Drawable转换成Bitmap
-     *
-     * @param drawable
-     * @return
-     */
-    private fun drawable2Bitmap(drawable: Drawable?): Bitmap {
-        return when (drawable) {
-            is BitmapDrawable -> drawable.bitmap
-            is NinePatchDrawable,
-            is VectorDrawable -> {
-                // .9图片转换成Bitmap
-                val bitmap = Bitmap.createBitmap(
-                    drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicHeight(),
-                    Bitmap.Config.ARGB_8888
-                )
-                val canvas = Canvas(bitmap)
-                drawable.setBounds(
-                    0, 0, canvas.width, canvas.height
-                )
-                drawable.draw(canvas)
-                bitmap
-            }
-            else -> {
-                (drawable as BitmapDrawable).bitmap
-            }
-        }
     }
 
     /**
