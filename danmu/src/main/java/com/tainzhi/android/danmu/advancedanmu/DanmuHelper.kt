@@ -7,9 +7,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.NinePatchDrawable
 import android.graphics.drawable.VectorDrawable
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -95,13 +92,14 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         levelTextColor = ContextCompat.getColor(context, android.R.color.white)
 
         // 弹幕内容 = 用户name + 弹幕内容
-        val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
-            setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
-                0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-        text = spannableString
+        // val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
+        //     setSpan(
+        //         ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
+        //         0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        //     )
+        // }
+        // text = spannableString
+        text = entity.name + ": " + entity.text
         textColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
 
         textBackground = ContextCompat.getDrawable(context, R.drawable.corners_danmu)
