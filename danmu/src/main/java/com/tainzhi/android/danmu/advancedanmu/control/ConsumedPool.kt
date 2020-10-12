@@ -46,7 +46,7 @@ class ConsumedPool(val context: Context) {
 
     fun addPainter(danmuPainter: DanmuPainter, key: Int) {
         if (!danmuPainterMap.containsKey(key)) {
-            danmuPainterMap.put(key, danmuPainter)
+            danmuPainterMap[key] = danmuPainter
         }
     }
 
@@ -82,7 +82,6 @@ class ConsumedPool(val context: Context) {
     
     @Synchronized
     private fun drawEveryElement(danmus: ArrayList<Danmu>, canvas: Canvas) {
-        Log.d(TAG, "drawEveryElement, danmu.size=${danmus.size}")
         isDrawing = true
         if (danmus.isNullOrEmpty()) return
         var index = 0
@@ -94,6 +93,7 @@ class ConsumedPool(val context: Context) {
                 channel.dispatch(danmu)
                 if (danmu.attached) {
                     performDraw(danmu, painter, canvas, channel)
+                    Log.d(TAG, "drawEveryElement, danmu.size=${danmus.size}")
                 }
                 index++
             } else {
