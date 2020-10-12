@@ -4,8 +4,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
-import android.text.Layout
-import android.text.StaticLayout
 import android.text.TextPaint
 import com.tainzhi.android.danmu.advancedanmu.Channel
 import com.tainzhi.android.danmu.advancedanmu.Danmu
@@ -35,22 +33,21 @@ open class DanmuPainter: IDanmuPainter() {
         }
     }
     
-    protected fun draw(canvas: Canvas, danmu: Danmu, channel: Channel) {
+    private fun draw(canvas: Canvas, danmu: Danmu, channel: Channel) {
         danmu.run {
-            text?.let { drawText(canvas, danmu, channel) }
-            textBackground?.let { drawTextBackground(canvas, danmu, channel) }
             avatar?.let { drawAvatar(canvas, danmu, channel) }
-            avatarStrokes?.let { drawTextAvatarStrokes(canvas, danmu, channel) }
+            drawAvatarStrokes(canvas, danmu, channel)
             levelBitmap?.let { drawLevel(canvas, danmu, channel) }
             levelText?.let { drawLevelText(canvas, danmu, channel) }
+            textBackground?.let { drawTextBackground(canvas, danmu, channel) }
+            text?.let { drawText(canvas, danmu, channel) }
         }
-        
     }
     
     protected fun drawAvatar(canvas: Canvas, danmu: Danmu, channel: Channel) {
-        val top = danmu.position.x + danmu.height / 2 -
-                danmu.avatarHeight / 2
         val x = danmu.position.x + danmu.marginLeft
+        val top = danmu.position.y + danmu.height / 2 -
+                danmu.avatarHeight / 2
         rect.set(
             x, top,
             (x + danmu.avatarWidth),
@@ -58,23 +55,22 @@ open class DanmuPainter: IDanmuPainter() {
         )
         canvas.drawBitmap(danmu.avatar!!, null, rect, paint)
     }
-    
-    
-    protected fun drawTextAvatarStrokes(canvas: Canvas, danmu: Danmu, channel: Channel) {
+
+    protected fun drawAvatarStrokes(canvas: Canvas, danmu: Danmu, channel: Channel) {
         val x = danmu.position.x + danmu.marginLeft + danmu.avatarWidth / 2
         val top = danmu.position.y + channel.height / 2
-        
+
         paint.color = Color.WHITE
         paint.style = Paint.Style.STROKE
         canvas.drawCircle(x.toFloat(), top.toFloat(), (danmu.avatarHeight / 2).toFloat(), paint)
     }
     
     protected fun drawLevel(canvas: Canvas, danmu: Danmu, channel: Channel) {
-        val top = danmu.position.y + channel.height / 2 - danmu.levelBitmapHeight / 2
         val x = danmu.position.x +
                 danmu.marginLeft +
                 danmu.avatarWidth +
                 danmu.levelBitmapMarginLeft
+        val top = danmu.position.y + channel.height / 2 - danmu.levelBitmapHeight / 2
         rect.set(
             x, top,
             x + danmu.levelBitmapWidth,
@@ -90,63 +86,42 @@ open class DanmuPainter: IDanmuPainter() {
             color = danmu.levelTextColor
             style = Paint.Style.FILL
         }
-        val top = danmu.position?.y +
-                danmu.height / 2 -
-                paint.ascent() / 2 -
-                paint.descent() / 2
         val x = danmu.position.x +
                 danmu.marginLeft +
                 danmu.avatarWidth +
                 danmu.levelBitmapMarginLeft +
                 danmu.levelBitmapWidth / 2
+        val top = danmu.position?.y +
+                danmu.height / 2 -
+                paint.ascent() / 2 -
+                paint.descent() / 2
         canvas.drawText(levelText as String, x.toFloat(), top, paint)
     }
     
     protected fun drawText(canvas: Canvas, danmu: Danmu, channel: Channel) {
-        val text = danmu.text ?: return
         paint.run {
             textSize = danmu.textSize
             color = danmu.textColor
             style = Paint.Style.FILL
         }
-        val staticLayout = StaticLayout.Builder.obtain(
-            text, 0, text.length, paint, StaticLayout.getDesiredWidth(text, paint).toInt()
-        )
-            .setLineSpacing(0f, 1f)
-            .setIncludePad(true)
-            .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-            .build()
-        val top = danmu.position.y +
-                channel.height / 2 -
-                staticLayout.height / 2
         val x = danmu.position.x +
                 danmu.marginLeft +
                 danmu.avatarWidth +
+                danmu.levelBitmapWidth +
                 danmu.levelBitmapMarginLeft +
                 danmu.textMarginLeft
+        val top = danmu.position.y +
+                channel.height / 2 -
+                danmu.textStaticLayout!!.height / 2
         canvas.save()
         canvas.translate(x.toFloat(), top.toFloat())
-        staticLayout.draw(canvas)
+        danmu.textStaticLayout?.draw(canvas)
         canvas.restore()
     }
     
     protected fun drawTextBackground(canvas: Canvas, danmu: Danmu, channel: Channel) {
-        val text = danmu.text ?: return
-        val staticLayout = StaticLayout.Builder.obtain(
-            text, 0, text.length, paint, StaticLayout.getDesiredWidth(text, paint).toInt()
-        )
-            .setLineSpacing(0f, 1f)
-            .setIncludePad(true)
-            .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-            .build()
-        // FIXME: 2020/9/10 delete this
-        // val staticLayout = StaticLayout(
-        //         text, paint, ceil(StaticLayout.getDesiredWidth(text, paint).toDouble()).toInt(),
-        //         Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true)
-        //
-        // )
         val textBackgroundHeight =
-            staticLayout.height + danmu.textBackgroundPadding.top + danmu.textBackgroundPadding.bottom
+            danmu.textStaticLayout!!.height + danmu.textBackgroundPadding.top + danmu.textBackgroundPadding.bottom
         val top = danmu.position.y + (channel.height - textBackgroundHeight) / 2
         val x = danmu.position.x +
                 danmu.marginLeft +
@@ -159,7 +134,7 @@ open class DanmuPainter: IDanmuPainter() {
                     danmu.levelBitmapWidth +
                     danmu.textMarginLeft +
                     danmu.textBackgroundMarginLeft +
-                    staticLayout.width +
+                    danmu.textStaticLayout!!.width +
                     danmu.textBackgroundPadding.right),
             top + textBackgroundHeight
         )
