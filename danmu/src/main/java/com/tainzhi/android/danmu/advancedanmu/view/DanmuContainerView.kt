@@ -47,9 +47,12 @@ class DanmuContainerView @JvmOverloads constructor(
         }
         danmuController.addDanmu(index, danmu)
     }
-    
-    
+
+    /**
+     * 同时大量弹幕需要弹出
+     */
     override fun jumpQueue(danmus: List<Danmu>) {
+        danmuController.jumpQueue(danmus)
     }
     
     @SuppressLint("ObsoleteSdkInt")
