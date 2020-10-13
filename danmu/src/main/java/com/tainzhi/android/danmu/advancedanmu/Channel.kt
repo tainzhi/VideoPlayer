@@ -23,7 +23,7 @@ class Channel {
     companion object {
 
         const val MAX_COUNT_IN_SCREEN = 30
-        private const val DEFAULT_SIGNAL_CHANNEL_HEIGHT = 40
+        private const val DEFAULT_SIGNAL_CHANNEL_HEIGHT = 30
 
         /**
          * 弹幕区域同时能显示的最大弹幕频道数
