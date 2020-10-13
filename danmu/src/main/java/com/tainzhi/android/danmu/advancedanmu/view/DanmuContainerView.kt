@@ -34,11 +34,11 @@ class DanmuContainerView @JvmOverloads constructor(
     }
 
     override fun add(danmu: Danmu) {
-        danmu.isMoving = true
-        danmuController.addDanmu(-1, danmu)
+        add(-1, danmu)
     }
 
     override fun add(index: Int, danmu: Danmu) {
+        danmuController.addDanmu(index, danmu)
     }
     
     
@@ -47,7 +47,6 @@ class DanmuContainerView @JvmOverloads constructor(
     
     @SuppressLint("ObsoleteSdkInt")
     override fun lockDraw() {
-        // Log.d(TAG, "lockDraw()")
         if (!danmuController.isChannelCreated) return
         synchronized(lock) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
