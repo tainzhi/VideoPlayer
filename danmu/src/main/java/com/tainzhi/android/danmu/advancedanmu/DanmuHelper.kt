@@ -1,7 +1,11 @@
 package com.tainzhi.android.danmu.advancedanmu
 
+import android.R.color
 import android.content.Context
 import android.graphics.Bitmap
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -86,15 +90,14 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         levelTextColor = ContextCompat.getColor(context, android.R.color.white)
 
         // 弹幕内容 = 用户name + 弹幕内容
-        // val spannableString = SpannableString("${entity.name}:${entity.text}").apply {
-        //     setSpan(
-        //         ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
-        //         0, entity.name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        //     )
-        // }
-        // text = spannableString
-        text = entity.name + ": " + entity.text
-        textColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
+        val spannableString = SpannableString("${entity.name}: ${entity.text}").apply {
+            setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, color.white)),
+                0, entity.name.length + 2 /* 添加的: 的长度*/, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        text = spannableString
+        textColor = ContextCompat.getColor(context, color.holo_green_dark)
 
         textBackground = ContextCompat.getDrawable(context, R.drawable.corners_danmu)
 

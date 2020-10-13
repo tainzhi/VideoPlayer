@@ -1,13 +1,10 @@
 package com.tainzhi.android.danmu.advancedanmu.control.dispatch
 
 import android.graphics.Paint
-import android.text.Layout
-import android.text.StaticLayout
 import android.text.TextPaint
 import com.tainzhi.android.danmu.advancedanmu.Channel
 import com.tainzhi.android.danmu.advancedanmu.Danmu
-import com.tainzhi.android.danmu.advancedanmu.painter.DanmuPainter.Companion.paint
-import kotlin.math.ceil
+import com.tainzhi.android.danmu.advancedanmu.painter.DanmuPainter
 import kotlin.random.Random
 
 /**
@@ -17,7 +14,7 @@ import kotlin.random.Random
  * @description: 确定每个Danmu的绘制位置
  **/
 
-class DanmuDispatcher() : IDispatcher {
+class DanmuDispatcher : IDispatcher {
 
     private val textPaint = TextPaint().apply {
         flags = Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG
@@ -39,23 +36,19 @@ class DanmuDispatcher() : IDispatcher {
         val text = danmu.text ?: return
         textPaint.textSize = danmu.textSize
 
-        danmu.textStaticLayout = StaticLayout.Builder.obtain(
-            text, 0, text.length, paint, ceil(StaticLayout.getDesiredWidth(text, paint).toDouble()).toInt()
-        )
-            .setLineSpacing(0f, 1f)
-            .setIncludePad(true)
-            .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-            .build() ?: return
+        val textStaticLayout = DanmuPainter.generateTextStaticLayout(textPaint, text)
+        danmu.textMeasuredWith = textStaticLayout.width
+        danmu.textMeasuredHeight = textStaticLayout.height
         danmu.width = danmu.position.x +
                 danmu.marginLeft +
                 danmu.avatarWidth +
                 danmu.levelBitmapMarginLeft +
                 danmu.levelBitmapWidth +
                 danmu.textMarginLeft +
-                danmu.textStaticLayout!!.width +
+                danmu.textMeasuredWith +
                 danmu.textBackgroundPadding.right
 
-        val textHeight = danmu.textStaticLayout!!.height +
+        val textHeight = danmu.textMeasuredHeight +
                 danmu.textBackgroundPadding.top +
                 danmu.textBackgroundPadding.bottom
 
