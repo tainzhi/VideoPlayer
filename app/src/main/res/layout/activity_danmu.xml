@@ -6,13 +6,13 @@
 	android:layout_height="match_parent"
 	tools:context="com.tainzhi.android.videoplayer.ui.DanmuActivity"
 	>
-	
-	<com.tainzhi.android.danmu.advancedanmu.view.DanmuContainerView
+
+	<com.tainzhi.android.danmu.advancedanmu.view.DanmuContainerSurfaceView
 		android:id="@+id/danmuContainerView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		/>
-	
+
 	<Button
 		android:id="@+id/addDanmuBtn"
 		android:layout_width="100dp"
