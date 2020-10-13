@@ -10,7 +10,7 @@ import android.widget.RelativeLayout
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/9/9 下午9:55
- * @description:
+ * @description: 弹幕需要处理点击事件, 那用 [DanmuParentView]作为[DanmuContainerView] 或者 [DanmuContainerSurfaceView]的根布局
  **/
 
 class DanmuParentView @JvmOverloads constructor(

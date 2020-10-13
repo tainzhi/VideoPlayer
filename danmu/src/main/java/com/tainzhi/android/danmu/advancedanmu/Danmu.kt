@@ -58,7 +58,6 @@ class Danmu : OnDanmuTouchListener {
 
     var width = 0
     var height = 0
-    var enableTouch = true
     var channelIndex = 0
     var isMoving = true
     var isAlive = true
@@ -69,11 +68,18 @@ class Danmu : OnDanmuTouchListener {
 
     var speed = 0f
 
-    override fun onTouch(x: Float, y: Float): Boolean {
-        return false
-    }
+    var enableTouch = true
 
-    override fun release() {
+    /**
+     * 点击后, 弹幕停止/继续 滚动
+     */
+    var touchCallback: ((danmu: Danmu) -> Unit)? = { danmu -> danmu.isMoving = !danmu.isMoving }
+
+    /**
+     * 只有显示在可见区域内才能响应onTouch
+     */
+    override fun onTouch(x: Float, y: Float): Boolean {
+        return x >= position.x && x <= position.x + width && y >= position.y && y <= position.y + height
     }
 
     companion object {
