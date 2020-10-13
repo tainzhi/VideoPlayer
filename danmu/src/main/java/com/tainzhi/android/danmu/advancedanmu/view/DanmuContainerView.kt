@@ -106,7 +106,7 @@ class DanmuContainerView @JvmOverloads constructor(
      */
     private fun detachHasCanTouchDanmu() {
         onDanmuTouchListeners.removeAll {
-            (it as Danmu).isAlive
+            !(it as Danmu).isAlive
         }
     }
 
