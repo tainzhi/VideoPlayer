@@ -25,6 +25,7 @@ class DanmuDispatcher : IDispatcher {
         if (!danmu.attached) {
             val index = Random.nextInt(channels.size)
             val danmuChannel = channels[index]
+            danmu.channelIndex = index
             measure(danmu, danmuChannel)
         }
     }
@@ -60,7 +61,7 @@ class DanmuDispatcher : IDispatcher {
         if (danmu.displayType == Danmu.RIGHT_TO_LEFT) {
             danmu.position.x = channel.width
         } else {
-            danmu.position.x = -channel.width
+            danmu.position.x = -danmu.width
         }
         
         danmu.isMeasured = true
