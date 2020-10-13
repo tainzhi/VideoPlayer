@@ -1,7 +1,5 @@
 package com.tainzhi.android.danmu.advancedanmu.view
 
-import com.tainzhi.android.danmu.advancedanmu.Danmu
-
 /**
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
@@ -9,18 +7,16 @@ import com.tainzhi.android.danmu.advancedanmu.Danmu
  * @description:
  **/
 
+/**
+ * 用于确定Danmu是否在可见区域
+ */
 interface OnDanmuTouchListener {
 
     fun onTouch(x: Float, y: Float): Boolean
-
-    fun release()
 }
 
-interface OnDanmuTouchCallBackListener {
-    fun callBack(danmu: Danmu)
-}
+interface OnDanmuContainerViewListener {
 
-interface OnDanmuParentViewTouchCallbackListener {
     fun callBack()
 
     fun release()

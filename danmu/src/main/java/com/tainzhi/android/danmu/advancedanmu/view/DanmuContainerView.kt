@@ -6,6 +6,8 @@ import android.graphics.Canvas
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_MOVE
 import android.view.View
 import com.tainzhi.android.danmu.advancedanmu.Danmu
 import com.tainzhi.android.danmu.advancedanmu.control.Controller
@@ -23,14 +25,16 @@ class DanmuContainerView @JvmOverloads constructor(
 
     private val danmuController = Controller(context, this)
 
+    private val onDanmuTouchListeners = arrayListOf<OnDanmuTouchListener>()
+
+    var onDanmuContainerViewListener: OnDanmuContainerViewListener? = null
+
     private var drawFinished = false
 
     private val lock = Object()
 
-
     init {
         danmuController.prepare()
-
     }
 
     override fun add(danmu: Danmu) {
@@ -38,6 +42,9 @@ class DanmuContainerView @JvmOverloads constructor(
     }
 
     override fun add(index: Int, danmu: Danmu) {
+        if (danmu.enableTouch) {
+            onDanmuTouchListeners.add(danmu)
+        }
         danmuController.addDanmu(index, danmu)
     }
     
@@ -76,16 +83,55 @@ class DanmuContainerView @JvmOverloads constructor(
     }
     
     override fun hasCanTouchDanmu(): Boolean {
-        return true
+        return onDanmuTouchListeners.isNotEmpty()
     }
-    
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        detachHasCanTouchDanmu()
         danmuController.run {
             initChannels(canvas)
             draw(canvas)
         }
         unLockDraw()
+    }
+
+    /**
+     * 去除那些不活跃的Danmu的监听事件
+     */
+    private fun detachHasCanTouchDanmu() {
+        onDanmuTouchListeners.removeAll {
+            (it as Danmu).isAlive
+        }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (hasCanTouchDanmu()) {
+            parent.requestDisallowInterceptTouchEvent(true)
+        }
+        when (event.action and MotionEvent.ACTION_MASK) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+            MotionEvent.ACTION_UP -> {
+                onDanmuTouchListeners.forEach {
+                    if (it.onTouch(event.x, event.y)) {
+                        val danmu = it as Danmu
+                        danmu.touchCallback?.invoke(danmu)
+                        // 该事件被单个Danmu消耗
+                        return true
+                    }
+                }
+                if (!hasCanTouchDanmu()) {
+                    onDanmuContainerViewListener?.callBack()
+                }
+            }
+            MotionEvent.ACTION_POINTER_DOWN, ACTION_MOVE -> {
+                // do nothing
+            }
+
+        }
+        return true
     }
 
     private fun unLockDraw() {
