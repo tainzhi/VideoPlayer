@@ -70,6 +70,7 @@ class DanmuContainerView @JvmOverloads constructor(
     }
     
     override fun hideAllDanmu(hideAll: Boolean) {
+        danmuController.hideAll(hideAll)
     }
     
     override fun hideNormalDanmu(hide: Boolean) {

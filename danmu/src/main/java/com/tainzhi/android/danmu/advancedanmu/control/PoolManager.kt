@@ -53,21 +53,22 @@ class PoolManager(val context: Context, val danmuContainerView: IDanmuContainer)
     fun setDispatcher(dispatcher: IDispatcher) {
         danmuProducerPool.dispatcher = dispatcher
     }
-    
+
     fun addPainter(danmuPainter: DanmuPainter, key: Int) {
         danmuConsumedPool.addPainter(danmuPainter, key)
     }
-    
+
     fun drawDanmus(canvas: Canvas) {
         danmuConsumer.consume(canvas)
     }
 
-    fun hide(hide: Boolean){}
+    fun hide(hide: Boolean) {}
 
-    fun hideAll(hideAll: Boolean) {}
+    fun hideAll(hideAll: Boolean) {
+        danmuConsumedPool.hideAll(hideAll)
+    }
 
     fun release() {
         isStart = false
     }
-
 }
