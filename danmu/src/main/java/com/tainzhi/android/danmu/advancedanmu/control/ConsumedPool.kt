@@ -2,7 +2,6 @@ package com.tainzhi.android.danmu.advancedanmu.control
 
 import android.content.Context
 import android.graphics.Canvas
-import android.util.Log
 import com.tainzhi.android.danmu.advancedanmu.Channel
 import com.tainzhi.android.danmu.advancedanmu.Channel.Companion.MAX_COUNT_IN_SCREEN
 import com.tainzhi.android.danmu.advancedanmu.Danmu
@@ -48,13 +47,13 @@ class ConsumedPool(val context: Context) {
         }
     }
 
-    private fun hide(hide: Boolean) {
+    fun hide(hide: Boolean) {
         danmuPainterMap.forEach { (_, u) ->
             u.hide = hide
         }
     }
 
-    private fun hideAll(hide: Boolean) {
+    fun hideAll(hide: Boolean) {
         danmuPainterMap.forEach { (_, u) ->
             u.hideAll = hide
         }
@@ -70,7 +69,6 @@ class ConsumedPool(val context: Context) {
     
     
     fun put(danmus: List<Danmu>) {
-        Log.d(TAG, "put(), danmus.size=${danmus.size}")
         mixedDanmuViewQueue.addAll(danmus)
     }
     

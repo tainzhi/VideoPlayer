@@ -28,6 +28,9 @@ import java.lang.ref.WeakReference
  **/
 
 class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
+
+    var isHideAll = false
+
     private val danmuReference = WeakReference<IDanmuContainer>(danmuContainerView)
     fun release() {
     }
@@ -37,8 +40,15 @@ class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
         danmuReference.get()?.add(danmu)
     }
 
+    /**
+     * 显示/隐藏 所有弹幕
+     *
+     * 初始 isHideAll = false, 不隐藏, 则显示
+     * 每次调用该function, 则改变状态
+     */
     fun hideAllDanmu() {
-        danmuReference.get()?.hideAllDanmu(true)
+        isHideAll = !isHideAll
+        danmuReference.get()?.hideAllDanmu(isHideAll)
     }
 
     private fun createDanmu(entity: DanmuEntity): Danmu = Danmu().apply {
