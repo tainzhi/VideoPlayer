@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.text.StaticLayout
 import com.tainzhi.android.danmu.advancedanmu.view.OnDanmuTouchListener
 import com.tainzhi.android.danmu.dp
 import com.tainzhi.android.danmu.sp
@@ -33,7 +32,7 @@ class Danmu : OnDanmuTouchListener {
 
     // 用户等级标签
     var levelBitmap: Bitmap? = null
-    var levelBitmapWidth = 33.dp()
+    var levelBitmapWidth = 36.dp()
     var levelBitmapHeight = 16.dp()
     var levelBitmapMarginLeft = 5.dp()
     var levelBitmapMarginRight = 0
@@ -45,13 +44,14 @@ class Danmu : OnDanmuTouchListener {
 
     // 弹幕文本 = 用户name + 弹幕文本
     var text: CharSequence? = null
-    var textSize = 14f.sp()
+    var textSize = 12f.sp()
     var textColor = 0
     var textMarginLeft = 5.dp()
-    var textStaticLayout: StaticLayout? = null
+    var textMeasuredWith = 0 // 通过DanmuDispatcher.measure后获取
+    var textMeasuredHeight = 0 // 通过DanmuDispatcher.measure后获取
 
     var textBackground: Drawable? = null
-    var textBackgroundMarginLeft = 0
+    var textBackgroundMarginLeft = 20.dp()
     var textBackgroundPadding = Rect(15.dp(), 3.dp(), 15.dp(), 3.dp())
 
     var position = Point(0, 0)
