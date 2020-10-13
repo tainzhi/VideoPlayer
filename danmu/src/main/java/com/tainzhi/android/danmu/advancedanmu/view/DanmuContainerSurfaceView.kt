@@ -29,19 +29,18 @@ class DanmuContainerSurfaceView @JvmOverloads constructor(
     }
     
     private fun prepare(canvas: Canvas) {
+        controller.run {
+            prepare()
+            initChannels(canvas)
+        }
+    }
 
-    }
-    
-    private fun addDanmu(index: Int, danmu: Danmu) {
-    
-    }
-    
     override fun add(danmu: Danmu) {
-        addDanmu(-1, danmu)
+        add(-1, danmu)
     }
     
     override fun add(index: Int, danmu: Danmu) {
-        addDanmu(index, danmu)
+        controller.addDanmu(index, danmu)
     }
     
     override fun jumpQueue(danmus: List<Danmu>) {
@@ -61,6 +60,7 @@ class DanmuContainerSurfaceView @JvmOverloads constructor(
     }
     
     override fun hideAllDanmu(hideAll: Boolean) {
+        controller.hideAll(hideAll)
     }
     
     override fun hideNormalDanmu(hide: Boolean) {

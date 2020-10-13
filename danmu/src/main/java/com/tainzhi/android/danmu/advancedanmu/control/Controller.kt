@@ -27,15 +27,18 @@ class Controller(context: Context, danmuContainerView: IDanmuContainer) {
     fun prepare() {
         danmuPoolManager.start()
     }
-    
+
     fun addDanmu(index: Int, danmu: Danmu) {
         danmuPoolManager.addDanmu(index, danmu)
     }
-    
+
     fun jumpQueue(danmus: List<Danmu>) {
         danmuPoolManager.jumpQueue(danmus)
     }
-    
+
+    /**
+     * 根据Canvas高度确定 channel 个数
+     */
     fun initChannels(canvas: Canvas) {
         if (!isChannelCreated) {
             speedController.width = canvas.width
