@@ -91,7 +91,6 @@ class ConsumedPool(val context: Context) {
                 channel.dispatch(danmu)
                 if (danmu.attached) {
                     performDraw(danmu, painter, canvas, channel)
-                    Log.d(TAG, "drawEveryElement, danmu.size=${danmus.size}")
                 }
                 index++
             } else {
