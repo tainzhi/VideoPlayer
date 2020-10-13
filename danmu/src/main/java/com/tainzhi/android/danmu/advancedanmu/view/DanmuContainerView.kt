@@ -74,16 +74,21 @@ class DanmuContainerView @JvmOverloads constructor(
     
     override fun forceSleep() {
     }
-    
+
     override fun hideAllDanmu(hideAll: Boolean) {
         danmuController.hideAll(hideAll)
     }
-    
+
     override fun hideNormalDanmu(hide: Boolean) {
     }
-    
+
     override fun hasCanTouchDanmu(): Boolean {
         return onDanmuTouchListeners.isNotEmpty()
+    }
+
+    override fun release() {
+        onDanmuTouchListeners.clear()
+        danmuController.release()
     }
 
     override fun onDraw(canvas: Canvas) {
