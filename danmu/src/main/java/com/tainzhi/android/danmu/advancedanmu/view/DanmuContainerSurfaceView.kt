@@ -38,15 +38,18 @@ class DanmuContainerSurfaceView @JvmOverloads constructor(
     override fun add(danmu: Danmu) {
         add(-1, danmu)
     }
-    
+
     override fun add(index: Int, danmu: Danmu) {
         controller.addDanmu(index, danmu)
     }
-    
+
+    override fun release() {
+    }
+
     override fun jumpQueue(danmus: List<Danmu>) {
         controller.jumpQueue(danmus)
     }
-    
+
     override fun lockDraw() {
         if (!isSurfaceCreated) return
         val canvas = holder.lockCanvas() ?: return

@@ -18,5 +18,6 @@ interface IDanmuContainer {
     fun hideAllDanmu(hideAll: Boolean)
     fun hideNormalDanmu(hide: Boolean)
     fun hasCanTouchDanmu(): Boolean
+    fun release()
     
 }

@@ -1,14 +1,17 @@
 package com.tainzhi.android.danmu.advancedanmu
 
 import android.R.color
-import android.content.Context
 import android.graphics.Bitmap
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -27,13 +30,24 @@ import java.lang.ref.WeakReference
  * 建议凡是弹幕中涉及到的图片，大小控制在50kb以内，尺寸控制在100x100以内（单位像素）
  **/
 
-class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
+class DanMuHelper(val context: AppCompatActivity, danmuContainerView: IDanmuContainer) {
 
     var isHideAll = false
 
-    private val danmuReference = WeakReference<IDanmuContainer>(danmuContainerView)
-    fun release() {
+    init {
+        context.lifecycle.addObserver(object : LifecycleObserver {
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            fun destroy() {
+                release()
+            }
+        })
     }
+
+    fun release() {
+        danmuReference.get()?.release()
+    }
+
+    private val danmuReference = WeakReference<IDanmuContainer>(danmuContainerView)
 
     fun addDanmu(danmuEntity: DanmuEntity) {
         val danmu: Danmu = createDanmu(danmuEntity)
