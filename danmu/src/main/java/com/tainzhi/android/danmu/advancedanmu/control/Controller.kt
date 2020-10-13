@@ -51,4 +51,7 @@ class Controller(context: Context, danmuContainerView: IDanmuContainer) {
         danmuPoolManager.drawDanmus(canvas)
     }
 
+    fun hideAll(isHideAll: Boolean) {
+        danmuPoolManager.hideAll(isHideAll)
+    }
 }
