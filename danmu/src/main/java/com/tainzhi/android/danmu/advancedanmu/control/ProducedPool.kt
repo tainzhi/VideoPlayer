@@ -43,7 +43,13 @@ class ProducedPool(val context: Context) {
             reentrantLock.unlock()
         }
     }
-    
+
+    fun release() {
+        channels = null
+        mixedDanmuPendingQueue.clear()
+        fastDanmuPendingQueue.clear()
+    }
+
     @ExperimentalStdlibApi
     @Synchronized
     fun dispatch(): List<Danmu>? {

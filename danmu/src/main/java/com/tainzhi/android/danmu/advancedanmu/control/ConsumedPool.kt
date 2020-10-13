@@ -58,7 +58,12 @@ class ConsumedPool(val context: Context) {
             u.hideAll = hide
         }
     }
-    
+
+    fun release() {
+        danmuPainterMap.clear()
+        mixedDanmuViewQueue.clear()
+    }
+
     fun isDrawnQueueEmpty(): Boolean =
         if (mixedDanmuViewQueue.isEmpty()) {
             isDrawing = false

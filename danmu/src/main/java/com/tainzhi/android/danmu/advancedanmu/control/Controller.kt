@@ -23,13 +23,17 @@ class Controller(context: Context, danmuContainerView: IDanmuContainer) {
     init {
         danmuPoolManager.setDispatcher(danmuDispatcher)
     }
-    
+
     fun prepare() {
         danmuPoolManager.start()
     }
 
     fun addDanmu(index: Int, danmu: Danmu) {
         danmuPoolManager.addDanmu(index, danmu)
+    }
+
+    fun release() {
+        danmuPoolManager.release()
     }
 
     fun jumpQueue(danmus: List<Danmu>) {

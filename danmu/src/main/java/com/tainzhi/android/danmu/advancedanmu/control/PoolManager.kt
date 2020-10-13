@@ -70,5 +70,9 @@ class PoolManager(val context: Context, val danmuContainerView: IDanmuContainer)
 
     fun release() {
         isStart = false
+        danmuConsumer.release()
+        danmuConsumedPool.release()
+        danmuProducer.release()
+        danmuProducerPool.release()
     }
 }
