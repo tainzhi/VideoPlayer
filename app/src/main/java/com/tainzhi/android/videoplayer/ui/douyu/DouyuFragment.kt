@@ -1,13 +1,11 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.common.base.ui.BaseBindingFragment
+import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.DouyuFragmentBinding
 
 /**
@@ -26,14 +24,6 @@ class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>() {
             ChannelIdRoom(181, "王者荣耀"),
             ChannelIdRoom(6, "CS:GO")
     )
-
-    private val onPageChangeCallback by lazy {
-        object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-
-            }
-        }
-    }
 
     override fun getLayoutResId() = R.layout.douyu_fragment
 
