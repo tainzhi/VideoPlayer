@@ -5,15 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.ListenableWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonReader
-import com.tainzhi.android.videoplayer.App
-import com.tainzhi.android.videoplayer.bean.InputCategory
-import com.tainzhi.android.videoplayer.bean.InputTv
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
 
@@ -49,34 +42,36 @@ abstract class AppDataBase : RoomDatabase() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             // FIXME: 2020/6/11 WorkManager为啥不能加载, 待解决后, 不使用Thread 
-                            // val request = OneTimeWorkRequestBuilder<TvDatabaseWorker>().build()
-                            // WorkManager.getInstance(context).enqueue(request)
-                            Thread {
-                                App.CONTEXT.assets.open(TV_CIRCUIT_JSON_FILE).use { inputStream ->
-                                    JsonReader(inputStream.reader()).use { jsonReader ->
-                                        val tvCategories = object : TypeToken<List<InputCategory>>() {}.type
-                                        val tvList = ArrayList<Tv>()
-                                        val tvCircuitList = ArrayList<TvCircuit>()
-                                        val inputTvCategories: List<InputCategory> = Gson().fromJson(jsonReader, tvCategories)
-                                        inputTvCategories.forEach { category ->
-                                            category.tvLists.forEach { inputTv ->
-                                                    // TODO: 2020/6/13
-                                                    // 对于非卫视类的轮播类资源, 只有tvId, 没有tvName, 需要抽取出来
-                                                    tvList.add(Tv(inputTv.tvId, category.type, inputTv.tvName , inputTv.tvImg, inputTv.programUrl, inputTv.introduce))
-                                                    inputTv.tvCircuit?.forEach { circuit ->
-                                                        tvCircuitList.add(TvCircuit(inputTv.tvId, circuit))
-                                                }
-                                            }
-                                        }
-
-                                        instance!!.getTvDao().run {
-                                            insertAllTv(tvList)
-                                            insertAllTvCircuit(tvCircuitList)
-                                        }
-                                    }
-
-                                }
-                            }.start()
+                            val request = OneTimeWorkRequestBuilder<TvDatabaseWorker>().build()
+                            WorkManager.getInstance(context).enqueue(request)
+                            // FIXME: 2020/10/15 第一次点击新建数据库后, 页面不会更新, 需要再次进入查询数据库; 怎么使得第一次进入创建数据库
+                            // 后能更新UI
+                            // Thread {
+                            //     App.CONTEXT.assets.open(TV_CIRCUIT_JSON_FILE).use { inputStream ->
+                            //         JsonReader(inputStream.reader()).use { jsonReader ->
+                            //             val tvCategories = object : TypeToken<List<InputCategory>>() {}.type
+                            //             val tvList = ArrayList<Tv>()
+                            //             val tvCircuitList = ArrayList<TvCircuit>()
+                            //             val inputTvCategories: List<InputCategory> = Gson().fromJson(jsonReader, tvCategories)
+                            //             inputTvCategories.forEach { category ->
+                            //                 category.tvLists.forEach { inputTv ->
+                            //                         // TODO: 2020/6/13
+                            //                         // 对于非卫视类的轮播类资源, 只有tvId, 没有tvName, 需要抽取出来
+                            //                         tvList.add(Tv(inputTv.tvId, category.type, inputTv.tvName , inputTv.tvImg, inputTv.programUrl, inputTv.introduce))
+                            //                         inputTv.tvCircuit?.forEach { circuit ->
+                            //                             tvCircuitList.add(TvCircuit(inputTv.tvId, circuit))
+                            //                     }
+                            //                 }
+                            //             }
+                            //
+                            //             instance!!.getTvDao().run {
+                            //                 insertAllTv(tvList)
+                            //                 insertAllTvCircuit(tvCircuitList)
+                            //             }
+                            //         }
+                            //
+                            //     }
+                            // }.start()
                         }
                     })
                     .build()
