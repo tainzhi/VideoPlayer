@@ -51,7 +51,8 @@ git clone --recursive https://github.com/tainzhi/VideoPlayer
 
 ### danmmu
 - 弹幕库, 分为简单版和复杂版
-- 复杂版使用SurfaceView, 待实现
+- 复杂版弹幕库有缓冲池功能, 性能更好
+[详情参见](./danmu/README.md)
 
 ## 实现的功能
 - PlayVideoViewActivity: VideoView+MediaController简单播放功能

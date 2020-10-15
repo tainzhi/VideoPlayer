@@ -15,15 +15,15 @@ import kotlin.random.Random
  * @description:
  **/
 
-class DanmuItemView( context: Context, danmuBean: DanmuBean) : LinearLayout(context) {
+class SimpleDanmuItemView(context: Context, simpleDanmuBean: SimpleDanmuBean) : LinearLayout(context) {
 
     init {
         val view = inflate(context, R.layout.danmu_item, null)
         addView(view)
 
-        view.findViewById<ImageView>(R.id.avatar).setImageResource(danmuBean.avatarId)
-        view.findViewById<TextView>(R.id.tv_name).text = danmuBean.userName
-        view.findViewById<TextView>(R.id.tv_content).text = danmuBean.content
+        view.findViewById<ImageView>(R.id.avatar).setImageResource(simpleDanmuBean.avatarId)
+        view.findViewById<TextView>(R.id.tv_name).text = simpleDanmuBean.userName
+        view.findViewById<TextView>(R.id.tv_content).text = simpleDanmuBean.content
     }
 
     /**

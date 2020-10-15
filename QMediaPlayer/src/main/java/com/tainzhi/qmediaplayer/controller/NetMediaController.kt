@@ -18,7 +18,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
-import com.tainzhi.android.danmu.simpledanmu.DanmuView
 import com.tainzhi.qmediaplayer.R
 import com.tainzhi.qmediaplayer.Util
 import com.tainzhi.qmediaplayer.VideoView
@@ -140,22 +139,15 @@ class NetMediaController(val context: Context) : IController(context) {
         view.findViewById<ImageButton>(R.id.danmuBtn).setOnClickListener {
             isDanmuOn = !isDanmuOn
             (it as ImageButton).setImageResource(if (isDanmuOn) R.drawable.ic_danmu_on else R.drawable.ic_danmu_off)
-            if (!this::danmuView.isInitialized) {
-                danmuLayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 700)
-                danmuView = DanmuView(context)
-            }
             if (isDanmuOn) {
-                parent.addView(danmuView, danmuLayoutParams)
-                danmuView.datas = com.tainzhi.android.danmu.Util.loadData()
+                //     parent.addView(danmuView, danmuLayoutParams)
+                //     danmuView.mData = com.tainzhi.android.danmu.Util.loadData()
             } else {
-                danmuView.clear()
-                parent.removeView(danmuView)
+                //     danmuView.clear()
+                //     parent.removeView(danmuView)
             }
         }
     }
-
-    private lateinit var danmuView: DanmuView
-    private lateinit var danmuLayoutParams: ViewGroup.LayoutParams
 
     private fun doPlayPause() {
         if (videoView.isPlaying) {
