@@ -47,7 +47,6 @@
 			android:id="@+id/bottom_nav"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?colorPrimary"
 			app:itemIconTint="@drawable/main_bottom_nav_menu_select"
 			app:itemTextColor="@drawable/main_bottom_nav_menu_select"
 			app:menu="@menu/main_bottom_navigation" />
