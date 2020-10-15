@@ -18,15 +18,15 @@ import kotlin.random.Random
  * @description:
  **/
 
-class DanmuView @JvmOverloads constructor(
+class SimpleDanmuView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
-    
-    var datas: List<DanmuBean> = arrayListOf()
+
+    var mData: List<SimpleDanmuBean> = arrayListOf()
     private val widthPixels = resources.displayMetrics.widthPixels
     private val heightPixels = resources.displayMetrics.heightPixels
     private var curPos = 0
-    
+
     private val addHandler = @SuppressLint("HandlerLeak")
     object : Handler() {
         override fun handleMessage(msg: Message) {
@@ -52,11 +52,11 @@ class DanmuView @JvmOverloads constructor(
 
     private fun addTextView() {
         // 循环播放
-        if (curPos == datas.size) {
+        if (curPos == mData.size) {
             curPos = 0
         }
 
-        val danmuItemView = DanmuItemView(context, datas[curPos++])
+        val danmuItemView = SimpleDanmuItemView(context, mData[curPos++])
         addView(danmuItemView)
 
         danmuItemView.run {
