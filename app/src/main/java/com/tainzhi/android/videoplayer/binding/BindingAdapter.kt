@@ -32,51 +32,52 @@ import com.tainzhi.android.videoplayer.R
  * @description:
  **/
 
-
 @BindingAdapter(
-        "videoUri",
-        "thumbPlaceHolder",
-        "cornerRadius",
-        "thumbnailWidth",
-        "thumbnailHeight",
-        requireAll = false
+    "videoUri",
+    "thumbPlaceHolder",
+    "cornerRadius",
+    "thumbnailWidth",
+    "thumbnailHeight",
+    requireAll = false
 )
 fun bindVideoThumbnail(
-        imageView: ImageView,
-        videoUri: Uri,
-        placeHolder: Int? = null,
-        cornerRadius: Int? = null,
-        width: Int? = null,
-        height: Int? = null
+    imageView: ImageView,
+    videoUri: Uri,
+    placeHolder: Int? = null,
+    cornerRadius: Int? = null,
+    width: Int? = null,
+    height: Int? = null
 ) {
     val thumbnail: Bitmap? =
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    App.CONTEXT.contentResolver.loadThumbnail(
-                            videoUri, Size(320, 240), null)
-                } else {
-                    // val file = videoUri.toFile()
-                    // android 29 才能使用
-                    // ThumbnailUtils.createVideoThumbnail(videoUri.toFile(), Size(320, 240), null)
-                    MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver,
-                            ContentUris.parseId(videoUri),
-                            MediaStore.Images.Thumbnails.MINI_KIND,
-                            BitmapFactory.Options().apply { inSampleSize = 4 })
-                }
-            } catch (e: Exception) {
-                Log.e("BindingAdapter", "${videoUri.path}, ${e.message}")
-                null
-            } ?: return
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                App.CONTEXT.contentResolver.loadThumbnail(
+                    videoUri, Size(320, 240), null
+                )
+            } else {
+                // val file = videoUri.toFile()
+                // android 29 才能使用
+                // ThumbnailUtils.createVideoThumbnail(videoUri.toFile(), Size(320, 240), null)
+                MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver,
+                    ContentUris.parseId(videoUri),
+                    MediaStore.Images.Thumbnails.MINI_KIND,
+                    BitmapFactory.Options().apply { inSampleSize = 4 })
+            }
+        } catch (e: Exception) {
+            Log.e("BindingAdapter", "${videoUri.path}, ${e.message}")
+            null
+        } ?: return
     val options = RequestOptions()
     placeHolder?.let { options.placeholder(placeHolder) }
     cornerRadius?.let { options.transform(RoundedCorners(it)) }
     Glide.with(imageView.context).load(thumbnail)
-            .apply(options)
-            .into(imageView)
+        .apply(options)
+        .optionalCenterCrop()
+        .into(imageView)
 }
 
 @BindingAdapter(
-        "duration"
+    "duration"
 )
 fun bindDuration(textView: TextView, duration: Long) {
     textView.text = duration.formatMediaDuration()
@@ -86,9 +87,9 @@ private const val CHROME_PACKAGE = "com.android.chrome"
 
 @BindingAdapter("websiteLink", "hideWhenEmpty", requireAll = false)
 fun websiteLink(
-        button: View,
-        url: String?,
-        hideWhenEmpty: Boolean = false
+    button: View,
+    url: String?,
+    hideWhenEmpty: Boolean = false
 ) {
     if (url.isNullOrEmpty()) {
         if (hideWhenEmpty) {
@@ -114,10 +115,10 @@ fun openWebsiteUrl(context: Context, url: String) {
 fun openWebsiteUri(context: Context, uri: Uri) {
     if (context.isChromeCustomTabsSupported()) {
         CustomTabsIntent.Builder()
-                .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-                .build()
-                .launchUrl(context, uri)
+            .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+            .build()
+            .launchUrl(context, uri)
     } else {
         context.startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
