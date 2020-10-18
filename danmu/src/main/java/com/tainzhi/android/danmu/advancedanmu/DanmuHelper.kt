@@ -1,6 +1,7 @@
 package com.tainzhi.android.danmu.advancedanmu
 
 import android.R.color
+import android.content.Context
 import android.graphics.Bitmap
 import android.text.SpannableString
 import android.text.Spanned
@@ -30,12 +31,12 @@ import java.lang.ref.WeakReference
  * 建议凡是弹幕中涉及到的图片，大小控制在50kb以内，尺寸控制在100x100以内（单位像素）
  **/
 
-class DanMuHelper(val context: AppCompatActivity, danmuContainerView: IDanmuContainer) {
+class DanMuHelper(val context: Context, danmuContainerView: IDanmuContainer) {
 
     var isHideAll = false
 
     init {
-        context.lifecycle.addObserver(object : LifecycleObserver {
+        (context as AppCompatActivity).lifecycle.addObserver(object : LifecycleObserver {
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun destroy() {
                 release()
