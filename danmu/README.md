@@ -17,3 +17,7 @@ simpleDanmu.clear()
 ```
 
 ## 高级弹幕 AdvanceDanmu
+- 两种: 基于View的DanmuContainerView和基于SurfaceView的DanmuContainerSurfaceView
+- 如果要使单个Danmu能响应点击事件, 需要用DanmuParentView作为DanmuContainerView/DanmuContainerSurfaceView的根布局
+
+
