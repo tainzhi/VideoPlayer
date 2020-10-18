@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.smarx.notchlib.NotchScreenManager
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
+import com.tainzhi.android.videoplayer.util.multiplicationSign
 import com.tainzhi.qmediaplayer.AutoFullScreenListener
 import com.tainzhi.qmediaplayer.VideoView
 import com.tainzhi.qmediaplayer.controller.MediaController
@@ -42,7 +43,7 @@ class PlayActivity : AppCompatActivity() {
         // 根据视频的高宽,判断是竖屏还是横屏播放
         // resolution 1920x1080, 1920为height, 1080为width
         if (!resolution.isNullOrEmpty()) {
-            val heightAndwidth = resolution.split("x")
+            val heightAndwidth = resolution.split(resolution.multiplicationSign())
             val height = heightAndwidth[0]
             val width = heightAndwidth[1]
             if (height > width) {
