@@ -11,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.qmediaplayer.AutoFullScreenListener
-import com.tainzhi.qmediaplayer.Constant
 import com.tainzhi.qmediaplayer.VideoView
 import com.tainzhi.qmediaplayer.controller.NetMediaController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -63,7 +62,6 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         lifecycle.addObserver(videoView)
 
         videoView.videoTitle = mVideoTitle!!
-        videoView.mediaPlayerType = Constant.PlayerType.FFmpeg_PLAYER
         videoView.mediaController = NetMediaController(this@PlayDouyuActivity).apply {
             @RequiresApi(api = 23)
             requestDrawOverlayPermission = {

@@ -14,12 +14,17 @@ import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 import com.tainzhi.android.videoplayer.util.multiplicationSign
 import com.tainzhi.qmediaplayer.AutoFullScreenListener
+import com.tainzhi.qmediaplayer.Util
 import com.tainzhi.qmediaplayer.VideoView
 import com.tainzhi.qmediaplayer.controller.MediaController
 import com.tainzhi.qmediaplayer.render.glrender.effect.NoEffect
 import org.koin.android.ext.android.inject
 
+/**
+ * 播放本地视频, 没有弹幕Danmu和加载动画
+ */
 class PlayActivity : AppCompatActivity() {
+
     private lateinit var autoFullScreenListener: AutoFullScreenListener
     private lateinit var sensorManager: SensorManager
     private lateinit var videoView: VideoView
@@ -50,6 +55,7 @@ class PlayActivity : AppCompatActivity() {
                 orientation = 90
             }
         }
+        Util.hideSystemUI(this)
         videoView.run {
             videoTitle = mVideoTitle!!
             mediaPlayerType = preferenceRepository.playerType
@@ -61,10 +67,10 @@ class PlayActivity : AppCompatActivity() {
                 @RequiresApi(api = 23)
                 requestDrawOverlayPermission = {
                     startActivityForResult(
-                            Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION").apply {
-                                data = Uri.parse("package:" + context.packageName)
-                            },
-                            1
+                        Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION").apply {
+                            data = Uri.parse("package:" + context.packageName)
+                        },
+                        1
                     )
                 }
                 mediaControllerFloatWindowCallback = {
@@ -110,10 +116,12 @@ class PlayActivity : AppCompatActivity() {
     }
 
     companion object {
+
         private const val VIDEO_RUL = "url"
         private const val VIDEO_NAME = "name"
         private const val VIDEO_PROGRESS = "progress"
         private const val VIDEO_RESOLUTION = "resolution"
+
         @JvmStatic
         fun startPlay(starter: Context, uri: Uri, name: String, progress: Long = 100, resolution: String = "") {
             val intent = Intent(starter, PlayActivity::class.java)
