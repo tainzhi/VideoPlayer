@@ -2,7 +2,6 @@ package com.tainzhi.android.videoplayer
 
 import android.app.Application
 import android.content.Context
-import com.didichuxing.doraemonkit.DoraemonKit
 import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.di.appModule
 import org.koin.android.ext.koin.androidContext
@@ -35,8 +34,6 @@ class App : Application() {
         }
 
         AppDataBase.getInstance(applicationContext)
-
-        DoraemonKit.install(this)
     }
 
 }
