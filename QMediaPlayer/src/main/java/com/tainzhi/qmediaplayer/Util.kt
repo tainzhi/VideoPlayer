@@ -143,13 +143,12 @@ object Util {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             uiOptions = uiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         }
-        SYSTEM_UI = getWindow(context).decorView.systemUiVisibility
         getWindow(context).decorView.systemUiVisibility = uiOptions
+        SYSTEM_UI = getWindow(context).decorView.systemUiVisibility
     }
 
     @SuppressLint("NewApi")
     fun showSystemUI(context: Context?) {
-        val uiOptions = View.SYSTEM_UI_FLAG_VISIBLE
         getWindow(context).decorView.systemUiVisibility = SYSTEM_UI
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 半透明状态栏
