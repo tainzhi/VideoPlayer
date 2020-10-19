@@ -34,6 +34,7 @@ class DanmuContainerView @JvmOverloads constructor(
     private val lock = Object()
 
     init {
+        // controller初始化
         danmuController.prepare()
     }
 
