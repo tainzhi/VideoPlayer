@@ -6,7 +6,7 @@ import kotlin.random.Random
  * @author:      tainzhi
  * @mail:        qfq61@qq.com
  * @date:        2020/9/11 11:45
- * @description:
+ * @description: 随机选取速度
  **/
 
 class RandomSpeedController: ISpeedController() {
