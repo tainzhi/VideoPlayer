@@ -14,7 +14,7 @@ import com.tainzhi.android.danmu.advancedanmu.view.IDanmuContainer
  * @description:
  **/
 
-class Controller(context: Context, danmuContainerView: IDanmuContainer) {
+internal class Controller(context: Context, danmuContainerView: IDanmuContainer) {
     private val danmuPoolManager = PoolManager(context, danmuContainerView)
     private val danmuDispatcher = DanmuDispatcher()
     private val speedController = RandomSpeedController()
