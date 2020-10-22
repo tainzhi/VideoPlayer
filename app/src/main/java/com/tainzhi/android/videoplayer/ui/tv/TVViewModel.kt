@@ -2,22 +2,30 @@ package com.tainzhi.android.videoplayer.ui.tv
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.common.base.ui.BaseViewModel
+import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.repository.TVRepository
+import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class TVViewModel(private val tvRepository: TVRepository,
                   private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel() {
+
     private val _tvList: MutableLiveData<List<Tv>> = MutableLiveData()
     val tvList: LiveData<List<Tv>>
         get() = _tvList
     private val _tvPrograms = MutableLiveData<Map<String, String>>()
     val tvPrograms: LiveData<Map<String, String>>
         get() = _tvPrograms
+
+    val dataBaseStatus: LiveData<List<WorkInfo>>
+        get() = WorkManager.getInstance(App.CONTEXT).getWorkInfosByTagLiveData(Start_UP_Create_Database)
 
     /**
      * 从数据库获取卫视列表

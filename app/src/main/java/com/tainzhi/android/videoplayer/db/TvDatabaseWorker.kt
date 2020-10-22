@@ -8,7 +8,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.tainzhi.android.videoplayer.bean.InputCategory
-import com.tainzhi.android.videoplayer.bean.InputTv
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
 import kotlinx.coroutines.coroutineScope
@@ -35,7 +34,6 @@ class TvDatabaseWorker(
                     val inputTvCategories: List<InputCategory> = Gson().fromJson(jsonReader, tvCategories)
                     inputTvCategories.forEach { category ->
                         category.tvLists.forEach { inputTv ->
-                            // tvList.add(Tv(tv.id, tv.type, tv.name, tv.image, tv.programUrl))
                             tvList.add(Tv(inputTv.tvId, category.type, inputTv.tvName, inputTv.tvImg, inputTv.programUrl, inputTv.introduce))
                             inputTv.tvCircuit?.forEach { circuit ->
                                 tvCircuitList.add(TvCircuit(inputTv.tvId, circuit))

@@ -28,22 +28,24 @@ class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>() {
     override fun getLayoutResId() = R.layout.douyu_fragment
 
     override fun initView() {
-        mBinding.douyuViewPager.run {
-            offscreenPageLimit = 4
-            adapter = object : FragmentStateAdapter(this@DouyuFragment) {
-                override fun createFragment(position: Int): Fragment {
-                    return DouyuGameFragment.newInstance(defaultChannels[position].id.toString())
+        with(mBinding) {
+            douyuViewPager.run {
+                offscreenPageLimit = 4
+                adapter = object : FragmentStateAdapter(this@DouyuFragment) {
+                    override fun createFragment(position: Int): Fragment {
+                        return DouyuGameFragment.newInstance(defaultChannels[position].id.toString())
+                    }
+
+                    override fun getItemCount() = defaultChannels.size
                 }
-
-                override fun getItemCount() = defaultChannels.size
             }
-        }
-        TabLayoutMediator(mBinding.douyuTabLayout, mBinding.douyuViewPager) { tab, position ->
-            tab.text = defaultChannels[position].name
-        }.attach()
+            TabLayoutMediator(douyuTabLayout, douyuViewPager) { tab, position ->
+                tab.text = defaultChannels[position].name
+            }.attach()
 
-        mBinding.douyuMore.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_douyuFragment_to_douyuCategoryFragment)
+            douyuMore.setOnClickListener { view ->
+                view.findNavController().navigate(R.id.action_douyuFragment_to_douyuCategoryFragment)
+            }
         }
     }
 
