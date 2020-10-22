@@ -48,17 +48,18 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
 
     override fun initView() {
 
-        mBinding.localVideoRecyclerView.run {
-            layoutManager = LinearLayoutManager(requireActivity())
-            adapter = localVideoAdapter
-            ItemTouchHelper(recyclerItemTouchHelper).attachToRecyclerView(this)
+        with(mBinding) {
+            localVideoRecyclerView.run {
+                layoutManager = LinearLayoutManager(requireActivity())
+                adapter = localVideoAdapter
+                ItemTouchHelper(recyclerItemTouchHelper).attachToRecyclerView(this)
+            }
+
+            localVideoFab.setOnClickListener {
+                showShackBarMessage("to implement: 播放最近一次观看的视频")
+            }
+
         }
-
-        mBinding.localVideoFab.setOnClickListener {
-            showShackBarMessage("to implement: 播放最近一次观看的视频")
-        }
-
-
         getSharedViewModel<MainViewModel>().run {
             updateToolbarSearchView(true)
         }
