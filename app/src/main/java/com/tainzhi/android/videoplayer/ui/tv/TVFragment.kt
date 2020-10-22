@@ -44,6 +44,16 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
 
     override fun startObserve() {
         mViewModel.apply {
+
+            // 第一次查询数据库, 发现没有数据, 会创建TV table, 从
+            dataBaseStatus.observe(viewLifecycleOwner, Observer { listOfInfos ->
+                if (!listOfInfos.isNullOrEmpty()) {
+                    if (listOfInfos[0].state.isFinished) {
+                        initData()
+                    }
+                }
+            })
+
             tvList.observe(viewLifecycleOwner, Observer { it ->
                 tvAdapter.setList(it)
             })

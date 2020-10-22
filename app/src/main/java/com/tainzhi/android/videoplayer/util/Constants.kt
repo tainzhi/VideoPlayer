@@ -16,3 +16,5 @@ object Theme {
     val MODE_NIGHT_YES = 2 // equals[AppCompatDelegate.MODE_NIGHT_YES]
     val MODE_GRAY = 3 // 全局置灰
 }
+
+const val Start_UP_Create_Database = "start_up_create_database"
