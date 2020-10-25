@@ -198,7 +198,7 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
             when (playbackState) {
                 Player.STATE_IDLE -> {
                 }
-                Player.STATE_BUFFERING -> mHandler!!.post(callback)
+                Player.STATE_BUFFERING -> mHandler!!.post(callback!!)
                 Player.STATE_READY -> if (playWhenReady) { // mVideoView.onStatePlaying();
                 } else {
                 }
@@ -228,9 +228,9 @@ class IMediaExo(videoView: VideoView) : IMediaInterface(videoView), Player.Event
                 val percent = simpleExoPlayer?.bufferedPercentage ?: 0
                 mHandler!!.post { mVideoView.setBufferProgress(percent) }
                 if (percent < 100) {
-                    mHandler!!.postDelayed(callback, 300)
+                    mHandler!!.postDelayed(callback!!, 300)
                 } else {
-                    mHandler!!.removeCallbacks(callback)
+                    mHandler!!.removeCallbacks(callback!!)
                 }
             }
         }
