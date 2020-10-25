@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel>
-      <module name="VideoPlayer.app" target="1.8" />
-      <module name="VideoPlayer.buildSrc" target="1.8" />
-      <module name="VideoPlayer.common" target="1.8" />
-      <module name="VideoPlayer.danmu" target="1.8" />
-      <module name="VideoPlayer.ffmpeg" target="1.8" />
-      <module name="VideoPlayer.MediaSpider" target="1.8" />
-      <module name="VideoPlayer.QMediaPlayer" target="1.8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8" />
   </component>
 </project>
