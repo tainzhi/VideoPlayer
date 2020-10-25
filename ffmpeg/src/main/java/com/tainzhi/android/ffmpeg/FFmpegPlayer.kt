@@ -1,6 +1,5 @@
 package com.tainzhi.android.ffmpeg
 
-import android.net.Uri
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -61,13 +60,13 @@ class FFmpegPlayer: SurfaceHolder.Callback {
         playerManager.releaseNative()
     }
 
-    override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
     }
 
-    override fun surfaceDestroyed(holder: SurfaceHolder?) {
+    override fun surfaceDestroyed(holder: SurfaceHolder) {
     }
 
-    override fun surfaceCreated(holder: SurfaceHolder?) {
+    override fun surfaceCreated(holder: SurfaceHolder) {
         playerManager.setSurfaceNative(surfaceHolder?.surface!!)
     }
 }
