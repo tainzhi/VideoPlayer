@@ -36,15 +36,15 @@ class ChooseThemeDialogFragment : AppCompatDialogFragment() {
             )
         )
 
-        return MaterialAlertDialogBuilder(context)
-            .setTitle("Choose Theme")
-            .setSingleChoiceItems(listAdapter, 0) { _, position ->
-                listAdapter.getItem(position)?.type?.let {
-                    preferenceRepository.selectedTheme = it
+        return MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Choose Theme")
+                .setSingleChoiceItems(listAdapter, 0) { _, position ->
+                    listAdapter.getItem(position)?.type?.let {
+                        preferenceRepository.selectedTheme = it
+                    }
+                    dismiss()
                 }
-                dismiss()
-            }
-            .create()
+                .create()
     }
 
     override fun onStart() {
