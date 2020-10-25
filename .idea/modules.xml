@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidPorjects-VideoPlayer-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidPorjects-VideoPlayer-app.iml" group="VideoPlayer/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/AndroidPorjects-VideoPlayer-danmu.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/AndroidPorjects-VideoPlayer-danmu.iml" group="VideoPlayer/danmu" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidPorjects-VideoPlayer_buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidPorjects-VideoPlayer_buildSrc.iml" group="VideoPlayer/VideoPlayer_buildSrc" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidPorjects.VideoPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidPorjects.VideoPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/MediaSpider.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/MediaSpider.iml" group="VideoPlayer/MediaSpider" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/QMediaPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/QMediaPlayer.iml" group="VideoPlayer/QMediaPlayer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.iml" group="VideoPlayer" />
@@ -16,6 +17,13 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer-common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer-common.iml" group="VideoPlayer/common" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer-danmu.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer-danmu.iml" group="VideoPlayer/danmu" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer-ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer-ffmpeg.iml" group="VideoPlayer/ffmpeg" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer_buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer_buildSrc.iml" group="VideoPlayer/VideoPlayer_buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="VideoPlayer/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/common.iml" group="VideoPlayer/common" />
