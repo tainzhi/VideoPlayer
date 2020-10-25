@@ -41,7 +41,7 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
         setSupportActionBar(mBinding.toolbar)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         if (savedInstanceState != null) {
             super.onRestoreInstanceState(savedInstanceState)
         }
