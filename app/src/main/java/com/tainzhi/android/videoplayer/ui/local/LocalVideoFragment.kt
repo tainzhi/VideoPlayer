@@ -66,12 +66,19 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         getSharedViewModel<MainViewModel>().run {
             updateToolbarSearchView(false)
         }
     }
+
+    // override fun onDestroyView() {
+    //     super.onDestroyView()
+    //     getSharedViewModel<MainViewModel>().run {
+    //         updateToolbarSearchView(false)
+    //     }
+    // }
 
     override fun initData() {
         mViewModel.getLocalVideos()

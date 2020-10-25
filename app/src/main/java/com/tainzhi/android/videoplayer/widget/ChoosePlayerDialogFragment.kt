@@ -34,7 +34,7 @@ class ChoosePlayerDialogFragment : AppCompatDialogFragment() {
                 )
         )
 
-        return MaterialAlertDialogBuilder(context)
+        return MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Choose Player")
                 .setSingleChoiceItems(listAdapter, 0) { _, position ->
                     listAdapter.getItem(position)?.type?.let {
