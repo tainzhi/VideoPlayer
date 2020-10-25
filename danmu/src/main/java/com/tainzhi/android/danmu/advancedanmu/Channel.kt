@@ -17,8 +17,8 @@ class Channel {
     var topY = 0
     var space = 60
 
-    var r2lReferenceView: Danmu? = null
-    var l2rReferenceView: Danmu? = null
+    private var r2lReferenceView: Danmu? = null
+    private var l2rReferenceView: Danmu? = null
 
     companion object {
 
