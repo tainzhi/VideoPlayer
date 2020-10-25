@@ -122,7 +122,7 @@ class TextureRenderView @JvmOverloads constructor(
                         textureRenderView.surfaceCallback.setOwnSurfaceTexture(false)
                         val textureHolder = mp as ISurfaceTextureHolder
                         if (textureHolder != null) {
-                            textureRenderView.surfaceTexture = surfaceTexture
+                            textureRenderView.setSurfaceTexture(surfaceTexture)
                         } else {
                             (mp as ISurfaceTextureHolder).run {
                                 surfaceTexture = surfaceTexture

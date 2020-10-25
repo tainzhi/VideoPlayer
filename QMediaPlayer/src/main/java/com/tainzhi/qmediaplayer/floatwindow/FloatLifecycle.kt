@@ -84,8 +84,8 @@ class FloatLifecycle(private val applicationContext: Context, private val showFl
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {}
-    override fun onActivityDestroyed(activity: Activity?) {}
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+    override fun onActivityDestroyed(activity: Activity) {}
 
     companion object {
         private const val SYSTEM_DIALOG_REASON_KEY = "reason"
