@@ -4,8 +4,9 @@ import com.tainzhi.android.common.base.BaseRepository
 import com.tainzhi.android.common.base.Result
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
-import com.tainzhi.android.videoplayer.network.VideoClient
+import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.mediaspider.DouyuSpider
+import org.koin.java.KoinJavaComponent.get
 
 /**
  * @author:      tainzhi
@@ -28,10 +29,10 @@ class DouyuRepository : BaseRepository(){
         executeResponse(
                 // 推荐房间列表
                 if (gameId == "-1")
-                    VideoClient.service.getRecommendRooms(offset, limit)
+                    get(VideoService::class.java).getRecommendRooms(offset, limit)
                 // 特定game房间列表
                 else
-                    VideoClient.service.getGameRooms(gameId, offset, limit)
+                    get(VideoService::class.java).getGameRooms(gameId, offset, limit)
         )
 
     suspend fun getAllGames(): Result<List<DouyuGame>> {
@@ -39,7 +40,7 @@ class DouyuRepository : BaseRepository(){
     }
 
     private suspend fun requestAllGames(): Result<List<DouyuGame>> =
-            executeResponse(VideoClient.service.getAllGames())
+            executeResponse(get(VideoService::class.java).getAllGames())
 
     suspend fun getRoomCircuitId(roomId: String): Result<String> {
         return try {
