@@ -7,6 +7,7 @@ import com.tainzhi.android.videoplayer.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import kotlin.properties.Delegates
 
 /**
@@ -29,7 +30,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            androidLogger()
+            androidLogger(Level.DEBUG)
             modules(appModule)
         }
 
