@@ -21,7 +21,6 @@
 				android:scaleType="fitXY"
 				app:layout_constraintDimensionRatio="h, 16:9"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintHeight_percent="0.9"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
 				tools:src="@drawable/default_dota2" />
