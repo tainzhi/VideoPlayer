@@ -76,4 +76,8 @@
 	<style name="VideoTheme.Settings.Button.WebLink">
 		<item name="android:textColor">@android:color/holo_blue_bright</item>
 	</style>
+	
+	<style name="VideoTheme.Tv" parent="Widget.MaterialComponents.TextView">
+		<item name="android:textSize">10sp</item>
+	</style>
 </resources>
