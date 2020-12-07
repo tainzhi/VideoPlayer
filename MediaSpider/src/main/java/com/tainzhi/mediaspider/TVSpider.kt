@@ -26,20 +26,24 @@ class TVSpider {
      */
     /**
      * 从 [https://www.tvmao.com/program/playing/cctv]
-     * 获取各卫视频道当前直播节目
+     * 获取各卫视频道当前直播节目和下一个节目, 用Pair wrap
      *
      * @param type cctv 或者 satellite, 即央视和地方卫视
      */
-    fun getTvProgram(type: String): Map<String, String> {
+    fun getTvProgram(type: String): Map<String, TvProgramBean> {
         val response = KRequest().get("https://www.tvmao.com/program/playing/$type/")
         val doc = Jsoup.parse(response)
-        val tvProgramMap = hashMapOf<String, String>()
+        val tvProgramMap = hashMapOf<String, TvProgramBean>()
         doc.select("tr").forEach { item ->
             // 获取 /program/CCTV/CCTV1, 正则表达式捕获组 捕获1组
             val href = item.select("tr td a").attr("href")
             val key = (".*/(.*)").toRegex().findAll(href).first().groupValues[1]
-            val program = item.select("tr td.pt15")[0].text().split(" ")[0]
-            tvProgramMap[key] = program
+            // 当前正在直播的节目
+            val liveProgram = item.select("tr td.pt15")[0].text().split(" ")[0]
+            val liveProgramTime = item.select("tr td span")[0].text()
+            val nextProgram = item.select("tr td.pt15")[1].text().split(" ")[0]
+            val nextProgramTime = item.select("tr td span")[1].text().split(" ")[0]
+            tvProgramMap[key] = TvProgramBean(liveProgram, liveProgramTime, nextProgram, nextProgramTime)
         }
         return tvProgramMap
     }

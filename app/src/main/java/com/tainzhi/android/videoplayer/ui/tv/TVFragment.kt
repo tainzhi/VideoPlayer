@@ -59,7 +59,7 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
             })
             tvPrograms.observe(viewLifecycleOwner, Observer { it ->
                 tvAdapter.data.forEach { tv ->
-                    tv.broadingProgram = it[tv.id] ?: "没有查询到"
+                    tv.broadingProgram = it[tv.id]?.liveProgram ?: "没有查询到"
                 }
                 tvAdapter.notifyDataSetChanged()
             })

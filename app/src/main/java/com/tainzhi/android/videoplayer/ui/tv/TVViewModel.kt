@@ -10,6 +10,7 @@ import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
+import com.tainzhi.mediaspider.TvProgramBean
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
@@ -20,8 +21,8 @@ class TVViewModel(private val tvRepository: TVRepository,
     private val _tvList: MutableLiveData<List<Tv>> = MutableLiveData()
     val tvList: LiveData<List<Tv>>
         get() = _tvList
-    private val _tvPrograms = MutableLiveData<Map<String, String>>()
-    val tvPrograms: LiveData<Map<String, String>>
+    private val _tvPrograms = MutableLiveData<Map<String, TvProgramBean>>()
+    val tvPrograms: LiveData<Map<String, TvProgramBean>>
         get() = _tvPrograms
 
     val dataBaseStatus: LiveData<List<WorkInfo>>
@@ -58,7 +59,7 @@ class TVViewModel(private val tvRepository: TVRepository,
                 val resultProgram = async { tvRepository.loadTVProgram() }
                 val list = resultList.await()
                 val program = resultProgram.await()
-                list.forEach { it.broadingProgram = program[it.id] ?: ""}
+            // list.forEach { it.broadingProgram = program[it.id] ?: ""}
                 emitData(list)
             }
     }
