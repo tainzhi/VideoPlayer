@@ -4,6 +4,7 @@ import com.tainzhi.android.common.base.BaseRepository
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.db.TvDao
 import com.tainzhi.mediaspider.TVSpider
+import com.tainzhi.mediaspider.TvProgramBean
 
 /**
  * @author:      tainzhi
@@ -31,7 +32,7 @@ class TVRepository(private val tvDao: TvDao): BaseRepository() {
         return tvDao.getTvCircuit(tvId)
     }
 
-    fun loadTVProgram(): Map<String, String> {
+    fun loadTVProgram(): Map<String, TvProgramBean> {
         return TVSpider.getInstance().getTvProgram("cctv") +
                 TVSpider.getInstance().getTvProgram("satellite")
     }
