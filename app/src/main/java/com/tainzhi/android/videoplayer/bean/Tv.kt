@@ -1,7 +1,12 @@
 package com.tainzhi.android.videoplayer.bean
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.tainzhi.mediaspider.bean.TvProgramBean
 import java.io.Serializable
 
 /**
@@ -22,8 +27,11 @@ data class Tv(
         @ColumnInfo(name = "program_url") @field: SerializedName("programUrl") var programUrl : String? = "",
         @ColumnInfo(name = "introduce") @field: SerializedName("introduce") var introduce: String? = ""
 ): Serializable {
-    @Ignore @field: SerializedName("tvCircuit") var tvCircuit: List<String>? = null
-    @Ignore var broadingProgram: String? = null
+    @Ignore
+    @field: SerializedName("tvCircuit")
+    var tvCircuit: List<String>? = null
+    @Ignore
+    var program: TvProgramBean? = null
     // constructor(): this("", "", "", "", "", "", null)
     // constructor(id: String, type: String, name: String, image: String, programUrl: String, introduce: String): this(id, type, name, image, programUrl, introduce, null)
 

@@ -4,7 +4,7 @@ import com.tainzhi.android.common.base.BaseRepository
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.db.TvDao
 import com.tainzhi.mediaspider.TVSpider
-import com.tainzhi.mediaspider.TvProgramBean
+import com.tainzhi.mediaspider.bean.TvProgramBean
 
 /**
  * @author:      tainzhi

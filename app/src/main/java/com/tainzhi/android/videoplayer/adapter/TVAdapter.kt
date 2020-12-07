@@ -5,7 +5,6 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.databinding.ItemTvBinding
-import java.util.*
 
 /**
  * @author:      tainzhi
@@ -26,7 +25,6 @@ class TVAdapter(private val goToPlay: (tv: Tv) -> Unit ): BaseQuickAdapter<Tv, B
     override fun convert(holder: BaseDataBindingHolder<ItemTvBinding>, item: Tv) {
         holder.dataBinding?.apply {
             tv = item
-            loading.progress = Random().nextFloat()
             executePendingBindings()
         }
     }
