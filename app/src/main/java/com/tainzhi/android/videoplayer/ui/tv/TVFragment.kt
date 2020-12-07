@@ -2,7 +2,6 @@ package com.tainzhi.android.videoplayer.ui.tv
 
 import android.net.Uri
 import android.util.Log
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
@@ -46,7 +45,7 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
         mViewModel.apply {
 
             // 第一次查询数据库, 发现没有数据, 会创建TV table, 从
-            dataBaseStatus.observe(viewLifecycleOwner, Observer { listOfInfos ->
+            dataBaseStatus.observe(viewLifecycleOwner, { listOfInfos ->
                 if (!listOfInfos.isNullOrEmpty()) {
                     if (listOfInfos[0].state.isFinished) {
                         initData()
@@ -54,15 +53,15 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
                 }
             })
 
-            tvList.observe(viewLifecycleOwner, Observer { it ->
+            tvList.observe(viewLifecycleOwner) {
                 tvAdapter.setList(it)
-            })
-            tvPrograms.observe(viewLifecycleOwner, Observer { it ->
+            }
+            tvPrograms.observe(viewLifecycleOwner) { tvProgram ->
                 tvAdapter.data.forEach { tv ->
-                    tv.broadingProgram = it[tv.id]?.liveProgram ?: "没有查询到"
+                    tv.program = tvProgram[tv.id]
                 }
                 tvAdapter.notifyDataSetChanged()
-            })
+            }
         }
     }
 

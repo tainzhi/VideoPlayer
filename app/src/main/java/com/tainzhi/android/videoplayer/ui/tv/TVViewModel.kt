@@ -10,7 +10,7 @@ import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
-import com.tainzhi.mediaspider.TvProgramBean
+import com.tainzhi.mediaspider.bean.TvProgramBean
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 

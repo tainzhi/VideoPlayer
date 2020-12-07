@@ -1,5 +1,6 @@
 package com.tainzhi.mediaspider
 
+import com.tainzhi.mediaspider.bean.TvProgramBean
 import org.jsoup.Jsoup
 
 /**

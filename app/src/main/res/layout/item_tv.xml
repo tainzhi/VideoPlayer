@@ -15,14 +15,15 @@
 	
 	<com.google.android.material.card.MaterialCardView
 		android:layout_width="match_parent"
-		android:layout_height="70dp"
-		android:layout_marginStart="@dimen/margin_normal"
-		android:layout_marginEnd="@dimen/margin_normal"
-		android:layout_marginBottom="@dimen/margin_normal">
+		android:layout_height="wrap_content"
+		>
 		
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:paddingEnd="@dimen/margin_normal"
+			android:paddingStart="@dimen/margin_normal"
+			>
 			
 			<ImageView
 				android:id="@+id/tvImage"
@@ -30,14 +31,15 @@
 				android:layout_height="0dp"
 				app:imagePlaceholder="@{R.drawable.ic_default_tv}"
 				app:imageUrl="@{tv.image}"
-				app:roundCornerRadiusImage="@{5}"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintDimensionRatio="l,320:200"
 				app:layout_constraintHeight_percent="0.8"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
+				app:roundCornerRadiusImage="@{5}"
 				tools:ignore="ContentDescription"
-				tools:src="@drawable/ic_default_tv" />
+				tools:src="@drawable/ic_default_tv"
+				/>
 			
 			<TextView
 				android:id="@+id/tvName"
@@ -46,38 +48,92 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/margin_small"
 				android:text="@{tv.name}"
-				android:textSize="18sp"
+				android:textSize="14sp"
 				app:layout_constraintStart_toEndOf="@+id/tvImage"
 				app:layout_constraintTop_toTopOf="@id/tvImage"
-				tools:text="CCTV-1" />
+				tools:text="CCTV-1"
+				/>
 			
-			<com.airbnb.lottie.LottieAnimationView
-				android:id="@+id/loading"
-				android:layout_width="70dp"
-				android:layout_height="20dp"
-				android:layout_marginBottom="@dimen/margin_small"
-				app:layout_constraintBottom_toBottomOf="@+id/tvImage"
+			<TextView
+				android:id="@+id/textView6"
+				style="@style/VideoTheme.Tv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="正在播放"
 				app:layout_constraintStart_toStartOf="@+id/tvName"
-				app:lottie_autoPlay="true"
-				app:lottie_loop="true"
-				app:lottie_rawRes="@raw/program_loading"
-				app:lottie_scale="4" />
+				app:layout_constraintTop_toBottomOf="@+id/tvName"
+				/>
+			
+			<TextView
+				android:id="@+id/textView4"
+				style="@style/VideoTheme.Tv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:text="@{tv.program.liveProgramTime}"
+				app:layout_constraintBottom_toBottomOf="@+id/textView6"
+				app:layout_constraintStart_toEndOf="@+id/textView6"
+				app:layout_constraintTop_toTopOf="@id/textView6"
+				tools:text="12:24"
+				/>
+			
+			<com.tainzhi.android.common.widget.AutoScrollHorizontalView
+				android:id="@+id/autoScrollHorizontalView"
+				style="@style/TextAppearance.AppTheme.Headline6"
+				android:layout_width="160dp"
+				android:layout_height="wrap_content"
+				android:alpha="?alphaEmphasisMedium"
+				android:ellipsize="marquee"
+				android:layout_marginStart="10dp"
+				android:scrollHorizontally="true"
+				android:singleLine="true"
+				android:text='@{tv.program.liveProgram}'
+				android:textSize="14sp"
+				app:layout_constraintBottom_toBottomOf="@+id/textView6"
+				app:layout_constraintStart_toEndOf="@+id/textView4"
+				app:layout_constraintTop_toTopOf="@id/textView6"
+				tools:text="西游记第一集"
+				/>
+			
+			<TextView
+				android:id="@+id/textView5"
+				style="@style/VideoTheme.Tv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="4dp"
+				android:text="下一个节目"
+				app:layout_constraintBottom_toBottomOf="@+id/tvImage"
+				app:layout_constraintStart_toStartOf="@+id/textView6"
+				app:layout_constraintTop_toBottomOf="@+id/autoScrollHorizontalView"
+				/>
+			
+			<TextView
+				android:id="@+id/textView7"
+				style="@style/VideoTheme.Tv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@{tv.program.nextProgramTime}"
+				app:layout_constraintBottom_toBottomOf="@+id/textView5"
+				app:layout_constraintStart_toStartOf="@+id/textView4"
+				app:layout_constraintTop_toTopOf="@+id/textView5"
+				tools:text="12:44"
+				/>
 			
 			<com.tainzhi.android.common.widget.AutoScrollHorizontalView
 				style="@style/TextAppearance.AppTheme.Headline6"
 				android:layout_width="160dp"
 				android:layout_height="wrap_content"
-				android:layout_marginEnd="@dimen/margin_small"
 				android:alpha="?alphaEmphasisMedium"
 				android:ellipsize="marquee"
 				android:scrollHorizontally="true"
 				android:singleLine="true"
-				android:text='@{tv.broadingProgram}'
+				android:text='@{tv.program.nextProgram}'
 				android:textSize="14sp"
-				app:layout_constraintBottom_toBottomOf="@+id/loading"
-				app:layout_constraintStart_toEndOf="@id/loading"
-				app:layout_constraintTop_toTopOf="@+id/loading"
-				tools:text="西游记第一集" />
+				app:layout_constraintBottom_toBottomOf="@+id/textView5"
+				app:layout_constraintStart_toStartOf="@+id/autoScrollHorizontalView"
+				app:layout_constraintTop_toTopOf="@+id/textView5"
+				tools:text="西游记第一集"
+				/>
 		
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</com.google.android.material.card.MaterialCardView>
