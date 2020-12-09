@@ -1,7 +1,11 @@
 package com.tainzhi.android.videoplayer.bean
 
-import androidx.room.*
-import com.google.gson.annotations.SerializedName
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
 import java.io.Serializable
 
 /**
@@ -18,7 +22,7 @@ import java.io.Serializable
         indices = [Index("tv_id")]
 )
 data class TvCircuit(
-        @ColumnInfo(name = "tv_id") @field:SerializedName("tvId") var tvId: String?, // 卫视id
+        @ColumnInfo(name = "tv_id") @Json(name = "tvId") var tvId: String?, // 卫视id
         var circuit: String? // 卫视直播线路
 ): Serializable {
     @PrimaryKey(autoGenerate = true)
