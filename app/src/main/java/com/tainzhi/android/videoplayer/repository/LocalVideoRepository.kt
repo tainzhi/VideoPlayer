@@ -18,6 +18,7 @@ import com.tainzhi.android.videoplayer.bean.LocalVideo
  * @description:
  **/
 
+// TODO: 2020/12/9 用NetworkBoundRepository替换
 class LocalVideoRepository : BaseRepository() {
 
     fun getLocalVideoList(): List<LocalVideo> {

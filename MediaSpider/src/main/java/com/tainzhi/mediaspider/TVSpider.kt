@@ -41,10 +41,13 @@ class TVSpider {
             val key = (".*/(.*)").toRegex().findAll(href).first().groupValues[1]
             // 当前正在直播的节目
             val liveProgram = item.select("tr td.pt15")[0].text().split(" ")[0]
+            // 当前正在直播的节目开始时间
             val liveProgramTime = item.select("tr td span")[0].text()
+            // 下一个节目
             val nextProgram = item.select("tr td.pt15")[1].text().split(" ")[0]
             val nextProgramTime = item.select("tr td span")[1].text().split(" ")[0]
-            tvProgramMap[key] = TvProgramBean(liveProgram, liveProgramTime, nextProgram, nextProgramTime)
+            // 下一个节目开播时间
+            tvProgramMap[key] = TvProgramBean(key, liveProgram, liveProgramTime, nextProgram, nextProgramTime)
         }
         return tvProgramMap
     }

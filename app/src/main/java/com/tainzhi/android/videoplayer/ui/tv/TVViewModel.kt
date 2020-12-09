@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.tv
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.WorkInfo
@@ -8,13 +9,15 @@ import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.common.base.ui.BaseViewModel
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
-import com.tainzhi.android.videoplayer.repository.TVRepository
+import com.tainzhi.android.videoplayer.livedatanet.State
+import com.tainzhi.android.videoplayer.repository.TvRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 import com.tainzhi.mediaspider.bean.TvProgramBean
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 
-class TVViewModel(private val tvRepository: TVRepository,
+class TVViewModel(private val tvRepository: TvRepository,
                   private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel() {
 
@@ -43,8 +46,21 @@ class TVViewModel(private val tvRepository: TVRepository,
      */
     fun getTVProgram() {
         launch {
-            val tvPrograms = tvRepository.loadTVProgram()
-            _tvPrograms.postValue(tvPrograms)
+            val tvPrograms = tvRepository.getTvPrograms()
+            tvPrograms.collect { result ->
+                when (result) {
+                    is State.Success -> {
+                        _tvPrograms.postValue(result.data)
+                        Log.d("qfq", "state.success, ${result.data.size}")
+                    }
+                    is State.Error -> {
+                        Log.d("qfq", "state.error")
+                    }
+                    is State.Loading -> {
+                        Log.d("qfq", "state.loading")
+                    }
+                }
+            }
         }
     }
 
@@ -56,9 +72,9 @@ class TVViewModel(private val tvRepository: TVRepository,
     fun getTVListAndProgram() {
         launch {
                 val resultList = async {  tvRepository.loadTVs() }
-                val resultProgram = async { tvRepository.loadTVProgram() }
+            // val resultProgram = async { tvRepository.loadTVProgram() }
                 val list = resultList.await()
-                val program = resultProgram.await()
+            // val program = resultProgram.await()
             // list.forEach { it.broadingProgram = program[it.id] ?: ""}
                 emitData(list)
             }

@@ -8,9 +8,10 @@ package com.tainzhi.mediaspider.bean
  * Description:
  */
 data class TvProgramBean(
+        val tvId: String,
         val liveProgram: String,
         // 节目开始时间
         val liveProgramTime: String,
         val nextProgram: String,
-        val nextProgramTime: String
+        val nextProgramTime: String,
 )

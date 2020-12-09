@@ -1,12 +1,12 @@
 package com.tainzhi.android.videoplayer.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
+import com.tainzhi.android.videoplayer.bean.TvProgram
 
 /**
  * @author:       tainzhi
@@ -34,5 +34,11 @@ abstract class TvDao {
     // @Transaction
     // @Query("SELECT * FROM plants WHERE id IN (SELECT DISTINCT(plant_id) FROM garden_plantings)")
     // fun getPlantedGardens(): LiveData<List<PlantAndGardenPlantings>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertAllTvPrograms(programs: List<TvProgram>)
+
+    @Query("SELECT * FROM tv_program")
+    abstract fun getAllTvPrograms(): List<TvProgram>
 
 }

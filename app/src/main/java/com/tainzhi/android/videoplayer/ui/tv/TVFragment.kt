@@ -7,6 +7,7 @@ import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.databinding.TVFragmentBinding
+import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -36,7 +37,12 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
         }
     }
 
+    // 在dataBaseStates.observer()中有调用
     override fun initData() {
+        refresh()
+    }
+
+    private fun refresh() {
         mViewModel.getTVList()
         mViewModel.getTVProgram()
     }
@@ -44,11 +50,13 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
     override fun startObserve() {
         mViewModel.apply {
 
-            // 第一次查询数据库, 发现没有数据, 会创建TV table, 从
+            // 第一次查询数据库, 发现没有数据, 会创建TV table
+            // 创建数据库后, 每次进入该页面, 判断state.isFinished(), 然后 refresh()
             dataBaseStatus.observe(viewLifecycleOwner, { listOfInfos ->
-                if (!listOfInfos.isNullOrEmpty()) {
+                if (!listOfInfos.isNullOrEmpty() && !AppDataBase.firstCreateDb) {
                     if (listOfInfos[0].state.isFinished) {
-                        initData()
+                        refresh()
+                        AppDataBase.firstCreateDb = true
                     }
                 }
             })

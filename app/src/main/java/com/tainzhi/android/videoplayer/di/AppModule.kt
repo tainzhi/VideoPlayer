@@ -9,7 +9,7 @@ import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
-import com.tainzhi.android.videoplayer.repository.TVRepository
+import com.tainzhi.android.videoplayer.repository.TvRepository
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuGameViewModel
@@ -40,7 +40,7 @@ val viewModelModule = module {
 
 val repositoryModule = module {
     single { VideoClient.getService(VideoService::class.java, VideoService.DOUYU_BASE_URL) }
-    single { TVRepository(get()) }
+    single { TvRepository(get()) }
     single { LocalVideoRepository() }
     single { DouyuRepository() }
     single { PreferenceRepository(get()) }
