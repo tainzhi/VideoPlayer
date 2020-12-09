@@ -1,50 +1,59 @@
-[{
-  "type": "cctv",
-  "tvLists": [{
+[
+  {
     "tvId": "CCTV1",
     "tvType": "cctv",
     "tvName": "CCTV-1综合",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0307/20140307093140783.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv1.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv1.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-
-  }, {
+  },
+  {
     "tvId": "CCTV2",
     "tvType": "cctv",
     "tvName": "CCTV-2财经",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0307/20140307105501248.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv2.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv2.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv2hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/c5717c2d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV3",
     "tvType": "cctv",
     "tvName": "CCTV-3综艺",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0307/20140307105538946.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv3.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv3.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/53eda06f?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV4",
     "tvType": "cctv",
     "tvName": "CCTV-4国际",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0307/20140307105634657.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv4.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv4.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv4hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/0ccc41bf?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV5",
     "tvType": "cctv",
     "tvName": "CCTV-5体育",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0307/20140307105706596.jpg",
-    "tvCircuit": ["http://223.110.242.131:6610/cntv/live1/HD-2500k-1080P-cctv5/index.m3u8/1.m3u8?IASHttpSessionId=OTT3118520190910044229027819"],
+    "tvCircuit": [
+      "http://223.110.242.131:6610/cntv/live1/HD-2500k-1080P-cctv5/index.m3u8/1.m3u8?IASHttpSessionId=OTT3118520190910044229027819"
+    ],
     "programUrl": "https://m.tvsou.com/epg/6b26bee1?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV5-PLUS",
     "tvType": "cctv",
     "tvName": "CCTV-5+",
@@ -53,343 +62,465 @@
       "http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/e4e3801d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV6",
     "tvType": "cctv",
     "tvName": "CCTV-6电影",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0307/20140307105736341.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv6.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv6.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/ddb707c0?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV7",
     "tvType": "cctv",
     "tvName": "CCTV-7国防军事",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0111/20140111051043613.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv7.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv7.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv7hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/f2d13f2a?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV8",
     "tvType": "cctv",
     "tvName": "CCTV-8电视剧",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0111/20140111100415975.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv8.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv8.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv8hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV9",
     "tvType": "cctv",
     "tvName": "CCTV-9记录",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0111/20140111100726945.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv9.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv9.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv9hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV10",
     "tvType": "cctv",
     "tvName": "CCTV-10科教",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0111/20140111101013111.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv10.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv10.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv10hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV11",
     "tvType": "cctv",
     "tvName": "CCTV11戏曲",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0111/20140111101524361.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv11.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv11.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv11hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV12",
     "tvType": "cctv",
     "tvName": "CCTV-12法制",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0111/20140111101756385.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv12.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv12.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv12hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV13",
     "tvType": "cctv",
     "tvName": "CCTV-13新闻",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0111/20140111102142606.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv13.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv13.m3u8",
       "http://cctvcnch5c.v.wscdns.com/live/cctv17_2/index.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV15",
     "tvType": "cctv",
     "tvName": "CCTV-14少儿",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0331/20140331031008535.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv14.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv14.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv14hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV15",
     "tvType": "cctv",
     "tvName": "CCTV-15音乐",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0331/20140331031640152.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv15.m3u8",
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv15.m3u8",
       "http://ivi.bupt.edu.cn/hls/cctv15hd.m3u8"
     ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV19",
     "tvType": "cctv",
     "tvName": "CGTV-NEWS",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0331/20140331032438873.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cctv16.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cctv16.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCTV17NY",
     "tvType": "cctv",
     "tvName": "CCTV-17农业",
     "tvImg": "https://p3.img.cctvpic.com/photoAlbum/templet/special/PAGEHP1pnuSayxqIDjzBAovA190710/ELMTRGz3lC8z8vnzmWK8uLvE190710_1564579644.jpg",
-    "tvCircuit": ["http://cctvcnch5c.v.wscdns.com/live/cctv17_2/index.m3u8"],
+    "tvCircuit": [
+      "http://cctvcnch5c.v.wscdns.com/live/cctv17_2/index.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }]
-}, {
-  "type": "satellite",
-  "tvLists": [{
+  },
+  {
     "tvId": "BTV1",
     "tvType": "satellite",
     "tvName": "北京卫视",
     "tvImg": "http://www.66zhibo.net/d/file/2018/0613/small3d75528f7e72766bf831012a4e7a0096.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/btv1.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/btv1.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "HNTV1",
     "tvType": "satellite",
     "tvName": "湖南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105054954388.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hunantv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/hunantv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "JSTV1",
     "tvType": "satellite",
     "tvName": "江苏卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105061518886.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/jstv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/jstv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "ZJTV1",
     "tvType": "satellite",
     "tvName": "浙江卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105063047305.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/zjtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/zjtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "AHTV1",
     "tvType": "satellite",
     "tvName": "安徽卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105063514384.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/ahtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/ahtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "TJTV1",
     "tvType": "satellite",
     "tvName": "天津卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105065714879.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/tjtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/tjtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "LNTV1",
     "tvType": "satellite",
     "tvName": "辽宁卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105070406131.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/lntv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/lntv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "JXTV1",
     "tvType": "satellite",
     "tvName": "江西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105071533165.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/jxtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/jxtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "HLJTV1",
     "tvType": "satellite",
     "tvName": "黑龙江卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0105/20140105071801983.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hljtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/hljtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "SDTV1",
     "tvType": "satellite",
     "tvName": "山东卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127051528413.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sdtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/sdtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "DONGFANG1",
     "tvType": "satellite",
     "tvName": "东方卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127053017633.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/dftv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/dftv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "YNTV1",
     "tvType": "satellite",
     "tvName": "云南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127054817586.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/yntv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/yntv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "SCTV1",
     "tvType": "satellite",
     "tvName": "四川卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127055234325.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sctv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/sctv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "HNTV1",
     "tvType": "satellite",
     "tvName": "河南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127060905552.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hntv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/hntv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "GDTV1",
     "tvType": "satellite",
     "tvName": "广东卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127062745655.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gdtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/gdtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "SHENZHENTV1",
     "tvType": "satellite",
     "tvName": "深圳卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127065349318.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sztv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/sztv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "HUBEI1",
     "tvType": "satellite",
     "tvName": "湖北卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127070021782.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hbtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/hbtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "FJTV2",
     "tvType": "satellite",
     "tvName": "福建东南卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127070834599.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/dntv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/dntv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "XIAMENTV5",
     "tvType": "satellite",
     "tvName": "厦门卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127093057112.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/xmtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/xmtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "CCQTV1",
     "tvType": "satellite",
     "tvName": "重庆卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127094352591.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/cqtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/cqtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "GUIZOUTV1",
     "tvType": "satellite",
     "tvName": "贵州卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127094656144.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gstv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/gstv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "HEBEI1",
     "tvType": "satellite",
     "tvName": "河北卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127095100348.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/hbtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/hbtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "JILIN1",
     "tvType": "satellite",
     "tvName": "吉林卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127100134333.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/jltv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/jltv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "GUANXI1",
     "tvType": "satellite",
     "tvName": "广西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127102115885.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gxtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/gxtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "QHTV1",
     "tvType": "satellite",
     "tvName": "青海卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127102446619.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/qhtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/qhtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "SXTV1",
     "tvType": "satellite",
     "tvName": "山西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127103829275.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sxrtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/sxrtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "SXTV1",
     "tvType": "satellite",
     "tvName": "陕西卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127105155385.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/sxtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/sxtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "NMGTV1",
     "tvType": "satellite",
     "tvName": "内蒙古卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127110204634.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/nmgtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/nmgtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "NXTV2",
     "tvType": "satellite",
     "tvName": "宁夏卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127111151358.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/nxtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/nxtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "XIZANGTV1",
     "tvType": "satellite",
     "tvName": "西藏卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127111701420.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/xztv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/xztv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "XJTV1",
     "tvType": "satellite",
     "tvName": "新疆卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127111944516.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/xjtv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/xjtv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "GSTV1",
     "tvType": "satellite",
     "tvName": "甘肃卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127113347258.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/gstv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/gstv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }, {
+  },
+  {
     "tvId": "BINGTUAN",
     "tvType": "satellite",
     "tvName": "兵团卫视",
     "tvImg": "http://www.66zhibo.net/uploadfile/2014/0127/20140127112819830.jpg",
-    "tvCircuit": ["http://ivi.bupt.edu.cn/hls/bttv.m3u8"],
+    "tvCircuit": [
+      "http://ivi.bupt.edu.cn/hls/bttv.m3u8"
+    ],
     "programUrl": "https://m.tvsou.com/epg/b3666b9d?class=yangshi"
-  }]
-}]
+  }
+]
