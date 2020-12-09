@@ -8,7 +8,7 @@ import java.io.Serializable
  * @date:        2020/6/15 16:43
  * @description: 某个斗鱼game下的房间
  **/
- 
+
 data class DouyuRoom(
     val room_id: String,
     val room_src: String,

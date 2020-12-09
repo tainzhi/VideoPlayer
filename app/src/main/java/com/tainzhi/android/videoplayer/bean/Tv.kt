@@ -5,7 +5,8 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.tainzhi.mediaspider.bean.TvProgramBean
 import java.io.Serializable
 
@@ -20,19 +21,34 @@ import java.io.Serializable
         indices = [Index("id")]
 )
 data class Tv(
-        @PrimaryKey @ColumnInfo(name = "id") @field:SerializedName("tvId") var id: String = "",
-        @ColumnInfo(name = "type") @field:SerializedName("tvType") var type: String?,
-        @ColumnInfo(name = "name") @field: SerializedName("tvName") var name: String?,
-        @ColumnInfo(name = "image") @field: SerializedName("tvImg") var image: String?,
-        @ColumnInfo(name = "program_url") @field: SerializedName("programUrl") var programUrl : String? = "",
-        @ColumnInfo(name = "introduce") @field: SerializedName("introduce") var introduce: String? = ""
-): Serializable {
+        @PrimaryKey @ColumnInfo(name = "id") @Json(name = "tvId") var id: String = "",
+        @ColumnInfo(name = "type") @Json(name = "tvType") var type: String?,
+        @ColumnInfo(name = "name") @Json(name = "tvName") var name: String?,
+        @ColumnInfo(name = "image") @Json(name = "tvImg") var image: String?,
+        @ColumnInfo(name = "program_url") @Json(name = "programUrl") var programUrl: String? = "",
+        @ColumnInfo(name = "introduce") @Json(name = "introduce") var introduce: String? = ""
+) : Serializable {
     @Ignore
-    @field: SerializedName("tvCircuit")
+    @Json(name = "tvCircuit")
     var tvCircuit: List<String>? = null
+
     @Ignore
     var program: TvProgramBean? = null
     // constructor(): this("", "", "", "", "", "", null)
     // constructor(id: String, type: String, name: String, image: String, programUrl: String, introduce: String): this(id, type, name, image, programUrl, introduce, null)
 
 }
+
+/**
+ * only used in read TV from tv_circuits.json
+ */
+@JsonClass(generateAdapter = true)
+data class InputTv(
+        val tvId: String,
+        val tvType: String?,
+        val tvName: String?,
+        val tvImg: String?,
+        val tvCircuit: List<String>?,
+        val programUrl: String?,
+        val introduce: String?
+)

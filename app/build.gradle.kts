@@ -151,21 +151,24 @@ dependencies {
     implementation(Libs.AndroidX.Paging.runtimeKtx)
     implementation(Libs.AndroidX.Work.runtimeKtx)
     implementation(Libs.AndroidX.browser)
-    
+
     implementation(Libs.Google.material)
-    
+
     implementation(Libs.Coroutines.android)
-    
+
     implementation(Libs.Koin.scope)
     implementation(Libs.Koin.viewmodel)
     implementation(Libs.Koin.fragment)
     implementation(Libs.Koin.ext)
 
-    implementation(Libs.Retrofit.retrofit)
-    implementation(Libs.Retrofit.gsonConverter)
+    api(Libs.Retrofit.retrofit)
+    api(Libs.Retrofit.moshiConverter)
+    api(Libs.Moshi.moshi)
+    kapt(Libs.Moshi.codeGen)
+
     implementation(Libs.OkHttp.loggingInterceptor)
     implementation(Libs.cookietar)
-    
+
     implementation(Libs.Glide.glide)
     kapt(Libs.Glide.compiler)
 

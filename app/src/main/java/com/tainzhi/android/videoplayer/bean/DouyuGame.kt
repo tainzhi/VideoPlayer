@@ -6,8 +6,8 @@ package com.tainzhi.android.videoplayer.bean
  * @date:        2020/6/15 16:51
  * @description: 某个douyu game
  **/
- 
- 
+
+
 data class DouyuGame(
     val cate_id: Int,
     val game_name: String,
