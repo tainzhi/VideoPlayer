@@ -15,6 +15,7 @@ import org.koin.java.KoinJavaComponent.get
  * @description:
  **/
 
+// TODO: 2020/12/9 用NetworkBoundRepository替换 
 class DouyuRepository : BaseRepository(){
 
     /**

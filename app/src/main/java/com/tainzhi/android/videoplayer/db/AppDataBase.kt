@@ -9,6 +9,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
+import com.tainzhi.android.videoplayer.bean.TvProgram
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 
 /**
@@ -21,12 +22,15 @@ import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 const val DATABASE_NAME = "videoplayer.db"
 const val TV_CIRCUIT_JSON_FILE = "tv_circuits.json"
 
-@Database(entities = [Tv::class, TvCircuit::class], version = 1, exportSchema = false)
+@Database(entities = [Tv::class, TvCircuit::class, TvProgram::class], version = 2, exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun getTvDao(): TvDao
 
     companion object {
+
+        // TODO: 2020/12/9 把标记数据库创建成功的标记持久化
+        var firstCreateDb = false
 
         @Volatile
         private var instance: AppDataBase? = null
