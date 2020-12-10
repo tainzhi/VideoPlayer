@@ -61,11 +61,12 @@
 			app:layout_constraintDimensionRatio="w, 35:20"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:thumbPlaceHolder="@{R.drawable.ic_default_thumbnail}"
-			app:videoUri="@{video.uri}"
-			app:cornerRadius="@{6}"
+			cornerRadius="@{6}"
+			thumbPlaceHolder="@{R.drawable.ic_default_thumbnail}"
+			videoUri="@{video.uri}"
 			tools:ignore="ContentDescription"
-			tools:src="@drawable/ic_default_thumbnail" />
+			tools:src="@drawable/ic_default_thumbnail"
+			/>
 		
 		<TextView
 			android:id="@+id/videoDurationTv"
