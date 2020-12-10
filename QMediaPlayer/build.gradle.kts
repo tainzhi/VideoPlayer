@@ -48,7 +48,7 @@ dependencies {
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.constraintlayout)
     implementation(project(":danmu"))
-    implementation(project(":ffmpeg"))
+    // implementation(project(":ffmpeg"))
 
     api("tv.danmaku.ijk.media:ijkplayer-java:0.8.8")
     // Other ABIs: optional

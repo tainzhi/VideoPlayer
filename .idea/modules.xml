@@ -9,7 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" />
     </modules>
   </component>
 </project>
