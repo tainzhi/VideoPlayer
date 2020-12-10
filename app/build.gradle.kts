@@ -15,8 +15,9 @@ plugins {
 }
 
 apply {
-    // // 读取另一个gradle.kts
     // from("../test_dependencies.gradle.kts")
+    // 直接把 androidTestImplementation写在该目录报错, More than one file was found with OS independent path 'META-INF/AL2.0
+    from("../test_dependencies.gradle")
 }
 
 val byteOut = ByteArrayOutputStream()
@@ -33,7 +34,7 @@ android {
             // debug版本默认不签名
             // storeFile = file("../android.keystore")
         }
-    
+
         create("stagging") {
             storeFile = file("../android.keystore")
             // #签名密码
@@ -43,7 +44,7 @@ android {
             // #签名别名密码
             keyPassword = "tainzhi"
         }
-    
+
         create("release") {
             storeFile = file("../android.keystore")
             // #签名密码
@@ -56,7 +57,7 @@ android {
     }
     compileSdkVersion(Libs.Version.compileSdkVersion)
     buildToolsVersion(Libs.Version.buildToolsVersion)
-    
+
     defaultConfig {
         applicationId = "com.tainzhi.android.videoplayer"
         minSdkVersion(Libs.Version.minSdkVersion)
@@ -94,24 +95,24 @@ android {
             signingConfigs["release"]
         }
     }
-    
+
     applicationVariants.all {
         val outputFileName = getOutputFileName(
                 defaultConfig,
                 buildType = buildTypes.getByName(name)
         )
-    
+
         outputs.forEach { output ->
             check(output is com.android.build.gradle.internal.api.ApkVariantOutputImpl)
             output.outputFileName = outputFileName
         }
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -129,7 +130,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
-    implementation(project(":ffmpeg"))
+    // implementation(project(":ffmpeg"))
     implementation(project(":danmu"))
 
     implementation(Libs.Kotlin.stdlib)
@@ -196,30 +197,6 @@ dependencies {
     testImplementation(Libs.AndroidX.Test.core)
     testImplementation(Libs.AndroidX.archCoreTesting)
     testImplementation(Libs.Google.truth)
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // 以下是 android test 依赖
-    ///////////////////////////////////////////////////////////////////////////
-    // Koin for Unit test and instrumented test
-    androidTestImplementation(Libs.Koin.test)
-    androidTestImplementation(Libs.Coroutines.test)
-    
-    androidTestImplementation(Libs.AndroidX.archCoreTesting)
-    // Core Library
-    androidTestImplementation(Libs.AndroidX.Test.core)
-    // Required for instrumen(ed tests, AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation(Libs.AndroidX.Test.runner)
-    androidTestImplementation(Libs.AndroidX.Test.rules)
-    androidTestImplementation(Libs.AndroidX.Test.Ext.junit)
-    // assertion
-    androidTestImplementation(Libs.AndroidX.Test.Ext.truth)
-    androidTestImplementation(Libs.Google.truth)
-    // espresso
-    androidTestImplementation(Libs.AndroidX.Test.Espresso.core)
-    androidTestImplementation(Libs.AndroidX.Test.Espresso.contrib)
-    androidTestImplementation(Libs.AndroidX.Test.Espresso.intents)
-    androidTestImplementation(Libs.AndroidX.Work.workTesting)
-
 }
 
 // task("updateReleaseApk") {

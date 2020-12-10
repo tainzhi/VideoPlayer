@@ -1,20 +1,16 @@
 package com.tainzhi.android.videoplayer.db
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
-import com.tainzhi.android.videoplayer.utilities.getValue
+import com.tainzhi.android.videoplayer.bean.TvProgram
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.Matchers.equalTo
-import org.junit.After
-import org.junit.Assert.assertThat
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.hamcrest.CoreMatchers.*
+import org.junit.*
+import org.junit.Assert.*
+import org.junit.runner.*
 
 /**
  * @author:      tainzhi
@@ -27,29 +23,28 @@ import org.junit.runner.RunWith
 class TvDaoTest {
     private lateinit var database: AppDataBase
     private lateinit var tvDao: TvDao
-    private val tvList = arrayListOf<Tv>(
+    private val tvList = listOf<Tv>(
             Tv("CCTV1", "center", "CCTV1", "", "", ""),
             Tv("CCTV2", "center", "CCTV2", "", "", ""),
             Tv("CCTV3", "center", "CCTV3", "", "", ""))
-    private val tvCircuitList = arrayListOf<TvCircuit>(
+    private val tvCircuitList = listOf<TvCircuit>(
             TvCircuit("CCTV1", "https://www.baidu.com"),
             TvCircuit("CCTV1", "https://www.baidu.com"),
             TvCircuit("CCTV1", "https://www.baidu.com"),
             TvCircuit("CCTV2", "https://www.baidu.com")
     )
-
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    private val tvProgramList = listOf(
+            TvProgram("cctv", "program1", "12:01", "program2", "13:00"),
+            TvProgram("cctv2", "program1", "12:01", "program2", "13:00"),
+            TvProgram("cctv3", "program1", "12:01", "program2", "13:00"),
+    )
 
     @Before
     fun createDb() = runBlocking {
-        // context = InstrumentationRegistry.getInstrumentation().context
-        val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
-        database = Room.inMemoryDatabaseBuilder(targetContext, AppDataBase::class.java).build()
+        database = Room.inMemoryDatabaseBuilder(
+                ApplicationProvider.getApplicationContext(),
+                AppDataBase::class.java).build()
         tvDao = database.getTvDao()
-
-        tvDao.insertAllTv(tvList)
-        tvDao.insertAllTvCircuit(tvCircuitList)
     }
 
 
@@ -59,12 +54,26 @@ class TvDaoTest {
     }
 
     @Test
-    fun testGetTv() {
-        val tvList = tvDao.getAllTv()
-        assertThat(tvList.size, equalTo(3))
+    fun tvTableTest() {
+        tvDao.insertAllTv(tvList)
+        val tvs = tvDao.getAllTv()
+        assertThat(tvs.size, `is`(3))
+    }
 
-        // val tvCircuitList = getValue(tvDao.getTvCircuit("CCTV1"))
-        val tvCircuitList = tvDao.getTvCircuit("CCTV1")
-        assertThat(tvCircuitList.size, equalTo(3))
+    @Test
+    fun tvCircuitTableTest() {
+        // tv_circuit用外键映射到tv,所以要要插入tv到tv_table
+        tvDao.insertAllTv(tvList)
+        tvDao.insertAllTvCircuit(tvCircuitList)
+        val tvCircuits = tvDao.getTvCircuit("CCTV1")
+        assertThat(tvCircuits.size, `is`(3))
+    }
+
+    @Test
+    fun tvProgramTableTest() {
+        tvDao.insertAllTvPrograms(tvProgramList)
+
+        val tvPrograms = tvDao.getAllTvPrograms()
+        assertThat(tvPrograms.size, `is`(3))
     }
 }
