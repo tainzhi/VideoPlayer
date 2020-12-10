@@ -38,7 +38,7 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
         emit(State.success(localData))
 
         // todo 如果不delay, 为啥会出现数据出现然后, 闪消失
-    }.onEach { delay(20L) }.catch { e ->
+    }.onEach { delay(50L) }.catch { e ->
         Log.d("NetworkBoundRepository", "data repository error", e)
         emit(State.error("NetworkBoundRepository error! cannot get data from local db or db: ${e.message}"))
         e.message?.let { Log.e("NetworkBoundRepository", it) }
