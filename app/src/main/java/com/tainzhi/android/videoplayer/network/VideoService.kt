@@ -49,5 +49,4 @@ interface VideoService {
     @GET("game")
     suspend fun getAllGames(): Response<List<DouyuGame>>
 
-
 }
