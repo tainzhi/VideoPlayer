@@ -1,0 +1,26 @@
+{
+  "error": 0,
+  "msg": "successful",
+  "data": [
+    {
+      "room_id": 5384600,
+      "room_src": "https://rpic.douyucdn.cn/asrpic/201210/5384600_1028.png/dy1",
+      "room_name": "赛博朋克2077首发体验 5384600",
+      "owner_uid": "205703433",
+      "online": 1870128,
+      "hn": 1870128,
+      "nickname": "骚某某",
+      "url": "http://www.douyu.com/5384600"
+    },
+    {
+      "room_id": 5720533,
+      "room_src": "https://rpic.douyucdn.cn/asrpic/201210/5720533_1028.png/dy1",
+      "room_name": "【邦Sa】单人4排全网最逗最激情单口相声",
+      "owner_uid": "225865703",
+      "online": 1702361,
+      "hn": 1702361,
+      "nickname": "邦Sa",
+      "url": "http://www.douyu.com/5720533"
+    }
+  ]
+}

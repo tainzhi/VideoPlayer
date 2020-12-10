@@ -1,0 +1,37 @@
+{
+  "error": 0,
+  "data": [
+    {
+      "cate_id": 1855,
+      "game_name": "星势力",
+      "short_name": "xsl",
+      "game_url": "http://www.douyu.com/directory/game/xsl",
+      "game_src": "https://sta-op.douyucdn.cn/dycatr/8ad2ab9ef18690b984e32eaeadc7b585.png",
+      "game_icon": "https://sta-op.douyucdn.cn/dycatr/c0f6c4746299fea448a186610f51bbe5.png"
+    },
+    {
+      "cate_id": 1,
+      "game_name": "英雄联盟",
+      "short_name": "LOL",
+      "game_url": "http://www.douyu.com/directory/game/LOL",
+      "game_src": "https://cs-op.douyucdn.cn/dycatr/game_cate/c543faae97189c529c37b7741906d5a1.jpg",
+      "game_icon": "https://sta-op.douyucdn.cn/dycatr/9ef8ecacebe6af12af5cc8469bb64c0d.png"
+    },
+    {
+      "cate_id": 181,
+      "game_name": "王者荣耀",
+      "short_name": "wzry",
+      "game_url": "http://www.douyu.com/directory/game/wzry",
+      "game_src": "https://cs-op.douyucdn.cn/dycatr/game_cate/b14b8890330ca7cb5185b954808485fc.jpg",
+      "game_icon": "https://sta-op.douyucdn.cn/dycatr/c234d4e65592bbc95f77fa4a9c676179.png"
+    },
+    {
+      "cate_id": 19,
+      "game_name": "主机游戏",
+      "short_name": "TVgame",
+      "game_url": "http://www.douyu.com/directory/game/TVgame",
+      "game_src": "https://sta-op.douyucdn.cn/dycatr/52f21a3cb5817f04b1428d78153d2c40.jpg",
+      "game_icon": "https://cs-op.douyucdn.cn/dycatr/game_cate/602c38f19a4fe9af40fdb64a00ce9ed5.jpg"
+    }
+  ]
+}
