@@ -2,12 +2,15 @@ package com.tainzhi.android.videoplayer.ui.tv
 
 import android.net.Uri
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.util.toast
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.databinding.TVFragmentBinding
 import com.tainzhi.android.videoplayer.db.AppDataBase
+import com.tainzhi.android.videoplayer.livedatanet.State
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -31,9 +34,15 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
     override fun initVM(): TVViewModel = getViewModel()
 
     override fun initView() {
-        mBinding.tvRecyclerView.run {
-            layoutManager = LinearLayoutManager(requireActivity())
-            adapter = tvAdapter
+        with(mBinding) {
+            tvRecyclerView.run {
+                layoutManager = LinearLayoutManager(requireActivity())
+                adapter = tvAdapter
+            }
+            tvRefreshLayout.run {
+                setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.color_secondary))
+                setOnRefreshListener { refresh() }
+            }
         }
     }
 
@@ -64,11 +73,23 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
             tvList.observe(viewLifecycleOwner) {
                 tvAdapter.setList(it)
             }
-            tvPrograms.observe(viewLifecycleOwner) { tvProgram ->
-                tvAdapter.data.forEach { tv ->
-                    tv.program = tvProgram[tv.id]
+            tvPrograms.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is State.Success -> {
+                        tvAdapter.data.forEach { tv ->
+                            tv.program = state.data[tv.id]
+                        }
+                        tvAdapter.notifyDataSetChanged()
+                        mBinding.tvRefreshLayout.isRefreshing = false
+                    }
+                    is State.Loading -> {
+                        mBinding.tvRefreshLayout.isRefreshing = true
+                    }
+                    is State.Error -> {
+                        mBinding.tvRefreshLayout.isRefreshing = false
+                        activity?.toast(state.message)
+                    }
                 }
-                tvAdapter.notifyDataSetChanged()
             }
         }
     }
