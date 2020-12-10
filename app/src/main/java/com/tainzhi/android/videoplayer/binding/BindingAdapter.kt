@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.tainzhi.android.common.util.FormatUtil.formatMediaDuration
@@ -69,10 +70,9 @@ fun bindVideoThumbnail(
         } ?: return
     val options = RequestOptions()
     placeHolder?.let { options.placeholder(placeHolder) }
-    cornerRadius?.let { options.transform(RoundedCorners(it)) }
+    cornerRadius?.let { options.transform(CenterCrop(), RoundedCorners(it)) }
     Glide.with(imageView.context).load(thumbnail)
         .apply(options)
-        .optionalCenterCrop()
         .into(imageView)
 }
 

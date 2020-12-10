@@ -36,7 +36,7 @@
 				app:layout_constraintHeight_percent="0.8"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
-				app:roundCornerRadiusImage="@{5}"
+				app:roundCornerRadiusImage="@{8}"
 				tools:ignore="ContentDescription"
 				tools:src="@drawable/ic_default_tv"
 				/>
