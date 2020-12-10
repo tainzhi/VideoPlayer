@@ -11,7 +11,7 @@ import android.view.TextureView
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.tainzhi.qmediaplayer.IMediaExo
-import com.tainzhi.qmediaplayer.IMediaFFmpeg
+// import com.tainzhi.qmediaplayer.IMediaFFmpeg
 import com.tainzhi.qmediaplayer.IMediaIjk
 import com.tainzhi.qmediaplayer.IMediaInterface
 import com.tainzhi.qmediaplayer.IMediaSystem
@@ -135,9 +135,9 @@ class TextureRenderView @JvmOverloads constructor(
                 is IMediaExo -> {
                     mp.setDisplay(openSurface())
                 }
-                is IMediaFFmpeg -> {
-                    mp.setDisplay(openSurface())
-                }
+                // is IMediaFFmpeg -> {
+                //     mp.setDisplay(openSurface())
+                // }
             }
         }
 
