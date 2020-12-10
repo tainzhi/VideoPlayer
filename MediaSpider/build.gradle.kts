@@ -56,27 +56,4 @@ dependencies {
     testImplementation(Libs.robolectric)
     testImplementation(Libs.AndroidX.Test.Ext.junit)
 
-    ///////////////////////////////////////////////////////////////////////////
-    // 以下是 android test 依赖
-    ///////////////////////////////////////////////////////////////////////////
-    // Koin for Unit test and instrumented test
-    androidTestImplementation(Libs.Koin.test)
-    androidTestImplementation(Libs.Coroutines.test)
-
-    androidTestImplementation(Libs.AndroidX.archCoreTesting)
-    // Core Library
-    androidTestImplementation(Libs.AndroidX.Test.core)
-    // Required for instrumen(ed tests, AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation(Libs.AndroidX.Test.runner)
-    androidTestImplementation(Libs.AndroidX.Test.rules)
-    androidTestImplementation(Libs.AndroidX.Test.Ext.junit)
-    // assertion
-    androidTestImplementation(Libs.AndroidX.Test.Ext.truth)
-    androidTestImplementation(Libs.Google.truth)
-    // espresso
-    androidTestImplementation(Libs.AndroidX.Test.Espresso.core)
-    androidTestImplementation(Libs.AndroidX.Test.Espresso.contrib)
-    androidTestImplementation(Libs.AndroidX.Test.Espresso.intents)
-    androidTestImplementation(Libs.AndroidX.Work.workTesting)
-
 }
