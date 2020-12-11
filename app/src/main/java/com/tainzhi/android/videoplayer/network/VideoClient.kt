@@ -1,6 +1,7 @@
 package com.tainzhi.android.videoplayer.network
 
 import com.tainzhi.android.common.base.BaseRetrofitClient
+import com.tainzhi.android.videoplayer.BuildConfig
 import okhttp3.OkHttpClient
 
 /**
@@ -15,7 +16,8 @@ object VideoClient: BaseRetrofitClient() {
     val service by lazy { getService(VideoService::class.java, VideoService.DOUYU_BASE_URL)}
 
     override fun handleBuilder(builder: OkHttpClient.Builder) {
-        // FIXME: 2020/6/16 去除自定义 LogInterceptor
-        // builder.addInterceptor(LogInterceptor())
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(LogInterceptor())
+        }
     }
 }
