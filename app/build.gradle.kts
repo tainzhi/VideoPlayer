@@ -162,6 +162,8 @@ dependencies {
     implementation(Libs.Koin.fragment)
     implementation(Libs.Koin.ext)
 
+    implementation(Libs.logger)
+
     api(Libs.Retrofit.retrofit)
     api(Libs.Retrofit.moshiConverter)
     api(Libs.Moshi.moshi)

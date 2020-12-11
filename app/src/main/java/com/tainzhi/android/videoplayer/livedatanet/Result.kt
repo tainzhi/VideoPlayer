@@ -1,7 +1,7 @@
 package com.tainzhi.android.videoplayer.livedatanet
 
 /**
- * File:     Resource
+ * File:     Result
  * Author:   tainzhi
  * Created:  2020/12/3 19:30
  * Mail:     QFQ61@qq.com
