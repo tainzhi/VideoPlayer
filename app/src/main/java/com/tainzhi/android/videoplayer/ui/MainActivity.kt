@@ -12,6 +12,8 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,6 +24,7 @@ import com.tainzhi.android.videoplayer.databinding.ActivityMainBinding
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 import com.tainzhi.android.videoplayer.util.Theme
 import com.tainzhi.android.videoplayer.util.setupWithNavController
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -39,6 +42,9 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
         } // Else, need to wait for onRestoreInstanceState
 
         setSupportActionBar(mBinding.toolbar)
+        lifecycleScope.launch {
+            whenStarted { }
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

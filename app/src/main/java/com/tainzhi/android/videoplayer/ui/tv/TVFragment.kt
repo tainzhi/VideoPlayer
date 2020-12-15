@@ -53,7 +53,7 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
 
     private fun refresh() {
         mViewModel.getTVList()
-        mViewModel.getTVProgram()
+        // mViewModel.getTVProgram()
     }
 
     override fun startObserve() {
