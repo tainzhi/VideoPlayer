@@ -8,22 +8,21 @@ import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.common.base.ui.BaseViewModel
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
-import com.tainzhi.android.videoplayer.livedatanet.State
-import com.tainzhi.android.videoplayer.repository.TvRepository
+import com.tainzhi.android.videoplayer.livedatanet.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
-import com.tainzhi.mediaspider.bean.TvProgramBean
-import kotlinx.coroutines.flow.collect
 
-class TVViewModel(private val tvRepository: TvRepository,
+class TVViewModel(private val tvRepository: TVRepository,
                   private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel() {
 
     private val _tvList: MutableLiveData<List<Tv>> = MutableLiveData()
     val tvList: LiveData<List<Tv>>
         get() = _tvList
-    private val _tvPrograms = MutableLiveData<State<Map<String, TvProgramBean>>>()
-    val tvPrograms: LiveData<State<Map<String, TvProgramBean>>>
-        get() = _tvPrograms
+
+    // private val _tvPrograms = MutableLiveData<State<Map<String, TvProgramBean>>>()
+    val tvPrograms by lazy {
+        tvRepository.getTvPrograms()
+    }
 
     val dataBaseStatus: LiveData<List<WorkInfo>>
         get() = WorkManager.getInstance(App.CONTEXT).getWorkInfosByTagLiveData(Start_UP_Create_Database)
@@ -42,13 +41,10 @@ class TVViewModel(private val tvRepository: TvRepository,
     /**
      * 获取每个卫视当前的直播节目
      */
-    fun getTVProgram() {
-        launch {
-            val tvPrograms = tvRepository.getTvPrograms()
-            tvPrograms.collect {
-                _tvPrograms.postValue(it)
-            }
-        }
-    }
+    // fun getTVProgram() {
+    //     tvRepository.getTvPrograms().map {
+    //         _tvPrograms.postValue(it)
+    //     }
+    // }
 
 }

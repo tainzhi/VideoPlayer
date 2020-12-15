@@ -1,6 +1,6 @@
 package com.tainzhi.android.videoplayer.network
 
-import com.tainzhi.android.common.base.Response
+import com.tainzhi.android.common.base.ResponseBody
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import retrofit2.http.GET
@@ -28,7 +28,7 @@ interface VideoService {
     suspend fun getRecommendRooms(
             @Query("offset") offset: Int,
             @Query("limit") limit: Int
-    ): Response<List<DouyuRoom>>
+    ): ResponseBody<List<DouyuRoom>>
 
     /**
      * 获取游戏分类game_id下的直播房间
@@ -39,7 +39,7 @@ interface VideoService {
             @Path("game_id") gameId: String,
             @Query("offset") offset: Int,
             @Query("limit") limit: Int
-    ): Response<List<DouyuRoom>>
+    ): ResponseBody<List<DouyuRoom>>
 
 
     /**
@@ -47,6 +47,6 @@ interface VideoService {
      * http://open.douyucdn.cn/api/RoomApi/game
      */
     @GET("game")
-    suspend fun getAllGames(): Response<List<DouyuGame>>
+    suspend fun getAllGames(): ResponseBody<List<DouyuGame>>
 
 }
