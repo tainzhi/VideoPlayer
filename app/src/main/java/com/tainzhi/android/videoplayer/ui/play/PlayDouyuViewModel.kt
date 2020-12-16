@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
-import com.tainzhi.android.videoplayer.network.State
+import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ class PlayDouyuViewModel(
         private val coroutinesDispatcherProvider: CoroutinesDispatcherProvider
 ) : ViewModel() {
 
-    private val _roomUrl = MutableLiveData<State<String>>()
+    private val _roomUrl = MutableLiveData<Result<String>>()
     val roomUrl
         get() = _roomUrl
 

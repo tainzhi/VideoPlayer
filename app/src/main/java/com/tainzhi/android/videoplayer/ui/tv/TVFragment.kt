@@ -10,7 +10,6 @@ import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.databinding.TVFragmentBinding
 import com.tainzhi.android.videoplayer.db.AppDataBase
-import com.tainzhi.android.videoplayer.network.State
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -21,7 +20,7 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
             if (tv.tvCircuit != null) {
                 PlayActivity.startPlay(requireActivity(),
                         Uri.parse(tv.tvCircuit!![0]),
-                        tv.name?.let { it } ?: "")
+                        tv.name ?: "")
 
             } else {
                 Log.e("TVFragment.TVAdapter", "no valid circuit, ${tv.name} 不能观看")
@@ -75,20 +74,21 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
             }
             tvPrograms.observe(viewLifecycleOwner) { state ->
                 when (state) {
-                    is State.Success -> {
+                    is com.tainzhi.android.videoplayer.network.Result.Success -> {
                         tvAdapter.data.forEach { tv ->
                             tv.program = state.data[tv.id]
                         }
                         tvAdapter.notifyDataSetChanged()
                         mBinding.tvRefreshLayout.isRefreshing = false
                     }
-                    is State.Loading -> {
+                    is com.tainzhi.android.videoplayer.network.Result.Loading -> {
                         mBinding.tvRefreshLayout.isRefreshing = true
                     }
-                    is State.Error -> {
+                    is com.tainzhi.android.videoplayer.network.Result.Error -> {
                         mBinding.tvRefreshLayout.isRefreshing = false
                         activity?.toast(state.message)
                     }
+                    else -> Unit
                 }
             }
         }

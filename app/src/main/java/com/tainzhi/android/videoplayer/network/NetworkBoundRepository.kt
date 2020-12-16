@@ -3,7 +3,7 @@ package com.tainzhi.android.videoplayer.network
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import com.orhanobut.logger.Logger
-import com.tainzhi.android.videoplayer.network.State.Loading
+import com.tainzhi.android.videoplayer.network.Result.Loading
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.onEach
  * [REQUEST] represents the type for network.
  */
 abstract class NetworkBoundRepository<RESULT, REQUEST> {
-    fun asFlow() = flow<State<RESULT>> {
+    fun asFlow() = flow<Result<RESULT>> {
         // 1. 发送 Loading
         emit(Loading())
         // 2. 加载本地数据
@@ -34,13 +34,13 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
                 saveRemoteData(remoteResponse)
                 // 5. 再从本地取出, 发送成功数据
                 localData = fetchFromLocal()
-                emit(State.success(localData))
+                emit(Result.success(localData))
             } else {
-                emit(State.error("fetched remote data is invalid"))
+                emit(Result.error("fetched remote data is invalid"))
             }
         } else {
             // 3.2 本地数据没有过期, 发送刚才加载的本地数据
-            emit(State.success(localData))
+            emit(Result.success(localData))
         }
 
         // todo 如果不delay, 为啥会出现数据出现然后, 闪消失
@@ -48,7 +48,7 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
         delay(50L)
     }.catch { e ->
         Logger.e("data repository error", e)
-        emit(State.error("NetworkBoundRepository error! cannot get data from local db or db: ${e.message}"))
+        emit(Result.error("NetworkBoundRepository error! cannot get data from local db or db: ${e.message}"))
     }
 
     open fun isValidData(data: REQUEST) = true

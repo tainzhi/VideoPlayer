@@ -12,7 +12,6 @@ import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomAdapter
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomItemDecoration
 import com.tainzhi.android.videoplayer.databinding.DouyuGameFragmentBinding
-import com.tainzhi.android.videoplayer.network.State
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.play.PlayDouyuActivity
 import com.tainzhi.android.videoplayer.widget.CustomLoadMoreView
@@ -115,14 +114,14 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
     override fun startObserve() {
         mViewModel.gameRooms.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is State.Loading -> {
+                is com.tainzhi.android.videoplayer.network.Result.Loading -> {
                     mBinding.douyuGameRefreshLayout.isRefreshing = true
                 }
-                is State.Error -> {
+                is com.tainzhi.android.videoplayer.network.Result.Error -> {
                     mBinding.douyuGameRefreshLayout.isRefreshing = false
                     activity?.toast(state.message)
                 }
-                is State.Success -> {
+                is com.tainzhi.android.videoplayer.network.Result.Success -> {
                     mBinding.douyuGameRefreshLayout.isRefreshing = false
                     mBinding.douyuGameMultiStateView.viewState = MultiStateView.ViewState.CONTENT
                     douyuRoomAdapter.run {
@@ -135,7 +134,7 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
                         }
                     }
                 }
-                is State.SuccessEndData -> {
+                is com.tainzhi.android.videoplayer.network.Result.SuccessEndData -> {
                     mBinding.douyuGameRefreshLayout.isRefreshing = false
                     douyuRoomAdapter.run {
                         addData(state.data)
