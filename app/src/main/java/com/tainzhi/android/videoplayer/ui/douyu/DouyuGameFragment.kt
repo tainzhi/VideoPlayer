@@ -2,16 +2,17 @@ package com.tainzhi.android.videoplayer.ui.douyu
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.kennyc.view.MultiStateView
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.util.toast
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomAdapter
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomItemDecoration
 import com.tainzhi.android.videoplayer.databinding.DouyuGameFragmentBinding
+import com.tainzhi.android.videoplayer.network.State
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.play.PlayDouyuActivity
 import com.tainzhi.android.videoplayer.widget.CustomLoadMoreView
@@ -112,28 +113,37 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
     }
 
     override fun startObserve() {
-        mViewModel.uiState.observe(viewLifecycleOwner, Observer { it ->
-            mBinding.douyuGameRefreshLayout.isRefreshing = it.showLoading
-            it.showSuccess?.let { list ->
-                mBinding.douyuGameMultiStateView.viewState = MultiStateView.ViewState.CONTENT
-                douyuRoomAdapter.run {
-                    if (it.isRefresh) setList(list)
-                    else addData(list)
-                    loadMoreModule.run {
-                        isEnableLoadMore = true
-                        loadMoreComplete()
+        mViewModel.gameRooms.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is State.Loading -> {
+                    mBinding.douyuGameRefreshLayout.isRefreshing = true
+                }
+                is State.Error -> {
+                    mBinding.douyuGameRefreshLayout.isRefreshing = false
+                    activity?.toast(state.message)
+                }
+                is State.Success -> {
+                    mBinding.douyuGameRefreshLayout.isRefreshing = false
+                    mBinding.douyuGameMultiStateView.viewState = MultiStateView.ViewState.CONTENT
+                    douyuRoomAdapter.run {
+                        val roomList = state.data
+                        if (mViewModel.isRefreshLoading) setList(roomList)
+                        else addData(roomList)
+                        loadMoreModule.run {
+                            isEnableLoadMore = true
+                            loadMoreComplete()
+                        }
+                    }
+                }
+                is State.SuccessEndData -> {
+                    mBinding.douyuGameRefreshLayout.isRefreshing = false
+                    douyuRoomAdapter.run {
+                        addData(state.data)
+                        loadMoreModule.loadMoreEnd()
                     }
                 }
             }
-
-            if (it.showEnd) douyuRoomAdapter.loadMoreModule.loadMoreEnd()
-
-            it.showError?.let { message ->
-                // TODO: 2020/6/20 网络情况判断, 没有网络时, 怎么处理 
-                // activity?.toast(if (message.isBlank()) "Net error" else message)
-                // homeMultiStateView.viewState = MultiStateView.ViewState.ERROR
-            }
-        })
+        }
     }
 
     private fun loadMore() {

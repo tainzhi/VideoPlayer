@@ -16,6 +16,8 @@ sealed class State<out T> {
 
     data class Success<T>(val data: T) : State<T>()
 
+    data class SuccessEndData<T>(val data: T) : State<T>()
+
     data class Error<T>(val message: String) : State<T>()
 
     companion object {
@@ -33,6 +35,12 @@ sealed class State<out T> {
                 Success(data)
 
         /**
+         * 返回最后一组数据, 没有更多的数据了
+         */
+        fun <T> successEndData(data: T) =
+                SuccessEndData(data)
+
+        /**
          * Returns [State.Error] instance.
          * @param message Description of failure.
          */
@@ -46,6 +54,9 @@ sealed class State<out T> {
  */
 inline fun <reified T> State<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
     if (this is Success) {
-        liveData.value = data
+        liveData.postValue(data)
     }
 }
+
+val <T> State<T>.data: T?
+    get() = (this as? Success)?.data

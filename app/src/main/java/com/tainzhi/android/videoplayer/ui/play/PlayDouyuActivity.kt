@@ -6,10 +6,10 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
+import com.tainzhi.android.videoplayer.network.State
 import com.tainzhi.qmediaplayer.AutoFullScreenListener
 import com.tainzhi.qmediaplayer.VideoView
 import com.tainzhi.qmediaplayer.controller.NetMediaController
@@ -95,20 +95,24 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
     override fun getLayoutResId() = R.layout.activity_video_test
 
     override fun startObserve() {
-        mViewModel.roomCircuitId.observe(this@PlayDouyuActivity, Observer {
-            val uri = Uri.parse("http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8")
-            videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
-            // 如果先加载MediaController, 将不会显示
-        })
-        mViewModel.error.observe(this@PlayDouyuActivity, Observer {
-            Snackbar.make(videoView, it, Snackbar.LENGTH_SHORT)
-                    .setAction("退出播放界面") {
-                        finish()
-                    }
-                    .apply {
-                        // anchorView = bottomNavView
-                    }.show()
-
-        })
+        mViewModel.roomUrl.observe(this@PlayDouyuActivity) { state ->
+            when (state) {
+                is State.Success -> {
+                    // val uri = Uri.parse("http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8")
+                    val uri = Uri.parse(state.data)
+                    videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
+                    // 如果先加载MediaController, 将不会显示
+                }
+                is State.Error -> {
+                    Snackbar.make(videoView, state.message, Snackbar.LENGTH_SHORT)
+                            .setAction("退出播放界面") {
+                                finish()
+                            }
+                            .apply {
+                                // anchorView = bottomNavView
+                            }.show()
+                }
+            }
+        }
     }
 }

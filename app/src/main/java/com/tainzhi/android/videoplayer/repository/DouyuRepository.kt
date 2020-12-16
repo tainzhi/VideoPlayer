@@ -1,11 +1,16 @@
 package com.tainzhi.android.videoplayer.repository
 
+import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.BaseRepository
-import com.tainzhi.android.common.base.Result
+import com.tainzhi.android.common.base.ResponseBody
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
+import com.tainzhi.android.videoplayer.network.State
 import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.mediaspider.DouyuSpider
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import org.koin.java.KoinJavaComponent.get
 
 /**
@@ -15,40 +20,70 @@ import org.koin.java.KoinJavaComponent.get
  * @description:
  **/
 
-// TODO: 2020/12/9 用NetworkBoundRepository替换 
-class DouyuRepository : BaseRepository(){
+class DouyuRepository : BaseRepository() {
+
+    private var douyuCurrentOffset = 0
+    private var douyuLimit = 20 // 因为第一页加载20,方便形成首行横跨两格; 从第二页开始加载20个
 
     /**
-     * @param offset 已经加载offset个房间信息, 从offset加载之后的房间
-     * @param limit 加载数量限制, 默认为20
+     * @param gameId 直播游戏id
+     * @param isRefresh 是否重新加载, true 刷新, 只加载第一个page; false, 加载下一个page
      */
-    suspend fun getGameRooms(gameId: String, offset: Int, limit: Int = 20): Result<List<DouyuRoom>> {
-        return safeApiCall(call = { requestRooms(gameId, offset, limit)})
-    }
+    fun getGameRooms(gameId: String, isRefresh: Boolean = false): Flow<State<List<DouyuRoom>>> =
+            flow {
+                emit(State.loading())
 
-    private suspend fun requestRooms(gameId: String, offset: Int, limit: Int): Result<List<DouyuRoom>> =
-        executeResponse(
+                if (isRefresh) {
+                    douyuCurrentOffset = 0
+                }
+
+                lateinit var fetchedData: ResponseBody<List<DouyuRoom>>
                 // 推荐房间列表
                 if (gameId == "-1")
-                    get(VideoService::class.java).getRecommendRooms(offset, limit)
+                    fetchedData = get(VideoService::class.java).getRecommendRooms(douyuCurrentOffset, douyuLimit)
                 // 特定game房间列表
                 else
-                    get(VideoService::class.java).getGameRooms(gameId, offset, limit)
-        )
+                    fetchedData = get(VideoService::class.java).getGameRooms(gameId, douyuCurrentOffset, douyuLimit)
 
-    suspend fun getAllGames(): Result<List<DouyuGame>> {
-        return safeApiCall(call = { requestAllGames()})
-    }
+                val fetchedDataSize = fetchedData.data.size
+                if (fetchedDataSize < douyuLimit) {
+                    emit(State.SuccessEndData(fetchedData.data))
+                } else {
+                    emit(State.Success(fetchedData.data))
+                }
+                douyuCurrentOffset += fetchedDataSize
+            }.catch { e ->
+                Logger.e(e.toString())
+                emit(State.error(e.toString()))
+            }
 
-    private suspend fun requestAllGames(): Result<List<DouyuGame>> =
-            executeResponse(get(VideoService::class.java).getAllGames())
+    fun getAllGames(): Flow<State<List<DouyuGame>>> =
+            flow {
+                emit(State.loading())
 
-    suspend fun getRoomCircuitId(roomId: String): Result<String> {
-        return try {
-            val result = DouyuSpider.getInstance().getRoomCircuitId(roomId)
-            Result.Success<String>(result)
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
+                val fetchedData = get(VideoService::class.java).getAllGames()
+
+                emit(State.Success(fetchedData.data))
+            }.catch { e ->
+                Logger.e(e.toString())
+                emit(State.error(e.toString()))
+            }
+
+    fun getRoomUrl(roomId: String): Flow<State<String>> =
+            flow {
+                emit(State.loading())
+                val roomCircuitId = DouyuSpider.getInstance().getRoomCircuitId(roomId)
+                val url = String.format(circuit1, roomCircuitId)
+                emit(State.Success(url))
+            }.catch { e ->
+                Logger.e(e.toString())
+                emit(State.error(e.toString()))
+            }
+
+    companion object {
+        val circuit1 = "http://tx2play1.douyucdn.cn/live/%s_550.flv"
+        val circuit2 = "http://hdls1a.douyucdn.cn/live/%s.flv"
+        val circuit5 = "https://tc-tct.douyucdn2.cn/dyliveflv1a/%s_550.flv"
+
     }
 }
