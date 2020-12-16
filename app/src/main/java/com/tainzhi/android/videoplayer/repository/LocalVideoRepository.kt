@@ -4,12 +4,12 @@ import android.content.ContentUris
 import android.database.Cursor.FIELD_TYPE_STRING
 import android.net.Uri
 import android.provider.MediaStore
-import android.util.Log
-import com.tainzhi.android.common.base.BaseRepository
+import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.util.FormatUtil.formatMediaDate
 import com.tainzhi.android.common.util.FormatUtil.formatMediaSize
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.LocalVideo
+import com.tainzhi.android.videoplayer.network.State
 
 /**
  * @author:      tainzhi
@@ -18,10 +18,9 @@ import com.tainzhi.android.videoplayer.bean.LocalVideo
  * @description:
  **/
 
-// TODO: 2020/12/9 用NetworkBoundRepository替换
-class LocalVideoRepository : BaseRepository() {
+class LocalVideoRepository {
 
-    fun getLocalVideoList(): List<LocalVideo> {
+    fun getLocalVideoList(): State<List<LocalVideo>> {
         val list = arrayListOf<LocalVideo>()
         val videoColumnsProjection = arrayOf(
                 MediaStore.Video.Media._ID,
@@ -79,12 +78,13 @@ class LocalVideoRepository : BaseRepository() {
                     list += LocalVideo(contentUri, size, data, title, duration, resolution, orientation, dateAdded, dateModified, dateTaken, bucketName)
                 }
             } catch (e: Exception) {
-                Log.e("LocalVideoRepository", e.toString())
+                Logger.e(e.toString())
+                return State.error(e.toString())
             } finally {
-                return list
+                return State.success(list)
             }
         }
-        return list
+        return State.success(list)
     }
 
     fun deleteVideo(uri: Uri) {

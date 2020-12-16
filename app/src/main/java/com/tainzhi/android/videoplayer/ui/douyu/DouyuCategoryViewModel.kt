@@ -2,12 +2,14 @@ package com.tainzhi.android.videoplayer.ui.douyu
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
-import com.tainzhi.android.common.base.Result
-import com.tainzhi.android.common.base.ui.BaseViewModel
 import com.tainzhi.android.videoplayer.bean.DouyuGame
+import com.tainzhi.android.videoplayer.network.State
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * @author:      tainzhi
@@ -17,24 +19,21 @@ import kotlinx.coroutines.withContext
  **/
 class DouyuCategoryViewModel(private val douyuRepository: DouyuRepository,
                              private val coroutineProvider: CoroutinesDispatcherProvider
-) : BaseViewModel() {
+) : ViewModel() {
     private val _games = MutableLiveData<List<DouyuGame>>()
     val games: LiveData<List<DouyuGame>>
         get() = _games
 
 
     fun getDouyuRooms() {
-        launch {
-            val result = douyuRepository.getAllGames()
-            if (result is Result.Success) {
-                emitData(result.data)
+        viewModelScope.launch(coroutineProvider.io) {
+            douyuRepository.getAllGames().collect {
+                when (it) {
+                    is State.Success -> {
+                        _games.postValue(it.data)
+                    }
+                }
             }
-        }
-    }
-
-    private suspend fun emitData(data: List<DouyuGame>) {
-        withContext(coroutineProvider.main) {
-            _games.value = data
         }
     }
 }
