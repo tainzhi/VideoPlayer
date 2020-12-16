@@ -1,4 +1,4 @@
-package com.tainzhi.android.videoplayer.livedatanet
+package com.tainzhi.android.videoplayer.network
 
 /**
  * File:     Result

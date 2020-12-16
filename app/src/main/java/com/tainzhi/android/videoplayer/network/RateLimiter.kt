@@ -1,4 +1,4 @@
-package com.tainzhi.android.videoplayer.livedatanet
+package com.tainzhi.android.videoplayer.network
 
 import android.os.SystemClock
 import android.util.ArrayMap

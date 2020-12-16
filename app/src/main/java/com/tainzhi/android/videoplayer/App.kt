@@ -2,7 +2,9 @@ package com.tainzhi.android.videoplayer
 
 import android.app.Application
 import android.content.Context
-import com.tainzhi.android.videoplayer.db.AppDataBase
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.tainzhi.android.videoplayer.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,7 +21,6 @@ import kotlin.properties.Delegates
 
 class App : Application() {
 
-
     companion object {
         var CONTEXT: Context by Delegates.notNull()
     }
@@ -34,7 +35,23 @@ class App : Application() {
             modules(appModule)
         }
 
-        AppDataBase.getInstance(applicationContext)
+        initLog()
+
     }
 
+
+    private fun initLog() {
+        Logger.addLogAdapter(object : AndroidLogAdapter(
+                PrettyFormatStrategy.newBuilder()
+                        .showThreadInfo(false)
+                        .methodCount(0)
+                        .methodOffset(7)
+                        .build()
+        ) {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return BuildConfig.DEBUG;
+            }
+        })
+    }
 }
+

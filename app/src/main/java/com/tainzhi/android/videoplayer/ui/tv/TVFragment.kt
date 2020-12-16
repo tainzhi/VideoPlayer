@@ -10,7 +10,7 @@ import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.databinding.TVFragmentBinding
 import com.tainzhi.android.videoplayer.db.AppDataBase
-import com.tainzhi.android.videoplayer.livedatanet.State
+import com.tainzhi.android.videoplayer.network.State
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -53,7 +53,7 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
 
     private fun refresh() {
         mViewModel.getTVList()
-        // mViewModel.getTVProgram()
+        mViewModel.getTVProgram()
     }
 
     override fun startObserve() {
