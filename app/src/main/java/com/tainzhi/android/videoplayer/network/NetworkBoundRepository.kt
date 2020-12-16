@@ -1,13 +1,13 @@
-package com.tainzhi.android.videoplayer.livedatanet
+package com.tainzhi.android.videoplayer.network
 
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
+import com.orhanobut.logger.Logger
+import com.tainzhi.android.videoplayer.network.State.Loading
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
-import retrofit2.Response
 
 /**
  * File:     NetworkBoundRepository
@@ -22,27 +22,36 @@ import retrofit2.Response
  */
 abstract class NetworkBoundRepository<RESULT, REQUEST> {
     fun asFlow() = flow<State<RESULT>> {
-        emit(State.Loading())
-
+        // 1. 发送 Loading
+        emit(Loading())
+        // 2. 加载本地数据
         var localData = fetchFromLocal()
         if (localData == null || shouldFetch()) {
-            val apiResponse = fetchFromRemote()
-            val apiBody = apiResponse.body()
-            if (apiResponse.isSuccessful && apiBody != null) {
-                saveRemoteData(apiBody)
+            // 3.1 本地数据加载失败或者本地数据已经过期, 从remote加载数据
+            val remoteResponse = fetchFromRemote()
+            if (isValidData(remoteResponse)) {
+                // 4. 从remote加载数据成功, 先保存到本地
+                saveRemoteData(remoteResponse)
+                // 5. 再从本地取出, 发送成功数据
+                localData = fetchFromLocal()
+                emit(State.success(localData))
             } else {
-                emit(State.error(apiResponse.message()))
+                emit(State.error("fetched remote data is invalid"))
             }
-            localData = fetchFromLocal()
+        } else {
+            // 3.2 本地数据没有过期, 发送刚才加载的本地数据
+            emit(State.success(localData))
         }
-        emit(State.success(localData))
 
         // todo 如果不delay, 为啥会出现数据出现然后, 闪消失
-    }.onEach { delay(50L) }.catch { e ->
-        Log.d("NetworkBoundRepository", "data repository error", e)
+    }.onEach {
+        delay(50L)
+    }.catch { e ->
+        Logger.e("data repository error", e)
         emit(State.error("NetworkBoundRepository error! cannot get data from local db or db: ${e.message}"))
-        e.message?.let { Log.e("NetworkBoundRepository", it) }
     }
+
+    open fun isValidData(data: REQUEST) = true
 
     protected abstract fun shouldFetch(): Boolean
 
@@ -53,5 +62,5 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
     protected abstract fun fetchFromLocal(): RESULT
 
     @MainThread
-    protected abstract suspend fun fetchFromRemote(): Response<REQUEST>
+    protected abstract suspend fun fetchFromRemote(): REQUEST
 }
