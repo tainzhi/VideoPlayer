@@ -2,27 +2,31 @@ package com.tainzhi.android.videoplayer.ui.tv
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
-import com.tainzhi.android.common.base.ui.BaseViewModel
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
-import com.tainzhi.android.videoplayer.livedatanet.TVRepository
+import com.tainzhi.android.videoplayer.network.State
+import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
+import com.tainzhi.mediaspider.bean.TvProgramBean
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class TVViewModel(private val tvRepository: TVRepository,
+class TVViewModel(private val TVRepository: TVRepository,
                   private val dispatcherProvider: CoroutinesDispatcherProvider
-) : BaseViewModel() {
+) : ViewModel() {
 
     private val _tvList: MutableLiveData<List<Tv>> = MutableLiveData()
     val tvList: LiveData<List<Tv>>
         get() = _tvList
 
-    // private val _tvPrograms = MutableLiveData<State<Map<String, TvProgramBean>>>()
-    val tvPrograms by lazy {
-        tvRepository.getTvPrograms()
-    }
+    private val _tvPrograms = MutableLiveData<State<Map<String, TvProgramBean>>>()
+    val tvPrograms: LiveData<State<Map<String, TvProgramBean>>>
+        get() = _tvPrograms
 
     val dataBaseStatus: LiveData<List<WorkInfo>>
         get() = WorkManager.getInstance(App.CONTEXT).getWorkInfosByTagLiveData(Start_UP_Create_Database)
@@ -32,8 +36,8 @@ class TVViewModel(private val tvRepository: TVRepository,
      * 从数据库获取卫视列表
      */
     fun getTVList() {
-        launch {
-            val result = tvRepository.loadTVs()
+        viewModelScope.launch(dispatcherProvider.io) {
+            val result = TVRepository.loadTVs()
             _tvList.postValue(result)
         }
     }
@@ -41,10 +45,12 @@ class TVViewModel(private val tvRepository: TVRepository,
     /**
      * 获取每个卫视当前的直播节目
      */
-    // fun getTVProgram() {
-    //     tvRepository.getTvPrograms().map {
-    //         _tvPrograms.postValue(it)
-    //     }
-    // }
+    fun getTVProgram() {
+        viewModelScope.launch(dispatcherProvider.io) {
+            TVRepository.getTvPrograms().collect {
+                _tvPrograms.postValue(it)
+            }
+        }
+    }
 
 }

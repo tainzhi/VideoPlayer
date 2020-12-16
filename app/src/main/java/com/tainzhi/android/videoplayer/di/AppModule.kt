@@ -4,12 +4,12 @@ import android.app.Application
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.db.TvDao
-import com.tainzhi.android.videoplayer.livedatanet.TVRepository
 import com.tainzhi.android.videoplayer.network.VideoClient
 import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
+import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuGameViewModel

@@ -175,7 +175,6 @@ dependencies {
     implementation(Libs.Glide.glide)
     kapt(Libs.Glide.compiler)
 
-    implementation(Libs.timber)
     implementation(Libs.baseRecyclerViewAdapterHelper)
     implementation(Libs.youthBanner)
     implementation(Libs.tencentTbssdk)
