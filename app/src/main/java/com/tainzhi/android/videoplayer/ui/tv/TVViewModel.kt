@@ -10,6 +10,7 @@ import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.network.State
+import com.tainzhi.android.videoplayer.network.updateOnSuccess
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 import com.tainzhi.mediaspider.bean.TvProgramBean
@@ -37,8 +38,8 @@ class TVViewModel(private val TVRepository: TVRepository,
      */
     fun getTVList() {
         viewModelScope.launch(dispatcherProvider.io) {
-            val result = TVRepository.loadTVs()
-            _tvList.postValue(result)
+            TVRepository.loadTVs()
+                    .updateOnSuccess(_tvList)
         }
     }
 

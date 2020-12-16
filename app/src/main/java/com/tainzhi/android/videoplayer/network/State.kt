@@ -1,5 +1,8 @@
 package com.tainzhi.android.videoplayer.network
 
+import androidx.lifecycle.MutableLiveData
+import com.tainzhi.android.videoplayer.network.State.Success
+
 /**
  * File:     Result
  * Author:   tainzhi
@@ -8,7 +11,7 @@ package com.tainzhi.android.videoplayer.network
  * Description: State Management for UI & Data.
  */
 
-sealed class State<T> {
+sealed class State<out T> {
     class Loading<T> : State<T>()
 
     data class Success<T>(val data: T) : State<T>()
@@ -35,5 +38,14 @@ sealed class State<T> {
          */
         fun <T> error(message: String) =
                 Error<T>(message)
+    }
+}
+
+/**
+ * Updates value of [liveData] if [Result] is of type [Success]
+ */
+inline fun <reified T> State<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
+    if (this is Success) {
+        liveData.value = data
     }
 }
