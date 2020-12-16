@@ -3,7 +3,6 @@ package com.tainzhi.android.videoplayer.ui.local
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -86,11 +85,12 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
 
     override fun startObserve() {
         mViewModel.apply {
-            localVideoList.observe(viewLifecycleOwner, Observer {
+            localVideoList.observe(viewLifecycleOwner, {
                 localVideoAdapter.setList(it)
-            })
+            }
+            )
             // 在Android10+上,获取删除权限
-            permissionNeededForDelete.observe(viewLifecycleOwner, Observer { intentSender ->
+            permissionNeededForDelete.observe(viewLifecycleOwner, { intentSender ->
                 intentSender?.let {
                     // On Android 10+, if the app doesn't have permission to modify
                     // or delete an item, it returns an `IntentSender` that we can
@@ -109,7 +109,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             })
         }
 
-        getSharedViewModel<MainViewModel>().searchString.observe(requireActivity(), Observer { search ->
+        getSharedViewModel<MainViewModel>().searchString.observe(requireActivity(), { search ->
             localVideoAdapter.filter.filter(search)
         })
     }
