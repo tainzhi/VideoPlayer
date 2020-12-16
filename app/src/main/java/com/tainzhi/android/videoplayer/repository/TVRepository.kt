@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.repository
 
+import com.orhanobut.logger.Logger
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvProgram
 import com.tainzhi.android.videoplayer.db.TvDao
@@ -31,12 +32,18 @@ class TVRepository(
         const val TAG = "TVRepository.getTvPrograms"
     }
 
-    fun loadTVs(): List<Tv> {
-        val tvs = tvDao.getAllTv()
-        tvs.forEach { tv ->
-            tv.tvCircuit = loadTVSource(tv.id)
+    fun loadTVs(): State<List<Tv>> {
+        return try {
+            val tvs = tvDao.getAllTv()
+            tvs.forEach { tv ->
+                tv.tvCircuit = loadTVSource(tv.id)
+            }
+            State.success(tvs)
+        } catch (e: Exception) {
+            val message = "loadTVs failed"
+            Logger.e(message, e)
+            State.error("$message, $e")
         }
-        return tvs
     }
 
     /**
