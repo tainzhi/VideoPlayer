@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
-import com.tainzhi.android.videoplayer.network.State
+import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ class DouyuGameViewModel(private val douyuRepository: DouyuRepository,
 
     var isRefreshLoading = false
 
-    private val _gameRooms = MutableLiveData<State<List<DouyuRoom>>>()
+    private val _gameRooms = MutableLiveData<Result<List<DouyuRoom>>>()
     val gameRooms
         get() = _gameRooms
 

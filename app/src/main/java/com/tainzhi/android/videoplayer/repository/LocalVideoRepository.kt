@@ -9,7 +9,7 @@ import com.tainzhi.android.common.util.FormatUtil.formatMediaDate
 import com.tainzhi.android.common.util.FormatUtil.formatMediaSize
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.LocalVideo
-import com.tainzhi.android.videoplayer.network.State
+import com.tainzhi.android.videoplayer.network.Result
 
 /**
  * @author:      tainzhi
@@ -20,7 +20,7 @@ import com.tainzhi.android.videoplayer.network.State
 
 class LocalVideoRepository {
 
-    fun getLocalVideoList(): State<List<LocalVideo>> {
+    fun getLocalVideoList(): Result<List<LocalVideo>> {
         val list = arrayListOf<LocalVideo>()
         val videoColumnsProjection = arrayOf(
                 MediaStore.Video.Media._ID,
@@ -79,12 +79,12 @@ class LocalVideoRepository {
                 }
             } catch (e: Exception) {
                 Logger.e(e.toString())
-                return State.error(e.toString())
+                return Result.error(e.toString())
             } finally {
-                return State.success(list)
+                return Result.success(list)
             }
         }
-        return State.success(list)
+        return Result.success(list)
     }
 
     fun deleteVideo(uri: Uri) {

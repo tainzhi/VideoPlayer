@@ -9,7 +9,7 @@ import androidx.work.WorkManager
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
-import com.tainzhi.android.videoplayer.network.State
+import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.network.updateOnSuccess
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
@@ -25,8 +25,8 @@ class TVViewModel(private val TVRepository: TVRepository,
     val tvList: LiveData<List<Tv>>
         get() = _tvList
 
-    private val _tvPrograms = MutableLiveData<State<Map<String, TvProgramBean>>>()
-    val tvPrograms: LiveData<State<Map<String, TvProgramBean>>>
+    private val _tvPrograms = MutableLiveData<Result<Map<String, TvProgramBean>>>()
+    val tvPrograms: LiveData<Result<Map<String, TvProgramBean>>>
         get() = _tvPrograms
 
     val dataBaseStatus: LiveData<List<WorkInfo>>
