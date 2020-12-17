@@ -28,20 +28,17 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    //
-    // testOptions {
-    //     unitTests {
-    //         includeAndroidResources = true
-    //     }
-    // }
 }
 
 dependencies {
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.jsoup)
-    implementation(Libs.Google.gson)
     implementation(Libs.AndroidX.appcompat)
+    implementation(Libs.Google.gson)
     implementation(Libs.volley)
+    implementation(Libs.xmlToJson)
+    implementation(Libs.Moshi.moshi)
+    implementation(Libs.OkHttp.okhttp)
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖

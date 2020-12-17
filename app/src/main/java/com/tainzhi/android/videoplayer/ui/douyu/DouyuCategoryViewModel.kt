@@ -31,6 +31,7 @@ class DouyuCategoryViewModel(private val douyuRepository: DouyuRepository,
                     is com.tainzhi.android.videoplayer.network.Result.Success -> {
                         _games.postValue(it.data)
                     }
+                    else -> Unit
                 }
             }
         }
