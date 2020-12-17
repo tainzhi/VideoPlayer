@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider
+package com.tainzhi.mediaspider.spider
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject

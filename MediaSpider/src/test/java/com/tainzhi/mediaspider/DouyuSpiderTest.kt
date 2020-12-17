@@ -1,5 +1,6 @@
 package com.tainzhi.mediaspider
 
+import com.tainzhi.mediaspider.spider.DouyuSpider
 import org.junit.*
 
 /**

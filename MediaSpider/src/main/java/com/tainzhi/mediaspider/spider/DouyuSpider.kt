@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider
+package com.tainzhi.mediaspider.spider
 
 import com.google.gson.JsonObject
 import org.jsoup.Jsoup
@@ -10,6 +10,13 @@ import java.security.MessageDigest
  * @mail:        qfq61@qq.com
  * @date:        2020/6/9 13:32
  * @description: 使用[KRequest] 爬取斗鱼信息
+ *
+ * 用Volley爬取斗鱼直播间直播源. 因为使用了回调,
+ * 非常不方便用于爬虫(比如爬取room id, 需要多个请求和回调, 繁琐)
+ * 建议使用 KRequest实现的[DouyuSpider]
+ *
+ * 通过chrome debug工具获取的地址 https://tc-tct.douyucdn2.cn/dyliveflv1/562483rmTwjem0AN_1200p.flv
+ * 其中_1200p 对应清晰度
  **/
 
 class DouyuSpider {

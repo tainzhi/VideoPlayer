@@ -47,7 +47,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
     override fun initVM(): PlayDouyuViewModel = getViewModel()
 
     override fun initView() {
-        videoView = findViewById<VideoView>(R.id.video_view)
+        videoView = findViewById(R.id.video_view)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         autoFullScreenListener = AutoFullScreenListener(videoView)
     }
@@ -111,6 +111,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
                                 // anchorView = bottomNavView
                             }.show()
                 }
+                else -> Unit
             }
         }
     }
