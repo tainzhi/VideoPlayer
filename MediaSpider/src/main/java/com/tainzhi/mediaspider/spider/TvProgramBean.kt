@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider.bean
+package com.tainzhi.mediaspider.spider
 
 /**
  * File:     TvProgramBean
