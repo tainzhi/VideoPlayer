@@ -40,9 +40,8 @@ class TVRepository(
             }
             Result.success(tvs)
         } catch (e: Exception) {
-            val message = "loadTVs failed"
-            Logger.e(message, e)
-            Result.error("$message, $e")
+            Logger.e(e.toString())
+            Result.error(e.toString())
         }
     }
 

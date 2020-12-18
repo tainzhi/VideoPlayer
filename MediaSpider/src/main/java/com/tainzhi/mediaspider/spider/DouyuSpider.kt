@@ -1,6 +1,6 @@
 package com.tainzhi.mediaspider.spider
 
-import com.google.gson.JsonObject
+import com.tainzhi.mediaspider.fromJson
 import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
 import java.security.MessageDigest
@@ -38,18 +38,15 @@ class DouyuSpider {
         )
 
         lateinit var roomLiveUrl: String
-        lateinit var response: JsonObject
+        var response: RoomBean? = null
         try {
             response = KRequest().apply {
                 mapData = postData
                 headers = header
-            }.post(url)
-                    .json()
-
-            response.let { it ->
-                if (it.get("error").asInt == 0) {
-                    val dataObject = it.getAsJsonObject("data")
-                    val rtmpLive = dataObject.get("rtmp_live").asString
+            }.post(url).fromJson<RoomBean>()
+            if (response != null) {
+                if (response.error == 0 && response.data != null) {
+                    val rtmpLive = response.data!!.rtmpLive
                     if (rtmpLive.contains("mix=1")) {
                         throw NotFoundException("circuit not found; PKing")
                     } else {
@@ -59,17 +56,17 @@ class DouyuSpider {
                         if (found != null) {
                             roomLiveUrl = found.value
                         } else {
-                            throw NotFoundException("not found circuit id")
+                            throw NotFoundException("regex to find room live url failed")
                         }
                     }
                 } else {
-                    val msg = it.get("msg").asString
-                    throw  NotFoundException("not found circuit id", cause = Throwable(msg))
+                    throw  NotFoundException("response.error is ${response.error}, not 0; response.data = ${response.data}")
                 }
-
+            } else {
+                throw NotFoundException("parsed response is null")
             }
         } catch (e: Exception) {
-            throw NotFoundException("not found circuit id", e.cause)
+            throw NotFoundException("cannot found circuit id, ${e.message}", e.cause)
         }
         return roomLiveUrl
     }
