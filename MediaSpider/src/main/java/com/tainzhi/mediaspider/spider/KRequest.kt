@@ -1,8 +1,5 @@
 package com.tainzhi.mediaspider.spider
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.IOException
@@ -115,16 +112,4 @@ class KRequest {
         return ips!!
     }
 
-}
-
-// 获取Json对象
-fun String.json(): JsonObject {
-    // val text = dom().body().text()
-    return JsonParser.parseString(this).asJsonObject
-}
-
-// 获取Json数组
-fun String.jsonArray(): JsonArray {
-    // val rawJson = this.body().text()
-    return JsonParser.parseString(this).asJsonArray
 }

@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -34,10 +35,10 @@ dependencies {
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.jsoup)
     implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.Google.gson)
     implementation(Libs.volley)
     implementation(Libs.xmlToJson)
     implementation(Libs.Moshi.moshi)
+    kapt(Libs.Moshi.codeGen)
     implementation(Libs.OkHttp.okhttp)
 
     ///////////////////////////////////////////////////////////////////////////
