@@ -47,8 +47,8 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
     }.onEach {
         delay(50L)
     }.catch { e ->
-        Logger.e("data repository error", e)
-        emit(Result.error("NetworkBoundRepository error! cannot get data from local db or db: ${e.message}"))
+        Logger.e(e.toString())
+        emit(Result.error(e.toString()))
     }
 
     open fun isValidData(data: REQUEST) = true

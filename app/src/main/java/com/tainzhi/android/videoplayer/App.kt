@@ -44,7 +44,7 @@ class App : Application() {
         Logger.addLogAdapter(object : AndroidLogAdapter(
                 PrettyFormatStrategy.newBuilder()
                         .showThreadInfo(false)
-                        .methodCount(0)
+                        .methodCount(2)
                         .methodOffset(7)
                         .build()
         ) {
