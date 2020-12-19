@@ -7,8 +7,8 @@ import com.tainzhi.android.videoplayer.db.TvDao
 import com.tainzhi.android.videoplayer.network.NetworkBoundRepository
 import com.tainzhi.android.videoplayer.network.RateLimiter
 import com.tainzhi.android.videoplayer.network.Result
-import com.tainzhi.mediaspider.spider.TVSpider
-import com.tainzhi.mediaspider.spider.TvProgramBean
+import com.tainzhi.android.videoplayer.spider.TVSpider
+import com.tainzhi.android.videoplayer.spider.TvProgramBean
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow

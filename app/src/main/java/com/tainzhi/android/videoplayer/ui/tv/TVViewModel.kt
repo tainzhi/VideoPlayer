@@ -13,7 +13,7 @@ import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.network.updateOnSuccess
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
-import com.tainzhi.mediaspider.spider.TvProgramBean
+import com.tainzhi.android.videoplayer.spider.TvProgramBean
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 

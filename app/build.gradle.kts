@@ -129,7 +129,6 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":common"))
     implementation(project(":QMediaPlayer"))
-    implementation(project(":MediaSpider"))
     // implementation(project(":ffmpeg"))
     implementation(project(":danmu"))
 
@@ -175,6 +174,9 @@ dependencies {
     implementation(Libs.Glide.glide)
     kapt(Libs.Glide.compiler)
 
+    implementation(Libs.jsoup)
+    implementation(Libs.xmlToJson)
+
     implementation(Libs.baseRecyclerViewAdapterHelper)
     implementation(Libs.youthBanner)
     implementation(Libs.tencentTbssdk)
@@ -201,6 +203,7 @@ dependencies {
     testImplementation(Libs.AndroidX.Test.Ext.junit)
     testImplementation(Libs.AndroidX.Test.Ext.junitKtx)
     testImplementation(Libs.OkHttp.mockWebServer)
+    testImplementation(Libs.robolectric)
 }
 
 // task("updateReleaseApk") {
