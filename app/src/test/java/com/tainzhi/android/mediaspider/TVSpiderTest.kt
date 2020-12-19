@@ -1,6 +1,6 @@
-package com.tainzhi.mediaspider
+package com.tainzhi.android.mediaspider
 
-import com.tainzhi.mediaspider.spider.TVSpider
+import com.tainzhi.android.videoplayer.spider.TVSpider
 import org.junit.*
 
 /**

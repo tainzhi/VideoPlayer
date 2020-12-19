@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider.spider
+package com.tainzhi.android.videoplayer.spider
 
 import java.io.BufferedInputStream
 import java.io.BufferedReader
@@ -67,7 +67,7 @@ class KRequest {
             connect.doOutput = true
             connect.outputStream.write(it)
         }
-        return dom(connect)
+       return dom(connect)
     }
 
     // 获取请求 response

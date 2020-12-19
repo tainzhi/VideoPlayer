@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider
+package com.tainzhi.android.videoplayer.spider.movie
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
@@ -82,6 +82,9 @@ object MoshiUtils {
 
     fun <T> getAdapter(type: Type): JsonAdapter<T> = moshiBuild.adapter(type)
     inline fun <reified T> getAdapter(): JsonAdapter<T> = moshiBuild.adapter(object : TypeToken<T>() {}.type)
+    inline fun <reified T> getListAdapter(): JsonAdapter<T> = moshiBuild.adapter(
+            Types.newParameterizedType(List::class.java, T::class.java)
+    )
 
 }
 
@@ -94,8 +97,11 @@ abstract class TypeToken<T> {
 }
 
 
-//快捷序列化
+//快捷序列化 T
 inline fun <reified T : Any> String.fromJson() = MoshiUtils.fromJson<T>(this)
+
+// 快速序列化出List<T>
+inline fun <reified T : Any> String.listFromJson() = MoshiUtils.listFromJson<T>(this)
 
 //快捷反序列化
 fun Any.toJson() = MoshiUtils.toJson(this)
