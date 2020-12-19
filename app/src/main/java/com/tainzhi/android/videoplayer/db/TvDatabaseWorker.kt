@@ -11,6 +11,8 @@ import com.tainzhi.android.videoplayer.bean.InputTv
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.bean.TvCircuit
 import kotlinx.coroutines.coroutineScope
+import okio.buffer
+import okio.source
 
 /**
  * @author:      tainzhi
@@ -32,8 +34,9 @@ class TvDatabaseWorker(
             applicationContext.assets.open(TV_CIRCUIT_JSON_FILE).use { inputStream ->
                 val tvList = ArrayList<Tv>()
                 val tvCircuitList = ArrayList<TvCircuit>()
-                val readString = inputStream.bufferedReader().use { it.readText() }
-                moshiAdapter.fromJson(readString)?.forEach { inputTv ->
+                // val readString = inputStream.bufferedReader().use { it.readText() }
+                val buffer = inputStream.source().buffer()
+                moshiAdapter.fromJson(buffer)?.forEach { inputTv ->
                     tvList.add(Tv(inputTv.tvId, inputTv.tvType, inputTv.tvName, inputTv.tvImg, inputTv.programUrl, inputTv.introduce))
                     inputTv.tvCircuit?.forEach { circuit ->
                         tvCircuitList.add(TvCircuit(inputTv.tvId, circuit))

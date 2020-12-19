@@ -198,6 +198,9 @@ dependencies {
     testImplementation(Libs.AndroidX.Test.core)
     testImplementation(Libs.AndroidX.archCoreTesting)
     testImplementation(Libs.Google.truth)
+    testImplementation(Libs.AndroidX.Test.Ext.junit)
+    testImplementation(Libs.AndroidX.Test.Ext.junitKtx)
+    testImplementation(Libs.OkHttp.mockWebServer)
 }
 
 // task("updateReleaseApk") {
