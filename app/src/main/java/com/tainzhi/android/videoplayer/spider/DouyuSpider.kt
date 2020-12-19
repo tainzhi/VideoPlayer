@@ -1,6 +1,7 @@
-package com.tainzhi.mediaspider.spider
+package com.tainzhi.android.videoplayer.spider
 
-import com.tainzhi.mediaspider.fromJson
+import com.tainzhi.android.videoplayer.spider.movie.fromJson
+import com.tainzhi.mediaspider.spider.RoomBean
 import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
 import java.security.MessageDigest
@@ -40,7 +41,7 @@ class DouyuSpider {
         lateinit var roomLiveUrl: String
         var response: RoomBean? = null
         try {
-            response = KRequest().apply {
+            response = com.tainzhi.android.videoplayer.spider.KRequest().apply {
                 mapData = postData
                 headers = header
             }.post(url).fromJson<RoomBean>()
