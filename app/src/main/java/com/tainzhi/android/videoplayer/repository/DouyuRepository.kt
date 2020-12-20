@@ -6,7 +6,7 @@ import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.network.VideoService
-import com.tainzhi.android.videoplayer.spider.DouyuSpider
+import com.tainzhi.mediaspider.spider.DouyuSpider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
