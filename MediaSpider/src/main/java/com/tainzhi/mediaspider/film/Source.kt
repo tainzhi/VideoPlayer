@@ -35,7 +35,7 @@ class Source(
                     callback.invoke(parseHomeData(it))
                 },
                 error = {
-
+                    it
                 }
         )
     }
@@ -105,7 +105,7 @@ class Source(
 
 
     //以下为解析数据
-    fun parseHomeData(data: String?): HomeData? {
+    private fun parseHomeData(data: String?): HomeData? {
         try {
             if (data == null) return null
             val jsonObject = Util.xmlToJson(data)?.toJson()
@@ -160,7 +160,7 @@ class Source(
         return null
     }
 
-    fun parseHomeChannelData(data: String?): ArrayList<HomeChannelData>? {
+    private fun parseHomeChannelData(data: String?): ArrayList<HomeChannelData>? {
         try {
             if (data == null) return null
             val jsonObject = Util.xmlToJson(data)?.toJson()
@@ -184,7 +184,7 @@ class Source(
         return arrayListOf()
     }
 
-    fun parseSearchResultData(data: String?): ArrayList<SearchResultData>? {
+    private fun parseSearchResultData(data: String?): ArrayList<SearchResultData>? {
         try {
             if (data == null) return null
             val jsonObject = Util.xmlToJson(data)?.toJson()
@@ -218,7 +218,7 @@ class Source(
         return arrayListOf()
     }
 
-    fun parseDetailData(sourceKey: String, data: String?): DetailData? {
+    private fun parseDetailData(sourceKey: String, data: String?): DetailData? {
         try {
             if (data == null) return null
             val jsonObject = Util.xmlToJson(data)?.toJson()
@@ -278,7 +278,7 @@ class Source(
         return null
     }
 
-    fun parseDownloadData(data: String?): ArrayList<DownloadData>? {
+    private fun parseDownloadData(data: String?): ArrayList<DownloadData>? {
         try {
             if (data == null) return null
             val jsonObject = Util.xmlToJson(data)?.toJson()

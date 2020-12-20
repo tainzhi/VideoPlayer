@@ -2,6 +2,7 @@ package com.tainzhi.mediaspider
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.tainzhi.mediaspider.film.bean.MovieManager
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.*
@@ -21,19 +22,27 @@ class MovieManagerTest {
 
     val context = InstrumentationRegistry.getInstrumentation().targetContext
 
+    val sitePath = "assets/movie_site.json"
+    val configPath = "assets/movie_site_config.json"
+
+    val movieManager: MovieManager = MovieManager.getInstance(
+            context,
+            getFileFromPath(this, configPath),
+            getFileFromPath(this, sitePath),
+    )
+
     @Test
-    fun getConfig() {
-        val mainAssetsBasePath = "../../main/assets/"
-        val fileName = "assets/film_site.json"
-        // javaClass.classLoader!!.getResourceAsStream(mainAssetsBasePath + fileName).use { inputStream ->
-        //     val readString = inputStream.bufferedReader().use { it.readText() }
-        // }
-        fileObjectShouldNotBeNull(fileName)
+    fun fileExistsTest() {
+        fileObjectShouldNotBeNull(sitePath)
+        fileObjectShouldNotBeNull(configPath)
     }
 
     @Test
     fun getContextConfig() {
-
+        movieManager.curUseSourceConfig().requestHomeData { homedata ->
+            if (homedata != null) {
+            }
+        }
     }
 
     private fun getFileFromPath(obj: Any, fileName: String): File {
@@ -43,7 +52,7 @@ class MovieManagerTest {
     }
 
     @Throws(Exception::class)
-    fun fileObjectShouldNotBeNull(path: String) {
+    private fun fileObjectShouldNotBeNull(path: String) {
         val file: File = getFileFromPath(this, path)
         assertThat(file, notNullValue())
     }
