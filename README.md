@@ -48,6 +48,7 @@ git clone --recursive https://github.com/tainzhi/VideoPlayer
 - 此module封装了[ffmpeg-4.3](http://ffmpeg.org/download.html#release_4.3), 用ndk20b编译
 - 该module可以执行ffmpeg命令, 在cpp线程中执行, 提供了回调,命令执行进度,命令停止功能
 - 编译过程和使用参考[ffmpeg/README.md](./ffmpeg/README.md)
+- ffmpeg还支持了rtmp和hls推送
 
 ### danmmu
 - 弹幕库, 分为简单版和复杂版
