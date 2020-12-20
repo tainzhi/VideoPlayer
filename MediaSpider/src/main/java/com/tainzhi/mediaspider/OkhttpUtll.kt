@@ -27,7 +27,11 @@ class OkHttpUtil {
                     }
 
                     override fun onResponse(call: Call, response: Response) {
-                        success(response.body.toString())
+                        if (response.isSuccessful && response.body != null) {
+                            success(response.body!!.string())
+                        } else {
+                            error("response failed or body is null")
+                        }
                     }
                 }
         )
@@ -35,11 +39,16 @@ class OkHttpUtil {
 
     fun request(urlPath: String): String {
         val request = Request.Builder().url(urlPath).build()
-        return client.newCall(request).execute().body.toString()
+        return client.newCall(request).execute().body!!.string()
     }
 
     companion object {
-        private val client by lazy { OkHttpClient.Builder().readTimeout(5, SECONDS).build() }
+        private val client by lazy {
+            OkHttpClient
+                    .Builder()
+                    .readTimeout(60, SECONDS)
+                    .build()
+        }
         val instance: OkHttpUtil by lazy { OkHttpUtil() }
     }
 }
