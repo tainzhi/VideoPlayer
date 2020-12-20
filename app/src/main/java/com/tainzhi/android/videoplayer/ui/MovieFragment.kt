@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tainzhi.android.common.util.startKtxActivity
 import com.tainzhi.android.videoplayer.R
+import com.tainzhi.mediaspider.film.bean.MovieManager
 import kotlinx.android.synthetic.main.fragment_movie.danmuBtn
 
 class MovieFragment : Fragment() {
@@ -27,6 +28,20 @@ class MovieFragment : Fragment() {
         // }
         danmuBtn.setOnClickListener {
             startKtxActivity<DanmuActivity>()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val source = MovieManager.getInstance(requireContext()).curUseSourceConfig()
+        source.requestHomeData {
+            if (it != null) {
+                source.requestHomeChannelData(1, it.classifyList[0].id!!) { channelData ->
+                    if (channelData != null) {
+
+                    }
+                }
+            }
         }
     }
 }
