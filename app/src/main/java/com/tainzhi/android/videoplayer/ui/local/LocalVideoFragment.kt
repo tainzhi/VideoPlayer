@@ -55,6 +55,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             }
 
             localVideoFab.setOnClickListener {
+                // TODO: 2020/12/20 实现功能: 最近一次播放的视频 开始播放
                 showShackBarMessage("to implement: 播放最近一次观看的视频")
             }
 
