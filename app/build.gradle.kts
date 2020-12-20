@@ -129,6 +129,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":common"))
     implementation(project(":QMediaPlayer"))
+    implementation(project(":MediaSpider"))
     // implementation(project(":ffmpeg"))
     implementation(project(":danmu"))
 
@@ -169,13 +170,11 @@ dependencies {
     kapt(Libs.Moshi.codeGen)
 
     implementation(Libs.OkHttp.loggingInterceptor)
+    testImplementation(Libs.OkHttp.mockWebServer)
     implementation(Libs.cookietar)
 
     implementation(Libs.Glide.glide)
     kapt(Libs.Glide.compiler)
-
-    implementation(Libs.jsoup)
-    implementation(Libs.xmlToJson)
 
     implementation(Libs.baseRecyclerViewAdapterHelper)
     implementation(Libs.youthBanner)
@@ -200,10 +199,6 @@ dependencies {
     testImplementation(Libs.AndroidX.Test.core)
     testImplementation(Libs.AndroidX.archCoreTesting)
     testImplementation(Libs.Google.truth)
-    testImplementation(Libs.AndroidX.Test.Ext.junit)
-    testImplementation(Libs.AndroidX.Test.Ext.junitKtx)
-    testImplementation(Libs.OkHttp.mockWebServer)
-    testImplementation(Libs.robolectric)
 }
 
 // task("updateReleaseApk") {
