@@ -7,7 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.tainzhi.android.videoplayer.spider.TvProgramBean
+import com.tainzhi.mediaspider.spider.TvProgramBean
 import java.io.Serializable
 
 /**
