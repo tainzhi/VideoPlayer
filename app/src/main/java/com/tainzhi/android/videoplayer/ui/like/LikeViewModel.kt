@@ -2,7 +2,7 @@ package com.tainzhi.android.videoplayer.ui.like
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.tainzhi.android.common.base.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 
 /**
@@ -12,7 +12,7 @@ import com.tainzhi.android.videoplayer.repository.PreferenceRepository
  * @description:
  **/
 
-class LikeViewModel(private val preferenceRepository: PreferenceRepository) : BaseViewModel() {
+class LikeViewModel(private val preferenceRepository: PreferenceRepository) : ViewModel() {
 
     private val _advertising = MutableLiveData<Boolean>()
     val advertising: LiveData<Boolean>
@@ -42,9 +42,7 @@ class LikeViewModel(private val preferenceRepository: PreferenceRepository) : Ba
     // }
 
     init {
-        launch {
-            _advertising.postValue(preferenceRepository.advertising)
-        }
+        _advertising.postValue(preferenceRepository.advertising)
     }
 
     fun toggleAdvertising(checked: Boolean) {
