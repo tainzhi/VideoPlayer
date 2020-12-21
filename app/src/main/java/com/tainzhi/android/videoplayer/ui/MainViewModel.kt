@@ -2,7 +2,7 @@ package com.tainzhi.android.videoplayer.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.tainzhi.android.common.base.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 
 /**
  * @author:      tainzhi
@@ -11,7 +11,7 @@ import com.tainzhi.android.common.base.ui.BaseViewModel
  * @description:
  **/
 
-class MainViewModel: BaseViewModel() {
+class MainViewModel : ViewModel() {
     private val _title = MutableLiveData<String>()
     val title: LiveData<String>
         get() = _title
