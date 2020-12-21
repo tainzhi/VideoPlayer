@@ -26,7 +26,7 @@ data class NewVideo(
 //分类
 data class Classify(
         //分类id
-        val id: String?,
+        val id: String,
         //分类名
-        val name: String?
+        val name: String
 )

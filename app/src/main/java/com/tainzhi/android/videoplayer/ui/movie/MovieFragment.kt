@@ -5,17 +5,16 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
-import com.tainzhi.android.videoplayer.databinding.FragmentMovieBinding
-import com.tainzhi.android.videoplayer.ui.douyu.DouyuGameFragment
+import com.tainzhi.android.videoplayer.databinding.MovieFragmentBinding
 import com.tainzhi.mediaspider.film.bean.Classify
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MovieFragment : BaseVmBindingFragment<MovieViewModel, FragmentMovieBinding>() {
+class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding>() {
 
     private val classifyList = arrayListOf<Classify>()
 
     override fun getLayoutResId(): Int {
-        return R.layout.fragment_movie
+        return R.layout.movie_fragment
     }
 
     override fun initData() {
@@ -34,7 +33,7 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, FragmentMovieBinding
                     offscreenPageLimit = 4
                     adapter = object : FragmentStateAdapter(this@MovieFragment) {
                         override fun createFragment(position: Int): Fragment {
-                            return DouyuGameFragment.newInstance("-1")
+                            return MovieChannelFragment.newInstance(classifyList[position].id)
                         }
 
                         override fun getItemCount() = classifyList.size

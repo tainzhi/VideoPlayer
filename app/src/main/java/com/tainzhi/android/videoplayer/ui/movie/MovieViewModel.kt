@@ -1,0 +1,63 @@
+package com.tainzhi.android.videoplayer.ui.movie
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.tainzhi.android.common.CoroutinesDispatcherProvider
+import com.tainzhi.android.videoplayer.network.Result
+import com.tainzhi.android.videoplayer.repository.MovieRepository
+import com.tainzhi.mediaspider.film.bean.Classify
+import com.tainzhi.mediaspider.film.bean.HomeChannelData
+import kotlinx.coroutines.launch
+
+/**
+ * File:     MovieViewModel
+ * Author:   tainzhi
+ * Created:  2020/12/21 07:52
+ * Mail:     QFQ61@qq.com
+ * Description:
+ */
+class MovieViewModel(
+        private val movieRepository: MovieRepository,
+        private val dispatcherProvider: CoroutinesDispatcherProvider,
+) : ViewModel() {
+
+    var isRefreshLoading = false
+
+    private val _classifyLiveData = MutableLiveData<List<Classify>>()
+    val classifyListLiveData: LiveData<List<Classify>>
+        get() = _classifyLiveData
+
+    private val _channelLiveData = MutableLiveData<Result<List<HomeChannelData>>>()
+    val channelListLiveData: LiveData<Result<List<HomeChannelData>>>
+        get() = _channelLiveData
+
+    fun getHomeData() {
+        viewModelScope.launch(dispatcherProvider.io) {
+
+            movieRepository.movieManager.curUseSourceConfig().requestHomeData { homeData ->
+                _classifyLiveData.postValue(homeData?.classifyList)
+            }
+        }
+    }
+
+    private var channelCurPage = 1
+    fun getChannelData(channelId: String, isRefresh: Boolean = false) {
+        var isRefreshLoading = isRefresh
+        if (isRefresh) {
+            channelCurPage = 1
+        } else {
+            channelCurPage++
+        }
+        viewModelScope.launch(dispatcherProvider.io) {
+            movieRepository.movieManager.curUseSourceConfig().requestHomeChannelData(channelCurPage, channelId) { channelData ->
+                if (channelData == null) {
+                    _channelLiveData.postValue(Result.successEndData(emptyList()))
+                } else {
+                    _channelLiveData.postValue(Result.successEndData(channelData))
+                }
+            }
+        }
+    }
+}

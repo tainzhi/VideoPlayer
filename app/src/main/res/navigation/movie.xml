@@ -8,6 +8,6 @@
 	<fragment
 		android:id="@+id/movieFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.movie.MovieFragment"
-		tools:layout="@layout/fragment_movie"
+		tools:layout="@layout/movie_fragment"
 		android:label="@string/title_movie" />
 </navigation>
