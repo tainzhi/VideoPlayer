@@ -65,22 +65,23 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
     override fun initVM(): DouyuGameViewModel = getViewModel()
 
     override fun initView() {
-        mBinding.douyuGameRefreshLayout.run {
-            setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.color_secondary))
-            setOnRefreshListener { refresh() }
-        }
-
-        mBinding.douyuGameRecyclerView.run {
-            adapter = douyuRoomAdapter.apply {
-                addItemDecoration(DouyuRoomItemDecoration())
+        with(mBinding) {
+            douyuGameRefreshLayout.run {
+                setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.color_secondary))
+                setOnRefreshListener { refresh() }
             }
-            layoutManager = GridLayoutManager(requireActivity(), 2).apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        if (position == 0) return 2
-                        // loadMoreView 横跨两列
-                        else if (douyuRoomAdapter.getItemViewType(position) == BaseQuickAdapter.LOAD_MORE_VIEW) return 2
-                        else return 1
+
+            douyuGameRecyclerView.run {
+                adapter = douyuRoomAdapter
+                addItemDecoration(DouyuRoomItemDecoration())
+                layoutManager = GridLayoutManager(requireActivity(), 2).apply {
+                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                        override fun getSpanSize(position: Int): Int {
+                            if (position == 0) return 2
+                            // loadMoreView 横跨两列
+                            else if (douyuRoomAdapter.getItemViewType(position) == BaseQuickAdapter.LOAD_MORE_VIEW) return 2
+                            else return 1
+                        }
                     }
                 }
             }
