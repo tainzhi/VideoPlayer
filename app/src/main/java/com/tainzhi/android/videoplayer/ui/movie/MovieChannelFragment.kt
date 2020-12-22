@@ -29,7 +29,7 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     private val channelId by lazy { arguments?.getString(CHANNEL_ID) }
     private val movieChannelAdapter by lazy {
         MovieChannelAdapter { movie ->
-
+            MovieDetailActivity.start(requireActivity(), movie.id)
         }.apply {
             loadMoreModule.run {
                 loadMoreView = CustomLoadMoreView()
