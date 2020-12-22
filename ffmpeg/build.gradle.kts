@@ -7,12 +7,12 @@
 // }
 //
 // android {
-//     compileSdkVersion(Libs.Version.compileSdkVersion)
-//     buildToolsVersion(Libs.Version.buildToolsVersion)
+//     compileSdkVersion(Libs.Configs.compileSdkVersion)
+//     buildToolsVersion(Libs.Configs.buildToolsVersion)
 //
 //     defaultConfig {
-//         minSdkVersion(Libs.Version.minSdkVersion)
-//         targetSdkVersion(Libs.Version.targetSdkVersion)
+//         minSdkVersion(Libs.Configs.minSdkVersion)
+//         targetSdkVersion(Libs.Configs.targetSdkVersion)
 //         versionCode = 1
 //         versionName = "1.0"
 //         testInstrumentationRunner ="androidx.test.runner.AndroidJUnitRunner"

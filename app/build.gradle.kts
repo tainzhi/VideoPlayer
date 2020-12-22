@@ -55,16 +55,16 @@ android {
             keyPassword = "tainzhi"
         }
     }
-    compileSdkVersion(Libs.Version.compileSdkVersion)
-    buildToolsVersion(Libs.Version.buildToolsVersion)
+    compileSdkVersion(Libs.Configs.compileSdkVersion)
+    buildToolsVersion(Libs.Configs.buildToolsVersion)
 
     defaultConfig {
         applicationId = "com.tainzhi.android.videoplayer"
-        minSdkVersion(Libs.Version.minSdkVersion)
-        targetSdkVersion(Libs.Version.targetSdkVersion)
+        minSdkVersion(Libs.Configs.minSdkVersion)
+        targetSdkVersion(Libs.Configs.targetSdkVersion)
         versionCode = verCode
         versionName = version
-        testInstrumentationRunner ="androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // 第三方库 AppUpdate
         // 每个应用拥有不同的authorities，防止相同在同一个手机上无法同时安装

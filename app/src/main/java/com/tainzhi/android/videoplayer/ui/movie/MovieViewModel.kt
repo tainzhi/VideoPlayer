@@ -8,6 +8,7 @@ import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.repository.MovieRepository
 import com.tainzhi.mediaspider.film.bean.Classify
+import com.tainzhi.mediaspider.film.bean.DetailData
 import com.tainzhi.mediaspider.film.bean.HomeChannelData
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,7 @@ class MovieViewModel(
         private val dispatcherProvider: CoroutinesDispatcherProvider,
 ) : ViewModel() {
 
+    // 用于标记Adapter是否重置数据, 还是添加数据
     var isRefreshLoading = false
 
     private val _classifyLiveData = MutableLiveData<List<Classify>>()
@@ -32,6 +34,10 @@ class MovieViewModel(
     private val _channelLiveData = MutableLiveData<Result<List<HomeChannelData>>>()
     val channelListLiveData: LiveData<Result<List<HomeChannelData>>>
         get() = _channelLiveData
+
+    private val _movie = MutableLiveData<DetailData>()
+    val movie: LiveData<DetailData>
+        get() = _movie
 
     fun getHomeData() {
         viewModelScope.launch(dispatcherProvider.io) {
@@ -44,7 +50,7 @@ class MovieViewModel(
 
     private var channelCurPage = 1
     fun getChannelData(channelId: String, isRefresh: Boolean = false) {
-        var isRefreshLoading = isRefresh
+        isRefreshLoading = isRefresh
         if (isRefresh) {
             channelCurPage = 1
         } else {
@@ -57,6 +63,14 @@ class MovieViewModel(
                 } else {
                     _channelLiveData.postValue(Result.successEndData(channelData))
                 }
+            }
+        }
+    }
+
+    fun getMovieDetail(id: String) {
+        viewModelScope.launch(dispatcherProvider.io) {
+            movieRepository.movieManager.curUseSourceConfig().requestDetailData(id) { movie ->
+                _movie.postValue(movie)
             }
         }
     }
