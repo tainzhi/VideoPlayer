@@ -9,6 +9,7 @@ import org.junit.*
 import org.junit.runner.*
 import java.io.File
 import java.net.URL
+import java.util.concurrent.CountDownLatch
 
 /**
  * File:     MovieManager
@@ -39,10 +40,13 @@ class MovieManagerTest {
 
     @Test
     fun getContextConfig() {
+        val cowndownLatch = CountDownLatch(1)
         movieManager.curUseSourceConfig().requestHomeData { homedata ->
             if (homedata != null) {
+                cowndownLatch.countDown()
             }
         }
+        cowndownLatch.await()
     }
 
     private fun getFileFromPath(obj: Any, fileName: String): File {

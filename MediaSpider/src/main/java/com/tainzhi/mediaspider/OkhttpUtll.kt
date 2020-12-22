@@ -46,7 +46,7 @@ class OkHttpUtil {
         private val client by lazy {
             OkHttpClient
                     .Builder()
-                    .readTimeout(60, SECONDS)
+                    .readTimeout(10, SECONDS)
                     .build()
         }
         val instance: OkHttpUtil by lazy { OkHttpUtil() }

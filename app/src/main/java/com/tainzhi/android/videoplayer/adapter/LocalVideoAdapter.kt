@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.R
+import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.databinding.ItemLocalVideoBinding
-import java.util.*
+import java.util.ArrayList
 
 /**
  * @author:      tainzhi
