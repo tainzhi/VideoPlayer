@@ -6,6 +6,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieFragmentBinding
+import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieSourceDialog
 import com.tainzhi.mediaspider.film.bean.Classify
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -43,6 +44,11 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
                     tab.text = classifyList[position].name
                 }.attach()
 
+                changeMovieSiteFab.setOnClickListener {
+                    fragmentManager?.let { manager ->
+                        ChooseMovieSourceDialog().show(manager, "ChooseMovieSourceDialog")
+                    }
+                }
             }
         }
     }

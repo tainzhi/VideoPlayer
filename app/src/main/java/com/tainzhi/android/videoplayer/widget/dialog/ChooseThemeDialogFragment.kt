@@ -1,4 +1,4 @@
-package com.tainzhi.android.videoplayer.widget
+package com.tainzhi.android.videoplayer.widget.dialog
 
 import android.app.Dialog
 import android.os.Bundle

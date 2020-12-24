@@ -97,7 +97,7 @@ class MovieManager private constructor(val context: Context, val configFile: Fil
         return sourceConfigs[key]?.generateSource() ?: Source("", "", "", "")
     }
 
-    private val defaultSourceKey = "okzy"
+    var defaultSourceKey = "okzy"
 
     /**
      * 获取当前选择的源
@@ -106,13 +106,9 @@ class MovieManager private constructor(val context: Context, val configFile: Fil
         return generateSource(defaultSourceKey)
     }
 
-    /**
-     * 保存当前选择的源
-     */
-    // TODO: 2020/12/20
-    fun saveCurUseSourceConfig(sourceKey: String?) {
+    fun changeSourceConfig(sourceKey: String) {
         if (sourceConfigs.containsKey(sourceKey)) {
-            // SPUtils.getInstance().put("curSourceKey", sourceKey)
+            defaultSourceKey = sourceKey
         }
     }
 }

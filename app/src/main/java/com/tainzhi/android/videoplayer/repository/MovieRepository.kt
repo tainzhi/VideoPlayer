@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.repository
 
+import com.orhanobut.logger.Logger
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.mediaspider.film.bean.MovieManager
 
@@ -13,10 +14,15 @@ import com.tainzhi.mediaspider.film.bean.MovieManager
 class MovieRepository {
     val movieManager = MovieManager.getInstance(App.CONTEXT)
 
-    // fun getHomeData() = flow<Result<List<Classify>>>{
-    //     movieManager.curUseSourceConfig().requestHomeData { homeData ->
-    //             emit(Result.success(homeData.classifyList))
-    //         }
-    //     }
-    // }
+    fun getMovieSourceList(): List<Pair<String, String>> {
+        return if (movieManager.sourceConfigs != null) {
+            return movieManager.sourceConfigs.keys.map {
+                it to movieManager.sourceConfigs[it]!!.name
+            }
+        } else {
+            val error = "source configs is null"
+            Logger.e(error)
+            throw Exception(error)
+        }
+    }
 }
