@@ -1,5 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.movie
 
+import MovieDetailActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager

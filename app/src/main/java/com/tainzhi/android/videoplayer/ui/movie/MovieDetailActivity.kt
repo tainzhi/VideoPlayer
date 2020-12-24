@@ -1,10 +1,9 @@
-package com.tainzhi.android.videoplayer.ui.movie
-
 import android.content.Context
 import android.content.Intent
 import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieDetailActivityBinding
+import com.tainzhi.android.videoplayer.ui.movie.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -36,7 +35,7 @@ class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailAct
 
     override fun initData() {
         // val movieSource = intent.getStringExtra(MOVIE_SOURCE)
-        val movieId = intent.getStringArrayExtra(MOVIE_ID)
+        val movieId = intent.getStringExtra(MOVIE_ID)
         // if (movieSource != null && movieId != null) {
         if (movieId != null) {
             mViewModel.getMovieDetail(movieId as String)
@@ -45,7 +44,10 @@ class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailAct
 
     override fun startObserve() {
         mViewModel.movie.observe(this) {
-
+            mBinding.movie = it
+            // TODO: 2020/12/24
+            // 以下是播放url
+            // it.videoList[0].playUrl
         }
     }
 
