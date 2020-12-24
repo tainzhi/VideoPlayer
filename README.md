@@ -165,6 +165,10 @@ https和http的区别
   [5](https://github.com/boredream/VideoPlayer),
   [6](https://github.com/Zhaoss/VideoPlayerDemo),
   [7](https://github.com/googlesamples/android-VideoPlayer)
+- 怎么升级
+>- [bugly](https://bugly.qq.com/docs/user-guide/instruction-manual-android-upgrade/?v=20200622202242): 没有下载次数限制; 继承方便, 提供升级页面; 不用验证身份证; 唯一缺点, 没有提供api, 无法自动上传apk
+>- [蒲公英分发平台](https://www.pgyer.com/doc/view/api): 提供了api, 可以编写gradle插件自动上传; 缺点是需要身份证验证, 有下载次数限制
+>-  1   qqq
 
 
 ## 遇到的问题
