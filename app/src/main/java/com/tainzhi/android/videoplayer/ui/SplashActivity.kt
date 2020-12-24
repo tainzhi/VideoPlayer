@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.tainzhi.android.videoplayer.widget.showCheckPermissionDialog
+import com.tainzhi.android.videoplayer.widget.dialog.showCheckPermissionDialog
 
 class SplashActivity : AppCompatActivity() {
 

@@ -3,7 +3,9 @@ package com.tainzhi.android.videoplayer.ui.movie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.repository.MovieRepository
@@ -72,6 +74,20 @@ class MovieViewModel(
             movieRepository.movieManager.curUseSourceConfig().requestDetailData(id) { movie ->
                 _movie.postValue(movie)
             }
+        }
+    }
+
+    val movieSource = liveData<List<Pair<String, String>>> {
+        emit(movieRepository.getMovieSourceList())
+    }
+
+    var defaultSourceKey = movieRepository.movieManager.defaultSourceKey
+
+    fun changeMovieSource(sourceKey: String?) {
+        if (sourceKey != null) {
+            movieRepository.movieManager.defaultSourceKey = sourceKey
+        } else {
+            Logger.e("sourceKey is null")
         }
     }
 }

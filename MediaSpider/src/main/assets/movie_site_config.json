@@ -2,6 +2,7 @@
   {
     "key": "zuidazy",
     "name": "最大资源网",
+    "api": "http://www.zdziyuan.com/inc/api.php",
     "url": "http://www.zuidazy5.com",
     "new": "http://www.zuidazy5.com/?m=vod-index-pg-{page}.html",
     "view": "http://www.zuidazy5.com/?m=vod-type-id-{id}-pg-{page}.html",
