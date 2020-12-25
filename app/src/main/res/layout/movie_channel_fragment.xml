@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 	
-	<com.tainzhi.android.videoplayer.widget.InterceptTouchLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<com.tainzhi.android.common.widget.InterceptTouchLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
@@ -42,5 +42,5 @@
 				</androidx.constraintlayout.widget.ConstraintLayout>
 			</com.kennyc.view.MultiStateView>
 		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-	</com.tainzhi.android.videoplayer.widget.InterceptTouchLayout>
+	</com.tainzhi.android.common.widget.InterceptTouchLayout>
 </layout>
