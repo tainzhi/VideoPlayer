@@ -2,6 +2,8 @@ package com.tainzhi.android.videoplayer.util
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 
 /**
  * File:     Activity
@@ -25,4 +27,8 @@ fun Context.isForeGround(): Boolean {
         return componentName?.className == activityName
     }
     return false
+}
+
+fun Context.openBrowser(url: String) {
+    Intent(Intent.ACTION_VIEW, Uri.parse(url)).run { startActivity(this) }
 }

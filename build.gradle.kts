@@ -1,4 +1,5 @@
 buildscript {
+    val kotlin_version by extra("1.4.21")
     repositories {
         maven { setUrl("https://maven.aliyun.com/repository/public/") }
         maven { setUrl("https://maven.aliyun.com/repository/jcenter/")}
@@ -12,6 +13,9 @@ buildscript {
             classpath(com.tainzhi.android.buildsrc.Libs.AndroidX.Navigation.safeArgs)
             classpath(com.tainzhi.android.buildsrc.Libs.buglyUploadMapping)
         }
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
