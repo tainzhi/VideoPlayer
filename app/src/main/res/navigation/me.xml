@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/me"
+	app:startDestination="@id/meFragment">
+	
+	<fragment
+		android:id="@+id/meFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.me.MeFragment"
+		android:label="@string/title_me"
+		tools:layout="@layout/me_fragment">
+		<action
+			android:id="@+id/action_meFragment_to_aboutFragment"
+			app:destination="@id/aboutFragment" />
+		<action
+			android:id="@+id/action_meFragment_to_settingFragment"
+			app:destination="@id/settingFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/aboutFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.me.AboutFragment"
+		android:label="about_fragment"
+		tools:layout="@layout/about_fragment" />
+	<fragment
+		android:id="@+id/settingFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.me.SettingFragment"
+		android:label="setting_fragment"
+		tools:layout="@layout/setting_fragment" />
+</navigation>
