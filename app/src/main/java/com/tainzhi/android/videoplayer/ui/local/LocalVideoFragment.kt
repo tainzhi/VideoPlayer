@@ -60,6 +60,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             }
 
         }
+        // 显示搜索图标
         getSharedViewModel<MainViewModel>().run {
             updateToolbarSearchView(true)
         }
