@@ -135,7 +135,7 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
                     return false
                 }
             })
-            this.findViewById<androidx.appcompat.widget.SearchView.SearchAutoComplete>(R.id.search_src_text).run {
+            this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
                 setTextColor(android.graphics.Color.WHITE)
                 setHintTextColor(android.graphics.Color.WHITE)
                 hint = "请输入视频名称"
