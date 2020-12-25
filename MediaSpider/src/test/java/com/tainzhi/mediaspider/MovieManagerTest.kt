@@ -24,18 +24,15 @@ class MovieManagerTest {
     val context = InstrumentationRegistry.getInstrumentation().targetContext
 
     val sitePath = "assets/movie_site.json"
-    val configPath = "assets/movie_site_config.json"
 
     val movieManager: MovieManager = MovieManager.getInstance(
             context,
-            getFileFromPath(this, configPath),
             getFileFromPath(this, sitePath),
     )
 
     @Test
     fun fileExistsTest() {
         fileObjectShouldNotBeNull(sitePath)
-        fileObjectShouldNotBeNull(configPath)
     }
 
     @Test
