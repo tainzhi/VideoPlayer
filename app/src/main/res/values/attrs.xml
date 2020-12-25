@@ -7,8 +7,4 @@
 	
 	<attr name="textColorPrimary" format="color" />
 	<attr name="viewBackground" format="color" />
-	
-	<declare-styleable name="InterceptTouchLayout">
-		<attr name="android:orientation" />
-	</declare-styleable>
 </resources>
