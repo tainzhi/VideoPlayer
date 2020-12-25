@@ -26,6 +26,9 @@
 怎么使用
 ```
 git clone --recursive https://github.com/tainzhi/VideoPlayer
+
+# 如果忘记 recursive clone
+git submodule update --init --recursive
 ```
 
 ## 测试驱动开发
@@ -74,6 +77,7 @@ git clone --recursive https://github.com/tainzhi/VideoPlayer
 ## 资源获取方法
 
 ### 各大卫视网络源和图标
+- [更多卫视频道, 也要全球iptv频道](https://github.com/iptv-org/iptv)
 - [gitee: tv-source](https://gitee.com/forterli/project/tree/master/mini_program/tv_video/data): 从tv-source获取的tv卫视图片资源链接是http的, 而且有些图片不存在
 - 卫视名称,图片,网络原地址从tv-source拷贝json文件, 并做了部分修改放置在assets/tv_circuits.json中,app启动创建数据后加载进数据库
 - 各大卫视当前播放节目从[电视猫](https://www.tvmao.com/program/playing/cctv/)爬虫所得
