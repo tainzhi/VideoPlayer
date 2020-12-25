@@ -5,7 +5,8 @@
 		
 		<variable
 			name="viewModel"
-			type="com.tainzhi.android.videoplayer.ui.like.LikeViewModel" />
+			type="com.tainzhi.android.videoplayer.ui.me.SettingViewModel"
+			/>
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.tainzhi.android.videoplayer.ui.like
+package com.tainzhi.android.videoplayer.ui.me
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ import com.tainzhi.android.videoplayer.repository.PreferenceRepository
  * @description:
  **/
 
-class LikeViewModel(private val preferenceRepository: PreferenceRepository) : ViewModel() {
+class SettingViewModel(private val preferenceRepository: PreferenceRepository) : ViewModel() {
 
     private val _advertising = MutableLiveData<Boolean>()
     val advertising: LiveData<Boolean>

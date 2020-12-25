@@ -1,17 +1,17 @@
-package com.tainzhi.android.videoplayer.ui.like
+package com.tainzhi.android.videoplayer.ui.me
 
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
-import com.tainzhi.android.videoplayer.databinding.FragmentLikeBinding
+import com.tainzhi.android.videoplayer.databinding.SettingFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChoosePlayerDialogFragment
 import com.tainzhi.android.videoplayer.widget.dialog.ChoosePlayerRenderTypeDialogFragment
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseThemeDialogFragment
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class LikeFragment : BaseVmBindingFragment<LikeViewModel, FragmentLikeBinding>() {
-    override fun getLayoutResId() = R.layout.fragment_like
+class SettingFragment : BaseVmBindingFragment<SettingViewModel, SettingFragmentBinding>() {
+    override fun getLayoutResId() = R.layout.setting_fragment
 
-    override fun initVM(): LikeViewModel = getViewModel()
+    override fun initVM(): SettingViewModel = getViewModel()
 
     override fun initView() {
         mBinding.viewModel = mViewModel

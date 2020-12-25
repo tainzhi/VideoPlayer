@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/local"
-        android:icon="@drawable/ic_local"
-        android:contentDescription="@string/title_local_video"
-        android:title="@string/title_local_video"/>
-    <item
-        android:id="@+id/douyu"
-        android:icon="@drawable/ic_douyu"
-        android:contentDescription="@string/title_douyu"
-        android:title="@string/title_douyu"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/local"
+		android:icon="@drawable/ic_local"
+		android:contentDescription="@string/title_local_video"
+		android:title="@string/title_local_video" />
+	<item
+		android:id="@+id/douyu"
+		android:icon="@drawable/ic_douyu"
+		android:contentDescription="@string/title_douyu"
+		android:title="@string/title_douyu" />
     <item
         android:id="@+id/tv"
         android:icon="@drawable/ic_tv"
@@ -21,9 +20,9 @@
         android:icon="@drawable/ic_movie"
         android:contentDescription="@string/title_movie"
         android:title="@string/title_movie"/>
-    <item
-        android:id="@+id/like"
-        android:icon="@drawable/ic_like"
-        android:contentDescription="@string/title_like"
-        android:title="@string/title_like"/>
+	<item
+		android:id="@+id/me"
+		android:contentDescription="@string/title_me"
+		android:icon="@drawable/ic_me"
+		android:title="@string/title_me" />
 </menu>

@@ -22,16 +22,19 @@
 	<string name="title_douyu">斗鱼</string>
 	<string name="title_douyu_category">斗鱼分类</string>
 	<string name="title_like">收藏</string>
+	<string name="title_me">我的</string>
 	<string name="title_tv">电视</string>
 	<string name="title_movie">电影</string>
 	<string name="button_allow">允许</string>
 	<string name="button_deny">不允许</string>
 	<string name="permission_camera_rationale">camera ration</string>
 	<string name="permission_camera_never_ask_again">not again</string>
-
+	
 	<string name="delete_dialog_title">Delete</string>
 	<string name="delete_dialog_message">Delete %1$s?</string>
 	<string name="delete_dialog_positive">Delete</string>
 	<string name="delete_dialog_negative">Cancel</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

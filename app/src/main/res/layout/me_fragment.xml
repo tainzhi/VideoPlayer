@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	>
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:context=".ui.me.MeFragment"
+		>
+		
+		<com.tainzhi.android.common.widget.SetItemView
+			android:id="@+id/setting"
+			android:layout_width="match_parent"
+			android:layout_height="50dp"
+			app:itemName="设置"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:needDivideLine="true"
+			/>
+		
+		<com.tainzhi.android.common.widget.SetItemView
+			android:id="@+id/about"
+			android:layout_width="match_parent"
+			android:layout_height="50dp"
+			app:itemName="关于"
+			app:layout_constraintTop_toBottomOf="@+id/setting"
+			app:needDivideLine="true"
+			tools:layout_editor_absoluteX="0dp"
+			/>
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	>
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		>
+		
+		<ImageView
+			android:id="@+id/appIv"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_marginTop="@dimen/margin_large"
+			android:src="@drawable/ic_video"
+			app:layout_constraintDimensionRatio="1:1"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintWidth_percent="0.3"
+			tools:ignore="ContentDescription"
+			/>
+		
+		<TextView
+			android:id="@+id/versionTv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:layout_constraintEnd_toEndOf="@+id/appIv"
+			app:layout_constraintStart_toStartOf="@+id/appIv"
+			app:layout_constraintTop_toBottomOf="@+id/appIv"
+			tools:text="v1.0.1"
+			/>
+		
+		<com.tainzhi.android.common.widget.SetItemView
+			android:id="@+id/suggestion"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:itemName="建议反馈"
+			app:layout_constraintTop_toBottomOf="@id/versionTv"
+			app:needDivideLine="true"
+			/>
+		
+		<com.tainzhi.android.common.widget.SetItemView
+			android:id="@+id/source"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:itemName="源代码地址"
+			app:layout_constraintTop_toBottomOf="@+id/suggestion"
+			app:needDivideLine="true"
+			/>
+		
+		<com.tainzhi.android.common.widget.SetItemView
+			android:id="@+id/developer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:itemName="开发者微信"
+			app:layout_constraintTop_toBottomOf="@+id/source"
+			app:needDivideLine="true"
+			/>
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
