@@ -101,58 +101,10 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
                     text = title
                 }
             })
-            showCenterTitle.observe(this@MainActivity, Observer { show ->
-                mBinding.toolbarCenterTitle.visibility = if (show) View.VISIBLE else View.GONE
-            })
-            showSearchView.observe(this@MainActivity, Observer { show ->
-                searchMenu?.isVisible = show
-                if (!show) {
-                    mBinding.toolbar.collapseActionView()
-                }
-            })
         }
 
     }
 
-    private var searchMenu: MenuItem? = null
-    private var searchView: SearchView? = null
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.search, menu)
-        searchMenu = menu?.findItem(R.id.search)?.apply {
-            isVisible = true
-        }
-        searchView = ((searchMenu?.actionView) as SearchView).apply {
-            // setSearchableInfo(searchManager.getSearchableInfo(gameName))
-            maxWidth = Integer.MAX_VALUE
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    mViewModel.postSearchString(query)
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String): Boolean {
-                    mViewModel.postSearchString(newText)
-                    return false
-                }
-            })
-            this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
-                setTextColor(android.graphics.Color.WHITE)
-                setHintTextColor(android.graphics.Color.WHITE)
-                hint = "请输入视频名称"
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    // null 使得光标与字体同色
-                    textCursorDrawable = null
-                }
-            }
-            this.findViewById<android.widget.ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
-            this.findViewById<android.widget.ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
-            // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
-            // 去掉下划线
-            this.findViewById<View>(R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT)
-
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
 
     private fun initTheme() {
         val preferenceRepository: PreferenceRepository by inject()
