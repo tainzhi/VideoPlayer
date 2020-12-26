@@ -20,13 +20,6 @@ class MainViewModel : ViewModel() {
     val showCenterTitle: LiveData<Boolean>
         get() = _showCenterTitle
 
-    private val _showSearchView = MutableLiveData<Boolean>()
-    val showSearchView: LiveData<Boolean>
-        get() = _showSearchView
-
-    private val _searchString = MutableLiveData<String>()
-    val searchString: LiveData<String>
-        get() = _searchString
 
     fun updateToolbarCenterTitle(title: String) {
         _title.postValue(title)
@@ -34,13 +27,5 @@ class MainViewModel : ViewModel() {
 
     fun updateToolbarCenterTitleVisibility(visible: Boolean) {
         _showCenterTitle.postValue(visible)
-    }
-
-    fun updateToolbarSearchView(visible: Boolean) {
-        _showSearchView.postValue(visible)
-    }
-
-    fun postSearchString(search: String) {
-        _searchString.postValue(search)
     }
 }

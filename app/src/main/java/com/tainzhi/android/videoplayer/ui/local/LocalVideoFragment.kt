@@ -8,13 +8,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.iterator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
@@ -22,9 +22,7 @@ import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
 import com.tainzhi.android.videoplayer.adapter.RecyclerItemTouchHelper
 import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.databinding.LocalVideoFragmentBinding
-import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.PlayActivity
-import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -68,26 +66,8 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             }
 
         }
-        // 显示搜索图标
-        getSharedViewModel<MainViewModel>().run {
-            updateToolbarSearchView(true)
-        }
 
     }
-
-    override fun onStop() {
-        super.onStop()
-        getSharedViewModel<MainViewModel>().run {
-            updateToolbarSearchView(false)
-        }
-    }
-
-    // override fun onDestroyView() {
-    //     super.onDestroyView()
-    //     getSharedViewModel<MainViewModel>().run {
-    //         updateToolbarSearchView(false)
-    //     }
-    // }
 
     override fun initData() {
         mViewModel.getLocalVideos()
@@ -118,10 +98,6 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                 }
             })
         }
-
-        getSharedViewModel<MainViewModel>().searchString.observe(requireActivity(), { search ->
-            localVideoAdapter.filter.filter(search)
-        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -185,8 +161,8 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
     private var searchView: SearchView? = null
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search, menu)
-        searchMenu = menu?.findItem(R.id.search)?.apply {
+        inflater.inflate(R.menu.local_search, menu)
+        searchMenu = menu.findItem(R.id.search)?.apply {
             isVisible = true
         }
         searchView = ((searchMenu?.actionView) as SearchView).apply {
@@ -194,12 +170,12 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             maxWidth = Integer.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    // mViewModel.postSearchString(query)
+                    localVideoAdapter.filter.filter(query)
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    // mViewModel.postSearchString(newText)
+                    localVideoAdapter.filter.filter(query)
                     return false
                 }
             })
@@ -217,6 +193,14 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
             // 去掉下划线
             this.findViewById<View>(R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT)
+
+            setOnCloseListener {
+                Logger.d("qfq")
+                true
+            }
+            setOnSearchClickListener {
+                Logger.d("qfq")
+            }
         }
     }
 
