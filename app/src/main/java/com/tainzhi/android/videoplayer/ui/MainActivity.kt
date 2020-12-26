@@ -6,14 +6,9 @@ import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenStarted
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,7 +19,6 @@ import com.tainzhi.android.videoplayer.databinding.ActivityMainBinding
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 import com.tainzhi.android.videoplayer.util.Theme
 import com.tainzhi.android.videoplayer.util.setupWithNavController
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -42,9 +36,6 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
         } // Else, need to wait for onRestoreInstanceState
 
         setSupportActionBar(mBinding.toolbar)
-        lifecycleScope.launch {
-            whenStarted { }
-        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -101,8 +92,12 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
                     text = title
                 }
             })
-        }
+            showCenterTitle.observe(this@MainActivity, Observer { show ->
+                mBinding.toolbarCenterTitle.visibility = if (show) View.VISIBLE else View.GONE
+            })
 
+
+        }
     }
 
 
@@ -124,7 +119,7 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
 
     private fun setGrayTheme() {
         (this.applicationContext as Application).registerActivityLifecycleCallbacks(object :
-            EmptyActivityLifecycleCallback() {
+                EmptyActivityLifecycleCallback() {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 val cm = ColorMatrix().apply {
                     setSaturation(if (isGrayTheme) 1f else 0f)
