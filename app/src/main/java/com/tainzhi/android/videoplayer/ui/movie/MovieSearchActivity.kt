@@ -50,7 +50,6 @@ class MovieSearchActivity : BaseVmBindingActivity<MovieViewModel1, MovieSearchAc
                         textCursorDrawable = null
                     }
                 }
-                isSubmitButtonEnabled = true
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         if (query != null) {
