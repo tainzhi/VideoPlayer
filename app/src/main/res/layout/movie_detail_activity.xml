@@ -94,13 +94,29 @@
 			/>
 		
 		<TextView
-			android:id="@+id/textView10"
+			android:id="@+id/episodeNameTv"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@{movie.name}"
+			app:layout_constraintEnd_toStartOf="@id/moreEpisodeIv"
 			app:layout_constraintTop_toTopOf="@+id/textView8"
+			app:layout_goneMarginEnd="@dimen/margin_normal"
 			tools:layout_editor_absoluteX="158dp"
 			tools:text="天下霸道之我最吊"
+			/>
+		
+		<ImageView
+			android:id="@+id/moreEpisodeIv"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_marginEnd="@dimen/margin_normal"
+			android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+			android:visibility="gone"
+			app:layout_constraintBottom_toBottomOf="@+id/textView8"
+			app:layout_constraintDimensionRatio="1:1"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/textView8"
+			tools:visibility="visible"
 			/>
 		
 		<TextView
