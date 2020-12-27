@@ -1,9 +1,9 @@
 package com.tainzhi.android.videoplayer.ui.movie
 
-import MovieDetailActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
@@ -19,6 +19,7 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     companion object {
         private const val CHANNEL_ID = "channel_id"
         fun newInstance(channelId: String): MovieChannelFragment {
+            Logger.d("newInstance(), qfq, channelId=${channelId}")
             return MovieChannelFragment().apply {
                 arguments = Bundle().apply {
                     putString(CHANNEL_ID, channelId)
@@ -27,6 +28,7 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
         }
     }
 
+    private var page = 1
     private val channelId by lazy { arguments?.getString(CHANNEL_ID) }
     private val movieChannelAdapter by lazy {
         MovieChannelAdapter { movie ->
@@ -34,7 +36,10 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
         }.apply {
             loadMoreModule.run {
                 loadMoreView = CustomLoadMoreView()
-                setOnLoadMoreListener { loadMore() }
+                setOnLoadMoreListener {
+                    Logger.d("qfq load more listener")
+                    loadMore()
+                }
             }
         }
     }
@@ -44,8 +49,9 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     }
 
     override fun initData() {
+        Logger.d("initData(), qfq channelid=${channelId}")
         if (channelId != null) {
-            refresh()
+            loadMore()
         } else {
             Logger.e("channelId is null")
         }
@@ -60,7 +66,17 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
             movieChannelRecyclerView.run {
                 adapter = movieChannelAdapter
                 addItemDecoration(MovieChannelAdapterDecoration())
-                layoutManager = GridLayoutManager(requireContext(), 3)
+                layoutManager = GridLayoutManager(requireContext(), 3).apply {
+                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                        override fun getSpanSize(position: Int): Int {
+                            // loadMoreView 横跨3列
+                            if (movieChannelAdapter.getItemViewType(position) == BaseQuickAdapter.LOAD_MORE_VIEW)
+                                return 3
+                            else return 1
+                        }
+                    }
+
+                }
             }
         }
     }
@@ -76,7 +92,7 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
                 is Result.Success -> {
                     mBinding.movieChannelRefreshLayout.isRefreshing = false
                     movieChannelAdapter.run {
-                        if (mViewModel.isRefreshLoading) setList(result.data)
+                        if (page == 1) setList(result.data)
                         else addData(result.data)
                         loadMoreModule.run {
                             isEnableLoadMore = true
@@ -99,10 +115,14 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     }
 
     private fun loadMore() {
-        mViewModel.getChannelData(channelId!!, isRefresh = false)
+        page++
+        Logger.d("qfq, loadMore, channelId=${channelId}")
+        mViewModel.getChannelData(channelId!!, page)
     }
 
     private fun refresh() {
-        mViewModel.getChannelData(channelId!!, isRefresh = true)
+        Logger.d("qfq, refresh")
+        page = 1
+        mViewModel.getChannelData(channelId!!, page)
     }
 }
