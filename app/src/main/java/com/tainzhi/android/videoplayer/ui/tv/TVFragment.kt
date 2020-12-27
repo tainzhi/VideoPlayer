@@ -4,7 +4,8 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.base.ui.LazyLoad
+import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.common.util.toast
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
@@ -13,7 +14,7 @@ import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>() {
+class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>(), LazyLoad {
 
     private val tvAdapter by lazy(LazyThreadSafetyMode.NONE) {
         TVAdapter { tv ->

@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.base.ui.LazyLoad
+import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
@@ -27,7 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 /**
  * 本地视频
  */
-class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>() {
+class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>(), LazyLoad {
 
     companion object {
         private const val DELETE_PERMISSION_REQUEST = 0x1033
