@@ -6,7 +6,8 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.base.ui.LazyLoad
+import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.common.util.startKtxActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieFragmentBinding
@@ -14,7 +15,7 @@ import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieSourceDialog
 import com.tainzhi.mediaspider.film.bean.Classify
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding>() {
+class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding>(), LazyLoad {
 
     private val classifyList = arrayListOf<Classify>()
 
@@ -26,14 +27,15 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
     // 该fragment生命周期为: onViewCreated() -> initData() -> onStop() -> onDestory()
     // 防止重复加载: 之前请求的 MovieChannelFragment请求数据, 而此时又再次请求新的数据 mViewModel.getHomeData()再重新创建新的 MovieChannelFragment请求数据
     // 造成多次请求的情况
-    private var isLoaded = false
+    // private var isLoaded = false
 
     override fun initData() {
         setHasOptionsMenu(true)
-        if (!isLoaded) {
-            isLoaded = true
-            mViewModel.getHomeData()
-        }
+        // if (!isLoaded) {
+        //     isLoaded = true
+        //     mViewModel.getHomeData()
+        // }
+        mViewModel.getHomeData()
     }
 
     override fun initVM(): MovieViewModel = getViewModel()

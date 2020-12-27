@@ -1,16 +1,13 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
-import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.adapter.DouyuCategoryAdapter
 import com.tainzhi.android.videoplayer.bean.DouyuGame
-import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.databinding.DouyuCategoryFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**

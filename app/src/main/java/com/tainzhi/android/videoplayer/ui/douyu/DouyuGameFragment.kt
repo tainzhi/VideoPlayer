@@ -6,7 +6,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.kennyc.view.MultiStateView
-import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.base.ui.LazyLoad
+import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.common.util.toast
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomAdapter
@@ -24,10 +25,10 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * @date:        2020/6/15 09:32
  * @description: 斗鱼频道页面, 该页面展示当前游戏分类的所有房间列表
  **/
-class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFragmentBinding>() {
+class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFragmentBinding>(), LazyLoad {
 
     // 通过 newInstance(gameId) 创建传参
-    private val gameId by lazy(LazyThreadSafetyMode.NONE) { arguments?.getString(GAME_ID)}
+    private val gameId by lazy(LazyThreadSafetyMode.NONE) { arguments?.getString(GAME_ID) }
 
     // 通过Navigation创建的 DouyuGameFragment 传参
     private val args: DouyuGameFragmentArgs by navArgs()
