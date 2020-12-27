@@ -5,7 +5,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.orhanobut.logger.Logger
-import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.base.ui.LazyLoad
+import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.MovieChannelAdapter
 import com.tainzhi.android.videoplayer.adapter.MovieChannelAdapterDecoration
@@ -14,7 +15,7 @@ import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.widget.CustomLoadMoreView
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelFragmentBinding>() {
+class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelFragmentBinding>(), LazyLoad {
 
     companion object {
         private const val CHANNEL_ID = "channel_id"
@@ -48,7 +49,7 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
 
     override fun initData() {
         if (channelId != null) {
-            loadMore()
+            refresh()
         } else {
             Logger.e("channelId is null")
         }
