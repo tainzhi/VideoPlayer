@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
+import com.tainzhi.android.common.util.startKtxActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieSourceDialog
@@ -21,9 +22,18 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
         return R.layout.movie_fragment
     }
 
+    // 在本地视频, 斗鱼, 电影, tv fragment之间切换,
+    // 该fragment生命周期为: onViewCreated() -> initData() -> onStop() -> onDestory()
+    // 防止重复加载: 之前请求的 MovieChannelFragment请求数据, 而此时又再次请求新的数据 mViewModel.getHomeData()再重新创建新的 MovieChannelFragment请求数据
+    // 造成多次请求的情况
+    private var isLoaded = false
+
     override fun initData() {
         setHasOptionsMenu(true)
-        mViewModel.getHomeData()
+        if (!isLoaded) {
+            isLoaded = true
+            mViewModel.getHomeData()
+        }
     }
 
     override fun initVM(): MovieViewModel = getViewModel()
@@ -35,7 +45,7 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
             classifyList.addAll(it)
             with(mBinding) {
                 movieViewPager2.run {
-                    offscreenPageLimit = 4
+                    offscreenPageLimit = 1
                     adapter = object : FragmentStateAdapter(this@MovieFragment) {
                         override fun createFragment(position: Int): Fragment {
                             return MovieChannelFragment.newInstance(classifyList[position].id)
@@ -49,7 +59,7 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
                 }.attach()
 
                 changeMovieSiteFab.setOnClickListener {
-                    fragmentManager?.let { manager ->
+                    childFragmentManager.let { manager ->
                         ChooseMovieSourceDialog().show(manager, "ChooseMovieSourceDialog")
                     }
                 }
@@ -73,6 +83,6 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
      * 打开搜索页面
      */
     private fun openMovieSearch() {
-
+        startKtxActivity<MovieSearchActivity>()
     }
 }

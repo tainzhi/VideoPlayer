@@ -1,9 +1,10 @@
+package com.tainzhi.android.videoplayer.ui.movie
+
 import android.content.Context
 import android.content.Intent
 import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieDetailActivityBinding
-import com.tainzhi.android.videoplayer.ui.movie.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
