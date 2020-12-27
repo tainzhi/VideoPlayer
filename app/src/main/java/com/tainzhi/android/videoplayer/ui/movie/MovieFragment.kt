@@ -45,7 +45,7 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
             classifyList.addAll(it)
             with(mBinding) {
                 movieViewPager2.run {
-                    offscreenPageLimit = 1
+                    offscreenPageLimit = 10
                     adapter = object : FragmentStateAdapter(this@MovieFragment) {
                         override fun createFragment(position: Int): Fragment {
                             return MovieChannelFragment.newInstance(classifyList[position].id)

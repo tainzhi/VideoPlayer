@@ -19,7 +19,6 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     companion object {
         private const val CHANNEL_ID = "channel_id"
         fun newInstance(channelId: String): MovieChannelFragment {
-            Logger.d("newInstance(), qfq, channelId=${channelId}")
             return MovieChannelFragment().apply {
                 arguments = Bundle().apply {
                     putString(CHANNEL_ID, channelId)
@@ -37,7 +36,6 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
             loadMoreModule.run {
                 loadMoreView = CustomLoadMoreView()
                 setOnLoadMoreListener {
-                    Logger.d("qfq load more listener")
                     loadMore()
                 }
             }
@@ -49,7 +47,6 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     }
 
     override fun initData() {
-        Logger.d("initData(), qfq channelid=${channelId}")
         if (channelId != null) {
             loadMore()
         } else {
@@ -116,12 +113,10 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
 
     private fun loadMore() {
         page++
-        Logger.d("qfq, loadMore, channelId=${channelId}")
         mViewModel.getChannelData(channelId!!, page)
     }
 
     private fun refresh() {
-        Logger.d("qfq, refresh")
         page = 1
         mViewModel.getChannelData(channelId!!, page)
     }

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.ui.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
@@ -193,14 +192,6 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
             // 去掉下划线
             this.findViewById<View>(R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT)
-
-            setOnCloseListener {
-                Logger.d("qfq")
-                true
-            }
-            setOnSearchClickListener {
-                Logger.d("qfq")
-            }
         }
     }
 
