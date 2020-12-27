@@ -30,7 +30,7 @@ class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>() {
     override fun initView() {
         with(mBinding) {
             douyuViewPager.run {
-                offscreenPageLimit = 4
+                offscreenPageLimit = 2
                 adapter = object : FragmentStateAdapter(this@DouyuFragment) {
                     override fun createFragment(position: Int): Fragment {
                         return DouyuGameFragment.newInstance(defaultChannels[position].id.toString())
@@ -47,10 +47,6 @@ class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>() {
                 view.findNavController().navigate(R.id.action_douyuFragment_to_douyuCategoryFragment)
             }
         }
-    }
-
-    override fun initData() {
-
     }
 
 }
