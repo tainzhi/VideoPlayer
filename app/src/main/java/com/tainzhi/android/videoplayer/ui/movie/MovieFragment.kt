@@ -28,13 +28,8 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
     // 防止重复加载: 之前请求的 MovieChannelFragment请求数据, 而此时又再次请求新的数据 mViewModel.getHomeData()再重新创建新的 MovieChannelFragment请求数据
     // 造成多次请求的情况
     // private var isLoaded = false
-
     override fun initData() {
         setHasOptionsMenu(true)
-        // if (!isLoaded) {
-        //     isLoaded = true
-        //     mViewModel.getHomeData()
-        // }
         mViewModel.getHomeData()
     }
 
