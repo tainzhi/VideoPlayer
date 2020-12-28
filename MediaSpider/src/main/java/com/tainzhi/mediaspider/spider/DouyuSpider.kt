@@ -68,7 +68,7 @@ class DouyuSpider {
                 throw NotFoundException("parsed response is null")
             }
         } catch (e: Exception) {
-            throw NotFoundException("cannot found circuit id, data = ${data}", e.cause)
+            throw NotFoundException("cannot found circuit id = ${rid}, data = ${data}", e.cause)
         }
         return roomLiveUrl
     }
