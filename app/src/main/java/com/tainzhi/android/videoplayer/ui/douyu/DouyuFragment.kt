@@ -31,7 +31,7 @@ class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>(), LazyLoad {
     override fun initView() {
         with(mBinding) {
             douyuViewPager.run {
-                offscreenPageLimit = 2
+                offscreenPageLimit = 4
                 adapter = object : FragmentStateAdapter(this@DouyuFragment) {
                     override fun createFragment(position: Int): Fragment {
                         return DouyuGameFragment.newInstance(defaultChannels[position].id.toString())

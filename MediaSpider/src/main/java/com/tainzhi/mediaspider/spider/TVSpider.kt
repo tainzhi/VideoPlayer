@@ -1,5 +1,6 @@
 package com.tainzhi.mediaspider.spider
 
+import com.tainzhi.mediaspider.utils.OkHttpUtil
 import org.jsoup.Jsoup
 
 /**
@@ -31,7 +32,7 @@ class TVSpider {
      * @param type cctv 或者 satellite, 即央视和地方卫视
      */
     fun getTvProgram(type: String): Map<String, TvProgramBean> {
-        val response = KRequest().get("https://www.tvmao.com/program/playing/$type/")
+        val response = OkHttpUtil.instance.request("https://www.tvmao.com/program/playing/$type/")
         val doc = Jsoup.parse(response)
         val tvProgramMap = hashMapOf<String, TvProgramBean>()
         doc.select("tr").forEach { item ->

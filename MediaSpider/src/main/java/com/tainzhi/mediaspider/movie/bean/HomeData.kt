@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider.film.bean
+package com.tainzhi.mediaspider.movie.bean
 
 /**
  * File:     HomeData
@@ -7,10 +7,10 @@ package com.tainzhi.mediaspider.film.bean
  * Mail:     QFQ61@qq.com
  * Description:
  */
-data class HomeData(val videoList: ArrayList<NewVideo>, val classifyList: ArrayList<Classify>)
+data class HomeData(val movieList: ArrayList<NewMovie>, val classifyList: ArrayList<Classify>)
 
 //新更新的资源
-data class NewVideo(
+data class NewMovie(
         //更新时间
         val updateTime: String?,
         //视频id

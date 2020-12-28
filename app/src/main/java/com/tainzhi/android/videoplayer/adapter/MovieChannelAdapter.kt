@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.ItemMovieChannelBinding
-import com.tainzhi.mediaspider.film.bean.HomeChannelData
+import com.tainzhi.mediaspider.movie.bean.HomeChannelData
 import com.tainzhi.qmediaplayer.dp
 
 /**

@@ -9,10 +9,10 @@ import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.network.Result
 import com.tainzhi.android.videoplayer.repository.MovieRepository
-import com.tainzhi.mediaspider.film.bean.Classify
-import com.tainzhi.mediaspider.film.bean.DetailData
-import com.tainzhi.mediaspider.film.bean.HomeChannelData
-import com.tainzhi.mediaspider.film.bean.SearchResultData
+import com.tainzhi.mediaspider.movie.bean.Classify
+import com.tainzhi.mediaspider.movie.bean.DetailData
+import com.tainzhi.mediaspider.movie.bean.HomeChannelData
+import com.tainzhi.mediaspider.movie.bean.SearchResultData
 import kotlinx.coroutines.launch
 
 /**

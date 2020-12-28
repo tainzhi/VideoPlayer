@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.ItemMovieSearchResultBinding
-import com.tainzhi.mediaspider.film.bean.SearchResultData
+import com.tainzhi.mediaspider.movie.bean.SearchResultData
 
 /**
  * @author:      tainzhi

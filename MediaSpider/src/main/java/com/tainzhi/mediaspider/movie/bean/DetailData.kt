@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider.film.bean
+package com.tainzhi.mediaspider.movie.bean
 
 /**
  * File:     DetailData
@@ -31,12 +31,12 @@ data class DetailData(
         //简介
         val des: String?,
         //播放列表
-        val videoList: ArrayList<Video>?,
+        val episodeList: ArrayList<Episode>?,
         //所属视频源的key
         val sourceKey: String?
 )
 
-data class Video(
+data class Episode(
         val name: String?,
         val playUrl: String?
 )
