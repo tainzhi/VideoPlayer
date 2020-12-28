@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseQuickAdapter.AnimationType.SlideInBottom
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
@@ -28,6 +29,7 @@ class DouyuRoomAdapter(private val goToPlay: (room : DouyuRoom) -> Unit) :
             val clickedTv = data[position]
             goToPlay.invoke(clickedTv)
         }
+        setAnimationWithDefault(SlideInBottom)
     }
     override fun convert(holder: BaseDataBindingHolder<ItemDouyuRoomBinding>, item: DouyuRoom) {
         holder.dataBinding?.apply {

@@ -50,7 +50,11 @@ class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) :
         holder.dataBinding?.apply {
             video = item
             holder.foreground = localVideoItemForeground
-            holder.video  = item
+            holder.video = item
+            holder.dataBinding.root.animation = android.view.animation.AnimationUtils.loadAnimation(
+                    context,
+                    R.anim.recyclerview_list_translate_alpha_scale
+            )
             executePendingBindings()
         }
     }
