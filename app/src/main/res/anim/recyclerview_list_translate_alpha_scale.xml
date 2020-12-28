@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+	android:interpolator="@android:interpolator/decelerate_cubic"
+	android:ordering="sequentially">
+	<translate
+		android:duration="500"
+		android:fromXDelta="200%"
+		android:toYDelta="0%" />
+	<alpha
+		android:duration="2500"
+		android:fromAlpha="0.0"
+		android:toAlpha="3.0" />
+</set>
