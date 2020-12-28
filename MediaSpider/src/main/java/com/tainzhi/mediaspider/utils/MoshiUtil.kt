@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider
+package com.tainzhi.mediaspider.utils
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader

@@ -1,16 +1,16 @@
-package com.tainzhi.mediaspider.film
+package com.tainzhi.mediaspider.movie
 
-import com.tainzhi.mediaspider.OkHttpUtil
-import com.tainzhi.mediaspider.Util
-import com.tainzhi.mediaspider.film.bean.Classify
-import com.tainzhi.mediaspider.film.bean.DetailData
-import com.tainzhi.mediaspider.film.bean.DownloadData
-import com.tainzhi.mediaspider.film.bean.HomeChannelData
-import com.tainzhi.mediaspider.film.bean.HomeData
-import com.tainzhi.mediaspider.film.bean.NewVideo
-import com.tainzhi.mediaspider.film.bean.SearchResultData
-import com.tainzhi.mediaspider.film.bean.Video
-import com.tainzhi.mediaspider.isVideoUrl
+import com.tainzhi.mediaspider.movie.bean.Classify
+import com.tainzhi.mediaspider.movie.bean.DetailData
+import com.tainzhi.mediaspider.movie.bean.DownloadData
+import com.tainzhi.mediaspider.movie.bean.Episode
+import com.tainzhi.mediaspider.movie.bean.HomeChannelData
+import com.tainzhi.mediaspider.movie.bean.HomeData
+import com.tainzhi.mediaspider.movie.bean.NewMovie
+import com.tainzhi.mediaspider.movie.bean.SearchResultData
+import com.tainzhi.mediaspider.utils.OkHttpUtil
+import com.tainzhi.mediaspider.utils.Util
+import com.tainzhi.mediaspider.utils.isVideoUrl
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -110,12 +110,12 @@ class Source(
             if (data == null) return null
             val jsonObject = Util.xmlToJson(data)?.toJson()
             jsonObject?.getJSONObject("rss")?.run {
-                val videoList = ArrayList<NewVideo>()
+                val videoList = ArrayList<NewMovie>()
                 val video = getJSONObject("list").get("video")
                 try {
                     if (video is JSONObject) {
                         videoList.add(
-                                NewVideo(
+                                NewMovie(
                                         video.getString("last"),
                                         video.getString("id"),
                                         video.getString("tid"),
@@ -127,7 +127,7 @@ class Source(
                         for (i in 0 until video.length()) {
                             val json = video.getJSONObject(i)
                             videoList.add(
-                                    NewVideo(
+                                    NewMovie(
                                             json.getString("last"),
                                             json.getString("id"),
                                             json.getString("tid"),
@@ -225,30 +225,30 @@ class Source(
             val videoInfo =
                     jsonObject?.getJSONObject("rss")?.getJSONObject("list")!!.getJSONObject("video")
             val dd = videoInfo.getJSONObject("dl").get("dd")
-            var videoList: ArrayList<Video>? = null
+            var episodeList: ArrayList<Episode>? = null
             if (dd is JSONObject) {
-                videoList = dd.getString(("content"))?.split("#")
+                episodeList = dd.getString(("content"))?.split("#")
                         ?.map {
                             val split = it.split("$")
                             if (split.size >= 2) {
-                                Video(split[0], split[1])
+                                Episode(split[0], split[1])
                             } else {
-                                Video(split[0], split[0])
+                                Episode(split[0], split[0])
                             }
-                        }?.toMutableList() as ArrayList<Video>? ?: arrayListOf()
+                        }?.toMutableList() as ArrayList<Episode>? ?: arrayListOf()
             } else if (dd is JSONArray) {
                 for (i in 0 until dd.length()) {
                     val list = dd.getJSONObject(i)?.getString("content")?.split("#")
                             ?.map {
                                 val split = it.split("$")
                                 if (split.size >= 2) {
-                                    Video(split[0], split[1])
+                                    Episode(split[0], split[1])
                                 } else {
-                                    Video(split[0], split[0])
+                                    Episode(split[0], split[0])
                                 }
-                            }?.toMutableList() as ArrayList<Video>? ?: arrayListOf()
+                            }?.toMutableList() as ArrayList<Episode>? ?: arrayListOf()
                     if (list.size > 0) {
-                        videoList = list
+                        episodeList = list
                         if (list[0].playUrl.isVideoUrl()) {
                             //优先获取应用内播放的资源
                             break
@@ -268,7 +268,7 @@ class Source(
                     videoInfo.getString("actor"),
                     videoInfo.getString("director"),
                     videoInfo.getString("des"),
-                    videoList,
+                    episodeList,
                     sourceKey
             )
 

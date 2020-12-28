@@ -1,12 +1,11 @@
-package com.tainzhi.mediaspider.film.bean
+package com.tainzhi.mediaspider.movie
 
 import android.content.Context
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.tainzhi.mediaspider.film.Source
-import com.tainzhi.mediaspider.listFromJson
-import com.tainzhi.mediaspider.readAssets
-import com.tainzhi.mediaspider.readString
+import com.tainzhi.mediaspider.utils.listFromJson
+import com.tainzhi.mediaspider.utils.readAssets
+import com.tainzhi.mediaspider.utils.readString
 import java.io.File
 
 /**

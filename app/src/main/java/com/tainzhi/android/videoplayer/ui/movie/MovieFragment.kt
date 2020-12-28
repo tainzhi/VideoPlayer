@@ -12,7 +12,7 @@ import com.tainzhi.android.common.util.startKtxActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieSourceDialog
-import com.tainzhi.mediaspider.film.bean.Classify
+import com.tainzhi.mediaspider.movie.bean.Classify
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding>(), LazyLoad {
