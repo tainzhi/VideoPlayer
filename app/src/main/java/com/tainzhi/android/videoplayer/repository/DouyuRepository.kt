@@ -75,7 +75,7 @@ class DouyuRepository {
                 val url = String.format(circuit1, roomCircuitId)
                 emit(Result.Success(url))
             }.catch { e ->
-                Logger.e(e.toString())
+                Logger.e(e.toString(), e.cause)
                 emit(Result.error(e.toString()))
             }
 
