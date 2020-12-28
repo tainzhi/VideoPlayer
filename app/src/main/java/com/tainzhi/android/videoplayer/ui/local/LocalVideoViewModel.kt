@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.LocalVideo
-import com.tainzhi.android.videoplayer.network.updateOnSuccess
+import com.tainzhi.android.videoplayer.network.doIfSuccess
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 import kotlinx.coroutines.launch
 
@@ -30,7 +30,7 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
         viewModelScope.launch(dispatcherProvider.io) {
             localVideoRepository
                     .getLocalVideoList()
-                    .updateOnSuccess(_localVideoList)
+                    .doIfSuccess { _localVideoList.postValue(it) }
         }
     }
 

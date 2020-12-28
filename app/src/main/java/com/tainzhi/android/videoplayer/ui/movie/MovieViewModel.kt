@@ -7,7 +7,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
-import com.tainzhi.android.videoplayer.network.Result
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.repository.MovieRepository
 import com.tainzhi.mediaspider.movie.bean.Classify
 import com.tainzhi.mediaspider.movie.bean.DetailData
@@ -31,8 +31,8 @@ class MovieViewModel(
     val classifyListLiveData: LiveData<List<Classify>>
         get() = _classifyLiveData
 
-    private val _channelLiveData = MutableLiveData<Result<List<HomeChannelData>>>()
-    val channelListLiveData: LiveData<Result<List<HomeChannelData>>>
+    private val _channelLiveData = MutableLiveData<ResultOf<List<HomeChannelData>>>()
+    val channelListLiveData: LiveData<ResultOf<List<HomeChannelData>>>
         get() = _channelLiveData
 
     private val _movie = MutableLiveData<DetailData>()
@@ -52,9 +52,9 @@ class MovieViewModel(
         viewModelScope.launch(dispatcherProvider.io) {
             movieRepository.movieManager.curUseSourceConfig().requestHomeChannelData(page, channelId) { channelData ->
                 if (channelData.isNullOrEmpty()) {
-                    _channelLiveData.postValue(Result.successEndData(emptyList()))
+                    _channelLiveData.postValue(ResultOf.successEndData(emptyList()))
                 } else {
-                    _channelLiveData.postValue(Result.success(channelData))
+                    _channelLiveData.postValue(ResultOf.success(channelData))
                 }
             }
         }
@@ -82,17 +82,17 @@ class MovieViewModel(
         }
     }
 
-    private val _searchResult = MutableLiveData<Result<List<SearchResultData>>>()
-    val searchResult: LiveData<Result<List<SearchResultData>>>
+    private val _searchResult = MutableLiveData<ResultOf<List<SearchResultData>>>()
+    val searchResult: LiveData<ResultOf<List<SearchResultData>>>
         get() = _searchResult
 
     fun searchMovie(key: String, page: Int) {
         viewModelScope.launch(dispatcherProvider.io) {
             movieRepository.movieManager.curUseSourceConfig().requestSearchData(key, page) {
                 if (it.isNullOrEmpty()) {
-                    _searchResult.postValue(Result.successEndData(emptyList()))
+                    _searchResult.postValue(ResultOf.successEndData(emptyList()))
                 } else {
-                    _searchResult.postValue(Result.success(it))
+                    _searchResult.postValue(ResultOf.success(it))
                 }
             }
         }

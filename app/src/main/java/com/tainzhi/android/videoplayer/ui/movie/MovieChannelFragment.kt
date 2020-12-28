@@ -11,7 +11,7 @@ import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.MovieChannelAdapter
 import com.tainzhi.android.videoplayer.adapter.MovieChannelAdapterDecoration
 import com.tainzhi.android.videoplayer.databinding.MovieChannelFragmentBinding
-import com.tainzhi.android.videoplayer.network.Result
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.widget.CustomLoadMoreView
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -84,10 +84,10 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     override fun startObserve() {
         mViewModel.channelListLiveData.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {
+                is ResultOf.Loading -> {
                     mBinding.movieChannelRefreshLayout.isRefreshing = true
                 }
-                is Result.Success -> {
+                is ResultOf.Success -> {
                     mBinding.movieChannelRefreshLayout.isRefreshing = false
                     movieChannelAdapter.run {
                         if (page == 1) setList(result.data)
@@ -98,14 +98,14 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
                         }
                     }
                 }
-                is Result.SuccessEndData -> {
+                is ResultOf.SuccessEndData -> {
                     mBinding.movieChannelRefreshLayout.isRefreshing = false
                     movieChannelAdapter.run {
                         addData(result.data)
                         loadMoreModule.loadMoreEnd()
                     }
                 }
-                is Result.Error -> {
+                is ResultOf.Error -> {
                     mBinding.movieChannelRefreshLayout.isRefreshing = false
                 }
             }
