@@ -42,6 +42,9 @@ git submodule update --init --recursive
 - Surface/TextureView/GLSurface
 - Android MediaPlayer/IjkPlayer/exoplayer, 特效, 水印, 缓存视频
 
+### common
+- BaseFragment支持懒加载
+
 ### QMediaSpider
 - 爬取网络视频资源, 使用到技术有Jsoup, Volley, android test等等.
 - 破解算法参考[real-url](https://github.com/wbt5/real-url)
