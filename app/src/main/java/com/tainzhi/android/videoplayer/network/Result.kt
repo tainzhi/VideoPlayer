@@ -1,7 +1,6 @@
 package com.tainzhi.android.videoplayer.network
 
-import androidx.lifecycle.MutableLiveData
-import com.tainzhi.android.videoplayer.network.Result.Success
+import com.tainzhi.android.videoplayer.network.ResultOf.Success
 
 /**
  * File:     Result
@@ -11,24 +10,26 @@ import com.tainzhi.android.videoplayer.network.Result.Success
  * Description: Result Management for UI & Data.
  */
 
-sealed class Result<out T> {
-    class Loading<T> : Result<T>()
+// 为什么 Result --> ResultOf了
+// 因为kotlin.Result的存在, 使得代码提示混乱, 为了区分, 改成ResultOf
+sealed class ResultOf<out T> {
+    class Loading<T> : ResultOf<T>()
 
-    data class Success<T>(val data: T) : Result<T>()
+    data class Success<T>(val data: T) : ResultOf<T>()
 
-    data class SuccessEndData<T>(val data: T) : Result<T>()
+    data class SuccessEndData<T>(val data: T) : ResultOf<T>()
 
-    data class Error<T>(val message: String) : Result<T>()
+    data class Error<T>(val message: String, val throwable: Throwable? = null) : ResultOf<T>()
 
     companion object {
 
         /**
-         * Returns [Result.Loading] instance.
+         * Returns [ResultOf.Loading] instance.
          */
         fun <T> loading() = Loading<T>()
 
         /**
-         * Returns [Result.Success] instance.
+         * Returns [ResultOf.Success] instance.
          * @param data Data to emit with status.
          */
         fun <T> success(data: T) =
@@ -41,7 +42,7 @@ sealed class Result<out T> {
                 SuccessEndData(data)
 
         /**
-         * Returns [Result.Error] instance.
+         * Returns [ResultOf.Error] instance.
          * @param message Description of failure.
          */
         fun <T> error(message: String) =
@@ -49,14 +50,25 @@ sealed class Result<out T> {
     }
 }
 
-/**
- * Updates value of [liveData] if [Result] is of type [Success]
- */
-inline fun <reified T> Result<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
-    if (this is Success) {
-        liveData.postValue(data)
+val <T> ResultOf<T>.data: T?
+    get() = (this as? Success)?.data
+
+inline fun <reified T> ResultOf<T>.doIfError(callback: (error: String?, throwable: Throwable?) -> Unit) {
+    if (this is ResultOf.Error) {
+        callback(message, throwable)
     }
 }
 
-val <T> Result<T>.data: T?
-    get() = (this as? Success)?.data
+inline fun <reified T> ResultOf<T>.doIfSuccess(callback: (value: T) -> Unit) {
+    if (this is ResultOf.Success) {
+        callback(data)
+    }
+}
+
+// inline fun <reified T, reified R> ResultOf<T>.map(transform: (T) -> R): ResultOf<R> {
+//     return when (this) {
+//         is ResultOf.Success -> ResultOf.success(transform(data))
+//         is ResultOf.Loading -> ResultOf.loading()
+//         else -> ResultOf.error(this.message)
+//     }
+// }

@@ -11,6 +11,7 @@ import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.databinding.TVFragmentBinding
 import com.tainzhi.android.videoplayer.db.AppDataBase
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.ui.PlayActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -75,17 +76,17 @@ class TVFragment : BaseVmBindingFragment<TVViewModel, TVFragmentBinding>(), Lazy
             }
             tvPrograms.observe(viewLifecycleOwner) { state ->
                 when (state) {
-                    is com.tainzhi.android.videoplayer.network.Result.Success -> {
+                    is ResultOf.Success -> {
                         tvAdapter.data.forEach { tv ->
                             tv.program = state.data[tv.id]
                         }
                         tvAdapter.notifyDataSetChanged()
                         mBinding.tvRefreshLayout.isRefreshing = false
                     }
-                    is com.tainzhi.android.videoplayer.network.Result.Loading -> {
+                    is ResultOf.Loading -> {
                         mBinding.tvRefreshLayout.isRefreshing = true
                     }
-                    is com.tainzhi.android.videoplayer.network.Result.Error -> {
+                    is ResultOf.Error -> {
                         mBinding.tvRefreshLayout.isRefreshing = false
                         activity?.toast(state.message)
                     }
