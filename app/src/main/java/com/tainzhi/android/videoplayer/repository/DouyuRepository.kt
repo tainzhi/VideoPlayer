@@ -4,7 +4,7 @@ import com.orhanobut.logger.Logger
 import com.tainzhi.android.common.base.ResponseBody
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
-import com.tainzhi.android.videoplayer.network.Result
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.mediaspider.spider.DouyuSpider
 import kotlinx.coroutines.flow.Flow
@@ -28,9 +28,9 @@ class DouyuRepository {
      * @param gameId 直播游戏id
      * @param isRefresh 是否重新加载, true 刷新, 只加载第一个page; false, 加载下一个page
      */
-    fun getGameRooms(gameId: String, isRefresh: Boolean = false): Flow<Result<List<DouyuRoom>>> =
+    fun getGameRooms(gameId: String, isRefresh: Boolean = false): Flow<ResultOf<List<DouyuRoom>>> =
             flow {
-                emit(Result.loading())
+                emit(ResultOf.loading())
 
                 if (isRefresh) {
                     douyuCurrentOffset = 0
@@ -46,37 +46,37 @@ class DouyuRepository {
 
                 val fetchedDataSize = fetchedData.data.size
                 if (fetchedDataSize < douyuLimit) {
-                    emit(Result.SuccessEndData(fetchedData.data))
+                    emit(ResultOf.SuccessEndData(fetchedData.data))
                 } else {
-                    emit(Result.Success(fetchedData.data))
+                    emit(ResultOf.Success(fetchedData.data))
                 }
                 douyuCurrentOffset += fetchedDataSize
             }.catch { e ->
                 Logger.e(e.toString())
-                emit(Result.error(e.toString()))
+                emit(ResultOf.error(e.toString()))
             }
 
-    fun getAllGames(): Flow<Result<List<DouyuGame>>> =
+    fun getAllGames(): Flow<ResultOf<List<DouyuGame>>> =
             flow {
-                emit(Result.loading())
+                emit(ResultOf.loading())
 
                 val fetchedData = get(VideoService::class.java).getAllGames()
 
-                emit(Result.Success(fetchedData.data))
+                emit(ResultOf.Success(fetchedData.data))
             }.catch { e ->
                 Logger.e(e.toString())
-                emit(Result.error(e.toString()))
+                emit(ResultOf.error(e.toString()))
             }
 
-    fun getRoomUrl(roomId: String): Flow<Result<String>> =
+    fun getRoomUrl(roomId: String): Flow<ResultOf<String>> =
             flow {
-                emit(Result.loading())
+                emit(ResultOf.loading())
                 val roomCircuitId = DouyuSpider.getInstance().getRoomCircuitId(roomId)
                 val url = String.format(circuit1, roomCircuitId)
-                emit(Result.Success(url))
+                emit(ResultOf.Success(url))
             }.catch { e ->
                 Logger.e(e.toString(), e.cause)
-                emit(Result.error(e.toString()))
+                emit(ResultOf.error(e.toString()))
             }
 
     companion object {

@@ -6,7 +6,7 @@ import com.tainzhi.android.videoplayer.bean.TvProgram
 import com.tainzhi.android.videoplayer.db.TvDao
 import com.tainzhi.android.videoplayer.network.NetworkBoundRepository
 import com.tainzhi.android.videoplayer.network.RateLimiter
-import com.tainzhi.android.videoplayer.network.Result
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.mediaspider.spider.TVSpider
 import com.tainzhi.mediaspider.spider.TvProgramBean
 import kotlinx.coroutines.async
@@ -32,16 +32,16 @@ class TVRepository(
         const val TAG = "TVRepository.getTvPrograms"
     }
 
-    fun loadTVs(): Result<List<Tv>> {
+    fun loadTVs(): ResultOf<List<Tv>> {
         return try {
             val tvs = tvDao.getAllTv()
             tvs.forEach { tv ->
                 tv.tvCircuit = loadTVSource(tv.id)
             }
-            Result.success(tvs)
+            ResultOf.success(tvs)
         } catch (e: Exception) {
             Logger.e(e.toString())
-            Result.error(e.toString())
+            ResultOf.error(e.toString())
         }
     }
 
@@ -54,7 +54,7 @@ class TVRepository(
         return tvDao.getTvCircuit(tvId)
     }
 
-    fun getTvPrograms(): Flow<Result<Map<String, TvProgramBean>>> {
+    fun getTvPrograms(): Flow<ResultOf<Map<String, TvProgramBean>>> {
         return object : NetworkBoundRepository<Map<String, TvProgramBean>, Map<String, TvProgramBean>>() {
             override fun shouldFetch(): Boolean = rateLimiter.shouldFetch(TAG)
 

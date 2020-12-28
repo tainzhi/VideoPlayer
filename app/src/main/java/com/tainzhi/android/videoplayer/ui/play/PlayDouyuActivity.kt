@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import com.google.android.material.snackbar.Snackbar
 import com.tainzhi.android.common.base.ui.BaseVMActivity
 import com.tainzhi.android.videoplayer.R
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.qmediaplayer.AutoFullScreenListener
 import com.tainzhi.qmediaplayer.VideoView
 import com.tainzhi.qmediaplayer.controller.NetMediaController
@@ -96,13 +97,13 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
     override fun startObserve() {
         mViewModel.roomUrl.observe(this@PlayDouyuActivity) { state ->
             when (state) {
-                is com.tainzhi.android.videoplayer.network.Result.Success -> {
+                is ResultOf.Success -> {
                     // val uri = Uri.parse("http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8")
                     val uri = Uri.parse(state.data)
                     videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
                     // 如果先加载MediaController, 将不会显示
                 }
-                is com.tainzhi.android.videoplayer.network.Result.Error -> {
+                is ResultOf.Error -> {
                     Snackbar.make(videoView, state.message, Snackbar.LENGTH_SHORT)
                             .setAction("退出播放界面") {
                                 finish()

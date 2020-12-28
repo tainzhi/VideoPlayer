@@ -7,7 +7,7 @@ import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.MovieSearchResultAdapter
 import com.tainzhi.android.videoplayer.databinding.MovieSearchActivityBinding
-import com.tainzhi.android.videoplayer.network.Result
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.widget.CustomLoadMoreView
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import com.tainzhi.android.videoplayer.ui.movie.MovieViewModel as MovieViewModel1
@@ -76,7 +76,7 @@ class MovieSearchActivity : BaseVmBindingActivity<MovieViewModel1, MovieSearchAc
     override fun startObserve() {
         mViewModel.searchResult.observe(this) { result ->
             when (result) {
-                is Result.Success -> {
+                is ResultOf.Success -> {
                     searchResultAdapter.run {
                         if (page == 1) setList(result.data)
                         else addData(result.data)
@@ -86,7 +86,7 @@ class MovieSearchActivity : BaseVmBindingActivity<MovieViewModel1, MovieSearchAc
                         }
                     }
                 }
-                is Result.SuccessEndData -> {
+                is ResultOf.SuccessEndData -> {
                     searchResultAdapter.run {
                         addData(result.data)
                         loadMoreModule.loadMoreEnd()

@@ -25,11 +25,4 @@ class SettingFragment : BaseVmBindingFragment<SettingViewModel, SettingFragmentB
             fragmentManager?.let { ChoosePlayerRenderTypeDialogFragment().show(it, "choosePlayerRenderDialog") }
         }
     }
-
-    override fun initData() {
-    }
-
-    override fun startObserve() {
-    }
-
 }

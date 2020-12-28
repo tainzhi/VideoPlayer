@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.DouyuGame
+import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class DouyuCategoryViewModel(private val douyuRepository: DouyuRepository,
         viewModelScope.launch(coroutineProvider.io) {
             douyuRepository.getAllGames().collect {
                 when (it) {
-                    is com.tainzhi.android.videoplayer.network.Result.Success -> {
+                    is ResultOf.Success -> {
                         _games.postValue(it.data)
                     }
                     else -> Unit

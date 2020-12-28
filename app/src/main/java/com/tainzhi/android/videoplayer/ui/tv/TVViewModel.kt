@@ -9,8 +9,8 @@ import androidx.work.WorkManager
 import com.tainzhi.android.common.CoroutinesDispatcherProvider
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
-import com.tainzhi.android.videoplayer.network.Result
-import com.tainzhi.android.videoplayer.network.updateOnSuccess
+import com.tainzhi.android.videoplayer.network.ResultOf
+import com.tainzhi.android.videoplayer.network.doIfSuccess
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 import com.tainzhi.mediaspider.spider.TvProgramBean
@@ -25,8 +25,8 @@ class TVViewModel(private val TVRepository: TVRepository,
     val tvList: LiveData<List<Tv>>
         get() = _tvList
 
-    private val _tvPrograms = MutableLiveData<Result<Map<String, TvProgramBean>>>()
-    val tvPrograms: LiveData<Result<Map<String, TvProgramBean>>>
+    private val _tvPrograms = MutableLiveData<ResultOf<Map<String, TvProgramBean>>>()
+    val tvPrograms: LiveData<ResultOf<Map<String, TvProgramBean>>>
         get() = _tvPrograms
 
     val dataBaseStatus: LiveData<List<WorkInfo>>
@@ -39,7 +39,7 @@ class TVViewModel(private val TVRepository: TVRepository,
     fun getTVList() {
         viewModelScope.launch(dispatcherProvider.io) {
             TVRepository.loadTVs()
-                    .updateOnSuccess(_tvList)
+                    .doIfSuccess { _tvList.postValue(it) }
         }
     }
 
