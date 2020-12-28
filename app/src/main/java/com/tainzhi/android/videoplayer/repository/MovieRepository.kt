@@ -2,7 +2,7 @@ package com.tainzhi.android.videoplayer.repository
 
 import com.orhanobut.logger.Logger
 import com.tainzhi.android.videoplayer.App
-import com.tainzhi.mediaspider.film.bean.MovieManager
+import com.tainzhi.mediaspider.movie.MovieManager
 
 /**
  * File:     MovieRepository

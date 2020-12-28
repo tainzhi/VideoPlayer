@@ -6,7 +6,7 @@
 	
 	<data>
 		
-		<import type="com.tainzhi.mediaspider.film.bean.DetailData" />
+		<import type="com.tainzhi.mediaspider.movie.bean.DetailData" />
 		
 		<variable
 			name="movie"

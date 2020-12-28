@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider
+package com.tainzhi.mediaspider.utils
 
 import android.content.Context
 import okio.buffer

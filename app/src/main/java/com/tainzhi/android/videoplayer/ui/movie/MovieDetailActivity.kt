@@ -7,8 +7,8 @@ import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieDetailActivityBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieEpisodeDialog
-import com.tainzhi.mediaspider.film.bean.DetailData
-import com.tainzhi.mediaspider.film.bean.Video
+import com.tainzhi.mediaspider.movie.bean.DetailData
+import com.tainzhi.mediaspider.movie.bean.Episode
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -46,12 +46,12 @@ class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailAct
     override fun startObserve() {
         mViewModel.movie.observe(this) { detailData ->
             mBinding.movie = detailData
-            if (!detailData.videoList.isNullOrEmpty()) {
-                if (detailData.videoList!!.size > 1) {
+            if (!detailData.episodeList.isNullOrEmpty()) {
+                if (detailData.episodeList!!.size > 1) {
                     with(mBinding) {
                         moreEpisodeIv.isVisible = true
                         episodeNameTv.setOnClickListener {
-                            ChooseMovieEpisodeDialog(detailData.videoList!!).apply {
+                            ChooseMovieEpisodeDialog(detailData.episodeList!!).apply {
                                 episodeCallback = { episode ->
                                     startPlay(detailData, episode)
                                 }
@@ -65,7 +65,7 @@ class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailAct
         }
     }
 
-    private fun startPlay(movie: DetailData, episode: Video? = null) {
+    private fun startPlay(movie: DetailData, episode: Episode? = null) {
         val showName = if (episode == null) movie.type else episode.name + " : " + movie.type
         val playingEpisodeName = movie.name + if (episode == null) "" else " : " + episode.name
         mBinding.episodeNameTv.text = playingEpisodeName

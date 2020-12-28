@@ -1,6 +1,7 @@
 package com.tainzhi.mediaspider.spider
 
-import com.tainzhi.mediaspider.fromJson
+import com.tainzhi.mediaspider.utils.OkHttpUtil
+import com.tainzhi.mediaspider.utils.fromJson
 import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
 import java.security.MessageDigest
@@ -26,7 +27,6 @@ class DouyuSpider {
         val url = "https://playweb.douyucdn.cn/lapi/live/hlsH5Preview/$rid"
         val auth = (rid + timeSeconds).toMD5()
         val header = mutableMapOf<String, String>(
-                "Content-type" to "application/x-www-form-urlencoded",
                 "rid" to rid,
                 "time" to timeSeconds.toString(),
                 "auth" to auth
@@ -41,6 +41,8 @@ class DouyuSpider {
         var response: RoomBean? = null
         var data: String? = null
         try {
+            // 写法有问题
+            // data = OkHttpUtil.instance.post(url, header, postData
             data = KRequest().apply {
                 mapData = postData
                 headers = header
@@ -84,7 +86,7 @@ class DouyuSpider {
          获取的图片是默认的, 因为douyu懒加载了图片, 还需要找到图片加载地址
      */
     fun getAllRoom() {
-        val response = KRequest().get("https://www.douyu.com/directory")
+        val response = OkHttpUtil.instance.request("https://www.douyu.com/directory")
 
         val doc = Jsoup.parse(response)
         doc.select("li.layout-Classify-item a.layout-Classify-card").forEach { item ->

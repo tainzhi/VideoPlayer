@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider
+package com.tainzhi.mediaspider.utils
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson
 import java.util.Locale

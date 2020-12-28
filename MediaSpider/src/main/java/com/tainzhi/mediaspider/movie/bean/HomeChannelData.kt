@@ -1,4 +1,4 @@
-package com.tainzhi.mediaspider.film.bean
+package com.tainzhi.mediaspider.movie.bean
 
 /**
  * File:     HomeChannelData

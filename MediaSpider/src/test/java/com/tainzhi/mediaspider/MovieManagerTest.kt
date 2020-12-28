@@ -2,7 +2,7 @@ package com.tainzhi.mediaspider
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.tainzhi.mediaspider.film.bean.MovieManager
+import com.tainzhi.mediaspider.movie.MovieManager
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.*
