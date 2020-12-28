@@ -56,30 +56,6 @@
 			android:onCheckedChanged="@{(view, checked) -> viewModel.toggleAdvertising(checked)}"
 			android:text="视频前播放广告"
 			app:layout_constraintTop_toBottomOf="@+id/choosePlayerRenderTv" />
-		<View
-			app:layout_constraintTop_toBottomOf="@id/advertisingSwitch"
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:background="?android:dividerHorizontal"/>
 		
-		<TextView
-			android:id="@+id/textView3"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="About"
-			style="@style/VideoTheme.Settings.Button.About"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/advertisingSwitch" />
-		
-		<TextView
-			android:id="@+id/sourceUrl"
-			style="@style/VideoTheme.Settings.Button.WebLink"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:focusable="true"
-			android:text="源码地址"
-			app:layout_constraintTop_toBottomOf="@+id/textView3"
-			websiteLink="https://github.com/tainzhi/VideoPlayer" />
-<!--		<todo>websiteLink无法点击的原因</todo>-->
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

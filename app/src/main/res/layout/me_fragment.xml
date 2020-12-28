@@ -13,7 +13,7 @@
 		<com.tainzhi.android.common.widget.SetItemView
 			android:id="@+id/setting"
 			android:layout_width="match_parent"
-			android:layout_height="50dp"
+			android:layout_height="wrap_content"
 			app:itemName="设置"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -24,11 +24,12 @@
 		<com.tainzhi.android.common.widget.SetItemView
 			android:id="@+id/about"
 			android:layout_width="match_parent"
-			android:layout_height="50dp"
+			android:layout_height="wrap_content"
 			app:itemName="关于"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/setting"
 			app:needDivideLine="true"
-			tools:layout_editor_absoluteX="0dp"
 			/>
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
