@@ -12,9 +12,6 @@ import com.squareup.moshi.JsonClass
  * Description:
  *
  */
-/*
-
- */
 @JsonClass(generateAdapter = true)
 data class RoomBean(
         @Json(name = "data")
