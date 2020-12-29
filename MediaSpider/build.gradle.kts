@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation(files("libs/rhino-1.7.13.jar"))
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.jsoup)
     implementation(Libs.AndroidX.appcompat)

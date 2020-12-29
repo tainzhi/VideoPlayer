@@ -17,7 +17,13 @@ import java.util.zip.GZIPInputStream
  * @description: 封装的请求
  */
 
-@Deprecated("使用OkhttpsUtil替换")
+@Deprecated(
+        message = "simple http request&post",
+        replaceWith = ReplaceWith(
+                expression = "OkHttpUtil",
+                imports = ["com.tainzhi.mediaspider.utils.OkHttpUtil"]
+        ),
+        level = DeprecationLevel.ERROR)
 class KRequest {
 
     var userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
