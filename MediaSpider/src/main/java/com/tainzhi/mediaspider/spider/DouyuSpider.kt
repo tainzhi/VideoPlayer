@@ -1,10 +1,12 @@
 package com.tainzhi.mediaspider.spider
 
+import android.util.Log
+import com.tainzhi.mediaspider.utils.JsEngine
 import com.tainzhi.mediaspider.utils.OkHttpUtil
 import com.tainzhi.mediaspider.utils.fromJson
+import com.tainzhi.mediaspider.utils.toMD5
 import org.jsoup.Jsoup
 import java.lang.System.currentTimeMillis
-import java.security.MessageDigest
 
 /**
  * @author:      tainzhi
@@ -22,58 +24,108 @@ import java.security.MessageDigest
 
 class DouyuSpider {
 
-    fun getRoomCircuitId(rid: String): String {
-        val timeSeconds = currentTimeMillis() / 1000
+    private var rid: String = ""
+    private val did: String = "10000000000000000000000000001501"
+    private var t10: String = ""
+    private var ver = "219032101"
+
+    fun getRoomCircuitId(id: String): String {
+        this.rid = id
+        val t13 = currentTimeMillis()
+        t10 = (t13 / 1000).toString()
+
         val url = "https://playweb.douyucdn.cn/lapi/live/hlsH5Preview/$rid"
-        val auth = (rid + timeSeconds).toMD5()
-        val header = mutableMapOf<String, String>(
+        val auth = (rid + t13).toMD5()
+        val header = mutableMapOf(
                 "rid" to rid,
-                "time" to timeSeconds.toString(),
+                "time" to t13.toString(),
                 "auth" to auth
         )
 
         val postData = mutableMapOf(
                 "rid" to rid,
-                "did" to "10000000000000000000000000001501"
+                "did" to did,
         )
-
-        lateinit var roomLiveUrl: String
-        var response: RoomBean? = null
-        var data: String? = null
+        lateinit var livingRoomId: String
         try {
-            // 写法有问题
-            // data = OkHttpUtil.instance.post(url, header, postData
-            data = KRequest().apply {
-                mapData = postData
-                headers = header
-            }.post(url)
-            response = data.fromJson<RoomBean>()
+            val htmlPage = OkHttpUtil.instance.post(url, header, postData)
+            val response = htmlPage.fromJson<RoomBean>()
             if (response != null) {
                 if (response.error == 0 && response.data != null) {
                     val rtmpLive = response.data!!.rtmpLive
                     if (rtmpLive.contains("mix=1")) {
-                        throw NotFoundException("circuit not found; PKing")
+                        throw Exception("circuit not found; PKing")
                     } else {
-                        // val regex = Regex(pattern = "[0-9a-zA-Z]*_")
                         val regex = Regex(pattern = "[0-9a-zA-Z]*")
                         val found = regex.find(rtmpLive)
                         if (found != null) {
-                            roomLiveUrl = found.value
+                            livingRoomId = found.value
                         } else {
-                            throw NotFoundException("regex to find room live url failed")
+                            throw Exception("regex to find room live url failed")
                         }
                     }
+                } else if (response.error == 102) {
+                    // 房间不存在
+                    throw RoomNotExist()
+                } else if (response.error == 104) {
+                    // 房间未开播
+                    throw RoomNotLiving()
                 } else {
-                    throw  NotFoundException("response.error is ${response.error}, not 0; response.data = ${response.data}")
+                    return getIdByExecJs(rid)
                 }
             } else {
-                throw NotFoundException("parsed response is null")
+                return getIdByExecJs(rid)
             }
-        } catch (e: Exception) {
-            throw NotFoundException("cannot found circuit id = ${rid}, data = ${data}", e.cause)
+        } catch (e: java.lang.Exception) {
+            return getIdByExecJs(rid)
         }
-        return roomLiveUrl
+        return livingRoomId
     }
+
+    /**
+     * 因为直接通过header和post body无法获取到直播间直播编号
+     * 只能通过执行js代码获取
+     */
+    private fun getIdByExecJs(id: String): String {
+        Log.i("DouyuSpider.getIdByExecJs()", "roomId=${id}")
+        val htmlPage = OkHttpUtil.instance.request("https://m.douyu.com/${id.trim()}")
+        try {
+            val ubFun = Regex(pattern = "(function ub98484234.*)\\s(var.*)").find(htmlPage)!!.groupValues[0]
+            val funcUb9 = Regex("eval.*;}").replace(ubFun, "strc;}")
+            val funResult = JsEngine.execJs(funcUb9, "ub98484234")
+
+            val v = Regex("v=(\\d+)").find(funResult)!!.groupValues[1]
+            val rb = (rid + did + t10 + v).toMD5()
+
+            val originalSignFun = Regex("return rt;}\\);?").replace(funResult, "return rt;}")
+            val signFun = originalSignFun
+                    .replace("(function (", "function sign(")
+                    .replace("CryptoJS.MD5(cb).toString()", "\"${rb}\"")
+
+            val signResult = JsEngine.execJs(signFun, "sign", rid, did, t10)
+            // Regex("""sign=(\S+)""").find(params)
+            val signParam = Regex("sign=(\\S*)").find(signResult)!!.groupValues[1]
+            val postBodyMap = mapOf(
+                    "v" to v,
+                    "did" to did,
+                    "tt" to t10,
+                    "sign" to signParam,
+                    "ver" to ver,
+                    "rid" to rid,
+                    "rate" to "-1",
+            )
+
+            val url = "https://m.douyu.com/api/room/ratestream"
+            val response: String = OkHttpUtil.instance.post(url, postMap = postBodyMap)
+            val livingRoomId: String = Regex("(\\d{1,7}[0-9a-zA-Z]+)_?\\d{0,4}(.m3u8|/playlist)").find(response)!!.groupValues[1]
+            return livingRoomId
+        } catch (e: Exception) {
+            throw NotFoundException(e.message
+                    ?: "throw exec js to get room:${rid} living id faled", e.cause)
+        }
+        throw NotFoundException()
+    }
+
 
     /*
     <li class="layout-Classify-item"><a class="layout-Classify-card secondCateCard" href="/g_jdqs" target="_blank"><i class="secondCateCard-icon">
@@ -107,13 +159,4 @@ class DouyuSpider {
             instance ?: DouyuSpider().also { instance = it }
         }
     }
-}
-
-fun String.toMD5(): String {
-    val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
-    return bytes.toHex()
-}
-
-fun ByteArray.toHex(): String {
-    return joinToString("") { "%02x".format(it) }
 }
