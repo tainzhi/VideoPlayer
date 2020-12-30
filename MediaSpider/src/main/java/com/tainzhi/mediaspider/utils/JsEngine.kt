@@ -11,6 +11,11 @@ import org.mozilla.javascript.Function
  * Description:
  */
 object JsEngine {
+    /**
+     * array to varary的用法
+     * val paramsArray = arrayOf("a", "b")
+     * execJs(js, functionName, *paramsArray)
+     */
     fun execJs(js: String, functionName: String, vararg params: String): String {
         val cx = Context.enter()
         val rhino = cx.apply {

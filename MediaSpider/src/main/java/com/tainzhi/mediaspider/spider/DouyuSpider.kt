@@ -1,6 +1,5 @@
 package com.tainzhi.mediaspider.spider
 
-import android.util.Log
 import com.tainzhi.mediaspider.utils.JsEngine
 import com.tainzhi.mediaspider.utils.OkHttpUtil
 import com.tainzhi.mediaspider.utils.fromJson
@@ -76,7 +75,7 @@ class DouyuSpider {
             } else {
                 return getIdByExecJs(rid)
             }
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             return getIdByExecJs(rid)
         }
         return livingRoomId
@@ -87,17 +86,16 @@ class DouyuSpider {
      * 只能通过执行js代码获取
      */
     private fun getIdByExecJs(id: String): String {
-        Log.i("DouyuSpider.getIdByExecJs()", "roomId=${id}")
         val htmlPage = OkHttpUtil.instance.request("https://m.douyu.com/${id.trim()}")
         try {
-            val ubFun = Regex(pattern = "(function ub98484234.*)\\s(var.*)").find(htmlPage)!!.groupValues[0]
-            val funcUb9 = Regex("eval.*;}").replace(ubFun, "strc;}")
+            val ubFun = Regex(pattern = "(function ub98484234.*)\\s(var.*)").find(htmlPage)!!.value
+            val funcUb9 = Regex("eval.*;\\}").replace(ubFun, "strc;\\}")
             val funResult = JsEngine.execJs(funcUb9, "ub98484234")
 
             val v = Regex("v=(\\d+)").find(funResult)!!.groupValues[1]
             val rb = (rid + did + t10 + v).toMD5()
 
-            val originalSignFun = Regex("return rt;}\\);?").replace(funResult, "return rt;}")
+            val originalSignFun = Regex("return rt;\\}\\);?").replace(funResult, "return rt;\\}")
             val signFun = originalSignFun
                     .replace("(function (", "function sign(")
                     .replace("CryptoJS.MD5(cb).toString()", "\"${rb}\"")
@@ -123,7 +121,6 @@ class DouyuSpider {
             throw NotFoundException(e.message
                     ?: "throw exec js to get room:${rid} living id faled", e.cause)
         }
-        throw NotFoundException()
     }
 
 
