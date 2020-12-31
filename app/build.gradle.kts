@@ -10,7 +10,6 @@ plugins {
     kotlin("android.extensions")
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
-    id("bugly")
     id("kotlin-android")
 }
 
@@ -119,12 +118,6 @@ android {
 
 }
 
-bugly {
-    appId = "25c0753a52"
-    appKey = "2c72a2dc-57af-47c2-be10-c6f592cc743f"
-    // debug = true
-}
-
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":common"))
@@ -188,7 +181,6 @@ dependencies {
     implementation(Libs.licenseDialog)
     implementation(Libs.appUpdate)
     implementation(Libs.activityOnCrash)
-    implementation(Libs.buglyCrashReport)
     implementation(Libs.multiStateView)
     implementation(Libs.volley)
     implementation(Libs.lottie)
