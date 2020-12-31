@@ -1,16 +1,16 @@
-
 import com.tainzhi.android.buildsrc.Libs
-import java.io.ByteArrayOutputStream
 
 
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    kotlin("android.extensions")
+    id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
+    // kotlin("android.extensions") 弃用extension获取资源
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-android")
+    id("io.wusa.semver-git-plugin").version("2.3.7")
+    id("com.tainzhi.android.plugin.upload")
 }
 
 apply {
@@ -19,29 +19,11 @@ apply {
     from("../test_dependencies.gradle")
 }
 
-val byteOut = ByteArrayOutputStream()
-exec {
-    commandLine = "git rev-list HEAD --first-parent --count".split(" ")
-    standardOutput = byteOut
-}
-val verCode = String(byteOut.toByteArray()).trim().toInt()
-val version = gitDescribeVersion()
-
 android {
     signingConfigs {
         getByName("debug") {
             // debug版本默认不签名
             // storeFile = file("../android.keystore")
-        }
-
-        create("stagging") {
-            storeFile = file("../android.keystore")
-            // #签名密码
-            storePassword = "123456"
-            // #签名别名
-            keyAlias = "android"
-            // #签名别名密码
-            keyPassword = "tainzhi"
         }
 
         create("release") {
@@ -61,8 +43,9 @@ android {
         applicationId = "com.tainzhi.android.videoplayer"
         minSdkVersion(Libs.Configs.minSdkVersion)
         targetSdkVersion(Libs.Configs.targetSdkVersion)
-        versionCode = verCode
-        versionName = version
+        versionCode = semver.info.count
+        versionName = semver.info.lastTag
+        flavorDimensions("1")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // 第三方库 AppUpdate
@@ -82,11 +65,6 @@ android {
             applicationIdSuffix = ".debug"
             signingConfigs["debug"]
         }
-        create("stagging") {
-            applicationIdSuffix = ".stagging"
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfigs["stagging"]
-        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -95,15 +73,23 @@ android {
         }
     }
 
-    applicationVariants.all {
-        val outputFileName = getOutputFileName(
-                defaultConfig,
-                buildType = buildTypes.getByName(name)
-        )
+    productFlavors {
+        create("pgy") {
+            // dimension = ""
+        }
+    }
 
+    applicationVariants.all {
         outputs.forEach { output ->
             check(output is com.android.build.gradle.internal.api.ApkVariantOutputImpl)
-            output.outputFileName = outputFileName
+            if (output is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
+                if (buildType.name == "debug") {
+                    output.outputFileName =
+                            "VideoPlayer_${flavorName}_${versionName}_${buildType.name}.apk"
+                } else if (buildType.name == "release") {
+                    output.outputFileName = "VideoPlayer_${flavorName}_${versionName}.apk"
+                }
+            }
         }
     }
 
@@ -116,6 +102,16 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+    adbOptions {
+        timeOutInMs = 20 * 60 * 1000  // 20 minutes
+        installOptions("-d", "-t")
+    }
+
+}
+
+uploadConfig {
+    apiKey = "99d9f637f9ca00b7ef97cdb2cdabd8ac"
+    updateDescription = "fix gradle && upload"
 }
 
 dependencies {
@@ -140,10 +136,6 @@ dependencies {
     implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     kapt(Libs.AndroidX.Room.compiler)
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.Paging.runtimeKtx)
@@ -197,76 +189,3 @@ dependencies {
     testImplementation(Libs.Google.truth)
 }
 
-// task("updateReleaseApk") {
-//     // 升级内容以 \n 分割
-//     val updateDescription = "1.修改了UI逻辑\n2.fix some fatal bug\n3.添加bug上报\n4.混淆代码\n5.添加Crash页面"
-//     addDownloadUrl(updateDescription)
-// }.dependsOn("assembleRelease")
-
-
-fun getOutputFileName(
-        productFlavor: com.android.builder.model.ProductFlavor,
-        buildType: com.android.build.gradle.internal.dsl.BuildType
-): String {
-    return productFlavor.applicationId + buildType.applicationIdSuffix +
-            "-" + productFlavor.versionName +
-            // "-" + productFlavor.versionCode +
-            ".apk"
-}
-
-
-// after you run `git tag`, then you can retrieve it
-fun gitDescribeVersion(): String {
-    
-    val stdOut = ByteArrayOutputStream()
-    
-    exec {
-        // commandLine("git", "describe", "--tags", "--long", "--always", "--match", "[0-9].[0-9]*")
-        commandLine("git", "describe", "--tags", "--long", "--always")
-        standardOutput = stdOut
-        workingDir = rootDir
-    }
-    
-    val describe = stdOut.toString().trim()
-    val gitDescribeMatchRegex = """(.+)\.(\d+)-(\d+)-.*""".toRegex()
-    
-    return gitDescribeMatchRegex.matchEntire(describe)
-            ?.destructured
-            ?.let { (major, minor, patch) ->
-                "$major.$minor.$patch"
-            }
-            ?: throw GradleException("Cannot parse git describe '$describe'")
-}
-
-// assembleRelease后会在app/build/outpus/apk/release/目录下生成apk和outpus.json
-// outpus.json已经有apk的一些信息，比如versionCode和versionNumber
-// 默认缺少打包时间和更新描述，在这里添加
-// 并添加下载路径
-// 我要把包通过github action上传到 https://gitee.com/qinmen/GithubServer/WanAndroid 方便下载
-fun addDownloadUrl(updateDescription: String) {
-    // val currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-    // val targetFile = file("app/build/outputs/apk/release/output.json")
-    // val packageJson = com.google.gson.JsonParser().parse(targetFile.readText()).asJsonObject
-    // val gson = com.google.gson.Gson()
-    // packageJson.apply {
-    //     val apkFileName = get("outputFile").asString
-    //     val versionCode = get("versionCode").asString
-    //     val downloadUrl = "https://gitee.com/qinmen/GithubServer/raw/master/WanAndroid$apkFileName"
-    //     // val backupDownloadUrl = "https://github.com/tainzhi/WanAndroid/releases/download/" + gitVersionTag() + "/" + apkFileName
-    //     // val dataMap = [ "versionCode": versionCode,
-    //     //                 "description": updateDescription,
-    //     //                 "url": downloadUrl,
-    //     //                 "url_backup": backupDownloadUrl,
-    //     //                 "time": currentTime,
-    //     //                 "apkName": apkFileName]
-    // }
-    // // val dataMap = [ "versionCode": versionCode,
-    // //                 "description": updateDescription,
-    // //                 "url": downloadUrl,
-    // //                 "url_backup": backupDownloadUrl,
-    // //                 "time": currentTime,
-    // //                 "apkName": apkFileName]
-    // // def updateMap = [ "errorCode": 0, "data": dataMap, "errorMsg": ""]
-    // val outputJsonPath = "app/build/outputs/apk/release/update.json"
-    // // (File(outputJsonPath)).write(new JsonOutput().toJson(updateMap))
-}
