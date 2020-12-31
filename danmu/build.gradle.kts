@@ -4,7 +4,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    kotlin("android.extensions")
+    id("kotlin-parcelize")
 }
 
 android {

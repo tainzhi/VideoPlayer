@@ -5,9 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.MediaController
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.tainzhi.android.videoplayer.R
-import kotlinx.android.synthetic.main.activity_videoview_mediacontroller.*
 
 /**
  * 使用[android.widget.VideoView] 和 [android.widget.MediaController]简单地播放视频
@@ -24,10 +24,10 @@ class PlayVideoViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_videoview_mediacontroller)
 
         val mediaController = MediaController(this)
-        videoView.run {
+        findViewById<VideoView>(R.id.videoView).run {
             setMediaController(mediaController)
             setVideoURI(videoUri)
-            setOnPreparedListener { _->
+            setOnPreparedListener { _ ->
                 start()
             }
         }
