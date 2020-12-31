@@ -8,14 +8,11 @@ buildscript {
 
 
         dependencies {
-            classpath(com.tainzhi.android.buildsrc.Libs.androidGradlePlugin)
+            classpath(com.tainzhi.android.buildsrc.Libs.androidToolBuildGradle)
             classpath(com.tainzhi.android.buildsrc.Libs.Kotlin.gradlePlugin)
             classpath(com.tainzhi.android.buildsrc.Libs.AndroidX.Navigation.safeArgs)
             classpath(com.tainzhi.android.buildsrc.Libs.buglyUploadMapping)
         }
-    }
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
