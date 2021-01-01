@@ -1,11 +1,11 @@
 package com.tainzhi.android.videoplayer.ui.me
 
 import androidx.navigation.fragment.findNavController
-import com.tainzhi.android.common.base.ui.fragment.BaseBindingFragment
+import com.tainzhi.android.common.base.ui.fragment.BaseViewBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MeFragmentBinding
 
-class MeFragment : BaseBindingFragment<MeFragmentBinding>() {
+class MeFragment : BaseViewBindingFragment<MeFragmentBinding>() {
     override fun getLayoutResId(): Int {
         return R.layout.me_fragment
     }
