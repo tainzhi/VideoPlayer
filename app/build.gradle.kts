@@ -10,7 +10,7 @@ plugins {
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
     id("io.wusa.semver-git-plugin").version("2.3.7")
-    id("com.tainzhi.android.plugin.upload")
+    // id("com.tainzhi.android.plugin.autoupload")
 }
 
 apply {
@@ -73,23 +73,18 @@ android {
         }
     }
 
-    productFlavors {
-        create("pgy") {
-            // dimension = ""
-        }
-    }
-
     applicationVariants.all {
         outputs.forEach { output ->
             check(output is com.android.build.gradle.internal.api.ApkVariantOutputImpl)
-            if (output is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
-                if (buildType.name == "debug") {
-                    output.outputFileName =
-                            "VideoPlayer_${flavorName}_${versionName}_${buildType.name}.apk"
-                } else if (buildType.name == "release") {
-                    output.outputFileName = "VideoPlayer_${flavorName}_${versionName}.apk"
-                }
-            }
+            output.outputFileName = "VideoPlayer_${versionName}.apk"
+            // if (output is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
+            //     if (buildType.name == "debug") {
+            //         output.outputFileName =
+            //                 "VideoPlayer_${flavorName}_${versionName}_${buildType.name}.apk"
+            //     } else if (buildType.name == "release") {
+            //         output.outputFileName = "VideoPlayer_${flavorName}_${versionName}.apk"
+            //     }
+            // }
         }
     }
 
@@ -109,10 +104,30 @@ android {
 
 }
 
-uploadConfig {
-    apiKey = "99d9f637f9ca00b7ef97cdb2cdabd8ac"
-    updateDescription = "fix gradle && upload"
-}
+
+// 用法:
+// 必须要新建 flavor: pgy
+// 具体上传任务: ./gradlew autoupload
+//
+// 缺点: 只能在本地打包和签名; 如果通过github上传会非常麻烦,因为要确保签名不会泄露,  只能在github action签名kkk
+//
+// autoUpload {
+//     apiKey = "99d9f637f9ca00b7ef97cdb2cdabd8ac"
+//     flavor = "pgy"
+//     buildType = "release"
+//     updateDescription =
+//     """
+//         1. 使用自定义plugin上传
+//         2. 修改相关依赖
+//     """.trimIndent()
+// }
+// android {
+//     productFlavors {
+//         create("pgy") {
+//             // dimension = ""
+//         }
+//     }
+// }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
