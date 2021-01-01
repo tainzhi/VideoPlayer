@@ -1,0 +1,90 @@
+name: push release apk to gitee.com
+env:
+  REPO: VideoPlayer
+# RELEASE_APK_DIR: app/build/outputs/apk/pgy/release
+# do not need flavor name
+  RELEASE_APK_DIR: app/build/outputs/apk/release
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      #      - name: debug github action with tmate
+      #        uses: actions/checkout@v2
+      #      - name: setup tmate session
+      #        uses: mxschmitt/action-tmate@v3
+      - name: Checkout code with submodule directory
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          submodules: true
+      - name: get all git tags
+        run: |
+          git fetch --prune --unshallow --tags
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: assemble release apk
+        run: |
+          ./gradlew assembleRelease
+      - name: get apk basekname
+        run: |
+          cd ${{ env.RELEASE_APK_DIR }}
+          echo "BASE_NAME=`for i in *apk; do echo $i | sed 's/.apk//'; done`" >> $GITHUB_ENV
+      - name: sign release apk
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: ${{ env.RELEASE_APK_DIR }}
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      #      - name: set gitee private key
+      #        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+      #        with:
+      #          ssh-private-key: ${{ secrets.GITEE_PRIVATE_KEY }}
+      #          ssh-host: gitee.com
+      #      - name: clone GithubServer form gitee
+      #        run:  |
+      #          cd ..
+      #          git clone git@gitee.com:qinmen/GithubServer.git
+      #          cp ${{ env.REPO }}/${{ env.SIGNED_RELEASE_FILE }} GithubServer/${{ env.REPO }}/${{ env.BASE_NAME }}.apk
+      #          # 复制app/build/outputs/apk/release/update.json复制到Server目录，方便上传
+      #          cp ${{ env.REPO }}/${{ env.RELEASE_APK_DIR }}/update.json GithubServer/${{ env.REPO }}
+      #          cd GithubServer
+      #          git config --local user.email "qinmen"
+      #          git config --local user.name "qfq61@qq.com"
+      #          git add . && git commit -m "add "${{ env.BASE_NAME }}.apk
+      #          git push origin master
+      #          cd ../${{ env.REPO }}
+      #      - name: Upload PGYER FILE
+      #        id: pgyer
+      #        uses: xtayga/upload-pgyer-action@master
+      #        with:
+      #          url: https://www.pgyer.com/apiv2/app/upload
+      #          forms: '{"_api_key":"${{ secrets.pgyer_key }}","buildInstallType":2,"buildPassword":"${{ secrets.pgyer_pass }}","buildName":"appname"}'
+      #          fileForms: '{"file": ${{ env.BASE_NAME}} }'
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./${{ env.SIGNED_RELEASE_FILE }}
+          asset_name: ${{ env.BASE_NAME }}.apk
+          asset_content_type: application/zip
