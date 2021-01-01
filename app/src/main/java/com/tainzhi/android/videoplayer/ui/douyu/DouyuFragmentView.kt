@@ -5,7 +5,7 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tainzhi.android.common.base.ui.LazyLoad
-import com.tainzhi.android.common.base.ui.fragment.BaseBindingFragment
+import com.tainzhi.android.common.base.ui.fragment.BaseViewBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.DouyuFragmentBinding
 
@@ -16,7 +16,7 @@ import com.tainzhi.android.videoplayer.databinding.DouyuFragmentBinding
  * @description: 斗鱼首页
  **/
 
-class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>(), LazyLoad {
+class DouyuFragmentView : BaseViewBindingFragment<DouyuFragmentBinding>(), LazyLoad {
     private val defaultChannels = arrayListOf(
             ChannelIdRoom(-1, "推荐"),
             ChannelIdRoom(3, "DOTA2"),
@@ -32,7 +32,7 @@ class DouyuFragment : BaseBindingFragment<DouyuFragmentBinding>(), LazyLoad {
         with(mBinding) {
             douyuViewPager.run {
                 offscreenPageLimit = 4
-                adapter = object : FragmentStateAdapter(this@DouyuFragment) {
+                adapter = object : FragmentStateAdapter(this@DouyuFragmentView) {
                     override fun createFragment(position: Int): Fragment {
                         return DouyuGameFragment.newInstance(defaultChannels[position].id.toString())
                     }
