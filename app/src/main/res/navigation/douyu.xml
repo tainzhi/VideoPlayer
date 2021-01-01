@@ -7,9 +7,9 @@
 	
 	<fragment
 		android:id="@+id/douyuFragment"
-		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.douyu.DouyuFragmentView"
 		tools:layout="@layout/douyu_fragment"
-		android:label="@string/title_douyu" >
+		android:label="@string/title_douyu">
 		<action
 			android:id="@+id/action_douyuFragment_to_douyuCategoryFragment"
 			app:destination="@id/douyuCategoryFragment" />

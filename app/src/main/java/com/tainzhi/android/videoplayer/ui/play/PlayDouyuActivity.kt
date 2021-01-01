@@ -7,16 +7,14 @@ import android.hardware.SensorManager
 import android.net.Uri
 import androidx.annotation.RequiresApi
 import com.google.android.material.snackbar.Snackbar
-import com.tainzhi.android.common.base.ui.BaseVMActivity
-import com.tainzhi.android.videoplayer.R
+import com.tainzhi.android.common.base.ui.BaseViewBindingActivity
+import com.tainzhi.android.videoplayer.databinding.ActivityVideoTestBinding
 import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.qmediaplayer.AutoFullScreenListener
-import com.tainzhi.qmediaplayer.VideoView
 import com.tainzhi.qmediaplayer.controller.NetMediaController
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.android.ext.android.inject
 
-class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
-
+class PlayDouyuActivity : BaseViewBindingActivity<ActivityVideoTestBinding>() {
     companion object {
         private const val VIDEO_ID = "id"
         private const val VIDEO_NAME = "name"
@@ -32,7 +30,8 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
 
     private lateinit var autoFullScreenListener: AutoFullScreenListener
     private lateinit var sensorManager: SensorManager
-    private lateinit var videoView: VideoView
+    private val videoView by lazy { mBinding.videoView }
+    private val viewModel: PlayDouyuViewModel by inject()
 
     override fun onResume() {
         super.onResume()
@@ -45,10 +44,7 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
         sensorManager.unregisterListener(autoFullScreenListener)
     }
 
-    override fun initVM(): PlayDouyuViewModel = getViewModel()
-
     override fun initView() {
-        videoView = findViewById(R.id.video_view)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         autoFullScreenListener = AutoFullScreenListener(videoView)
     }
@@ -89,30 +85,27 @@ class PlayDouyuActivity : BaseVMActivity<PlayDouyuViewModel>() {
             }
         }
 
-        mViewModel.getRoomCircuit(id!!)
-    }
-
-    override fun getLayoutResId() = R.layout.activity_video_test
-
-    override fun startObserve() {
-        mViewModel.roomUrl.observe(this@PlayDouyuActivity) { state ->
-            when (state) {
-                is ResultOf.Success -> {
-                    // val uri = Uri.parse("http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8")
-                    val uri = Uri.parse(state.data)
-                    videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
-                    // 如果先加载MediaController, 将不会显示
+        viewModel.run {
+            getRoomCircuit(id!!)
+            roomUrl.observe(this@PlayDouyuActivity) { state ->
+                when (state) {
+                    is ResultOf.Success -> {
+                        // val uri = Uri.parse("http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8")
+                        val uri = Uri.parse(state.data)
+                        videoView.startFullScreenDirectly(this@PlayDouyuActivity, uri)
+                        // 如果先加载MediaController, 将不会显示
+                    }
+                    is ResultOf.Error -> {
+                        Snackbar.make(videoView, state.message, Snackbar.LENGTH_SHORT)
+                                .setAction("退出播放界面") {
+                                    finish()
+                                }
+                                .apply {
+                                    // anchorView = bottomNavView
+                                }.show()
+                    }
+                    else -> Unit
                 }
-                is ResultOf.Error -> {
-                    Snackbar.make(videoView, state.message, Snackbar.LENGTH_SHORT)
-                            .setAction("退出播放界面") {
-                                finish()
-                            }
-                            .apply {
-                                // anchorView = bottomNavView
-                            }.show()
-                }
-                else -> Unit
             }
         }
     }
