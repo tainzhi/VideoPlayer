@@ -133,7 +133,9 @@ https和http的区别
 ## Todo
 - [ ] 参考GSYVideoPlayer的GSYVideoGLViewCustomRender实现水印效果
 - [] [Easy Permissions](https://github.com/googlesamples/easypermissions)
+- [] [PermissionX](https://github.com/guolindev/PermissionX)
 - [] [使用composing build, 而不是buildSrc](https://juejin.im/post/5ed3ef906fb9a047bf7070b6#heading-6)
+- [] [manage network usage](https://developer.android.google.cn/training/basics/network-ops/managing))
 - [] 使用Paging
 - [ ] motionlayout实现酷炫的动画
 - [ ] 电影界面通过[flexbox-layout](https://github.com/google/flexbox-layout)实现酷炫的效果
@@ -155,6 +157,13 @@ https和http的区别
 - [ ] 学习Douyu新版, 看有什么想实现的功能; 如果能逆向出直播源就更好了
 - [ ] 学习竞品: 小米视频
 
+## buildSrc.AutoUpload插件的使用
+- `./gradlew autoupload`自动编译上传到蒲公英
+- 但是需要添加pgy渠道
+
+## github action的使用
+- `git tag -a v0.1.0`新建tag后, `git push origin v0.1.0`推送tag到远程后触发
+
 ## 参考
 - [iToutiao相关设计也实现](https://github.com/iMeiji/Toutiao)
 - [影视天地（Android 客户端），涵盖电影、电视剧、综艺节目、动漫、游戏五大类别的资源。整合两大资源搜索引擎，连接互联网千万数量级的资源库。支持视频资源在线播放、边下边播，不限速下载，不等待播放](https://github.com/123lxw123/VideoWorld_Android)
@@ -175,7 +184,6 @@ https和http的区别
 - 怎么升级
 >- [bugly](https://bugly.qq.com/docs/user-guide/instruction-manual-android-upgrade/?v=20200622202242): 没有下载次数限制; 继承方便, 提供升级页面; 不用验证身份证; 唯一缺点, 没有提供api, 无法自动上传apk
 >- [蒲公英分发平台](https://www.pgyer.com/doc/view/api): 提供了api, 可以编写gradle插件自动上传; 缺点是需要身份证验证, 有下载次数限制
->-  1   qqq
 
 
 ## 遇到的问题
