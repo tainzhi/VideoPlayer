@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -157,15 +156,12 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                 }.show()
     }
 
-    private var searchMenu: MenuItem? = null
-    private var searchView: SearchView? = null
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.local_search, menu)
-        searchMenu = menu.findItem(R.id.search)?.apply {
+        val searchMenu = menu.findItem(R.id.search)?.apply {
             isVisible = true
         }
-        searchView = ((searchMenu?.actionView) as SearchView).apply {
+        val searchView = ((searchMenu?.actionView) as SearchView).apply {
             // setSearchableInfo(searchManager.getSearchableInfo(gameName))
             maxWidth = Integer.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {

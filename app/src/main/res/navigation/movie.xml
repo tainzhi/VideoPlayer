@@ -13,6 +13,9 @@
 		<action
 			android:id="@+id/action_movieFragment_to_movieDetailFragment"
 			app:destination="@id/movieDetailFragment" />
+		<action
+			android:id="@+id/action_movieFragment_to_movieSearchFragment"
+			app:destination="@id/movieSearchFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/movieDetailFragment"
@@ -21,5 +24,13 @@
 		<argument
 			android:name="movieId"
 			app:argType="string" />
+	</fragment>
+	<fragment
+		android:id="@+id/movieSearchFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.movie.MovieSearchFragment"
+		android:label="搜索">
+		<action
+			android:id="@+id/action_movieSearchFragment_to_movieDetailFragment"
+			app:destination="@id/movieDetailFragment" />
 	</fragment>
 </navigation>

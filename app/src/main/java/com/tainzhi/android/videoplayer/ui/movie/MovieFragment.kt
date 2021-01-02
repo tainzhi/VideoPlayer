@@ -4,11 +4,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tainzhi.android.common.base.ui.LazyLoad
 import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
-import com.tainzhi.android.common.util.startKtxActivity
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieSourceDialog
@@ -80,6 +80,6 @@ class MovieFragment : BaseVmBindingFragment<MovieViewModel, MovieFragmentBinding
      * 打开搜索页面
      */
     private fun openMovieSearch() {
-        startKtxActivity<MovieSearchActivity>()
+        findNavController().navigate(R.id.action_movieFragment_to_movieSearchFragment)
     }
 }

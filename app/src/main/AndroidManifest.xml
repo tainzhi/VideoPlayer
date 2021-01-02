@@ -41,7 +41,6 @@
 	    </activity>
 	    <activity android:name=".ui.play.PlayDouyuActivity" />
 	    <activity android:name=".ui.PlayActivity" />
-	    <activity android:name=".ui.movie.MovieSearchActivity" />
     </application>
 
 </manifest>
