@@ -23,7 +23,7 @@ class MovieSearchActivity : BaseVmBindingActivity<MovieViewModel1, MovieSearchAc
 
     private val searchResultAdapter by lazy {
         MovieSearchResultAdapter { movie ->
-            MovieDetailActivity.start(this, movie.id)
+            MovieDetailFragment.start(this, movie.id)
         }.apply {
             loadMoreModule.run {
                 loadMoreView = CustomLoadMoreView()

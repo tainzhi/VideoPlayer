@@ -13,7 +13,7 @@ data class DetailData(
         //分类id
         val tid: String?,
         //名字
-        val name: String?,
+        val name: String,
         //类型
         val type: String?,
         //语言

@@ -3,28 +3,28 @@ package com.tainzhi.android.videoplayer.ui.movie
 import android.content.Context
 import android.content.Intent
 import androidx.core.view.isVisible
-import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
+import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
-import com.tainzhi.android.videoplayer.databinding.MovieDetailActivityBinding
+import com.tainzhi.android.videoplayer.databinding.MovieDetailFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieEpisodeDialog
 import com.tainzhi.mediaspider.movie.bean.DetailData
 import com.tainzhi.mediaspider.movie.bean.Episode
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
- * File:     MovieDetailActivity
+ * File:     MovieDetailFragment
  * Author:   tainzhi
  * Created:  2020/12/21 10:52
  * Mail:     QFQ61@qq.com
  * Description:
  */
-class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailActivityBinding>() {
+class MovieDetailFragment : BaseVmBindingFragment<MovieViewModel, MovieDetailFragmentBinding>() {
     companion object {
         // private const val MOVIE_SOURCE = "movie_source"
-        private const val MOVIE_ID = "movie_id"
+        const val MOVIE_ID = "movie_id"
         fun start(startContext: Context, movieId: String) {
             startContext.startActivity(
-                    Intent(startContext, MovieDetailActivity::class.java).apply {
+                    Intent(startContext, MovieDetailFragment::class.java).apply {
                         // putExtra(MOVIE_SOURCE, movieSource)
                         putExtra(MOVIE_ID, movieId)
                     }
@@ -36,10 +36,10 @@ class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailAct
 
     override fun initData() {
         // val movieSource = intent.getStringExtra(MOVIE_SOURCE)
-        val movieId = intent.getStringExtra(MOVIE_ID)
+        val movieId = arguments?.getString(MOVIE_ID)
         // if (movieSource != null && movieId != null) {
         if (movieId != null) {
-            mViewModel.getMovieDetail(movieId as String)
+            mViewModel.getMovieDetail(movieId)
         }
     }
 
@@ -55,7 +55,7 @@ class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailAct
                                 episodeCallback = { episode ->
                                     startPlay(detailData, episode)
                                 }
-                            }.show(supportFragmentManager, "Choose Movie Episode")
+                            }.show(childFragmentManager, "Choose Movie Episode")
                         }
                     }
                 } else {
@@ -75,6 +75,6 @@ class MovieDetailActivity : BaseVmBindingActivity<MovieViewModel, MovieDetailAct
     }
 
     override fun getLayoutResId(): Int {
-        return R.layout.movie_detail_activity
+        return R.layout.movie_detail_fragment
     }
 }
