@@ -1,10 +1,10 @@
 package com.tainzhi.android.videoplayer.ui.me
 
 import com.tainzhi.android.common.base.ui.fragment.BaseViewBindingFragment
+import com.tainzhi.android.common.util.openBrowser
 import com.tainzhi.android.videoplayer.BuildConfig
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.AboutFragmentBinding
-import com.tainzhi.android.videoplayer.util.openBrowser
 import com.tainzhi.android.videoplayer.util.replyUrl
 import com.tainzhi.android.videoplayer.util.sourceUrl
 import com.tainzhi.android.videoplayer.widget.dialog.MeDialog

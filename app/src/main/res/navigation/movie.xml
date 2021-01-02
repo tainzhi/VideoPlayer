@@ -12,15 +12,24 @@
 		tools:layout="@layout/movie_fragment">
 		<action
 			android:id="@+id/action_movieFragment_to_movieDetailFragment"
-			app:destination="@id/movieDetailFragment" />
+			app:destination="@id/movieDetailFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
 		<action
 			android:id="@+id/action_movieFragment_to_movieSearchFragment"
-			app:destination="@id/movieSearchFragment" />
+			app:destination="@id/movieSearchFragment"
+			app:enterAnim="@anim/fade_in"
+			app:exitAnim="@anim/fade_out"
+			app:popEnterAnim="@anim/fade_in"
+			app:popExitAnim="@anim/fade_out" />
 	</fragment>
 	<fragment
 		android:id="@+id/movieDetailFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.movie.MovieDetailFragment"
-		android:label="电影详情">
+		android:label="电影详情"
+		tools:layout="@layout/movie_detail_fragment">
 		<argument
 			android:name="movieId"
 			app:argType="string" />
@@ -28,9 +37,14 @@
 	<fragment
 		android:id="@+id/movieSearchFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.movie.MovieSearchFragment"
-		android:label="搜索">
+		android:label="搜索"
+		tools:layout="@layout/movie_search_fragment">
 		<action
 			android:id="@+id/action_movieSearchFragment_to_movieDetailFragment"
-			app:destination="@id/movieDetailFragment" />
+			app:destination="@id/movieDetailFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
 	</fragment>
 </navigation>
