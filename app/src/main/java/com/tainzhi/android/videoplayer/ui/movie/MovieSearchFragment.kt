@@ -28,7 +28,7 @@ class MovieSearchFragment : BaseVmBindingFragment<MovieViewModel, MovieSearchFra
     private val searchResultAdapter by lazy {
         MovieSearchResultAdapter { movie ->
             val bundle = bundleOf(MovieDetailFragment.MOVIE_ID to movie.id)
-            findNavController().navigate(R.id.action_movieFragment_to_movieDetailFragment, bundle)
+            findNavController().navigate(R.id.action_movieSearchFragment_to_movieDetailFragment, bundle)
         }.apply {
             loadMoreModule.run {
                 loadMoreView = CustomLoadMoreView()
@@ -46,29 +46,6 @@ class MovieSearchFragment : BaseVmBindingFragment<MovieViewModel, MovieSearchFra
     override fun initView() {
         setHasOptionsMenu(true)
         with(mBinding) {
-            // searchView.run {
-            //     this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
-            //         setTextColor(android.graphics.Color.WHITE)
-            //         setHintTextColor(android.graphics.Color.WHITE)
-            //         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            //             // null 使得光标与字体同色
-            //             textCursorDrawable = null
-            //         }
-            //     }
-            //     setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            //         override fun onQueryTextSubmit(query: String?): Boolean {
-            //             if (query != null) {
-            //                 startSearch(query)
-            //             }
-            //             return false
-            //         }
-            //
-            //         override fun onQueryTextChange(newText: String?): Boolean {
-            //             return false
-            //         }
-            //     })
-            // }
-
             searchRecyclerView.run {
                 adapter = searchResultAdapter
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

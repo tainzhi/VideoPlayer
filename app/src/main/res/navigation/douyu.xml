@@ -12,7 +12,11 @@
 		android:label="@string/title_douyu">
 		<action
 			android:id="@+id/action_douyuFragment_to_douyuCategoryFragment"
-			app:destination="@id/douyuCategoryFragment" />
+			app:destination="@id/douyuCategoryFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
 	</fragment>
 	<fragment
 		android:id="@+id/douyuCategoryFragment"
@@ -21,7 +25,11 @@
 		tools:layout="@layout/douyu_category_fragment" >
 		<action
 			android:id="@+id/action_douyuCategoryFragment_to_douyuGameFragment"
-			app:destination="@id/douyuGameFragment">
+			app:destination="@id/douyuGameFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right">
 			<argument
 				android:name="gameId"
 				app:argType="string" />

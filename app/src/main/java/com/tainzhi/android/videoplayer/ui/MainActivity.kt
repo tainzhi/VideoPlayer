@@ -79,12 +79,6 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
 
     override fun getLayoutResId() = R.layout.activity_main
 
-    override fun initView() {
-    }
-
-    override fun initData() {
-    }
-
     override fun startObserve() {
         mViewModel.run {
             title.observe(this@MainActivity, Observer { title ->
