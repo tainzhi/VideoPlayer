@@ -2,6 +2,8 @@ package com.tainzhi.android.videoplayer.ui.movie
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.orhanobut.logger.Logger
@@ -32,7 +34,9 @@ class MovieChannelFragment : BaseVmBindingFragment<MovieViewModel, MovieChannelF
     private val channelId by lazy { arguments?.getString(CHANNEL_ID) }
     private val movieChannelAdapter by lazy {
         MovieChannelAdapter { movie ->
-            MovieDetailActivity.start(requireActivity(), movie.id)
+            val bundle = bundleOf(MovieDetailFragment.MOVIE_ID to movie.id)
+            findNavController().navigate(R.id.action_movieFragment_to_movieDetailFragment, bundle)
+
         }.apply {
             loadMoreModule.run {
                 loadMoreView = CustomLoadMoreView()

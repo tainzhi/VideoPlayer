@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation android:id="@+id/movie"
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/movie"
 	app:startDestination="@id/movieFragment">
 	
 	<fragment
 		android:id="@+id/movieFragment"
 		android:name="com.tainzhi.android.videoplayer.ui.movie.MovieFragment"
-		tools:layout="@layout/movie_fragment"
-		android:label="@string/title_movie" />
+		android:label="@string/title_movie"
+		tools:layout="@layout/movie_fragment">
+		<action
+			android:id="@+id/action_movieFragment_to_movieDetailFragment"
+			app:destination="@id/movieDetailFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/movieDetailFragment"
+		android:name="com.tainzhi.android.videoplayer.ui.movie.MovieDetailFragment"
+		android:label="电影详情">
+		<argument
+			android:name="movieId"
+			app:argType="string" />
+	</fragment>
 </navigation>
