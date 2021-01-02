@@ -26,7 +26,7 @@ class ChooseMovieEpisodeDialog(val episodes: List<Episode>) : BottomSheetDialogF
         return view
     }
 
-    // 回调 Episode到 MovieDetailActivity
+    // 回调 Episode到 MovieDetailFragment
     var episodeCallback: ((Episode) -> Unit)? = null
 
     private val clickCallback: ((Episode) -> Unit) = { video ->
