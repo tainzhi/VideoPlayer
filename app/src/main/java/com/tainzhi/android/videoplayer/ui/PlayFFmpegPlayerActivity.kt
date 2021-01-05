@@ -8,7 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tainzhi.android.videoplayer.R
 
-class PlayFFmepgPlayerActivity : AppCompatActivity() {
+class PlayFFmpegPlayerActivity : AppCompatActivity() {
     // private val player = FFmpegPlayer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +57,7 @@ class PlayFFmepgPlayerActivity : AppCompatActivity() {
         private const val TYPE = "type"
         @JvmStatic
         fun startPlay(starter: Context, type: String) {
-            val intent = Intent(starter, PlayFFmepgPlayerActivity::class.java)
+            val intent = Intent(starter, PlayFFmpegPlayerActivity::class.java)
             intent.putExtra(TYPE, type)
             starter.startActivity(intent)
         }
