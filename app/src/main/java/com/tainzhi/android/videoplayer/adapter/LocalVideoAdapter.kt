@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseQuickAdapter.AnimationType.AlphaIn
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.bean.LocalVideo
@@ -30,6 +31,7 @@ class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) :
     var originalData =  ArrayList<LocalVideo>()
 
     init {
+        setAnimationWithDefault(AlphaIn)
         setOnItemClickListener { _, _, position ->
             val clickedTv = data[position]
             goToPlay.invoke(clickedTv)
@@ -51,10 +53,6 @@ class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) :
             video = item
             holder.foreground = localVideoItemForeground
             holder.video = item
-            holder.dataBinding.root.animation = android.view.animation.AnimationUtils.loadAnimation(
-                    context,
-                    R.anim.recyclerview_list_translate_alpha_scale
-            )
             executePendingBindings()
         }
     }
