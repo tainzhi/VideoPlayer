@@ -103,6 +103,9 @@ android {
         installOptions("-d", "-t")
     }
 
+    packagingOptions {
+        exclude("META-INF/library_release.kotlin_module")
+    }
 }
 
 

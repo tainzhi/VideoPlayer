@@ -26,19 +26,20 @@
 	    <activity android:name=".ui.PlayFFmepgPlayerActivity" />
 	    <activity android:name=".ui.PlayVideoViewActivity" />
 	    <activity
+		    android:theme="@style/AppTheme.Main"
 		    android:name=".ui.MainActivity"
 		    android:windowSoftInputMode="adjustPan|adjustResize|stateHidden" />
-	    <activity
-		    android:name=".ui.SplashActivity"
-		
-		    android:theme="@style/AppTheme.Splash">
-		    <intent-filter>
-			    <action android:name="android.intent.action.MAIN" />
-			
-			    <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-			    <category android:name="android.intent.category.LAUNCHER" />
-		    </intent-filter>
-	    </activity>
+		<activity
+			android:name=".ui.SplashActivity"
+			android:noHistory="true"
+			android:theme="@style/AppTheme.Splash">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 	    <activity android:name=".ui.play.PlayDouyuActivity" />
 	    <activity android:name=".ui.PlayActivity" />
     </application>
