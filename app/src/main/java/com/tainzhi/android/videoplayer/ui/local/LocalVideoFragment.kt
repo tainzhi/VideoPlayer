@@ -1,18 +1,24 @@
 package com.tainzhi.android.videoplayer.ui.local
 
+import android.Manifest
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.kennyc.view.MultiStateView.ViewState.CONTENT
+import com.kennyc.view.MultiStateView.ViewState.EMPTY
+import com.kennyc.view.MultiStateView.ViewState.ERROR
 import com.tainzhi.android.common.base.ui.LazyLoad
 import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
@@ -22,6 +28,7 @@ import com.tainzhi.android.videoplayer.adapter.RecyclerItemTouchHelper
 import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.databinding.LocalVideoFragmentBinding
 import com.tainzhi.android.videoplayer.ui.PlayActivity
+import com.tainzhi.android.videoplayer.widget.dialog.showCheckPermissionDialog
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -31,7 +38,16 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
 
     companion object {
         private const val DELETE_PERMISSION_REQUEST = 0x1033
+        const val REQUEST_REQUIRED_PERMISSIONS = 42
     }
+
+    private val requestPermissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    )
+
+    private var isMissingPermissions = true
+    private var showRationale = false
 
     private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE) {
         LocalVideoAdapter { video ->
@@ -63,13 +79,26 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                 // TODO: 2020/12/20 实现功能: 最近一次播放的视频 开始播放
                 showShackBarMessage("to implement: 播放最近一次观看的视频")
             }
-
+            mBinding.localVideoMultiStateView.run {
+                getView(ERROR)?.setOnClickListener {
+                    requestMissingRequiredPermissions()
+                }
+                getView(EMPTY)?.setOnClickListener {
+                    initData()
+                }
+            }
         }
 
     }
 
     override fun initData() {
-        mViewModel.getLocalVideos()
+        checkPermission()
+        if (!isMissingPermissions) {
+            mBinding.localVideoMultiStateView.viewState = CONTENT
+            mViewModel.getLocalVideos()
+        } else {
+            mBinding.localVideoMultiStateView.viewState = ERROR
+        }
     }
 
     override fun startObserve() {
@@ -161,7 +190,7 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
         val searchMenu = menu.findItem(R.id.search)?.apply {
             isVisible = true
         }
-        val searchView = ((searchMenu?.actionView) as SearchView).apply {
+        ((searchMenu?.actionView) as SearchView).apply {
             // setSearchableInfo(searchManager.getSearchableInfo(gameName))
             maxWidth = Integer.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -192,4 +221,58 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
         }
     }
 
+    /**
+     * 检查是否缺少权限
+     */
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            isMissingPermissions = false
+        } else {
+            requestMissingRequiredPermissions()
+        }
+    }
+
+    private fun requestMissingRequiredPermissions() {
+        val missing = HashSet<String>()
+        showRationale = false
+        for (permission in requestPermissions) {
+            if (ContextCompat.checkSelfPermission(requireContext(), permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                missing.add(permission)
+                showRationale = showRationale or (shouldShowRequestPermissionRationale(permission))
+            }
+        }
+        if (missing.isNotEmpty()) {
+            requestPermissions(missing.toTypedArray(), REQUEST_REQUIRED_PERMISSIONS)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == REQUEST_REQUIRED_PERMISSIONS) {
+            var granted = true
+            var _showRationale = false
+
+            for (i in grantResults.indices) {
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    granted = false
+                    _showRationale = _showRationale || shouldShowRequestPermissionRationale(permissions[i])
+
+                }
+            }
+            if (granted) {
+                initData()
+            } else {
+                // If we were not supposed to show the rationale before requestPermissions(...) and
+                // we still shouldn't show the rationale it means the user previously selected
+                // "don't ask again" in the permission request dialog. In this case we bring up the
+                // system permission settings for this package.
+                if (!_showRationale && !showRationale) {
+                    requireActivity().showCheckPermissionDialog(childFragmentManager)
+                }
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
 }
