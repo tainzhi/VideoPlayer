@@ -1,7 +1,6 @@
 package com.tainzhi.android.videoplayer.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseQuickAdapter.AnimationType.AlphaIn
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.bean.Tv
@@ -21,12 +20,15 @@ class TVAdapter(private val goToPlay: (tv: Tv) -> Unit ): BaseQuickAdapter<Tv, B
             val clickedTv = data[position]
             goToPlay.invoke(clickedTv)
         }
-        setAnimationWithDefault(AlphaIn)
     }
 
     override fun convert(holder: BaseDataBindingHolder<ItemTvBinding>, item: Tv) {
         holder.dataBinding?.apply {
             tv = item
+            root.animation = android.view.animation.AnimationUtils.loadAnimation(
+                    context,
+                    R.anim.recyclerview_list_translate_alpha_scale
+            )
             executePendingBindings()
         }
     }
