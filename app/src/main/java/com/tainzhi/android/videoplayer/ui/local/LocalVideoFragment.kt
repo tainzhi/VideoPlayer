@@ -4,7 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -46,7 +46,6 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
     )
 
-    private var isMissingPermissions = true
     private var showRationale = false
 
     private val localVideoAdapter by lazy(LazyThreadSafetyMode.NONE) {
@@ -92,18 +91,19 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
     }
 
     override fun initData() {
-        checkPermission()
-        if (!isMissingPermissions) {
-            mBinding.localVideoMultiStateView.viewState = CONTENT
+        if (haveStoragePermission()) {
+            mBinding.localVideoMultiStateView.viewState = EMPTY
             mViewModel.getLocalVideos()
         } else {
             mBinding.localVideoMultiStateView.viewState = ERROR
+            requestMissingRequiredPermissions()
         }
     }
 
     override fun startObserve() {
         mViewModel.apply {
             localVideoList.observe(viewLifecycleOwner, {
+                mBinding.localVideoMultiStateView.viewState = CONTENT
                 localVideoAdapter.setList(it)
             }
             )
@@ -221,58 +221,57 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
         }
     }
 
-    /**
-     * 检查是否缺少权限
-     */
-    private fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            isMissingPermissions = false
-        } else {
-            requestMissingRequiredPermissions()
-        }
-    }
+    private fun haveStoragePermission() =
+            ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PERMISSION_GRANTED
 
     private fun requestMissingRequiredPermissions() {
-        val missing = HashSet<String>()
-        showRationale = false
-        for (permission in requestPermissions) {
-            if (ContextCompat.checkSelfPermission(requireContext(), permission)
-                    != PackageManager.PERMISSION_GRANTED) {
-                missing.add(permission)
-                showRationale = showRationale or (shouldShowRequestPermissionRationale(permission))
+        if (!haveStoragePermission()) {
+            val missing = HashSet<String>()
+            showRationale = false
+            for (permission in requestPermissions) {
+                if (ContextCompat.checkSelfPermission(requireContext(), permission)
+                        != PERMISSION_GRANTED) {
+                    missing.add(permission)
+                    showRationale = showRationale or (shouldShowRequestPermissionRationale(permission))
+                }
             }
-        }
-        if (missing.isNotEmpty()) {
-            requestPermissions(missing.toTypedArray(), REQUEST_REQUIRED_PERMISSIONS)
+            if (missing.isNotEmpty()) {
+                requestPermissions(missing.toTypedArray(), REQUEST_REQUIRED_PERMISSIONS)
+            }
+        } else {
+            initData()
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_REQUIRED_PERMISSIONS) {
-            var granted = true
-            var _showRationale = false
-
-            for (i in grantResults.indices) {
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    granted = false
-                    _showRationale = _showRationale || shouldShowRequestPermissionRationale(permissions[i])
-
-                }
-            }
-            if (granted) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED) {
                 initData()
             } else {
-                // If we were not supposed to show the rationale before requestPermissions(...) and
-                // we still shouldn't show the rationale it means the user previously selected
-                // "don't ask again" in the permission request dialog. In this case we bring up the
-                // system permission settings for this package.
-                if (!_showRationale && !showRationale) {
+                var showRationale = false
+                for (i in grantResults.indices) {
+                    if (grantResults[i] != PERMISSION_GRANTED) {
+                        showRationale = showRationale || shouldShowRequestPermissionRationale(permissions[i])
+
+                    }
+                }
+                if (showRationale) {
+                    showNoAccess()
+                } else {
+                    // If we were not supposed to show the rationale before requestPermissions(...) and
+                    // we still shouldn't show the rationale it means the user previously selected
+                    // "don't ask again" in the permission request dialog. In this case we bring up the
+                    // system permission settings for this package.
                     requireActivity().showCheckPermissionDialog(childFragmentManager)
                 }
             }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
+    }
+
+    private fun showNoAccess() {
+
     }
 }
