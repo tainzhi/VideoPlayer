@@ -13,9 +13,9 @@
 			android:id="@+id/localVideoMultiStateView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			app:msv_emptyView="@layout/view_empty"
-			app:msv_errorView="@layout/view_permissions_erro"
 			>
+			<!--			app:msv_emptyView="@layout/view_empty"-->
+			<!--			app:msv_errorView="@layout/view_permissions_erro"-->
 			
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/localVideoRecyclerView"

@@ -33,6 +33,8 @@
 						android:id="@+id/movieChannelRecyclerView"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
+						android:layout_marginEnd="@dimen/margin_small"
+						android:layout_marginStart="@dimen/margin_small"
 						app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
 						app:spanCount="3"
 						tools:listitem="@layout/item_movie_channel"
