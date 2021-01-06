@@ -87,4 +87,8 @@
 	<style name="VideoTheme.Tv" parent="Widget.MaterialComponents.TextView">
 		<item name="android:textSize">10sp</item>
 	</style>
+	
+	<style name="View.State" parent="Widget.MaterialComponents.TextView">
+		<item name="android:textSize">30sp</item>
+	</style>
 </resources>
