@@ -4,18 +4,18 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	>
 	
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<com.kennyc.view.MultiStateView
+		android:id="@+id/localVideoMultiStateView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		app:msv_emptyView="@layout/view_empty"
+		app:msv_errorView="@layout/view_permissions_error"
 		>
 		
-		<com.kennyc.view.MultiStateView
-			android:id="@+id/localVideoMultiStateView"
+		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			>
-			<!--			app:msv_emptyView="@layout/view_empty"-->
-			<!--			app:msv_errorView="@layout/view_permissions_erro"-->
 			
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/localVideoRecyclerView"
@@ -42,6 +42,6 @@
 				app:tint="@android:color/white"
 				tools:ignore="ContentDescription"
 				/>
-		</com.kennyc.view.MultiStateView>
-	</androidx.constraintlayout.widget.ConstraintLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</com.kennyc.view.MultiStateView>
 </layout>
