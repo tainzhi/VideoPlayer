@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.ItemMovieChannelBinding
 import com.tainzhi.mediaspider.movie.bean.HomeChannelData
-import com.tainzhi.qmediaplayer.dp
 
 /**
  * @author:      tainzhi
@@ -42,17 +41,12 @@ class MovieChannelAdapter(private val goToPlay: (room: HomeChannelData) -> Unit)
 class MovieChannelAdapterDecoration : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         val position = (view.layoutParams as RecyclerView.LayoutParams).viewLayoutPosition
-        val rect = Rect(4.dp(), 4.dp(), 4.dp(), 4.dp())
-        // 左边一列
-        if (position % 3 == 0) {
-            rect.left = 10.dp()
-        } else if (position % 3 == 2) {
-            // 右边一列
-            rect.right = 10.dp()
-        }
+        val rect = Rect()
+        rect.right = (parent.context).resources.getDimension(R.dimen.spacing_micro).toInt()
+        rect.left = rect.right
         // 第一行
         if (position < 3) {
-            rect.top = 10.dp()
+            rect.top = (parent.context).resources.getDimension(R.dimen.spacing_normal).toInt()
         }
         outRect.set(rect)
     }
