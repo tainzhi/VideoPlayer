@@ -29,6 +29,6 @@ class CustomLoadMoreView : BaseLoadMoreView() {
             holder.getView(R.id.load_more_loading_view)
 
     override fun getRootView(parent: ViewGroup) =
-            LayoutInflater.from(parent.context).inflate(R.layout.view_load_more, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.view_recyclerview_load_more, parent, false)
 
 }

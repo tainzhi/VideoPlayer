@@ -40,14 +40,11 @@ class MovieChannelAdapter(private val goToPlay: (room: HomeChannelData) -> Unit)
 // 三列
 class MovieChannelAdapterDecoration : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        val position = (view.layoutParams as RecyclerView.LayoutParams).viewLayoutPosition
+        // val position = (view.layoutParams as RecyclerView.LayoutParams).viewLayoutPosition
         val rect = Rect()
-        rect.right = (parent.context).resources.getDimension(R.dimen.spacing_micro).toInt()
+        rect.right = parent.context.resources.getDimension(R.dimen.spacing_micro).toInt()
         rect.left = rect.right
-        // 第一行
-        if (position < 3) {
-            rect.top = (parent.context).resources.getDimension(R.dimen.spacing_normal).toInt()
-        }
+        rect.top = parent.context.resources.getDimension(R.dimen.spacing_normal).toInt()
         outRect.set(rect)
     }
 }
