@@ -67,11 +67,11 @@ git submodule update --init --recursive
 ## 依赖框架和技术
 - javaMVP(第一版): MVP, retrofit2, rxjava2等等
 - master(当前开发版): kotlin, MVVM(google jetpack), jsoup, ijkplayer,
-  mediaplayer, exoplayer...
+  mediaplayer, exoplayer, koin, retrofit, okhttp
 
 | 库 | 功能 |
 | :----- | :--------- |
-|[lottie](https://github.com/airbnb/lottie-android) | 动画 |
+| [lottie](https://github.com/airbnb/lottie-android) | 动画 |
 | [Jsoup](https://jsoup.org/) | 网页解析(爬虫) |
 | [moshi](https://github.com/square/moshi/) | 替换Gson为moshi |
 | [NotchScreenTool](https://github.com/smarxpan/NotchScreenTool) | 刘海屏全面屏工具,全屏播放时使用刘海 |
@@ -128,6 +128,9 @@ https和http的区别
 - [youtube-dl](https://github.com/ytdl-org/youtube-dl/blob/c3bcd206eb031de30179c88ac7acd806a477ceae/youtube_dl/extractor/douyutv.py)
 - [you-get](https://github.com/soimort/you-get/blob/0811aed29c528e1f5994c81f126b05afbf146dd2/src/you_get/extractors/douyutv.py)
 - [streamlink](https://github.com/streamlink/streamlink/blob/fb6a00c86bbf752b578ea317cdede242a2b4e836/src/streamlink/plugins/douyutv.py)
+
+#### 电影资源获取
+- [参考zy-player](https://github.com/vicedev/ZY-Player-Android)
 
 
 ## Todo
