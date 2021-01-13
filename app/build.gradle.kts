@@ -206,5 +206,9 @@ dependencies {
     testImplementation(Libs.AndroidX.Test.core)
     testImplementation(Libs.AndroidX.archCoreTesting)
     testImplementation(Libs.Google.truth)
+    testImplementation(Libs.Koin.test)
+    testImplementation(Libs.hamcrest)
+    testImplementation(Libs.json)
+    testImplementation(Libs.AndroidX.Lifecycle.livedataTesting)
 }
 

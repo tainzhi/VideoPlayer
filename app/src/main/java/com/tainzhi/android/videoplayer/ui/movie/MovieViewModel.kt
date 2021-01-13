@@ -39,7 +39,6 @@ class MovieViewModel(
 
     fun getHomeData() {
         launchIO {
-
             movieRepository.movieManager.curUseSourceConfig().requestHomeData { homeData ->
                 _classifyLiveData.postValue(homeData?.classifyList)
             }
