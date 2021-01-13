@@ -2,14 +2,12 @@ package com.tainzhi.android.videoplayer.ui.douyu
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.tainzhi.android.common.CoroutinesDispatcherProvider
+import com.tainzhi.android.common.BaseViewModel
+import com.tainzhi.android.common.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 /**
  * @author:      tainzhi
@@ -18,15 +16,15 @@ import kotlinx.coroutines.launch
  * @description: 斗鱼分类页面
  **/
 class DouyuCategoryViewModel(private val douyuRepository: DouyuRepository,
-                             private val coroutineProvider: CoroutinesDispatcherProvider
-) : ViewModel() {
+                             coroutineProvider: CoroutineDispatcherProvider
+) : BaseViewModel(coroutineProvider) {
     private val _games = MutableLiveData<List<DouyuGame>>()
     val games: LiveData<List<DouyuGame>>
         get() = _games
 
 
     fun getDouyuRooms() {
-        viewModelScope.launch(coroutineProvider.io) {
+        launchIO {
             douyuRepository.getAllGames().collect {
                 when (it) {
                     is ResultOf.Success -> {
@@ -37,4 +35,5 @@ class DouyuCategoryViewModel(private val douyuRepository: DouyuRepository,
             }
         }
     }
+
 }

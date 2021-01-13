@@ -59,7 +59,7 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
     protected abstract suspend fun saveRemoteData(response: REQUEST)
 
     @MainThread
-    protected abstract fun fetchFromLocal(): RESULT
+    protected abstract suspend fun fetchFromLocal(): RESULT
 
     @MainThread
     protected abstract suspend fun fetchFromRemote(): REQUEST
