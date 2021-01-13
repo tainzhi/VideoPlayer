@@ -27,7 +27,7 @@
 	</fragment>
 	<fragment
 		android:id="@+id/aboutFragment"
-		android:name="com.tainzhi.android.videoplayer.ui.me.AboutFragmentView"
+		android:name="com.tainzhi.android.videoplayer.ui.me.AboutFragment"
 		android:label="About"
 		tools:layout="@layout/about_fragment" />
 	<fragment
