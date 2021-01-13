@@ -15,7 +15,7 @@ import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 import com.tainzhi.mediaspider.spider.TvProgramBean
 import kotlinx.coroutines.flow.collect
 
-class TVViewModel(private val TVRepository: TVRepository,
+class TVViewModel(private val tVRepository: TVRepository,
                   dispatcherProvider: CoroutineDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
 
@@ -36,7 +36,7 @@ class TVViewModel(private val TVRepository: TVRepository,
      */
     fun getTVList() {
         launchIO {
-            TVRepository.loadTVs()
+            tVRepository.loadTVs()
                     .doIfSuccess { _tvList.postValue(it) }
         }
     }
@@ -46,10 +46,9 @@ class TVViewModel(private val TVRepository: TVRepository,
      */
     fun getTVProgram() {
         launchIO {
-            TVRepository.getTvPrograms().collect {
+            tVRepository.getTvPrograms().collect {
                 _tvPrograms.postValue(it)
             }
         }
     }
-
 }
