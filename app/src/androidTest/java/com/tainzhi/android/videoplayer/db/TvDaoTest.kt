@@ -55,13 +55,15 @@ class TvDaoTest {
 
     @Test
     fun tvTableTest() {
-        tvDao.insertAllTv(tvList)
-        val tvs = tvDao.getAllTv()
-        assertThat(tvs.size, `is`(3))
+        runBlocking {
+            tvDao.insertAllTv(tvList)
+            val tvs = tvDao.getAllTv()
+            assertThat(tvs.size, `is`(3))
+        }
     }
 
     @Test
-    fun tvCircuitTableTest() {
+    fun tvCircuitTableTest() = runBlocking {
         // tv_circuit用外键映射到tv,所以要要插入tv到tv_table
         tvDao.insertAllTv(tvList)
         tvDao.insertAllTvCircuit(tvCircuitList)
@@ -70,7 +72,7 @@ class TvDaoTest {
     }
 
     @Test
-    fun tvProgramTableTest() {
+    fun tvProgramTableTest() = runBlocking {
         tvDao.insertAllTvPrograms(tvProgramList)
 
         val tvPrograms = tvDao.getAllTvPrograms()
