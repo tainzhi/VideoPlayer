@@ -16,7 +16,7 @@ import com.tainzhi.android.videoplayer.databinding.DouyuFragmentBinding
  * @description: 斗鱼首页
  **/
 
-class DouyuFragmentView : BaseViewBindingFragment<DouyuFragmentBinding>(), LazyLoad {
+class DouyuFragment : BaseViewBindingFragment<DouyuFragmentBinding>(), LazyLoad {
     private val defaultChannels = arrayListOf(
             ChannelIdRoom(-1, "推荐"),
             ChannelIdRoom(3, "DOTA2"),
@@ -32,7 +32,7 @@ class DouyuFragmentView : BaseViewBindingFragment<DouyuFragmentBinding>(), LazyL
         with(mBinding) {
             douyuViewPager.run {
                 offscreenPageLimit = 4
-                adapter = object : FragmentStateAdapter(this@DouyuFragmentView) {
+                adapter = object : FragmentStateAdapter(this@DouyuFragment) {
                     override fun createFragment(position: Int): Fragment {
                         return DouyuGameFragment.newInstance(defaultChannels[position].id.toString())
                     }
