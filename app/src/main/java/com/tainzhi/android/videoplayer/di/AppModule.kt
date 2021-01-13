@@ -1,7 +1,7 @@
 package com.tainzhi.android.videoplayer.di
 
 import android.app.Application
-import com.tainzhi.android.common.CoroutinesDispatcherProvider
+import com.tainzhi.android.common.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.db.TvDao
 import com.tainzhi.android.videoplayer.network.VideoClient
@@ -37,7 +37,7 @@ val viewModelModule = module {
     viewModel { DouyuCategoryViewModel(get(), get()) }
     viewModel { MainViewModel() }
     viewModel { PlayDouyuViewModel(get(), get()) }
-    viewModel { SettingViewModel(get()) }
+    viewModel { SettingViewModel(get(), get()) }
     viewModel { MovieViewModel(get(), get()) }
 }
 
@@ -52,7 +52,7 @@ val repositoryModule = module {
 
 // 单独抽出CoroutineModule, 方便test
 val coroutineModule = module {
-    single { CoroutinesDispatcherProvider() }
+    single { CoroutineDispatcherProvider() }
 }
 
 val databaseModule = module {

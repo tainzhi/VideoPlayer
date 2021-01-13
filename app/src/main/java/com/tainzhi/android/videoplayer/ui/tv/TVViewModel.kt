@@ -2,11 +2,10 @@ package com.tainzhi.android.videoplayer.ui.tv
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.tainzhi.android.common.CoroutinesDispatcherProvider
+import com.tainzhi.android.common.BaseViewModel
+import com.tainzhi.android.common.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.network.ResultOf
@@ -15,11 +14,10 @@ import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.util.Start_UP_Create_Database
 import com.tainzhi.mediaspider.spider.TvProgramBean
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class TVViewModel(private val TVRepository: TVRepository,
-                  private val dispatcherProvider: CoroutinesDispatcherProvider
-) : ViewModel() {
+                  dispatcherProvider: CoroutineDispatcherProvider
+) : BaseViewModel(dispatcherProvider) {
 
     private val _tvList: MutableLiveData<List<Tv>> = MutableLiveData()
     val tvList: LiveData<List<Tv>>
@@ -37,7 +35,7 @@ class TVViewModel(private val TVRepository: TVRepository,
      * 从数据库获取卫视列表
      */
     fun getTVList() {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
             TVRepository.loadTVs()
                     .doIfSuccess { _tvList.postValue(it) }
         }
@@ -47,7 +45,7 @@ class TVViewModel(private val TVRepository: TVRepository,
      * 获取每个卫视当前的直播节目
      */
     fun getTVProgram() {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
             TVRepository.getTvPrograms().collect {
                 _tvPrograms.postValue(it)
             }

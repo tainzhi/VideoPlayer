@@ -2,18 +2,16 @@ package com.tainzhi.android.videoplayer.ui.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
-import com.tainzhi.android.common.CoroutinesDispatcherProvider
+import com.tainzhi.android.common.BaseViewModel
+import com.tainzhi.android.common.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.repository.MovieRepository
 import com.tainzhi.mediaspider.movie.bean.Classify
 import com.tainzhi.mediaspider.movie.bean.DetailData
 import com.tainzhi.mediaspider.movie.bean.HomeChannelData
 import com.tainzhi.mediaspider.movie.bean.SearchResultData
-import kotlinx.coroutines.launch
 
 /**
  * File:     MovieViewModel
@@ -24,8 +22,8 @@ import kotlinx.coroutines.launch
  */
 class MovieViewModel(
         private val movieRepository: MovieRepository,
-        private val dispatcherProvider: CoroutinesDispatcherProvider,
-) : ViewModel() {
+        dispatcherProvider: CoroutineDispatcherProvider,
+) : BaseViewModel(dispatcherProvider) {
 
     private val _classifyLiveData = MutableLiveData<List<Classify>>()
     val classifyListLiveData: LiveData<List<Classify>>
@@ -40,7 +38,7 @@ class MovieViewModel(
         get() = _movie
 
     fun getHomeData() {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
 
             movieRepository.movieManager.curUseSourceConfig().requestHomeData { homeData ->
                 _classifyLiveData.postValue(homeData?.classifyList)
@@ -49,7 +47,7 @@ class MovieViewModel(
     }
 
     fun getChannelData(channelId: String, page: Int) {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
             movieRepository.movieManager.curUseSourceConfig().requestHomeChannelData(page, channelId) { channelData ->
                 if (channelData.isNullOrEmpty()) {
                     _channelLiveData.postValue(ResultOf.successEndData(emptyList()))
@@ -61,14 +59,14 @@ class MovieViewModel(
     }
 
     fun getMovieDetail(id: String) {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
             movieRepository.movieManager.curUseSourceConfig().requestDetailData(id) { movie ->
                 _movie.postValue(movie)
             }
         }
     }
 
-    val movieSource = liveData<List<Pair<String, String>>> {
+    val movieSource = liveData {
         emit(movieRepository.getMovieSourceList())
     }
 
@@ -87,7 +85,7 @@ class MovieViewModel(
         get() = _searchResult
 
     fun searchMovie(key: String, page: Int) {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
             movieRepository.movieManager.curUseSourceConfig().requestSearchData(key, page) {
                 if (it.isNullOrEmpty()) {
                     _searchResult.postValue(ResultOf.successEndData(emptyList()))

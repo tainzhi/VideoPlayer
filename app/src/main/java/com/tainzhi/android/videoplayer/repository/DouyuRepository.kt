@@ -28,7 +28,7 @@ class DouyuRepository {
      * @param gameId 直播游戏id
      * @param isRefresh 是否重新加载, true 刷新, 只加载第一个page; false, 加载下一个page
      */
-    fun getGameRooms(gameId: String, isRefresh: Boolean = false): Flow<ResultOf<List<DouyuRoom>>> =
+    suspend fun getGameRooms(gameId: String, isRefresh: Boolean = false): Flow<ResultOf<List<DouyuRoom>>> =
             flow {
                 emit(ResultOf.loading())
 

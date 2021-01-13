@@ -1,18 +1,16 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.tainzhi.android.common.CoroutinesDispatcherProvider
+import com.tainzhi.android.common.BaseViewModel
+import com.tainzhi.android.common.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class DouyuGameViewModel(private val douyuRepository: DouyuRepository,
-                         private val coroutinesDispatcherProvider: CoroutinesDispatcherProvider
-) : ViewModel() {
+                         coroutineDispatcherProvider: CoroutineDispatcherProvider
+) : BaseViewModel(coroutineDispatcherProvider) {
 
     var isRefreshLoading = false
 
@@ -28,7 +26,7 @@ class DouyuGameViewModel(private val douyuRepository: DouyuRepository,
      */
     fun getGameRooms(gameId: String, isRefresh: Boolean = true) {
         isRefreshLoading = isRefresh
-        viewModelScope.launch(coroutinesDispatcherProvider.io) {
+        launchIO {
             douyuRepository.getGameRooms(gameId, isRefresh).collect { result ->
                 _gameRooms.postValue(result)
             }

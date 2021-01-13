@@ -9,7 +9,7 @@ import com.tainzhi.android.videoplayer.util.replyUrl
 import com.tainzhi.android.videoplayer.util.sourceUrl
 import com.tainzhi.android.videoplayer.widget.dialog.MeDialog
 
-class AboutFragmentView : BaseViewBindingFragment<AboutFragmentBinding>() {
+class AboutFragment : BaseViewBindingFragment<AboutFragmentBinding>() {
     override fun getLayoutResId(): Int = R.layout.about_fragment
 
     override fun initView() {

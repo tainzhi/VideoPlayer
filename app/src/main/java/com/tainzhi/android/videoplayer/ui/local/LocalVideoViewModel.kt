@@ -6,17 +6,16 @@ import android.net.Uri
 import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.tainzhi.android.common.CoroutinesDispatcherProvider
+import com.tainzhi.android.common.BaseViewModel
+import com.tainzhi.android.common.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.network.doIfSuccess
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
-import kotlinx.coroutines.launch
 
-class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository,
-                          private val dispatcherProvider: CoroutinesDispatcherProvider
-) : ViewModel() {
+class LocalVideoViewModel(
+        private val localVideoRepository: LocalVideoRepository,
+        coroutineDispatcherProvider: CoroutineDispatcherProvider,
+) : BaseViewModel(coroutineDispatcherProvider) {
     private var pendingDeleteVideoUri: Uri? = null
 
     private val _permissionNeededForDelete = MutableLiveData<IntentSender?>()
@@ -27,7 +26,7 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
         get() = _localVideoList
 
     fun getLocalVideos() {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
             localVideoRepository
                     .getLocalVideoList()
                     .doIfSuccess { _localVideoList.postValue(it) }
@@ -39,7 +38,7 @@ class LocalVideoViewModel(private val localVideoRepository: LocalVideoRepository
      * @param uri 要删除的视频uri
      */
     fun deleteVideo(uri: Uri) {
-        viewModelScope.launch(dispatcherProvider.io) {
+        launchIO {
             try {
                 localVideoRepository.deleteVideo(uri)
             } catch (securityException: SecurityException) {

@@ -19,26 +19,26 @@ import com.tainzhi.android.videoplayer.bean.TvProgram
 abstract class TvDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAllTv(tvs: List<Tv>)
+    abstract suspend fun insertAllTv(tvs: List<Tv>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAllTvCircuit(tvs: List<TvCircuit>)
+    abstract suspend fun insertAllTvCircuit(tvs: List<TvCircuit>)
 
     @Query("SELECT * FROM tv")
-    abstract fun getAllTv(): List<Tv>
+    abstract suspend fun getAllTv(): List<Tv>
 
     // 提供tvId, 查询该频道的所有网络源
     @Query("SELECT circuit FROM tv_circuit WHERE tv_id = :tvId")
-    abstract fun getTvCircuit(tvId: String): List<String>
+    abstract suspend fun getTvCircuit(tvId: String): List<String>
 
     // @Transaction
     // @Query("SELECT * FROM plants WHERE id IN (SELECT DISTINCT(plant_id) FROM garden_plantings)")
     // fun getPlantedGardens(): LiveData<List<PlantAndGardenPlantings>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAllTvPrograms(programs: List<TvProgram>)
+    abstract suspend fun insertAllTvPrograms(programs: List<TvProgram>)
 
     @Query("SELECT * FROM tv_program")
-    abstract fun getAllTvPrograms(): List<TvProgram>
+    abstract suspend fun getAllTvPrograms(): List<TvProgram>
 
 }

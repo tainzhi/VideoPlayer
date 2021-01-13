@@ -78,10 +78,8 @@ class LocalVideoRepository {
                     list += LocalVideo(contentUri, size, data, title, duration, resolution, orientation, dateAdded, dateModified, dateTaken, bucketName)
                 }
             } catch (e: Exception) {
-                Logger.e(e.toString())
+                Logger.e(e.toString(), e.cause)
                 return ResultOf.error(e.toString())
-            } finally {
-                return ResultOf.success(list)
             }
         }
         return ResultOf.success(list)

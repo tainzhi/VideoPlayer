@@ -32,7 +32,7 @@ class TVRepository(
         const val TAG = "TVRepository.getTvPrograms"
     }
 
-    fun loadTVs(): ResultOf<List<Tv>> {
+    suspend fun loadTVs(): ResultOf<List<Tv>> {
         return try {
             val tvs = tvDao.getAllTv()
             tvs.forEach { tv ->
@@ -50,7 +50,7 @@ class TVRepository(
      *
      * @program tvId 卫视tvId
      */
-    private fun loadTVSource(tvId: String): List<String> {
+    private suspend fun loadTVSource(tvId: String): List<String> {
         return tvDao.getTvCircuit(tvId)
     }
 
@@ -66,7 +66,7 @@ class TVRepository(
                 tvDao.insertAllTvPrograms(tvProgramList)
             }
 
-            override fun fetchFromLocal(): Map<String, TvProgramBean> {
+            override suspend fun fetchFromLocal(): Map<String, TvProgramBean> {
                 val tvProgramBeanMap = hashMapOf<String, TvProgramBean>()
                 val programs: List<TvProgram> = tvDao.getAllTvPrograms()
                 programs.forEach { program ->

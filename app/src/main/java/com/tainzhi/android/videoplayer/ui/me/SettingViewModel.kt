@@ -2,7 +2,8 @@ package com.tainzhi.android.videoplayer.ui.me
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.tainzhi.android.common.BaseViewModel
+import com.tainzhi.android.common.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 
 /**
@@ -12,7 +13,9 @@ import com.tainzhi.android.videoplayer.repository.PreferenceRepository
  * @description:
  **/
 
-class SettingViewModel(private val preferenceRepository: PreferenceRepository) : ViewModel() {
+class SettingViewModel(private val preferenceRepository: PreferenceRepository,
+                       coroutineDispatcherProvider: CoroutineDispatcherProvider
+) : BaseViewModel(coroutineDispatcherProvider) {
 
     private val _advertising = MutableLiveData<Boolean>()
     val advertising: LiveData<Boolean>
