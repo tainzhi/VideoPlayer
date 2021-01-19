@@ -3,6 +3,7 @@ package com.tainzhi.android.videoplayer.ui
 import android.os.Bundle
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.tainzhi.android.common.base.ui.BaseViewBindingActivity
+import com.tainzhi.android.common.util.hideNavigation
 import com.tainzhi.android.common.util.startKtxActivity
 import com.tainzhi.android.videoplayer.databinding.ActivitySplashBinding
 
@@ -25,6 +26,12 @@ class SplashActivity : BaseViewBindingActivity<ActivitySplashBinding>() {
             }
 
         })
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        if (hasFocus) {
+            hideNavigation()
+        }
     }
 
     override fun onResume() {
