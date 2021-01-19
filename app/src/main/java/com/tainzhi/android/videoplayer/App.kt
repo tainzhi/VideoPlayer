@@ -23,6 +23,9 @@ class App : Application() {
 
     companion object {
         var CONTEXT: Context by Delegates.notNull()
+
+        // 是否是 灰色主题
+        var isGrayTheme = false
     }
 
     override fun onCreate() {
@@ -38,7 +41,6 @@ class App : Application() {
         initLog()
 
     }
-
 
     private fun initLog() {
         Logger.addLogAdapter(object : AndroidLogAdapter(
