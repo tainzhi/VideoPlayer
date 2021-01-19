@@ -25,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.tainzhi.android.common.util.FormatUtil.formatMediaDuration
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.R
+import glimpse.glide.GlimpseTransformation
 
 /**
  * @author:      tainzhi
@@ -70,7 +71,7 @@ fun bindVideoThumbnail(
         } ?: return
     val options = RequestOptions()
     placeHolder?.let { options.placeholder(placeHolder) }
-    cornerRadius?.let { options.transform(CenterCrop(), RoundedCorners(it)) }
+    cornerRadius?.let { options.transform(CenterCrop(), RoundedCorners(it), GlimpseTransformation()) }
     Glide.with(imageView.context).load(thumbnail)
         .apply(options)
         .into(imageView)
