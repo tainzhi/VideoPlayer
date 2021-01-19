@@ -7,12 +7,13 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
+import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.callback.EmptyActivityLifecycleCallback
 import com.tainzhi.android.videoplayer.databinding.ActivityMainBinding
@@ -22,6 +23,7 @@ import com.tainzhi.android.videoplayer.util.setupWithNavController
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
+@Suppress("DUPLICATE_LABEL_IN_WHEN")
 class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>() {
 
     private var currentNavController: LiveData<NavController>? = null
@@ -39,9 +41,7 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        if (savedInstanceState != null) {
-            super.onRestoreInstanceState(savedInstanceState)
-        }
+        super.onRestoreInstanceState(savedInstanceState)
         // Now that BottomNavigationBar has restored its instance state
         // and its selectedItemId, we can proceed with setting up the
         // BottomNavigationBar with Navigation
@@ -65,9 +65,9 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
         )
 
         // Whenever the selected controller changes, setup the action bar.
-        controller.observe(this, Observer { navController ->
+        controller.observe(this) { navController ->
             mBinding.toolbar.setupWithNavController(navController)
-        })
+        }
         currentNavController = controller
     }
 
@@ -81,50 +81,69 @@ class MainActivity : BaseVmBindingActivity<MainViewModel, ActivityMainBinding>()
 
     override fun startObserve() {
         mViewModel.run {
-            title.observe(this@MainActivity, Observer { title ->
+            title.observe(this@MainActivity) { title ->
                 mBinding.toolbarCenterTitle.run {
                     text = title
                 }
-            })
-            showCenterTitle.observe(this@MainActivity, Observer { show ->
+            }
+            showCenterTitle.observe(this@MainActivity) { show ->
                 mBinding.toolbarCenterTitle.visibility = if (show) View.VISIBLE else View.GONE
-            })
+            }
 
 
         }
     }
 
-
     private fun initTheme() {
         val preferenceRepository: PreferenceRepository by inject()
-        preferenceRepository.theme.observe(this, Observer { t ->
+        preferenceRepository.theme.observe(this) { t ->
             when (t) {
-                Theme.MODE_GRAY -> setGrayTheme()
-                Theme.MODE_NIGHT_YES, Theme.MODE_NIGHT_NO -> {
-                    // 是置灰状态, 恢复原样不置灰
-                    if (isGrayTheme) setGrayTheme()
+                Theme.MODE_GRAY -> {
+                    setGrayTheme()
+                }
+                Theme.MODE_NIGHT_NO, Theme.MODE_NIGHT_YES -> {
+                    unsetGrayTheme()
                     delegate.localNightMode = t
                 }
             }
-        })
+        }
     }
-
-    private var isGrayTheme = false
 
     private fun setGrayTheme() {
-        (this.applicationContext as Application).registerActivityLifecycleCallbacks(object :
-                EmptyActivityLifecycleCallback() {
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                val cm = ColorMatrix().apply {
-                    setSaturation(if (isGrayTheme) 1f else 0f)
-                }
-                val paint = Paint().apply { colorFilter = ColorMatrixColorFilter(cm) }
-                activity.window.decorView.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
-            }
-        })
-        // 使得能够 onActivityCreated
-        delegate.localNightMode = Theme.MODE_NIGHT_NO
-        // 在置灰和不置灰 切换
-        isGrayTheme = !isGrayTheme
+        if (!App.isGrayTheme) {
+            (this.applicationContext as Application).registerActivityLifecycleCallbacks(
+                    object : EmptyActivityLifecycleCallback() {
+                        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                            val cm = ColorMatrix().apply {
+                                // 0f 置灰, 1f 不置灰
+                                setSaturation(0f)
+                            }
+                            val paint = Paint().apply { colorFilter = ColorMatrixColorFilter(cm) }
+                            activity.window.decorView.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
+                        }
+                    })
+
+            App.isGrayTheme = true
+            ActivityCompat.recreate(this)
+        }
     }
+
+    private fun unsetGrayTheme() {
+        if (App.isGrayTheme) {
+            (this.applicationContext as Application).registerActivityLifecycleCallbacks(
+                    object : EmptyActivityLifecycleCallback() {
+                        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                            val cm = ColorMatrix().apply {
+                                // 0f 置灰, 1f 不置灰
+                                setSaturation(1f)
+                            }
+                            val paint = Paint().apply { colorFilter = ColorMatrixColorFilter(cm) }
+                            activity.window.decorView.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
+                        }
+                    })
+            App.isGrayTheme = false
+            ActivityCompat.recreate(this)
+        }
+    }
+
 }
