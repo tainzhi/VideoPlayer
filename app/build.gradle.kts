@@ -52,6 +52,10 @@ android {
         // 每个应用拥有不同的authorities，防止相同在同一个手机上无法同时安装
         val _id = applicationId ?: ""
         resValue("string", "authorities", _id)
+
+        ndk {
+            abiFilters("armeabi-v7a", "arm64-v8a")
+        }
     }
 
     buildFeatures {
@@ -101,6 +105,12 @@ android {
     adbOptions {
         timeOutInMs = 20 * 60 * 1000  // 20 minutes
         installOptions("-d", "-t")
+    }
+
+    aaptOptions {
+        // 用于 glimpse-android
+        noCompress("tflite")
+        noCompress("lite")
     }
 
     packagingOptions {
@@ -196,6 +206,10 @@ dependencies {
     implementation(Libs.volley)
     implementation(Libs.lottie)
     implementation(Libs.notchScreenTool)
+    implementation(Libs.Glimpse.core)
+    implementation(Libs.Glimpse.glide)
+    implementation(Libs.tensorflowLite)
+
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖
     ///////////////////////////////////////////////////////////////////////////

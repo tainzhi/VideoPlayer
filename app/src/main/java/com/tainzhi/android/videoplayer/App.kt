@@ -6,6 +6,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.tainzhi.android.videoplayer.di.appModule
+import glimpse.core.Glimpse
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -40,6 +41,7 @@ class App : Application() {
 
         initLog()
 
+        Glimpse.init(this)
     }
 
     private fun initLog() {

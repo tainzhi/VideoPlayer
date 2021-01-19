@@ -28,10 +28,11 @@
 				android:text="DELETE"
 				android:textColor="?colorError"
 				android:textSize="20sp"
-				android:layout_marginEnd="@dimen/margin_normal"
+				android:layout_marginEnd="@dimen/margin_small"
 				app:layout_constraintBottom_toBottomOf="@+id/imageView3"
 				app:layout_constraintEnd_toStartOf="@+id/imageView3"
-				app:layout_constraintTop_toTopOf="@+id/imageView3" />
+				app:layout_constraintTop_toTopOf="@+id/imageView3"
+				/>
 			
 			<ImageView
 				android:id="@+id/imageView3"
@@ -54,7 +55,7 @@
 			android:id="@+id/videoThumbnailImageView"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
-			android:layout_marginStart="@dimen/margin_normal"
+			android:layout_marginStart="@dimen/margin_small"
 			android:layout_marginTop="12dp"
 			android:background="@drawable/bg_video_thumbnail"
 			android:scaleType="fitCenter"
