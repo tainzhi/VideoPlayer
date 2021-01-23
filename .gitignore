@@ -2,7 +2,8 @@
 *.hprof
 
 ### macOS
-.DS_store
+.DS_Store
+
 
 ### Android template
 # Built application files
