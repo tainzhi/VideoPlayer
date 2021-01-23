@@ -11,6 +11,7 @@ buildscript {
             classpath(com.tainzhi.android.buildsrc.Libs.AndroidX.Navigation.safeArgs)
             classpath(com.tainzhi.android.buildsrc.Libs.buglyUploadMapping)
             classpath(kotlin("gradle-plugin", com.tainzhi.android.buildsrc.Libs.Kotlin.version))
+            classpath(com.tainzhi.android.buildsrc.Libs.DoKit.plugin)
         }
     }
 }
