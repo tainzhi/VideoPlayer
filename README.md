@@ -19,7 +19,7 @@
 
 <!-- vim-markdown-toc -->
 ## Info
-<img src="./demo.gif" alt="项目demo" height="300">
+<img src="./art/demo.gif" alt="项目demo" height="300">
 
 这是一个视频播放器，又不仅仅是一个播放器。它不仅能观看本地视频，还能看斗鱼直播， 能看央视和各大地方卫士，能看美剧和电影。许多功能正在紧张的开发中。。。敬请期待
 
@@ -140,6 +140,8 @@ https和http的区别
 - [] [使用composing build, 而不是buildSrc](https://juejin.im/post/5ed3ef906fb9a047bf7070b6#heading-6)
 - [] [manage network usage](https://developer.android.google.cn/training/basics/network-ops/managing))
 - [] 使用Paging
+- [] [detekt](https://github.com/detekt/detekt): 代码检测和kotlin编码规范
+- [] [detek添加hook](https://blog.csdn.net/qq_23191031/article/details/107287168)
 - [ ] motionlayout实现酷炫的动画
 - [ ] 电影界面通过[flexbox-layout](https://github.com/google/flexbox-layout)实现酷炫的效果
 - [x] Fab播放按钮, 播放最近观看记录; 使用Snackbar替换Toast,[参考1](https://stackoverflow.com/questions/36332487/move-snackbar-above-the-bottom-bar), [2](https://stackoverflow.com/questions/56040954/how-to-display-snackbar-above-bottomnavigationview-move-fab)
