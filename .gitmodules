@@ -1,6 +1,6 @@
 [submodule "buildSrc"]
 	path = buildSrc
-	url = git@github.com:tainzhi/android_buildSrc.git
+	url = https://github.com/tainzhi/android_buildSrc.git
 [submodule "common"]
 	path = common
-	url = git@github.com:tainzhi/android_common.git
+	url = https://github.com/tainzhi/android_common.git
