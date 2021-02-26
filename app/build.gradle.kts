@@ -161,7 +161,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
-    // implementation(project(":ffmpeg"))
+    api(project(":ffmpeg"))
     implementation(project(":danmu"))
 
     implementation(Libs.Kotlin.stdlib)
