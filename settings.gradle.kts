@@ -1,5 +1,5 @@
 include(":danmu")
-// include(":ffmpeg")
+include(":ffmpeg")
 include(":app")
 include(":common")
 include(":QMediaPlayer")

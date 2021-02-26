@@ -233,9 +233,9 @@ class VideoView @JvmOverloads constructor(
                 // mediaPlayerClass = IMediaExo::class.java
                 IMediaExo(this)
             }
-            // Constant.PlayerType.FFmpeg_PLAYER -> {
-            //     IMediaFFmpeg(this)
-            // }
+            Constant.PlayerType.FFmpeg_PLAYER -> {
+                IMediaFFmpeg(this)
+            }
             else -> null
         }
         state = STATE_IDLE
