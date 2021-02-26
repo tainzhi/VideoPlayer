@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+	
+	<!--Top level DayNight theme to be used in AndroidManifest.xml-->
+	<style name="AppTheme.DayNight" parent="Base.AppTheme">
+		<item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+		<item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+		<item name="alphaEmphasisHigh">@dimen/alpha_emphasis_high</item>
+		<item name="alphaEmphasisMedium">@dimen/alpha_emphasis_medium</item>
+		<item name="alphaEmphasisDisabled">@dimen/alpha_emphasis_disabled</item>
+	</style>
+
+</resources>
