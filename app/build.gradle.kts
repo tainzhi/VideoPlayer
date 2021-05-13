@@ -6,7 +6,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
-    // kotlin("android.extensions") 弃用extension获取资源
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
     id("io.wusa.semver-git-plugin").version("2.3.7")
