@@ -41,12 +41,28 @@ android {
             path  = file("CMakeLists.txt")
         }
     }
+    ndkVersion = "22.1.7171670"
 
     // ndkVersion = "20.1.5948944"
 
     // sourceSets.main {
     //     jniLibs.srcDir 'libs'
     // }
+
+    packagingOptions {
+
+        // fix:
+        // More than one file was found with OS independent path 'lib/arm64-v8a/libswscale.so'.
+        // If you are using jniLibs and CMake IMPORTED targets
+        pickFirst("lib/arm64-v8a/libswscale.so")
+        pickFirst("lib/arm64-v8a/libavcodec.so")
+        pickFirst("lib/arm64-v8a/libavutil.so")
+        pickFirst("lib/arm64-v8a/libpostproc.so")
+        pickFirst("lib/arm64-v8a/libavformat.so")
+        pickFirst("lib/arm64-v8a/libavfilter.so")
+        pickFirst("lib/arm64-v8a/libswresample.so")
+        pickFirst("lib/arm64-v8a/libavdevice.so")
+    }
 }
 
 dependencies {
