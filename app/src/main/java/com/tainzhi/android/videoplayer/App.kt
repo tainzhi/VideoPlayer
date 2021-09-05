@@ -2,7 +2,7 @@ package com.tainzhi.android.videoplayer
 
 import android.app.Application
 import android.content.Context
-import com.didichuxing.doraemonkit.DoraemonKit
+import com.didichuxing.doraemonkit.DoKit
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -44,7 +44,7 @@ class App : Application() {
 
         Glimpse.init(this)
 
-        initDokit()
+        initDoKit()
     }
 
     private fun initLog() {
@@ -56,13 +56,15 @@ class App : Application() {
                         .build()
         ) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG;
+                return BuildConfig.DEBUG
             }
         })
     }
 
-    private fun initDokit() {
-        DoraemonKit.install(this, "fb4b4d9b3653a6ce268cc03317de0278")
+    private fun initDoKit() {
+        DoKit.Builder(this)
+                .productId("fb4b4d9b3653a6ce268cc03317de0278")
+                .build()
     }
 }
 
