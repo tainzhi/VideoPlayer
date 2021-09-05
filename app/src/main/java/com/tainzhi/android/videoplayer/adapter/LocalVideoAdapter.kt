@@ -28,6 +28,7 @@ class LocalVideoAdapter(private val goToPlay: (video: LocalVideo) -> Unit ) :
         Filterable
 {
 
+    // TODO: 2021/9/5  BindingAdapter提供了特定视频帧作为缩略图的方法，可以把最近的视频播放位置帧作为新的缩略图 
     var originalData =  ArrayList<LocalVideo>()
 
     init {
