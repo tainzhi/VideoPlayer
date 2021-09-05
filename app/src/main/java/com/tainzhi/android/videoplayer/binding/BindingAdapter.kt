@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -40,6 +41,7 @@ import glimpse.glide.GlimpseTransformation
     "cornerRadius",
     "thumbnailWidth",
     "thumbnailHeight",
+    "frame",
     requireAll = false
 )
 fun bindVideoThumbnail(
@@ -47,34 +49,49 @@ fun bindVideoThumbnail(
     videoUri: Uri,
     placeHolder: Int? = null,
     cornerRadius: Int? = null,
+    frame: Long = 10,
     width: Int? = null,
     height: Int? = null
 ) {
-    val thumbnail: Bitmap? =
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                App.CONTEXT.contentResolver.loadThumbnail(
-                    videoUri, Size(320, 240), null
-                )
-            } else {
-                // val file = videoUri.toFile()
-                // android 29 才能使用
-                // ThumbnailUtils.createVideoThumbnail(videoUri.toFile(), Size(320, 240), null)
-                MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver,
-                    ContentUris.parseId(videoUri),
-                    MediaStore.Images.Thumbnails.MINI_KIND,
-                    BitmapFactory.Options().apply { inSampleSize = 4 })
-            }
-        } catch (e: Exception) {
-            Log.e("BindingAdapter", "${videoUri.path}, ${e.message}")
-            null
-        } ?: return
+    // val retriver = MediaMetadataRetriever()
+    // val image = retriver.getFrameAtTime(10000L)
+    // val thumbnail: Bitmap? =
+    //     try {
+    //         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    //             App.CONTEXT.contentResolver.loadThumbnail(
+    //                 videoUri, Size(320, 240), null
+    //             )
+    //         } else {
+    //             // val file = videoUri.toFile()
+    //             // android 29 才能使用
+    //             // ThumbnailUtils.createVideoThumbnail(videoUri.toFile(), Size(320, 240), null)
+    //             MediaStore.Video.Thumbnails.getThumbnail(App.CONTEXT.contentResolver,
+    //                 ContentUris.parseId(videoUri),
+    //                 MediaStore.Images.Thumbnails.MINI_KIND,
+    //                 BitmapFactory.Options().apply { inSampleSize = 4 })
+    //         }
+    //     } catch (e: Exception) {
+    //         Log.e("BindingAdapter", "${videoUri.path}, ${e.message}")
+    //         null
+    //     } ?: return
+    // val options = RequestOptions()
+    // placeHolder?.let { options.placeholder(placeHolder) }
+    // cornerRadius?.let { options.transform(CenterCrop(), RoundedCorners(it), GlimpseTransformation()) }
+    // Glide.with(imageView.context).load(thumbnail)
+    //     .apply(options)
+    //     .into(imageView)
     val options = RequestOptions()
+            .frame(frame)
     placeHolder?.let { options.placeholder(placeHolder) }
     cornerRadius?.let { options.transform(CenterCrop(), RoundedCorners(it), GlimpseTransformation()) }
-    Glide.with(imageView.context).load(thumbnail)
-        .apply(options)
-        .into(imageView)
+    Glide.with(imageView.context)
+            // .setDefaultRequestOptions(
+            //         // RequestOptions().frame(10).placeholder(placeHolder)
+            //         RequestOptions().frame(100)
+            // )
+            .load(videoUri)
+            .apply(options)
+            .into(imageView)
 }
 
 @BindingAdapter(
