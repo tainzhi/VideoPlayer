@@ -6,14 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Libs.Configs.compileSdkVersion)
-    buildToolsVersion(Libs.Configs.buildToolsVersion)
+    compileSdk = Libs.Configs.compileSdkVersion
+    buildToolsVersion = Libs.Configs.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion(Libs.Configs.minSdkVersion)
-        targetSdkVersion(Libs.Configs.targetSdkVersion)
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Libs.Configs.minSdkVersion
+        targetSdk = Libs.Configs.targetSdkVersion
         testInstrumentationRunner ="androidx.test.runner.AndroidJUnitRunner"
 
         externalNativeBuild {
@@ -41,7 +39,7 @@ android {
             path  = file("CMakeLists.txt")
         }
     }
-    ndkVersion = "22.1.7171670"
+    ndkVersion = "21.0.6113669"
 
     // ndkVersion = "20.1.5948944"
 
@@ -69,4 +67,7 @@ dependencies {
     implementation(Libs.Kotlin.stdlib)
     testImplementation(Libs.junit)
 
+}
+repositories {
+    mavenCentral()
 }

@@ -3,8 +3,7 @@ buildscript {
         maven { setUrl("https://maven.aliyun.com/repository/public/") }
         maven { setUrl("https://maven.aliyun.com/repository/jcenter/")}
         google()
-        jcenter()
-
+        mavenCentral()
 
         dependencies {
             classpath(com.tainzhi.android.buildsrc.Libs.androidToolBuildGradle)
@@ -21,7 +20,7 @@ allprojects {
         maven { setUrl("https://maven.aliyun.com/repository/public/") }
         maven { setUrl("https://maven.aliyun.com/repository/jcenter/") }
         google()
-        jcenter()
+        mavenCentral()
         // for BaseRecyclerViewAdapterHelper
         maven {
             setUrl("https://jitpack.io")
