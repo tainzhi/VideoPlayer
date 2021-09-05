@@ -17,14 +17,12 @@ android {
         }
     }
 
-    compileSdkVersion(Libs.Configs.compileSdkVersion)
-    buildToolsVersion(Libs.Configs.buildToolsVersion)
+    compileSdk = Libs.Configs.compileSdkVersion
+    buildToolsVersion = Libs.Configs.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion(Libs.Configs.minSdkVersion)
-        targetSdkVersion(Libs.Configs.targetSdkVersion)
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Libs.Configs.minSdkVersion
+        targetSdk = Libs.Configs.targetSdkVersion
     }
 
     buildTypes {

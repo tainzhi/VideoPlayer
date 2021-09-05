@@ -39,10 +39,10 @@ class DouyuRepository {
                 lateinit var fetchedData: ResponseBody<List<DouyuRoom>>
                 // 推荐房间列表
                 if (gameId == "-1")
-                    fetchedData = get(VideoService::class.java).getRecommendRooms(douyuCurrentOffset, douyuLimit)
+                    fetchedData = (get(VideoService::class.java) as VideoService).getRecommendRooms(douyuCurrentOffset, douyuLimit)
                 // 特定game房间列表
                 else
-                    fetchedData = get(VideoService::class.java).getGameRooms(gameId, douyuCurrentOffset, douyuLimit)
+                    fetchedData = (get(VideoService::class.java) as VideoService).getGameRooms(gameId, douyuCurrentOffset, douyuLimit)
 
                 val fetchedDataSize = fetchedData.data.size
                 if (fetchedDataSize < douyuLimit) {
@@ -60,7 +60,7 @@ class DouyuRepository {
             flow {
                 emit(ResultOf.loading())
 
-                val fetchedData = get(VideoService::class.java).getAllGames()
+                val fetchedData = (get(VideoService::class.java) as VideoService).getAllGames()
 
                 emit(ResultOf.Success(fetchedData.data))
             }.catch { e ->

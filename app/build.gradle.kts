@@ -1,5 +1,4 @@
-import com.tainzhi.android.buildsrc.Libs
-
+ import com.tainzhi.android.buildsrc.Libs
 
 plugins {
     id("com.android.application")
@@ -17,6 +16,7 @@ apply {
     // from("../test_dependencies.gradle.kts")
     // 直接把 androidTestImplementation写在该目录报错, More than one file was found with OS independent path 'META-INF/AL2.0
     from("../test_dependencies.gradle")
+    plugin("kotlin-android")
 }
 
 android {
@@ -36,13 +36,14 @@ android {
             keyPassword = "tainzhi"
         }
     }
-    compileSdkVersion(Libs.Configs.compileSdkVersion)
-    buildToolsVersion(Libs.Configs.buildToolsVersion)
+
+    compileSdk = Libs.Configs.compileSdkVersion
+    buildToolsVersion = Libs.Configs.buildToolsVersion
 
     defaultConfig {
         applicationId = "com.tainzhi.android.videoplayer"
-        minSdkVersion(Libs.Configs.minSdkVersion)
-        targetSdkVersion(Libs.Configs.targetSdkVersion)
+        minSdk = Libs.Configs.minSdkVersion
+        targetSdk = Libs.Configs.targetSdkVersion
         versionCode = semver.info.count
         versionName = semver.info.lastTag
         flavorDimensions("1")
@@ -187,10 +188,9 @@ dependencies {
 
     implementation(Libs.Coroutines.android)
 
-    implementation(Libs.Koin.scope)
-    implementation(Libs.Koin.viewmodel)
-    implementation(Libs.Koin.fragment)
-    implementation(Libs.Koin.ext)
+    implementation(Libs.Koin.android)
+    implementation(Libs.Koin.androidXCompose)
+    implementation(Libs.Koin.androidXWorkManager)
 
     implementation(Libs.logger)
 
@@ -241,4 +241,3 @@ dependencies {
     testImplementation(Libs.json)
     testImplementation(Libs.AndroidX.Lifecycle.livedataTesting)
 }
-
