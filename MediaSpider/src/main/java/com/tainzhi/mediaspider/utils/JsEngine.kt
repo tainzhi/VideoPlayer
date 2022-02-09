@@ -26,7 +26,7 @@ object JsEngine {
             rhino.evaluateString(scope, js, "script", 1, null)
             val f = scope.get(functionName, scope)
             if (f is Function) {
-                val result = f.call(rhino, scope, scope, arrayOf(params))
+                val result = f.call(rhino, scope, scope, params)
                 return Context.toString(result)
             } else {
                 throw Exception("$functionName} is not js function")
