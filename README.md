@@ -14,8 +14,6 @@
         + [python破解方式参考(失效)](#python破解方式参考失效)
 * [Todo](#todo)
 * [参考](#参考)
-* [遇到的问题](#遇到的问题)
-* [开发经验](#开发经验)
 
 <!-- vim-markdown-toc -->
 ## Info
@@ -23,13 +21,6 @@
 
 这是一个视频播放器，又不仅仅是一个播放器。它不仅能观看本地视频，还能看斗鱼直播， 能看央视和各大地方卫士，能看美剧和电影。许多功能正在紧张的开发中。。。敬请期待
 
-怎么使用
-```
-git clone --recursive https://github.com/tainzhi/VideoPlayer
-
-# 如果忘记 recursive clone
-git submodule update --init --recursive
-```
 
 ## 测试驱动开发
 - 先完成功能模块: 读取卫视列表到database, test成功
@@ -189,21 +180,6 @@ https和http的区别
 - 怎么升级
 >- [bugly](https://bugly.qq.com/docs/user-guide/instruction-manual-android-upgrade/?v=20200622202242): 没有下载次数限制; 继承方便, 提供升级页面; 不用验证身份证; 唯一缺点, 没有提供api, 无法自动上传apk
 >- [蒲公英分发平台](https://www.pgyer.com/doc/view/api): 提供了api, 可以编写gradle插件自动上传; 缺点是需要身份证验证, 有下载次数限制
-
-
-## 遇到的问题
-- [stackoverflow: How to execute JavaScript on Android](https://stackoverflow.com/questions/8374016/how-to-execute-javascript-on-android)
-- [tv的图片和视频源是http, Cleartext HTTP traffic to ... not permitted](https://www.cnblogs.com/kinglandsoft/p/10481500.html)
-- 懒加载导致的Fragment没有显示: 在DouyuGameFragment中使用懒加载初始化mBinding会导致第二次进入, 不显示画面
-- 单activity,多Fragment的多个actionbar处理, 非常麻烦, 要么使用NoActionBar主题, 每个fragment自定义toolbar, 要么[通过MainActivity的ViewModel更新toolbar](https://stackoverflow.com/questions/15560904/setting-custom-actionbar-title-from-fragment#:~:text=To%20set%20the%20title%20for,the%20title%20for%20that%20Activity%20)
-- 全局toast实在反人类, android已经在慢慢的废弃toast, 使用snackbar
-- Navigation传递参数不仅要在目标fragment定义参数, 也需要在action定义相同的参数
-- 通过ViewModel在activity和fragment之间传递数据
-
-## 开发经验
-- 专注于目标,而不是技术
-- 不要苛求于和原来的技术实现相同, 只要能解决问题, 哪管它新的实现思路
-- 对于某些实现细节的代码不熟悉不懂, 可以在github上高级搜索, 学习相应的代码段
 
 [ffmpeg]: #ffmpeg
 

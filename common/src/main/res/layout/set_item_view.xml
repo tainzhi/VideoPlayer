@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="50dp"
+	android:orientation="horizontal"
+	tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+	>
+	
+	<TextView
+		android:id="@+id/itemText"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:layout_gravity="start|center_vertical"
+		android:layout_marginEnd="@dimen/margin_normal"
+		android:layout_marginStart="@dimen/margin_normal"
+		android:alpha="?alphaEmphasisMedium"
+		android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+		android:gravity="center|start"
+		android:lines="1"
+		android:textAppearance="?textAppearanceBody1"
+		android:textSize="16sp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		tools:text="关于"
+		/>
+	
+	<com.google.android.material.switchmaterial.SwitchMaterial
+		android:id="@+id/switchBtn"
+		android:layout_width="wrap_content"
+		android:layout_height="50dp"
+		android:layout_gravity="end|center_vertical"
+		android:layout_marginEnd="@dimen/margin_normal"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible"
+		/>
+	
+	<View
+		android:id="@+id/divideLine"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_marginEnd="@dimen/margin_normal"
+		android:layout_marginStart="@dimen/margin_normal"
+		android:background="?android:dividerHorizontal"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		tools:visibility="visible"
+		/>
+</merge>
