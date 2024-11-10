@@ -43,8 +43,6 @@ class App : Application() {
         initLog()
 
         Glimpse.init(this)
-
-        initDoKit()
     }
 
     private fun initLog() {
@@ -59,12 +57,6 @@ class App : Application() {
                 return BuildConfig.DEBUG
             }
         })
-    }
-
-    private fun initDoKit() {
-        DoKit.Builder(this)
-                .productId("fb4b4d9b3653a6ce268cc03317de0278")
-                .build()
     }
 }
 

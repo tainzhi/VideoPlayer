@@ -8,7 +8,6 @@ plugins {
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
     id("io.wusa.semver-git-plugin").version("2.3.7")
-    id("com.didi.dokit")
     // id("com.tainzhi.android.plugin.autoupload")
 }
 
@@ -119,19 +118,6 @@ android {
     }
 }
 
-// http://xingyun.xiaojukeji.com/docs/dokit/#/androidGuide
-dokitExt {
-    comm {
-        //地图经纬度开关
-        gpsSwitch = true
-        //网络开关
-        networkSwitch = true
-        //大图开关
-        bigImgSwitch = true
-    }
-}
-
-
 // 用法:
 // 必须要新建 flavor: pgy
 // 具体上传任务: ./gradlew autoupload
@@ -221,10 +207,6 @@ dependencies {
     implementation(Libs.Glimpse.core)
     implementation(Libs.Glimpse.glide)
     implementation(Libs.tensorflowLite)
-
-    // Dokit
-    debugImplementation(Libs.DoKit.debugVersion)
-    releaseImplementation(Libs.DoKit.releaseVersion)
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖
