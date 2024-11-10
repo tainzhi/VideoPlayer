@@ -2,23 +2,23 @@ import com.tainzhi.android.buildsrc.Libs
 
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    compileSdk = Libs.Configs.compileSdkVersion
-    buildToolsVersion = Libs.Configs.buildToolsVersion
+    namespace = "com.tainzhi.android.ffmpeg"
+    compileSdk = 30
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
-        minSdk = Libs.Configs.minSdkVersion
-        targetSdk = Libs.Configs.targetSdkVersion
+        minSdk = 30
         testInstrumentationRunner ="androidx.test.runner.AndroidJUnitRunner"
 
         externalNativeBuild {
             cmake {
                 cppFlags("")
                 // abiFilters("arm64-v8a", "armeabi-v7a", "x86")
-                abiFilters("arm64-v8a", "armeabi-v7a")
+                abiFilters("arm64-v8a")
             }
         }
     }

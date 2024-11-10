@@ -2,17 +2,17 @@ package com.tainzhi.android.buildsrc
 
 object Libs {
 
-    const val androidToolBuildGradle = "com.android.tools.build:gradle:7.0.2"
+    const val androidToolBuildGradle = "com.android.tools.build:gradle:7.4.0"
 
     const val junit = "junit:junit:4.13"
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.1"
 
     object Configs {
-        const val minSdkVersion = 26
-        const val targetSdkVersion = 30
-        const val compileSdkVersion = 30
-        const val buildToolsVersion = "30.0.2"
+        const val minSdkVersion = 30
+        const val targetSdkVersion = 32
+        const val compileSdkVersion = 32
+        const val buildToolsVersion = "32.0.0"
 
     }
 
@@ -28,7 +28,7 @@ object Libs {
     object Plugins {
         const val androidApplication = "com.android.application"
         const val kotlinAndroid = "android"
-        const val kapt = "kapt"
+        // const val kapt = "kapt"
         const val detekt = "io.gitlab.arturbosch.detekt"
         const val crashlytics = "io.fabric"
     }
@@ -60,7 +60,7 @@ object Libs {
     }
 
     object Kotlin {
-        const val version = "1.5.30"
+        const val version = "1.7.21"
         const val stdlibJdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${version}"
         const val stdlibJdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version}"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
@@ -94,14 +94,14 @@ object Libs {
         const val preference = "androidx.preference:preference:1.1.0"
 
         object Navigation {
-            private const val version = "2.3.5"
+            private const val version = "2.5.3"
             const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
             const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
         }
 
         object Fragment {
-            private const val version = "1.3.0"
+            private const val version = "1.5.7"
             const val fragment = "androidx.fragment:fragment:$version"
             const val fragmentKtx = "androidx.fragment:fragment-ktx:$version"
         }
@@ -156,7 +156,7 @@ object Libs {
 
         object Lifecycle {
 
-            private const val version = "2.2.0"
+            private const val version = "2.4.1"
 
             // ViewModel
             const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
@@ -232,7 +232,7 @@ object Libs {
     }
 
     object Moshi {
-        private const val version = "1.12.0"
+        private const val version = "1.14.0"
         const val moshi = "com.squareup.moshi:moshi-kotlin:$version"
         const val codeGen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
     }
@@ -325,7 +325,7 @@ object Libs {
     // Didi/DoraemonKit
     // http://xingyun.xiaojukeji.com/docs/dokit/#/androidGuide
     object DoKit {
-        private const val version = "3.5.0-beta01"
+        private const val version = "3.5.0.1"
         const val debugVersion = "io.github.didi.dokit:dokitx:${version}"
         const val releaseVersion = "io.github.didi.dokit:dokitx-no-op:${version}"
 

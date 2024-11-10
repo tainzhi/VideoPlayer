@@ -2,11 +2,11 @@ import com.tainzhi.android.buildsrc.Libs
 
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-
+    namespace = "com.tainzhi.qmediaplayer"
     splits {
         abi {
             isEnable = true
@@ -17,12 +17,11 @@ android {
         }
     }
 
-    compileSdk = Libs.Configs.compileSdkVersion
-    buildToolsVersion = Libs.Configs.buildToolsVersion
+    compileSdk = 30
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
-        minSdk = Libs.Configs.minSdkVersion
-        targetSdk = Libs.Configs.targetSdkVersion
+        minSdk = 30
     }
 
     buildTypes {
@@ -45,7 +44,7 @@ dependencies {
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.constraintlayout)
     implementation(project(":danmu"))
-    api(project(":ffmpeg"))
+    implementation(project(":ffmpeg"))
 
     api("tv.danmaku.ijk.media:ijkplayer-java:0.8.8")
     // Other ABIs: optional

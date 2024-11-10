@@ -2,11 +2,12 @@ import com.tainzhi.android.buildsrc.Libs
 
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
 }
 
 android {
+    namespace = "com.tainzhi.android.common"
     compileSdk = Libs.Configs.compileSdkVersion
     buildToolsVersion = Libs.Configs.buildToolsVersion
 
@@ -44,7 +45,7 @@ dependencies {
     api(Libs.Retrofit.retrofit)
     api(Libs.Retrofit.moshiConverter)
     api(Libs.Moshi.moshi)
-    kapt(Libs.Moshi.codeGen)
+    ksp(Libs.Moshi.codeGen)
     api(Libs.OkHttp.loggingInterceptor)
     api(Libs.Glide.glide)
 

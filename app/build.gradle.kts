@@ -2,9 +2,9 @@
 
 plugins {
     id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
+    id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
+    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
     id("io.wusa.semver-git-plugin").version("2.3.7")
@@ -19,6 +19,7 @@ apply {
 }
 
 android {
+    namespace = "com.tainzhi.android.videoplayer"
     signingConfigs {
         getByName("debug") {
             // debug版本默认不签名
@@ -54,7 +55,7 @@ android {
         resValue("string", "authorities", _id)
 
         ndk {
-            abiFilters.addAll(setOf("armeabi-v7a", "arm64-v8a"))
+            abiFilters.addAll(setOf("arm64-v8a"))
         }
     }
 
@@ -147,7 +148,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
-    api(project(":ffmpeg"))
+    implementation(project(":ffmpeg"))
     implementation(project(":danmu"))
 
     implementation(Libs.Kotlin.stdlib)
@@ -161,10 +162,9 @@ dependencies {
     implementation(Libs.AndroidX.Navigation.uiKtx)
     implementation(Libs.AndroidX.Lifecycle.viewmodelKtx)
     implementation(Libs.AndroidX.Lifecycle.livedata)
-    implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
-    kapt(Libs.AndroidX.Room.compiler)
+    ksp(Libs.AndroidX.Room.compiler)
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.Paging.runtimeKtx)
     implementation(Libs.AndroidX.Work.runtimeKtx)
@@ -183,14 +183,14 @@ dependencies {
     api(Libs.Retrofit.retrofit)
     api(Libs.Retrofit.moshiConverter)
     api(Libs.Moshi.moshi)
-    kapt(Libs.Moshi.codeGen)
+    ksp(Libs.Moshi.codeGen)
 
     implementation(Libs.OkHttp.loggingInterceptor)
     testImplementation(Libs.OkHttp.mockWebServer)
     implementation(Libs.cookietar)
 
     implementation(Libs.Glide.glide)
-    kapt(Libs.Glide.compiler)
+    ksp(Libs.Glide.compiler)
 
     implementation(Libs.baseRecyclerViewAdapterHelper)
     implementation(Libs.youthBanner)
