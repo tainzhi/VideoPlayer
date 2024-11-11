@@ -8,7 +8,6 @@ plugins {
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
     id("io.wusa.semver-git-plugin").version("2.3.7")
-    // id("com.tainzhi.android.plugin.autoupload")
 }
 
 apply {
