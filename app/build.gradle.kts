@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
@@ -9,6 +9,7 @@ plugins {
 }
 
 android {
+    namespace = "com.tainzhi.android.videoplayer"
     signingConfigs {
         getByName("debug") {
             // debug版本默认不签名
@@ -26,7 +27,7 @@ android {
         }
     }
 
-    compileSdk = 30
+    compileSdk = 31
     buildToolsVersion = "30.0.2"
 
     defaultConfig {
@@ -112,7 +113,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":QMediaPlayer"))
     implementation(project(":MediaSpider"))
-    api(project(":ffmpeg"))
+    implementation(project(":ffmpeg"))
     implementation(project(":danmu"))
 
 
@@ -126,12 +127,11 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.room:room-runtime:2.3.0")
     implementation("androidx.room:room-ktx:2.3.0")
-    kapt("androidx.room:room-compiler:2.3.0")
+    ksp("androidx.room:room-compiler:2.3.0")
     implementation("androidx.paging:paging-runtime:2.1.2")
     implementation("androidx.paging:paging-runtime-ktx:2.1.2")
     implementation("androidx.work:work-runtime-ktx:2.3.0")
@@ -150,14 +150,14 @@ dependencies {
     api("com.squareup.retrofit2:retrofit:2.9.0")
     api("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
     implementation("com.github.franmontiel:PersistentCookieJar:v1.0.1")
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
+    ksp("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation("com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4")
     implementation("com.youth.banner:banner:1.4.10")

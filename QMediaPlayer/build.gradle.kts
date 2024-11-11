@@ -1,9 +1,10 @@
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
+    namespace = "com.tainzhi.qmediaplayer"
 
     splits {
         abi {
@@ -16,7 +17,7 @@ android {
     }
 
     compileSdk = 30
-    buildToolsVersion = "30.0.2"
+    buildToolsVersion = "32.0.0"
 
     defaultConfig {
         minSdk = 26
@@ -43,7 +44,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.3.2")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     implementation(project(":danmu"))
-    api(project(":ffmpeg"))
+    implementation(project(":ffmpeg"))
 
     api("tv.danmaku.ijk.media:ijkplayer-java:0.8.8")
     // Other ABIs: optional

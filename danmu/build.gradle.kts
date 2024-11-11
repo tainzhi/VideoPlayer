@@ -1,13 +1,13 @@
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
 }
 
 android {
+    namespace = "com.tainzhi.android.danmu"
     compileSdk = 30
-    buildToolsVersion = "30.0.2"
+    buildToolsVersion = "32.0.0"
 
     defaultConfig {
         minSdk = 26
@@ -33,5 +33,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.core:core-ktx:1.3.2")
-    api("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 }

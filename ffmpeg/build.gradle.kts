@@ -1,11 +1,12 @@
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
+    namespace = "com.tainzhi.android.ffmpeg"
     compileSdk = 30
-    buildToolsVersion = "30.0.2"
+    buildToolsVersion = "32.0.0"
 
     defaultConfig {
         minSdk = 26
@@ -64,7 +65,4 @@ android {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
 
-}
-repositories {
-    mavenCentral()
 }
