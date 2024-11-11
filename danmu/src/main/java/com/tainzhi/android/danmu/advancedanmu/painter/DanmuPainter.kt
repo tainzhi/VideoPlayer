@@ -103,7 +103,7 @@ open class DanmuPainter: IDanmuPainter() {
                 danmu.avatarWidth +
                 danmu.levelBitmapMarginLeft +
                 danmu.levelBitmapWidth / 2
-        val top = danmu.position.y +
+        val top = danmu.position?.y +
                 danmu.height / 2 -
                 paint.ascent() / 2 -
                 paint.descent() / 2

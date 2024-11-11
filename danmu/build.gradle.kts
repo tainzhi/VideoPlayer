@@ -2,17 +2,18 @@ import com.tainzhi.android.buildsrc.Libs
 
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android")
+    kotlin("kapt")
     id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.tainzhi.android.danmu"
-    compileSdk = 30
-    buildToolsVersion = "30.0.2"
+    compileSdk = Libs.Configs.compileSdkVersion
+    buildToolsVersion = Libs.Configs.buildToolsVersion
 
     defaultConfig {
-        minSdk = 30
+        minSdk = Libs.Configs.minSdkVersion
+        targetSdk = Libs.Configs.targetSdkVersion
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

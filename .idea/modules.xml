@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" />
+    </modules>
+  </component>
+</project>
