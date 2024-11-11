@@ -1,6 +1,6 @@
 package com.tainzhi.android.videoplayer.ui.me
 
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.SettingFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChoosePlayerDialogFragment

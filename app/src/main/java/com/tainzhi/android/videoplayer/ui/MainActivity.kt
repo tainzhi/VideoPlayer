@@ -12,7 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tainzhi.android.common.base.ui.BaseVmBindingActivity
+import com.tainzhi.android.videoplayer.base.ui.BaseVmBindingActivity
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.callback.EmptyActivityLifecycleCallback

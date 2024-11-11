@@ -4,9 +4,9 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tainzhi.android.common.base.ui.LazyLoad
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
-import com.tainzhi.android.common.util.toast
+import com.tainzhi.android.videoplayer.base.ui.LazyLoad
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.util.toast
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.TVAdapter
 import com.tainzhi.android.videoplayer.databinding.TVFragmentBinding

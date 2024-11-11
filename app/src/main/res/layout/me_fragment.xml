@@ -8,7 +8,7 @@
 	tools:context=".ui.me.MeFragment"
 	>
 	
-	<com.tainzhi.android.common.widget.SetItemView
+	<com.tainzhi.android.videoplayer.widget.SetItemView
 		android:id="@+id/setting"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
 		app:needDivideLine="true"
 		/>
 	
-	<com.tainzhi.android.common.widget.SetItemView
+	<com.tainzhi.android.videoplayer.widget.SetItemView
 		android:id="@+id/about"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

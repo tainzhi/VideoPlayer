@@ -3,7 +3,7 @@ package com.tainzhi.android.videoplayer.ui.douyu
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.DouyuCategoryAdapter
 import com.tainzhi.android.videoplayer.bean.DouyuGame

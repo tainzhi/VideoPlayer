@@ -1,7 +1,7 @@
 package com.tainzhi.android.videoplayer.di
 
 import android.app.Application
-import com.tainzhi.android.common.CoroutineDispatcherProvider
+import com.tainzhi.android.videoplayer.util.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.db.AppDataBase
 import com.tainzhi.android.videoplayer.db.TvDao
 import com.tainzhi.android.videoplayer.network.VideoClient

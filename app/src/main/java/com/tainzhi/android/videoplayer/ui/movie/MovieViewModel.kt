@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.orhanobut.logger.Logger
-import com.tainzhi.android.common.BaseViewModel
-import com.tainzhi.android.common.CoroutineDispatcherProvider
+import com.tainzhi.android.videoplayer.base.ui.BaseViewModel
+import com.tainzhi.android.videoplayer.util.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.repository.MovieRepository
 import com.tainzhi.mediaspider.movie.bean.Classify
@@ -21,8 +21,8 @@ import com.tainzhi.mediaspider.movie.bean.SearchResultData
  * Description:
  */
 class MovieViewModel(
-        private val movieRepository: MovieRepository,
-        dispatcherProvider: CoroutineDispatcherProvider,
+    private val movieRepository: MovieRepository,
+    dispatcherProvider: CoroutineDispatcherProvider,
 ) : BaseViewModel(dispatcherProvider) {
 
     private val _classifyLiveData = MutableLiveData<List<Classify>>()

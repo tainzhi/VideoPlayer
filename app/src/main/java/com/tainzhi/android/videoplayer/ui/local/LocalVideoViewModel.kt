@@ -6,15 +6,15 @@ import android.net.Uri
 import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.tainzhi.android.common.BaseViewModel
-import com.tainzhi.android.common.CoroutineDispatcherProvider
+import com.tainzhi.android.videoplayer.base.ui.BaseViewModel
+import com.tainzhi.android.videoplayer.util.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.network.doIfSuccess
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
 
 class LocalVideoViewModel(
-        private val localVideoRepository: LocalVideoRepository,
-        coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    private val localVideoRepository: LocalVideoRepository,
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
 ) : BaseViewModel(coroutineDispatcherProvider) {
     private var pendingDeleteVideoUri: Uri? = null
 

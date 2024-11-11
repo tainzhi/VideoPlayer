@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.tainzhi.android.common.BaseViewModel
-import com.tainzhi.android.common.CoroutineDispatcherProvider
+import com.tainzhi.android.videoplayer.base.ui.BaseViewModel
+import com.tainzhi.android.videoplayer.util.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.Tv
 import com.tainzhi.android.videoplayer.network.ResultOf

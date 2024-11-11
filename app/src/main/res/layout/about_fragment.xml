@@ -30,7 +30,7 @@
 		tools:text="v1.0.1"
 		/>
 	
-	<com.tainzhi.android.common.widget.SetItemView
+	<com.tainzhi.android.videoplayer.widget.SetItemView
 		android:id="@+id/suggestion"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
 		app:needDivideLine="true"
 		/>
 	
-	<com.tainzhi.android.common.widget.SetItemView
+	<com.tainzhi.android.videoplayer.widget.SetItemView
 		android:id="@+id/source"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
 		app:needDivideLine="true"
 		/>
 	
-	<com.tainzhi.android.common.widget.SetItemView
+	<com.tainzhi.android.videoplayer.widget.SetItemView
 		android:id="@+id/developer"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

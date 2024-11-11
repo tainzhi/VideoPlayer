@@ -1,6 +1,6 @@
 package com.tainzhi.android.videoplayer.network
 
-import com.tainzhi.android.common.base.BaseRetrofitClient
+import com.tainzhi.android.videoplayer.base.BaseRetrofitClient
 import com.tainzhi.android.videoplayer.BuildConfig
 import okhttp3.OkHttpClient
 

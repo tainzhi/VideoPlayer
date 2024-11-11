@@ -1,7 +1,7 @@
 package com.tainzhi.android.videoplayer.repository
 
 import com.orhanobut.logger.Logger
-import com.tainzhi.android.common.base.ResponseBody
+import com.tainzhi.android.videoplayer.base.ResponseBody
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.network.ResultOf

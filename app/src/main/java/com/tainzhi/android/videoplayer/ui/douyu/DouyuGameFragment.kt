@@ -6,9 +6,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.kennyc.view.MultiStateView
-import com.tainzhi.android.common.base.ui.LazyLoad
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
-import com.tainzhi.android.common.util.toast
+import com.tainzhi.android.videoplayer.base.ui.LazyLoad
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.util.toast
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomAdapter
 import com.tainzhi.android.videoplayer.adapter.DouyuRoomItemDecoration

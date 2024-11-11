@@ -2,7 +2,7 @@ package com.tainzhi.android.videoplayer
 
 import android.app.Application
 import android.content.Context
-import com.tainzhi.android.common.CoroutineDispatcherProvider
+import com.tainzhi.android.videoplayer.util.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.di.databaseModule
 import com.tainzhi.android.videoplayer.di.repositoryModule
 import com.tainzhi.android.videoplayer.di.viewModelModule

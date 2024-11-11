@@ -77,7 +77,7 @@
 				tools:text="12:24"
 				/>
 			
-			<com.tainzhi.android.common.widget.AutoScrollHorizontalView
+			<com.tainzhi.android.videoplayer.widget.AutoScrollHorizontalView
 				android:id="@+id/autoScrollHorizontalView"
 				style="@style/TextAppearance.AppTheme.Headline6"
 				android:layout_width="160dp"
@@ -119,7 +119,7 @@
 				tools:text="12:44"
 				/>
 			
-			<com.tainzhi.android.common.widget.AutoScrollHorizontalView
+			<com.tainzhi.android.videoplayer.widget.AutoScrollHorizontalView
 				style="@style/TextAppearance.AppTheme.Headline6"
 				android:layout_width="160dp"
 				android:layout_height="wrap_content"

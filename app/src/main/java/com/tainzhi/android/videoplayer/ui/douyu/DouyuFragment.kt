@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.tainzhi.android.common.base.ui.LazyLoad
-import com.tainzhi.android.common.base.ui.fragment.BaseViewBindingFragment
+import com.tainzhi.android.videoplayer.base.ui.LazyLoad
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseViewBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.DouyuFragmentBinding
 

@@ -4,12 +4,32 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.main.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/MediaSpider/VideoPlayer.MediaSpider.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/QMediaPlayer/VideoPlayer.QMediaPlayer.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.main.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/VideoPlayer.ffmpeg.unitTest.iml" />
     </modules>
   </component>
 </project>

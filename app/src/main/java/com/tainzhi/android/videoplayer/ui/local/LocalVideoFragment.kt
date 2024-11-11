@@ -19,8 +19,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.kennyc.view.MultiStateView.ViewState.CONTENT
 import com.kennyc.view.MultiStateView.ViewState.EMPTY
 import com.kennyc.view.MultiStateView.ViewState.ERROR
-import com.tainzhi.android.common.base.ui.LazyLoad
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.base.ui.LazyLoad
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.LocalVideoAdapter
 import com.tainzhi.android.videoplayer.adapter.LocalVideoViewHolder
@@ -34,7 +34,8 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 /**
  * 本地视频
  */
-class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>(), LazyLoad {
+class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideoFragmentBinding>(),
+    LazyLoad {
 
     companion object {
         private const val DELETE_PERMISSION_REQUEST = 0x1033

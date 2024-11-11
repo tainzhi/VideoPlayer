@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.tainzhi.android.common.base.ui.LazyLoad
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
-import com.tainzhi.android.common.util.hideKeyboard
+import com.tainzhi.android.videoplayer.base.ui.LazyLoad
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.util.hideKeyboard
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieSourceDialog

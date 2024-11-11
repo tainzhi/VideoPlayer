@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.MovieSearchResultAdapter
 import com.tainzhi.android.videoplayer.databinding.MovieSearchFragmentBinding

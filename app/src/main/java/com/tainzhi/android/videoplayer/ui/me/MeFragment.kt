@@ -1,7 +1,7 @@
 package com.tainzhi.android.videoplayer.ui.me
 
 import androidx.navigation.fragment.findNavController
-import com.tainzhi.android.common.base.ui.fragment.BaseViewBindingFragment
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseViewBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MeFragmentBinding
 

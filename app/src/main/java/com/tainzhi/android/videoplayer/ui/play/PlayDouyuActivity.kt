@@ -7,7 +7,7 @@ import android.hardware.SensorManager
 import android.net.Uri
 import androidx.annotation.RequiresApi
 import com.google.android.material.snackbar.Snackbar
-import com.tainzhi.android.common.base.ui.BaseViewBindingActivity
+import com.tainzhi.android.videoplayer.base.ui.BaseViewBindingActivity
 import com.tainzhi.android.videoplayer.databinding.ActivityVideoTestBinding
 import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.qmediaplayer.AutoFullScreenListener

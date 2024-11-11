@@ -1,8 +1,8 @@
 package com.tainzhi.android.videoplayer.ui.douyu
 
 import androidx.lifecycle.MutableLiveData
-import com.tainzhi.android.common.BaseViewModel
-import com.tainzhi.android.common.CoroutineDispatcherProvider
+import com.tainzhi.android.videoplayer.base.ui.BaseViewModel
+import com.tainzhi.android.videoplayer.util.CoroutineDispatcherProvider
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import com.tainzhi.android.videoplayer.network.ResultOf
 import com.tainzhi.android.videoplayer.repository.DouyuRepository

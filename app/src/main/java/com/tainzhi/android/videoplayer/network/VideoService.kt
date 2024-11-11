@@ -1,6 +1,6 @@
 package com.tainzhi.android.videoplayer.network
 
-import com.tainzhi.android.common.base.ResponseBody
+import com.tainzhi.android.videoplayer.base.ResponseBody
 import com.tainzhi.android.videoplayer.bean.DouyuGame
 import com.tainzhi.android.videoplayer.bean.DouyuRoom
 import retrofit2.http.GET

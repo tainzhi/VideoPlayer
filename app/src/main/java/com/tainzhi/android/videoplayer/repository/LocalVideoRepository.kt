@@ -5,8 +5,8 @@ import android.database.Cursor.FIELD_TYPE_STRING
 import android.net.Uri
 import android.provider.MediaStore
 import com.orhanobut.logger.Logger
-import com.tainzhi.android.common.util.FormatUtil.formatMediaDate
-import com.tainzhi.android.common.util.FormatUtil.formatMediaSize
+import com.tainzhi.android.videoplayer.util.FormatUtil.formatMediaDate
+import com.tainzhi.android.videoplayer.util.FormatUtil.formatMediaSize
 import com.tainzhi.android.videoplayer.App
 import com.tainzhi.android.videoplayer.bean.LocalVideo
 import com.tainzhi.android.videoplayer.network.ResultOf

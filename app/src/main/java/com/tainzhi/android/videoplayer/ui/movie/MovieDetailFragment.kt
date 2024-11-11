@@ -3,7 +3,7 @@ package com.tainzhi.android.videoplayer.ui.movie
 import android.content.Context
 import android.content.Intent
 import androidx.core.view.isVisible
-import com.tainzhi.android.common.base.ui.fragment.BaseVmBindingFragment
+import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
 import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.databinding.MovieDetailFragmentBinding
 import com.tainzhi.android.videoplayer.widget.dialog.ChooseMovieEpisodeDialog
