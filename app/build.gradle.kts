@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp") version "1.7.21-1.0.8"
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
     // kotlin("plugin.serialization")
+    // id("androidx.navigation.safeargs")
     id("androidx.navigation.safeargs.kotlin")
     id("io.wusa.semver-git-plugin").version("2.3.7")
 }

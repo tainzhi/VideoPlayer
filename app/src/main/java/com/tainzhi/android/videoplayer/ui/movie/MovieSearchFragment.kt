@@ -74,6 +74,7 @@ class MovieSearchFragment : BaseVmBindingFragment<MovieViewModel, MovieSearchFra
                         loadMoreModule.loadMoreEnd()
                     }
                 }
+                else -> {}
             }
         }
     }
