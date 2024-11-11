@@ -2,7 +2,6 @@ package com.tainzhi.android.videoplayer
 
 import android.app.Application
 import android.content.Context
-import com.didichuxing.doraemonkit.DoKit
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
