@@ -370,13 +370,13 @@ object Libs {
     // https://github.com/the-super-toys/glimpse-android
     object Glimpse {
         private const val version = "0.0.5"
-        const val core = "com.github.the-super-toys.glimpse-android:glimpse-core:$version"
+        const val core = "com.github.the-super-toys.glimpse-android:glimpse-core:0.0.5"
 
         //only required for glide extensions
-        const val glide = "com.github.the-super-toys.glimpse-android:glimpse-glide:$version"
+        const val glide = "com.github.the-super-toys.glimpse-android:glimpse-glide:0.0.5"
 
         //only required for coil extensions
-        const val coil = "com.github.the-super-toys.glimpse-android:glimpse-coil:$version"
+        const val coil = "com.github.the-super-toys.glimpse-android:glimpse-coil:0.0.5"
     }
 
     const val tensorflowLite = "org.tensorflow:tensorflow-lite:0.0.0-nightly"
