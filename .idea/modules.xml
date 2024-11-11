@@ -15,13 +15,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VideoPlayer.app.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoPlayer.buildSrc.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/common/VideoPlayer.common.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.main.iml" filepath="$PROJECT_DIR$/.idea/modules/danmu/VideoPlayer.danmu.main.iml" />

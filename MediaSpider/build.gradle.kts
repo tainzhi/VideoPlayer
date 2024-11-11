@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
+    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
 }
 
 android {
@@ -40,8 +40,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("com.android.volley:volley:1.1.1")
     implementation("com.github.smart-fun:XmlToJson:1.4.5")
-    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
     ///////////////////////////////////////////////////////////////////////////

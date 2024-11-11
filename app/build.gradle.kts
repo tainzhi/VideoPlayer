@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
+    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
     // kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
@@ -149,8 +149,8 @@ dependencies {
 
     api("com.squareup.retrofit2:retrofit:2.9.0")
     api("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")

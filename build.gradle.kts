@@ -17,5 +17,5 @@ plugins {
     id ("com.android.application") version "7.4.0" apply false
     id ("com.android.library") version "7.4.0" apply false
     id ("org.jetbrains.kotlin.android") version "1.7.21" apply false
-    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
+    // id("com.google.devtools.ksp") version "1.8.0-1.0.8"
 }
