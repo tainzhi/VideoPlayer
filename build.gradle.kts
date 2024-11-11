@@ -6,10 +6,10 @@ buildscript {
         mavenCentral()
 
         dependencies {
-            classpath(com.tainzhi.android.buildsrc.Libs.androidToolBuildGradle)
-            classpath(com.tainzhi.android.buildsrc.Libs.AndroidX.Navigation.safeArgs)
-            classpath(com.tainzhi.android.buildsrc.Libs.buglyUploadMapping)
-            classpath(kotlin("gradle-plugin", com.tainzhi.android.buildsrc.Libs.Kotlin.version))
+            classpath("com.android.tools.build:gradle:7.0.2")
+            classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
+            classpath("com.tencent.bugly:symtabfileuploader:2.2.1")
+            classpath(kotlin("gradle-plugin", "1.5.30"))
         }
     }
 }

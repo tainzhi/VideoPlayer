@@ -1,5 +1,3 @@
-import com.tainzhi.android.buildsrc.Libs
-
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -8,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk = Libs.Configs.compileSdkVersion
-    buildToolsVersion = Libs.Configs.buildToolsVersion
+    compileSdk = 30
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
-        minSdk = Libs.Configs.minSdkVersion
-        targetSdk = Libs.Configs.targetSdkVersion
+        minSdk = 26
+        targetSdk = 30
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,8 +30,8 @@ android {
 }
 
 dependencies {
-    api(Libs.Kotlin.stdlib)
-    api(Libs.AndroidX.appcompat)
-    api(Libs.AndroidX.coreKtx)
-    api(Libs.Glide.glide)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.core:core-ktx:1.3.2")
+    api("com.github.bumptech.glide:glide:4.12.0")
 }

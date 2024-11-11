@@ -1,17 +1,15 @@
-import com.tainzhi.android.buildsrc.Libs
-
 plugins {
     id("com.android.library")
     kotlin("android")
 }
 
 android {
-    compileSdk = Libs.Configs.compileSdkVersion
-    buildToolsVersion = Libs.Configs.buildToolsVersion
+    compileSdk = 30
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
-        minSdk = Libs.Configs.minSdkVersion
-        targetSdk = Libs.Configs.targetSdkVersion
+        minSdk = 26
+        targetSdk = 30
         testInstrumentationRunner ="androidx.test.runner.AndroidJUnitRunner"
 
         externalNativeBuild {
@@ -64,8 +62,7 @@ android {
 }
 
 dependencies {
-    implementation(Libs.Kotlin.stdlib)
-    testImplementation(Libs.junit)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
 
 }
 repositories {

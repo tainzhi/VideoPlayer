@@ -1,5 +1,3 @@
-import com.tainzhi.android.buildsrc.Libs
-
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -7,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk = Libs.Configs.compileSdkVersion
-    buildToolsVersion = Libs.Configs.buildToolsVersion
+    compileSdk = 30
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
-        minSdk = Libs.Configs.minSdkVersion
-        targetSdk = Libs.Configs.targetSdkVersion
+        minSdk = 26
+        targetSdk = 30
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,26 +34,26 @@ android {
 
 dependencies {
     implementation(files("libs/rhino-1.7.13.jar"))
-    implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.jsoup)
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.volley)
-    implementation(Libs.xmlToJson)
-    implementation(Libs.Moshi.moshi)
-    kapt(Libs.Moshi.codeGen)
-    implementation(Libs.OkHttp.okhttp)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
+    implementation("org.jsoup:jsoup:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("com.android.volley:volley:1.1.1")
+    implementation("com.github.smart-fun:XmlToJson:1.4.5")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖
     ///////////////////////////////////////////////////////////////////////////
-    testImplementation(Libs.junit)
-    testImplementation(Libs.Mockito.core)
-    testImplementation(Libs.Koin.test)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.AndroidX.Test.core)
-    testImplementation(Libs.AndroidX.archCoreTesting)
-    testImplementation(Libs.Google.truth)
-    testImplementation(Libs.robolectric)
-    testImplementation(Libs.AndroidX.Test.Ext.junit)
+    testImplementation("junit:junit:4.13")
+    testImplementation("org.mockito:mockito-core:3.3.0")
+    testImplementation("io.insert-koin:koin-test:3.1.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
+    testImplementation("androidx.test:core:1.2.0")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("com.google.truth:truth:0.42")
+    testImplementation("org.robolectric:robolectric:4.1")
+    testImplementation("androidx.test.ext:junit:1.1.0")
 
 }

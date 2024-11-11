@@ -1,5 +1,3 @@
- import com.tainzhi.android.buildsrc.Libs
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -28,13 +26,13 @@ android {
         }
     }
 
-    compileSdk = Libs.Configs.compileSdkVersion
-    buildToolsVersion = Libs.Configs.buildToolsVersion
+    compileSdk = 30
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
+        minSdk = 26
+        targetSdk = 30
         applicationId = "com.tainzhi.android.videoplayer"
-        minSdk = Libs.Configs.minSdkVersion
-        targetSdk = Libs.Configs.targetSdkVersion
         versionCode = semver.info.count
         versionName = semver.info.lastTag
         flavorDimensions("1")
@@ -117,76 +115,89 @@ dependencies {
     api(project(":ffmpeg"))
     implementation(project(":danmu"))
 
-    implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.preference)
-    implementation(Libs.AndroidX.constraintlayout)
-    implementation(Libs.AndroidX.viewPager2)
-    implementation(Libs.AndroidX.swiperefresh)
-    implementation(Libs.AndroidX.Navigation.fragmentKtx)
-    implementation(Libs.AndroidX.Navigation.uiKtx)
-    implementation(Libs.AndroidX.Lifecycle.viewmodelKtx)
-    implementation(Libs.AndroidX.Lifecycle.livedata)
-    implementation(Libs.AndroidX.Lifecycle.extensions)
-    implementation(Libs.AndroidX.Room.runtime)
-    implementation(Libs.AndroidX.Room.ktx)
-    kapt(Libs.AndroidX.Room.compiler)
-    implementation(Libs.AndroidX.Paging.runtime)
-    implementation(Libs.AndroidX.Paging.runtimeKtx)
-    implementation(Libs.AndroidX.Work.runtimeKtx)
-    implementation(Libs.AndroidX.browser)
 
-    implementation(Libs.Google.material)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("com.android.volley:volley:1.1.1")
+    implementation("androidx.core:core-ktx:1.3.2")
+    implementation("androidx.preference:preference:1.1.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.room:room-runtime:2.3.0")
+    implementation("androidx.room:room-ktx:2.3.0")
+    kapt("androidx.room:room-compiler:2.3.0")
+    implementation("androidx.paging:paging-runtime:2.1.2")
+    implementation("androidx.paging:paging-runtime-ktx:2.1.2")
+    implementation("androidx.work:work-runtime-ktx:2.3.0")
+    implementation("androidx.browser:browser:1.2.0")
 
-    implementation(Libs.Coroutines.android)
+    implementation("com.google.android.material:material:1.3.0")
 
-    implementation(Libs.Koin.android)
-    implementation(Libs.Koin.androidXCompose)
-    implementation(Libs.Koin.androidXWorkManager)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
-    implementation(Libs.logger)
+    implementation("io.insert-koin:koin-android:3.1.2")
+    implementation("io.insert-koin:koin-androidx-compose:3.1.2")
+    implementation("io.insert-koin:koin-androidx-workmanager:3.1.2")
 
-    api(Libs.Retrofit.retrofit)
-    api(Libs.Retrofit.moshiConverter)
-    api(Libs.Moshi.moshi)
-    kapt(Libs.Moshi.codeGen)
+    implementation("com.orhanobut:logger:2.2.0")
 
-    implementation(Libs.OkHttp.loggingInterceptor)
-    testImplementation(Libs.OkHttp.mockWebServer)
-    implementation(Libs.cookietar)
+    api("com.squareup.retrofit2:retrofit:2.9.0")
+    api("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
 
-    implementation(Libs.Glide.glide)
-    kapt(Libs.Glide.compiler)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
+    implementation("com.github.franmontiel:PersistentCookieJar:v1.0.1")
 
-    implementation(Libs.baseRecyclerViewAdapterHelper)
-    implementation(Libs.youthBanner)
-    implementation(Libs.tencentTbssdk)
-    implementation(Libs.verticalTabLayout)
-    implementation(Libs.flowlayout)
-    implementation(Libs.licenseDialog)
-    implementation(Libs.appUpdate)
-    implementation(Libs.activityOnCrash)
-    implementation(Libs.multiStateView)
-    implementation(Libs.volley)
-    implementation(Libs.lottie)
-    implementation(Libs.notchScreenTool)
-    implementation(Libs.Glimpse.core)
-    implementation(Libs.Glimpse.glide)
-    implementation(Libs.tensorflowLite)
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
+
+    implementation("com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4")
+    implementation("com.youth.banner:banner:1.4.10")
+    // 腾讯X5Webview
+    implementation("com.tencent.tbs.tbssdk:sdk:43697")
+    implementation("q.rorbin:VerticalTabLayout:1.2.5")
+    implementation("com.hyman:flowlayout-lib:1.1.2")
+    implementation("de.psdev.licensesdialog:licensesdialog:2.1.0")
+    // AppUpdate，简单的实现App更新下载和安装
+    implementation("com.azhon:appupdateX:2.8.0")
+    // launch a custom activity when your app crashes,
+    // instead of showing the hated "Unfortunately, X has stopped" dialog.
+    implementation("cat.ereza:customactivityoncrash:2.3.0")
+    implementation("com.github.Kennyc1012:MultiStateView:2.1.2")
+    implementation("com.airbnb.android:lottie:3.4.1")
+    implementation("com.github.smarxpan:NotchScreenTool:0.0.1")
+    // 基于tensorflow的智能内容感知的图片crop, 即任意尺寸条件的crop都能crop出图片的主要内容, 比如人像...
+    // https://github.com/the-super-toys/glimpse-android
+    implementation("com.github.the-super-toys.glimpse-android:glimpse-core:0.0.5")
+    implementation("com.github.the-super-toys.glimpse-android:glimpse-glide:0.0.5")
+    implementation("org.tensorflow:tensorflow-lite:0.0.0-nightly")
 
     ///////////////////////////////////////////////////////////////////////////
     // 以下是 unit test 依赖
     ///////////////////////////////////////////////////////////////////////////
-    testImplementation(Libs.junit)
-    testImplementation(Libs.Mockito.core)
-    testImplementation(Libs.Koin.test)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.AndroidX.Test.core)
-    testImplementation(Libs.AndroidX.archCoreTesting)
-    testImplementation(Libs.Google.truth)
-    testImplementation(Libs.Koin.test)
-    testImplementation(Libs.hamcrest)
-    testImplementation(Libs.json)
-    testImplementation(Libs.AndroidX.Lifecycle.livedataTesting)
+    testImplementation("junit:junit:4.13")
+    testImplementation("org.mockito:mockito-core:3.3.0")
+    testImplementation("io.insert-koin:koin-test:3.1.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
+    testImplementation("androidx.test:core:1.2.0")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("com.google.truth:truth:0.42")
+    testImplementation("io.insert-koin:koin-test:3.1.2")
+    // http://hamcrest.org/JavaHamcrest/distributables
+    testImplementation("org.hamcrest:hamcrest:2.2")
+    // json包含在android sdk中, 但是单元测试中没有该包
+    // 报错 Method put in org.json.JSONObject not mocked
+    // 解决办法: https://blog.csdn.net/u010513377/article/details/102938807
+    // json maven: https://mvnrepository.com/artifact/org.json/json?__cf_chl_captcha_tk__=a667358e389f181a56f6e51d65b1d5c9fa21ae78-1610526080-0-Acd6MaR0FBsffq3-jcACIoj8zFKdit0FyTt9VF_-mZEVnhOhopOEXa1XQDcl9RnMvJWW_gsY5T1v4LlnsUguWeBTPuzooChL0t3sDSLkb84W7XabHgbtcFciKj7_Jzzk4jUPb88XLXUZIV1eVMrF2L8pTaDPbD0V7EZphTJmKEdLvCcYyXl-rj71X13idbv2nSoSAI5MsovjdrjaePJtHYigF5r_y1DxGJ1zon48KgVMvLT5Upt9N9jd7WPiuYinlOOzryfuJ9vV7tc_tBANDqg0wQLEho9HMaWEcQuXQrKLeaXcf0jiMe7ktQjqVg0F-RAkChEbgj0zii8O5a5n3J7XYyGHR1mrN20heedQYlmBQK6YaKdrkO05zthYjNkX_sUtIG1VMQR6w78R8Ox2wutbS5r8p4z5jf3aJqWgqN-5FKENeE1nJHNqusZEC86YKUApc3qJqg_e5V3KpkXoad-0w1xg8grluQMVWcTYNkFQa6VtEbeIn4uIPXdAJ5ZqIpW3JCYGfM_tjQMzC0ZO4HAMxLP1w4gY3UZ7DBtiu_B7kXeRc5XwpU1txvveyJNp13Hax6JfSRROLY6qUGC7418fUfkGJfWISBAdOe9IiruN
+    testImplementation("org.json:json:20201115")
+    // https://github.com/jraska/livedata-testing
+    testImplementation("com.jraska.livedata:testing-ktx:1.1.2")
 }
