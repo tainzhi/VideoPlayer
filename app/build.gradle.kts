@@ -10,13 +10,6 @@ plugins {
     id("io.wusa.semver-git-plugin").version("2.3.7")
 }
 
-apply {
-    // from("../test_dependencies.gradle.kts")
-    // 直接把 androidTestImplementation写在该目录报错, More than one file was found with OS independent path 'META-INF/AL2.0
-    from("../test_dependencies.gradle")
-    plugin("kotlin-android")
-}
-
 android {
     signingConfigs {
         getByName("debug") {
