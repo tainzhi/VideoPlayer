@@ -59,7 +59,6 @@ class PlayDouyuActivity : BaseViewBindingActivity<ActivityVideoTestBinding>() {
 
         videoView.videoTitle = mVideoTitle!!
         videoView.mediaController = NetMediaController(this@PlayDouyuActivity).apply {
-            @RequiresApi(api = 23)
             requestDrawOverlayPermission = {
                 startActivityForResult(
                         Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION").apply {

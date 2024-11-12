@@ -64,7 +64,6 @@ class PlayActivity : AppCompatActivity() {
             startFullScreenDirectly(this@PlayActivity, mVideoUri!!)
             setEffect(NoEffect())
             mediaController = MediaController(this@PlayActivity).apply {
-                @RequiresApi(api = 23)
                 requestDrawOverlayPermission = {
                     startActivityForResult(
                         Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION").apply {
