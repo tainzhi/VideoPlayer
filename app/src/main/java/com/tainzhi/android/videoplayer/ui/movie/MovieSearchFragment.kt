@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tainzhi.android.videoplayer.base.ui.fragment.BaseVmBindingFragment
-import com.tainzhi.android.videoplayer.R
 import com.tainzhi.android.videoplayer.adapter.MovieSearchResultAdapter
 import com.tainzhi.android.videoplayer.databinding.MovieSearchFragmentBinding
 import com.tainzhi.android.videoplayer.network.ResultOf
@@ -28,7 +27,7 @@ class MovieSearchFragment : BaseVmBindingFragment<MovieViewModel, MovieSearchFra
     private val searchResultAdapter by lazy {
         MovieSearchResultAdapter { movie ->
             val bundle = bundleOf(MovieDetailFragment.MOVIE_ID to movie.id)
-            findNavController().navigate(R.id.action_movieSearchFragment_to_movieDetailFragment, bundle)
+            findNavController().navigate(com.tainzhi.android.videoplayer.R.id.action_movieSearchFragment_to_movieDetailFragment, bundle)
         }.apply {
             loadMoreModule.run {
                 loadMoreView = CustomLoadMoreView()
@@ -40,7 +39,7 @@ class MovieSearchFragment : BaseVmBindingFragment<MovieViewModel, MovieSearchFra
     }
 
     override fun getLayoutResId(): Int {
-        return R.layout.movie_search_fragment
+        return com.tainzhi.android.videoplayer.R.layout.movie_search_fragment
     }
 
     override fun initView() {
@@ -94,8 +93,8 @@ class MovieSearchFragment : BaseVmBindingFragment<MovieViewModel, MovieSearchFra
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.movie_search_expanded, menu)
-        val searchMenu = menu.findItem(R.id.search)?.apply {
+        inflater.inflate(com.tainzhi.android.videoplayer.R.menu.movie_search_expanded, menu)
+        val searchMenu = menu.findItem(com.tainzhi.android.videoplayer.R.id.search)?.apply {
             isVisible = true
         }
         val searchView = ((searchMenu?.actionView) as SearchView).apply {
@@ -113,21 +112,20 @@ class MovieSearchFragment : BaseVmBindingFragment<MovieViewModel, MovieSearchFra
                     return false
                 }
             })
-            TODO("implement search view")
-            // this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
-            //     setTextColor(android.graphics.Color.WHITE)
-            //     setHintTextColor(android.graphics.Color.WHITE)
-            //     hint = "请输入电影名称"
-            //     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            //         // null 使得光标与字体同色
-            //         textCursorDrawable = null
-            //     }
-            // }
-            // this.findViewById<android.widget.ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
-            // this.findViewById<android.widget.ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
-            // // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
-            // // 去掉下划线
-            // this.findViewById<View>(R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            this.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text).run {
+                setTextColor(android.graphics.Color.WHITE)
+                setHintTextColor(android.graphics.Color.WHITE)
+                hint = "请输入电影名称"
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                    // null 使得光标与字体同色
+                    textCursorDrawable = null
+                }
+            }
+            this.findViewById<android.widget.ImageView>(androidx.appcompat.R.id.search_button).setImageResource(com.tainzhi.android.videoplayer.R.drawable.ic_search)
+            this.findViewById<android.widget.ImageView>(androidx.appcompat.R.id.search_close_btn).setImageResource(com.tainzhi.android.videoplayer.R.drawable.ic_close)
+            // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
+            // 去掉下划线
+            this.findViewById<View>(androidx.appcompat.R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT)
         }
     }
 }
