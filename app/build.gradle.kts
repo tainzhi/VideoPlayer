@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version "2.0.0-1.0.21"
+    id("com.google.devtools.ksp")
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
     id("kotlin-kapt") // databinding 需要, google推荐compose，故databinding已经是维护状态，不再更新
     // kotlin("plugin.serialization")
