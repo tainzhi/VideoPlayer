@@ -68,4 +68,6 @@ val databaseModule = module {
     single { provideTVDao(get()) }
 }
 
-val appModule = listOf(viewModelModule, repositoryModule, databaseModule, coroutineModule)
+val appModule = module {
+    includes(viewModelModule,repositoryModule, databaseModule, coroutineModule)
+}

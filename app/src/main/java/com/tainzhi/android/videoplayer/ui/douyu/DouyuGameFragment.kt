@@ -16,8 +16,8 @@ import com.tainzhi.android.videoplayer.databinding.DouyuGameFragmentBinding
 import com.tainzhi.android.videoplayer.ui.MainViewModel
 import com.tainzhi.android.videoplayer.ui.play.PlayDouyuActivity
 import com.tainzhi.android.videoplayer.widget.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author:      tainzhi
@@ -34,6 +34,8 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
     private val args: DouyuGameFragmentArgs by navArgs()
 
     private lateinit var douyuGameId: String
+
+    private val mainViewModel:MainViewModel by viewModel()
 
     companion object {
         private const val GAME_ID = "game_id"
@@ -91,7 +93,7 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
         // gameId 只从DouyuFragment传递, 而从DouyuCategoryFragment不传
         // 从分类创建的DouyuGameFragment需要有center title
         if (gameId == null) {
-            getSharedViewModel<MainViewModel>().run {
+            mainViewModel.run {
                 updateToolbarCenterTitle(args.gameName)
                 updateToolbarCenterTitleVisibility(true)
             }
@@ -102,7 +104,7 @@ class DouyuGameFragment : BaseVmBindingFragment<DouyuGameViewModel, DouyuGameFra
         super.onDestroyView()
         // 退出时, 不显示center title
         if (gameId == null) {
-            getSharedViewModel<MainViewModel>().run {
+            mainViewModel.run {
                 updateToolbarCenterTitleVisibility(false)
             }
         }
