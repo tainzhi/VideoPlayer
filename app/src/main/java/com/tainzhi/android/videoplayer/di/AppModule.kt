@@ -8,7 +8,6 @@ import com.tainzhi.android.videoplayer.network.VideoClient
 import com.tainzhi.android.videoplayer.network.VideoService
 import com.tainzhi.android.videoplayer.repository.DouyuRepository
 import com.tainzhi.android.videoplayer.repository.LocalVideoRepository
-import com.tainzhi.android.videoplayer.repository.MovieRepository
 import com.tainzhi.android.videoplayer.repository.PreferenceRepository
 import com.tainzhi.android.videoplayer.repository.TVRepository
 import com.tainzhi.android.videoplayer.ui.MainViewModel
@@ -16,7 +15,6 @@ import com.tainzhi.android.videoplayer.ui.douyu.DouyuCategoryViewModel
 import com.tainzhi.android.videoplayer.ui.douyu.DouyuGameViewModel
 import com.tainzhi.android.videoplayer.ui.local.LocalVideoViewModel
 import com.tainzhi.android.videoplayer.ui.me.SettingViewModel
-import com.tainzhi.android.videoplayer.ui.movie.MovieViewModel
 import com.tainzhi.android.videoplayer.ui.play.PlayDouyuViewModel
 import com.tainzhi.android.videoplayer.ui.tv.TVViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -38,7 +36,6 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { PlayDouyuViewModel(get(), get()) }
     viewModel { SettingViewModel(get(), get()) }
-    viewModel { MovieViewModel(get(), get()) }
 }
 
 val repositoryModule = module {
@@ -47,7 +44,6 @@ val repositoryModule = module {
     single { LocalVideoRepository() }
     single { DouyuRepository() }
     single { PreferenceRepository(get()) }
-    single { MovieRepository() }
 }
 
 // 单独抽出CoroutineModule, 方便test

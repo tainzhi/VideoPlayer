@@ -15,11 +15,6 @@
         android:icon="@drawable/ic_tv"
         android:contentDescription="@string/title_tv"
         android:title="@string/title_tv"/>
-    <item
-        android:id="@+id/movie"
-        android:icon="@drawable/ic_movie"
-        android:contentDescription="@string/title_movie"
-        android:title="@string/title_movie"/>
 	<item
 		android:id="@+id/me"
 		android:contentDescription="@string/title_me"
