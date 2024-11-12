@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
     // kotlin("plugin.serialization")
     // id("androidx.navigation.safeargs")
@@ -28,12 +28,11 @@ android {
         }
     }
 
-    compileSdk = 31
-    buildToolsVersion = "30.0.2"
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 30
+        minSdk = 29
+        targetSdk = 34
         applicationId = "com.tainzhi.android.videoplayer"
         versionCode = semver.info.count
         versionName = semver.info.lastTag

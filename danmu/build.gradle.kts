@@ -6,12 +6,11 @@ plugins {
 
 android {
     namespace = "com.tainzhi.android.danmu"
-    compileSdk = 30
-    buildToolsVersion = "32.0.0"
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 30
+        minSdk = 29
+        targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
