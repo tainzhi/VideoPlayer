@@ -1,10 +1,8 @@
 buildscript {
     repositories {
         dependencies {
-            // classpath("com.android.tools.build:gradle:7.4.0")
             classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
             classpath("com.tencent.bugly:symtabfileuploader:2.2.1")
-            // classpath(kotlin("gradle-plugin", "1.5.30"))
         }
     }
 }

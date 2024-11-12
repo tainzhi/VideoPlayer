@@ -25,12 +25,11 @@ android {
         }
 
         compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
         }
-
         kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            jvmTarget = "11"
         }
     }
 
@@ -43,7 +42,6 @@ android {
 
 dependencies {
     implementation(files("libs/rhino-1.7.13.jar"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
     implementation("org.jsoup:jsoup:1.13.1")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("com.android.volley:volley:1.1.1")
