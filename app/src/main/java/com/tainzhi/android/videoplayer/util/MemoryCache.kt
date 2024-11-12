@@ -11,7 +11,7 @@ import androidx.collection.LruCache
  **/
 
 class MemoryCache {
-    private val cache: LruCache<String?, Any?>
+    private val cache: LruCache<String, Any>
 
     @Synchronized
     fun put(key: String?, value: Any?) {

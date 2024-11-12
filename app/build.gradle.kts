@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp") version "1.9.0-1.0.13"
     id("kotlin-parcelize") // 弃用android.extensions后, 使用parcelize
+    id("kotlin-kapt") // databinding 需要, google推荐compose，故databinding已经是维护状态，不再更新
     // kotlin("plugin.serialization")
     // id("androidx.navigation.safeargs")
     id("androidx.navigation.safeargs.kotlin")
@@ -52,6 +53,7 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -117,38 +119,38 @@ dependencies {
     implementation(project(":danmu"))
 
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.android.volley:volley:1.1.1")
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.preference:preference:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.android.volley)
+    implementation("androidx.preference:preference:1.2.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
-    implementation("androidx.room:room-runtime:2.3.0")
-    implementation("androidx.room:room-ktx:2.3.0")
-    ksp("androidx.room:room-compiler:2.3.0")
-    implementation("androidx.paging:paging-runtime:2.1.2")
-    implementation("androidx.paging:paging-runtime-ktx:2.1.2")
-    implementation("androidx.work:work-runtime-ktx:2.3.0")
-    implementation("androidx.browser:browser:1.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.room:room-runtime:2.5.1")
+    implementation("androidx.room:room-ktx:2.5.1")
+    ksp("androidx.room:room-compiler:2.5.1")
+    implementation("androidx.paging:paging-runtime:3.1.1")
+    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+    implementation("androidx.browser:browser:1.5.0")
 
     implementation("com.google.android.material:material:1.3.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
-    implementation("io.insert-koin:koin-android:3.1.2")
-    implementation("io.insert-koin:koin-androidx-compose:3.1.2")
-    implementation("io.insert-koin:koin-androidx-workmanager:3.1.2")
+    implementation(libs.insert.koin.koin.android)
+    implementation(libs.insert.koin.koin.androidx.compose)
+    implementation(libs.insert.koin.koin.androidx.workmanager)
 
     implementation("com.orhanobut:logger:2.2.0")
 
-    api("com.squareup.retrofit2:retrofit:2.9.0")
-    api("com.squareup.retrofit2:converter-moshi:2.9.0")
+    api("com.squareup.retrofit2:retrofit:2.10.0")
+    api("com.squareup.retrofit2:converter-moshi:2.10.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 

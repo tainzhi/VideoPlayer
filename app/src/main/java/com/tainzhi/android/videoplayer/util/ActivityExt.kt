@@ -95,11 +95,11 @@ inline fun <reified T : Activity> Fragment.startKtxActivityForResult(
         value: Pair<String, Any>? = null,
         values: Collection<Pair<String, Any>?>? = null
 ) =
-        activity?.let {
+        activity.let {
             val list = ArrayList<Pair<String, Any>?>()
             value?.let { list.add(it) }
             values?.let { list.addAll(it) }
-            startActivityForResult(activity?.getIntent<T>(flags, extra, list), requestCode)
+            startActivityForResult(activity!!.getIntent<T>(flags, extra, list), requestCode)
         }
 
 inline fun <reified T : Context> Context.getIntent(

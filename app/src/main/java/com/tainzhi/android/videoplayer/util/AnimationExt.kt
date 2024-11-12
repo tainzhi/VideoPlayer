@@ -48,7 +48,7 @@ fun View.exitCircularReveal(exitX: Int, exitY: Int, block: () -> Unit) {
         duration = 350
         interpolator = DecelerateInterpolator(1f)
         addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 block()
                 super.onAnimationEnd(animation)
             }

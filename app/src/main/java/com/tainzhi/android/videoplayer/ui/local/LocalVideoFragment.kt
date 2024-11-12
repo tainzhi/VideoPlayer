@@ -205,20 +205,21 @@ class LocalVideoFragment : BaseVmBindingFragment<LocalVideoViewModel, LocalVideo
                     return false
                 }
             })
-            this.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text).run {
-                setTextColor(android.graphics.Color.WHITE)
-                setHintTextColor(android.graphics.Color.WHITE)
-                hint = "请输入视频名称"
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    // null 使得光标与字体同色
-                    textCursorDrawable = null
-                }
-            }
-            this.findViewById<android.widget.ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
-            this.findViewById<android.widget.ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
-            // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
-            // 去掉下划线
-            this.findViewById<View>(R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            TODO("implement search view")
+            // this.findViewById<SearchView.SearchAutoComplete>(android.R.id.search_src_text).run {
+            //     setTextColor(android.graphics.Color.WHITE)
+            //     setHintTextColor(android.graphics.Color.WHITE)
+            //     hint = "请输入视频名称"
+            //     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            //         // null 使得光标与字体同色
+            //         textCursorDrawable = null
+            //     }
+            // }
+            // this.findViewById<android.widget.ImageView>(R.id.search_button).setImageResource(R.drawable.ic_search)
+            // this.findViewById<android.widget.ImageView>(R.id.search_close_btn).setImageResource(R.drawable.ic_close)
+            // // this.findViewById<ImageView>(R.id.search_mag_icon).setImageResource(R.drawable.ic_search)
+            // // 去掉下划线
+            // this.findViewById<View>(android.R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT)
         }
     }
 
