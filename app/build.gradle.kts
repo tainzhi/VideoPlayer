@@ -7,7 +7,6 @@ plugins {
     // kotlin("plugin.serialization")
     // id("androidx.navigation.safeargs")
     id("androidx.navigation.safeargs.kotlin")
-    id("io.wusa.semver-git-plugin").version("2.3.7")
 }
 
 android {
@@ -35,8 +34,12 @@ android {
         minSdk = 29
         targetSdk = 34
         applicationId = "com.tainzhi.android.videoplayer"
-        versionCode = semver.info.count
-        versionName = semver.info.lastTag
+        // 第1，2位表示年
+        // 第3，4位表示月
+        // 第5，6位表示日
+        // 最后两位取值01-99
+        versionCode = 24112101
+        versionName = "2024.11.21-1"
         flavorDimensions("1")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
