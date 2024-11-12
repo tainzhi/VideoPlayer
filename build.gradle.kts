@@ -1,14 +1,9 @@
 buildscript {
     repositories {
         dependencies {
-            classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
-            classpath("com.tencent.bugly:symtabfileuploader:2.2.1")
+            classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.8.3")
         }
     }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
 }
 
 plugins {

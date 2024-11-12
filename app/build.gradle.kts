@@ -32,14 +32,14 @@ android {
 
     defaultConfig {
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 30
         applicationId = "com.tainzhi.android.videoplayer"
         // 第1，2位表示年
         // 第3，4位表示月
         // 第5，6位表示日
         // 最后两位取值01-99
-        versionCode = 24112101
-        versionName = "2024.11.21-1"
+        versionCode = 24112102
+        versionName = "2024.11.21-2"
         flavorDimensions("1")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -78,14 +78,6 @@ android {
         outputs.forEach { output ->
             check(output is com.android.build.gradle.internal.api.ApkVariantOutputImpl)
             output.outputFileName = "VideoPlayer_${versionName}.apk"
-            // if (output is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
-            //     if (buildType.name == "debug") {
-            //         output.outputFileName =
-            //                 "VideoPlayer_${flavorName}_${versionName}_${buildType.name}.apk"
-            //     } else if (buildType.name == "release") {
-            //         output.outputFileName = "VideoPlayer_${flavorName}_${versionName}.apk"
-            //     }
-            // }
         }
     }
 
